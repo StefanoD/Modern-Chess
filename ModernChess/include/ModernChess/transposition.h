@@ -33,7 +33,7 @@ struct sevaltt_entry {
     int val;
 } extern * ett;
 
-extern int tt_size;
+extern uint32_t tt_size;
 extern int ptt_size;
 extern int ett_size;
 

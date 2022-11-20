@@ -11,7 +11,7 @@ stt_entry * tt;
 spawntt_entry * ptt;
 sevaltt_entry * ett;
 
-int tt_size = 0;
+uint32_t tt_size = 0;
 int ptt_size = 0;
 int ett_size = 0;
 
