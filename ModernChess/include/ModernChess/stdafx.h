@@ -73,17 +73,17 @@ enum emflag {
 };
 
 struct sboard {
-    uint8_t	 pieces[128];
-    uint8_t	 color[128];
+    uint8_t pieces[128];
+    uint8_t color[128];
     uint8_t stm;        // side to move: 0 = white,  1 = black
     uint8_t castle;     // 1 = shortW, 2 = longW, 4 = shortB, 8 = longB
     uint8_t ep;         // en passant square
-    uint8_t   ply;
-    uint64_t  hash;
-    uint64_t	 phash;
-    int  rep_index;
-    uint64_t  rep_stack[1024];
-    int8_t   king_loc[2];
+    uint8_t ply;
+    uint64_t hash;
+    uint64_t phash;
+    int rep_index;
+    uint64_t rep_stack[1024];
+    int8_t king_loc[2];
     int pcsq_mg[2];
     int pcsq_eg[2];
     int piece_material[2];
