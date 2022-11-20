@@ -75,9 +75,9 @@ enum emflag {
 struct sboard {
     uint8_t	 pieces[128];
     uint8_t	 color[128];
-    char stm;        // side to move: 0 = white,  1 = black
+    uint8_t stm;        // side to move: 0 = white,  1 = black
     char castle;     // 1 = shortW, 2 = longW, 4 = shortB, 8 = longB
-    char ep;         // en passant square
+    uint8_t ep;         // en passant square
     uint8_t   ply;
     uint64_t  hash;
     uint64_t	 phash;
@@ -98,8 +98,8 @@ extern sboard b;
 
 struct smove {
     char id;
-    char from;
-    char to;
+    uint8_t from;
+    uint8_t to;
     uint8_t piece_from;
     uint8_t piece_to;
     uint8_t piece_cap;
@@ -145,7 +145,7 @@ struct structtime {
     int inc[2];
     int movestogo;
     int depth;
-    int nodes;
+    uint64_t nodes;
     int mate;
     int movetime;
     uint8_t flags;

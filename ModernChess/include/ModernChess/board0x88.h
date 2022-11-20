@@ -1,10 +1,8 @@
+#pragma once
 
 #include "stdafx.h"
 #include "0x88_math.h"
 #include "transposition.h"
-
-sboard b;
-
 
 void clearBoard();
 
