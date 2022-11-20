@@ -41,7 +41,7 @@ int tt_init() {
         zobrist.castling[castling] = rand64();
     }
 
-    for (int ep = 0; ep <= 127; ep++) {
+    for (uint8_t ep = 0; ep <= 127; ep++) {
         zobrist.ep[ep] = rand64();
     }
 

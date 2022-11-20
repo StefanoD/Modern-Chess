@@ -54,6 +54,8 @@ void perft_start(char * command) {
     for (uint8_t d=1; d<=depth; d++) {
         printf("%d:\t%d\t%llu\n", (int) d, gettime()-starttime,perft(d));
     }
+
+    std::ignore = converted;
 }
 
 uint64_t perft(uint8_t depth) {
@@ -83,6 +85,7 @@ void util_bench(char * command) {
 
     int depth;
     converted = sscanf(command + 6, "%d", &depth);
+    std::ignore = converted;
 
     time_over = false;
 
@@ -103,8 +106,6 @@ void util_bench(char * command) {
     if (gettime()-starttime < 1000) starttime = gettime() - 1000;
 
     printf("Nodes:\t%d\nTime:\t%d ms\nNPS:\t%llu\n", (int) sd.nodes, gettime()-starttime, sd.nodes / ((gettime()-starttime)/1000));
-
-    return;
 }
 
 smove strToMove(char * a) {
@@ -119,7 +120,7 @@ smove strToMove(char * a) {
 
     m.flags = 0;
     m.castle = 0;
-    m.ep = -1;
+    m.ep = 255;
     m.ply = 0;
     m.score = 0;
 
@@ -228,14 +229,14 @@ char * algebraic_writemove(smove m, char * a) {
     return a;
 }
 
-void convert_0x88_a(int8_t sq, char * a) {
+void convert_0x88_a(uint8_t sq, char * a) {
     a[0] = COL(sq) + 'a';
     a[1] = ROW(sq) + '1';
     a[2] = 0;
 }
 
 uint8_t convert_a_0x88(char * a) {
-    int8_t sq;
+    uint8_t sq;
     sq = a[0] - 'a';
     sq += (a[1] - '1') * 16;
 

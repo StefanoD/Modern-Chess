@@ -76,7 +76,7 @@ struct sboard {
     uint8_t	 pieces[128];
     uint8_t	 color[128];
     uint8_t stm;        // side to move: 0 = white,  1 = black
-    char castle;     // 1 = shortW, 2 = longW, 4 = shortB, 8 = longB
+    uint8_t castle;     // 1 = shortW, 2 = longW, 4 = shortB, 8 = longB
     uint8_t ep;         // en passant square
     uint8_t   ply;
     uint64_t  hash;
@@ -106,7 +106,7 @@ struct smove {
     char flags;
     char castle;
     char ply;
-    char ep;
+    uint8_t ep;
     int score;
 };
 
@@ -209,8 +209,8 @@ extern char vectors[5];
 
 void board_display();
 void clearBoard();
-void fillSq(uint8_t color, uint8_t piece, int8_t sq);
-void clearSq(int8_t sq);
+void fillSq(uint8_t color, uint8_t piece, uint8_t sq);
+void clearSq(uint8_t sq);
 int board_loadFromFen(char * fen);
 
 
@@ -230,7 +230,7 @@ uint8_t movegen_qs(smove * moves);
 void movegen_sort(uint8_t movecount, smove * m, uint8_t current);
 
 
-void convert_0x88_a(int8_t sq, char * a);
+void convert_0x88_a(uint8_t sq, char * a);
 uint8_t convert_a_0x88(char * a);
 char * algebraic_writemove(smove m, char * a);
 int algebraic_moves(char * a);
@@ -239,7 +239,7 @@ int algebraic_moves(char * a);
 int move_make(smove move);
 int move_unmake(smove move);
 int move_makeNull();
-int move_unmakeNull(char ep);
+int move_unmakeNull(uint8_t ep);
 
 // the next couple of functions respond to questions about moves or move lists
 
@@ -271,7 +271,7 @@ void processIniString(char line[250] );
 
 
 int eval(int alpha, int beta, int use_hash);
-int isPiece(uint8_t color, uint8_t piece, int8_t sq);
+int isPiece(uint8_t color, uint8_t piece, uint8_t sq);
 int getTropism(int sq1, int sq2);
 void printEval();
 void printEvalFactor(int wh, int bl);
@@ -281,11 +281,11 @@ int Quiesce( int alpha, int beta );
 int badCapture(smove move);
 int Blind(smove move);
 
-int isAttacked(char byColor, int8_t sq);
-int leaperAttack( char byColor, int8_t sq, char byPiece );
-int straightAttack(char byColor, int8_t sq, int vect);
-int diagAttack(int byColor, int8_t sq, int vect);
-int bishAttack(int byColor, int8_t sq, int vect);
+int isAttacked(char byColor, uint8_t sq);
+int leaperAttack( char byColor, uint8_t sq, char byPiece );
+int straightAttack(char byColor, uint8_t sq, int vect);
+int diagAttack(int byColor, uint8_t sq, int vect);
+int bishAttack(int byColor, uint8_t sq, int vect);
 
 void perft_start(char * command);
 uint64_t perft(uint8_t depth);

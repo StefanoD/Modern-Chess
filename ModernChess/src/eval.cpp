@@ -575,7 +575,7 @@ int evalPawnStructure() {
     for (uint8_t row = 0; row < 8; row++)
         for (uint8_t col = 0; col < 8; col++) {
 
-            int8_t sq = SET_SQ(row, col);
+            uint8_t sq = SET_SQ(row, col);
 
             if (b.pieces[sq] == PAWN) {
                 if (b.color[sq] == WHITE) result += EvalPawn(sq, WHITE);
@@ -586,7 +586,7 @@ int evalPawnStructure() {
     return result;
 }
 
-int EvalPawn(int8_t sq, int8_t side) {
+int EvalPawn(uint8_t sq, int8_t side) {
     int result = 0;
     int flagIsPassed = 1; // we will be trying to disprove that
     int flagIsWeak = 1;   // we will be trying to disprove that
@@ -602,7 +602,7 @@ int EvalPawn(int8_t sq, int8_t side) {
 	if (b.pawn_ctrl[!side][sq]) // if a pawn is attacked by a pawn, it is not
 		flagIsPassed = 0;       // passed (not sure if it's the best decision)
 
-	int8_t nextSq = sq + stepFwd[side];
+	uint8_t nextSq = sq + stepFwd[side];
 
     while (IS_SQ(nextSq)) {
 
@@ -661,7 +661,7 @@ int EvalPawn(int8_t sq, int8_t side) {
     return result;
 }
 
-int isPawnSupported(int8_t sq, int8_t side) {
+int isPawnSupported(uint8_t sq, int8_t side) {
     int step;
     if (side == WHITE) step = SOUTH;
     else               step = NORTH;
@@ -763,7 +763,7 @@ void blockedPieces(int side) {
 		v.blockages[side] -= e.P_KING_BLOCKS_ROOK;
 }
 
-int isPiece(uint8_t color, uint8_t piece, int8_t sq) {
+int isPiece(uint8_t color, uint8_t piece, uint8_t sq) {
     return ( (b.pieces[sq] == piece) && (b.color[sq] == color) );
 }
 

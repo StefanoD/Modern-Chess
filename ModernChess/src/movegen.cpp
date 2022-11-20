@@ -64,7 +64,7 @@ uint8_t movegen(smove * moves, uint8_t tt_move) {
         }
 
 
-    for (int8_t sq=0; sq<120; sq++) {
+    for (uint8_t sq=0; sq<120; sq++) {
 
         if (b.color[sq] == b.stm) {
 
@@ -109,7 +109,7 @@ uint8_t movegen_qs(smove * moves) {
 
     movecount = 0;
 
-    for (int8_t sq=0; sq<120; sq++) {
+    for (uint8_t sq=0; sq<120; sq++) {
 
         if (b.color[sq] == b.stm) {
 
@@ -143,7 +143,7 @@ uint8_t movegen_qs(smove * moves) {
 }
 
 
-void movegen_pawn_move(int8_t sq, bool promotion_only) {
+void movegen_pawn_move(uint8_t sq, bool promotion_only) {
 
     if ( b.stm == WHITE ) {
         if (promotion_only && (ROW(sq) != ROW_7)) return;
@@ -168,7 +168,7 @@ void movegen_pawn_move(int8_t sq, bool promotion_only) {
     }
 }
 
-void movegen_pawn_capt(int8_t sq) {
+void movegen_pawn_capt(uint8_t sq) {
     if (b.stm == WHITE) {
         if (IS_SQ(sq+NW) && ((b.ep==sq+NW) || (b.color[sq+NW] == (b.stm^1)))) {
             movegen_push(sq, sq+NW, PAWN, b.pieces[sq+NW], MFLAG_CAPTURE);

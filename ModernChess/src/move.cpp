@@ -5,18 +5,18 @@ int move_makeNull() {
     b.stm = !b.stm;
     b.hash ^= zobrist.color;
     b.ply ++;
-    if (b.ep != -1) {
+    if (b.ep != 255) {
         b.hash ^= zobrist.ep[b.ep];
-        b.ep = -1;
+        b.ep = 255;
     }
     return 0;
 }
 
-int move_unmakeNull(char ep) {
+int move_unmakeNull(uint8_t ep) {
     b.stm = !b.stm;
     b.hash ^= zobrist.color;
     b.ply --;
-    if (ep != -1) {
+    if (ep != 255) {
         b.hash ^= zobrist.ep[ep];
         b.ep = ep;
     }
@@ -127,9 +127,9 @@ int move_make(smove move) {
 	*  ses the number of transposition table hits.                            *
     **************************************************************************/
 
-    if (b.ep != -1) {
+    if (b.ep != 255) {
         b.hash ^= zobrist.ep[b.ep];
-        b.ep = -1;
+        b.ep = 255;
     }
     if ( (move.piece_from == PAWN) && ( abs(move.from - move.to) == 32 ) 
 	&&   (b.pawn_ctrl[b.stm] [(move.from + move.to) / 2])
@@ -164,9 +164,9 @@ int move_unmake(smove move) {
     b.ply = move.ply;
 
     /* set en passant square */
-    if (b.ep != -1)
+    if (b.ep != 255)
         b.hash ^= zobrist.ep[b.ep];
-    if (move.ep != -1)
+    if (move.ep != 255)
         b.hash ^= zobrist.ep[move.ep];
     b.ep = move.ep;
 

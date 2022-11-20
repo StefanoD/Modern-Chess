@@ -58,7 +58,7 @@ void clearBoard() {
 * piece counters, material and pcsq values, pawn-related data, king location. *
 ******************************************************************************/
 
-void fillSq(uint8_t color, uint8_t piece, int8_t sq) {
+void fillSq(uint8_t color, uint8_t piece, uint8_t sq) {
 
     // place a piece on the board
     b.pieces[sq] = piece;
@@ -111,7 +111,7 @@ void fillSq(uint8_t color, uint8_t piece, int8_t sq) {
 }
 
 
-void clearSq(int8_t sq) {
+void clearSq(uint8_t sq) {
 
     // set intermediate variables, then do the same
     // as in fillSq(), only backwards
@@ -300,7 +300,7 @@ int board_loadFromFen(char * fen) {
 
 void board_display() {
 
-    int8_t sq;
+    uint8_t sq;
 
     char parray[3][7] = { {'K','Q','R','B','N','P'},
         {'k','q','r','b','n','p'},

@@ -3,7 +3,7 @@
 #include "ModernChess/0x88_math.h"
 
 
-int isAttacked( char byColor, int8_t sq ) {
+int isAttacked( char byColor, uint8_t sq ) {
 
     /* pawns */
     if ( byColor == WHITE && b.pawn_ctrl[WHITE][sq] )
@@ -37,7 +37,7 @@ int isAttacked( char byColor, int8_t sq ) {
     return 0;
 }
 
-int leaperAttack( char byColor, int8_t sq, char byPiece ) {
+int leaperAttack( char byColor, uint8_t sq, char byPiece ) {
     int8_t nextSq;
     for ( int dir = 0; dir < 8; dir++ ) {
         nextSq = sq + vector[byPiece][dir];
@@ -49,7 +49,7 @@ int leaperAttack( char byColor, int8_t sq, char byPiece ) {
 }
 
 
-int straightAttack(char byColor, int8_t sq, int vect) {
+int straightAttack(char byColor, uint8_t sq, int vect) {
     int nextSq = sq + vect;
 
     while ( IS_SQ(nextSq) ) {
@@ -65,7 +65,7 @@ int straightAttack(char byColor, int8_t sq, int vect) {
 }
 
 
-int diagAttack(int byColor, int8_t sq, int vect) {
+int diagAttack(int byColor, uint8_t sq, int vect) {
     int nextSq = sq + vect;
 
     while ( IS_SQ( nextSq ) ) {
@@ -80,7 +80,7 @@ int diagAttack(int byColor, int8_t sq, int vect) {
     return 0;
 }
 
-int bishAttack(int byColor, int8_t sq, int vect) {
+int bishAttack(int byColor, uint8_t sq, int vect) {
 	int nextSq = sq + vect;
 
 	while (IS_SQ(nextSq)) {

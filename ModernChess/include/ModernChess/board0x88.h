@@ -12,10 +12,10 @@ void clearBoard();
 * piece counters, material and pcsq values, pawn-related data, king location. *
 ******************************************************************************/
 
-void fillSq(uint8_t color, uint8_t piece, int8_t sq);
+void fillSq(uint8_t color, uint8_t piece, uint8_t sq);
 
 
-void clearSq(int8_t sq);
+void clearSq(uint8_t sq);
 
 
 int board_loadFromFen(char * fen);
