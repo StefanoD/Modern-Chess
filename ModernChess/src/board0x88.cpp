@@ -18,7 +18,7 @@ void clearBoard() {
     }
 
     b.castle = 0;
-    b.ep     = -1;
+    b.ep     = 255;
     b.ply    = 0;
     b.hash   = 0;
     b.phash  = 0;
@@ -293,6 +293,8 @@ int board_loadFromFen(char * fen) {
 
     b.rep_index = 0;
     b.rep_stack[b.rep_index] = b.hash;
+
+    std::ignore = converted;
 
     return 0;
 }

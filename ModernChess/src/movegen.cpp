@@ -73,9 +73,9 @@ uint8_t movegen(smove * moves, uint8_t tt_move) {
                 movegen_pawn_capt(sq);
             } else {
 				assert(b.pieces[sq] < (sizeof vectors / sizeof vectors[0]) && b.pieces[sq] >= 0);
-                for (char dir=0; dir<vectors[b.pieces[sq]]; dir++) {
+                for (uint8_t dir=0; dir<vectors[b.pieces[sq]]; dir++) {
 
-                    for (char pos = sq;;) {
+                    for (uint8_t pos = sq;;) {
 
                         pos = pos + vector[b.pieces[sq]][dir];
 
@@ -98,12 +98,12 @@ uint8_t movegen(smove * moves, uint8_t tt_move) {
 
     /* if we have a best-move fed into movegen(), then increase its score */
 
-    if (  ( tt_move != -1 ) && ( tt_move < movecount ) ) moves[tt_move].score = SORT_HASH;
+    if (  ( tt_move != 255 ) && ( tt_move < movecount ) ) moves[tt_move].score = SORT_HASH;
 
     return movecount;
 }
 
-uint8_t movegen_qs(smove * moves) {
+uint8_t movegen_qs(smove *moves) {
 
     m = moves;
 
@@ -118,9 +118,9 @@ uint8_t movegen_qs(smove * moves) {
                 movegen_pawn_capt(sq);
             } else {
 				assert(b.pieces[sq] < (sizeof vectors / sizeof vectors[0]) && b.pieces[sq] >= 0);
-                for (char dir=0; dir<vectors[b.pieces[sq]]; dir++) {
+                for (uint8_t dir=0; dir<vectors[b.pieces[sq]]; dir++) {
 
-                    for (char pos = sq;;) {
+                    for (uint8_t pos = sq;;) {
 
                         pos = pos + vector[b.pieces[sq]][dir];
 
@@ -186,7 +186,7 @@ void movegen_pawn_capt(uint8_t sq) {
     }
 }
 
-void movegen_push(char from, char to, uint8_t piece_from, uint8_t piece_cap, char flags) {
+void movegen_push(uint8_t from, uint8_t to, uint8_t piece_from, uint8_t piece_cap, char flags) {
 
     m[movecount].from = from;
     m[movecount].to = to;
@@ -230,7 +230,7 @@ void movegen_push(char from, char to, uint8_t piece_from, uint8_t piece_cap, cha
     if ((piece_from == PAWN) && ( (ROW(to)==ROW_1)||(ROW(to)==ROW_8) )) {
         m[movecount].flags |= MFLAG_PROMOTION;
 
-        for (char prompiece = QUEEN; prompiece <= KNIGHT; prompiece++) {
+        for (uint8_t prompiece = QUEEN; prompiece <= KNIGHT; prompiece++) {
             m[movecount+prompiece-1] = m[movecount];
             m[movecount+prompiece-1].piece_to = prompiece;
             m[movecount+prompiece-1].score += SORT_PROM + e.SORT_VALUE[prompiece];
@@ -242,7 +242,7 @@ void movegen_push(char from, char to, uint8_t piece_from, uint8_t piece_cap, cha
     movecount++;
 }
 
-void movegen_sort(uint8_t movecount, smove * m, uint8_t current) {
+void movegen_sort(uint8_t movecount, smove *m, uint8_t current) {
 
     //find the move with the highest score - hoping for an early cutoff
 

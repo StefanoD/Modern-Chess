@@ -97,14 +97,14 @@ extern sboard b;
 
 
 struct smove {
-    char id;
+    uint8_t id;
     uint8_t from;
     uint8_t to;
     uint8_t piece_from;
     uint8_t piece_to;
     uint8_t piece_cap;
     char flags;
-    char castle;
+    uint8_t castle;
     char ply;
     uint8_t ep;
     int score;
@@ -227,7 +227,7 @@ void CheckInput();
 
 uint8_t movegen(smove * moves, uint8_t tt_move);
 uint8_t movegen_qs(smove * moves);
-void movegen_sort(uint8_t movecount, smove * m, uint8_t current);
+void movegen_sort(uint8_t movecount, smove *m, uint8_t current);
 
 
 void convert_0x88_a(uint8_t sq, char * a);

@@ -11,6 +11,7 @@ add_library(${target}
         eval.cpp
         eval_init.cpp
         move.cpp
+        movegen.cpp
         Quiescence.cpp
         recognizer.cpp
         search.cpp
