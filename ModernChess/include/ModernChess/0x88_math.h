@@ -28,14 +28,14 @@
 
 #define NORTH  16
 #define NN    ( NORTH + NORTH )
-#define SOUTH  -16
+#define SOUTH  (-16)
 #define SS    ( SOUTH + SOUTH )
 #define EAST  1
-#define WEST  -1
+#define WEST  (-1)
 #define NE    17
-#define SW    -17
+#define SW    (-17)
 #define NW    15
-#define SE    -15
+#define SE    (-15)
 
 /* generate square number from row and column */
 #define SET_SQ(row,col) (row * 16 + col)
