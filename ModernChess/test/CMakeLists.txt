@@ -5,7 +5,8 @@ add_executable(${target}
         )
 
 target_link_libraries(${target} PRIVATE
-        gtest gtest_main gmock gmock_main
+
+        GTest::GTest
         modern-chess-lib
         )
 

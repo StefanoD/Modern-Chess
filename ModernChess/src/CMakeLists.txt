@@ -1,12 +1,8 @@
 set(target modern-chess-lib)
 
-include_directories(../include/ModernChess)
 
-set(header_files
-        )
+add_library(${target}
+        stdafx.cpp)
 
-set(source_files
-        )
+target_include_directories(${target} PUBLIC ../include)
 
-set(dependencies
- )
