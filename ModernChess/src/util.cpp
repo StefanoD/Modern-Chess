@@ -1,4 +1,4 @@
-
+#include "ModernChess/utils.h"
 #include "ModernChess/stdafx.h"
 #include "ModernChess/0x88_math.h"
 #include "ModernChess/transposition.h"
@@ -214,6 +214,20 @@ int algebraic_moves(char * a) {
 }
 
 
+void convert_0x88_a(uint8_t sq, char * a) {
+    a[0] = COL(sq) + 'a';
+    a[1] = ROW(sq) + '1';
+    a[2] = 0;
+}
+
+uint8_t convert_a_0x88(char * a) {
+    uint8_t sq;
+    sq = a[0] - 'a';
+    sq += (a[1] - '1') * 16;
+
+    return sq;
+}
+
 //returns new pointer
 char * algebraic_writemove(smove m, char * a) {
     char parray[5] = {0,'q','r','b','n'};
@@ -227,18 +241,4 @@ char * algebraic_writemove(smove m, char * a) {
     }
     a[0] = 0;
     return a;
-}
-
-void convert_0x88_a(uint8_t sq, char * a) {
-    a[0] = COL(sq) + 'a';
-    a[1] = ROW(sq) + '1';
-    a[2] = 0;
-}
-
-uint8_t convert_a_0x88(char * a) {
-    uint8_t sq;
-    sq = a[0] - 'a';
-    sq += (a[1] - '1') * 16;
-
-    return sq;
 }

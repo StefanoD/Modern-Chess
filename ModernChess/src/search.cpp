@@ -1,7 +1,7 @@
 #include "ModernChess/stdafx.h"
 #include "ModernChess/search.h"
 #include "ModernChess/transposition.h"
-
+#include "ModernChess/utils.h"
 
 /* symbols used to enhance readability */
 #define DO_NULL    1
@@ -21,7 +21,8 @@ enum eproto {
 	PROTO_NOTHING,
 	PROTO_XBOARD,
 	PROTO_UCI
-} extern mode;
+};
+extern eproto mode;
 
 uint8_t bestmove;         // move id passed between iterations for sorting purposes
 smove move_to_make;	 // move to be returned when search runs out of time

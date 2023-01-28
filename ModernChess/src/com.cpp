@@ -1,12 +1,15 @@
 
 #include "ModernChess/stdafx.h"
 #include "ModernChess/transposition.h"
+#include "ModernChess/utils.h"
 
 enum eproto {
     PROTO_NOTHING,
     PROTO_XBOARD,
     PROTO_UCI
-} mode = PROTO_NOTHING;
+};
+
+eproto mode = PROTO_NOTHING;
 
 int debug = 0;
 

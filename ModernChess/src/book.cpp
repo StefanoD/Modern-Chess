@@ -1,5 +1,6 @@
 #include "ModernChess/stdafx.h"
 #include "ModernChess/book.h"
+#include "ModernChess/utils.h"
 
 #define BOOK_SIZE 36000
 #define EXCLUDED -1
@@ -20,7 +21,8 @@ enum eproto {
     PROTO_NOTHING,
     PROTO_XBOARD,
     PROTO_UCI
-} extern mode;
+};
+extern eproto mode;
 
 void initBook() {
 

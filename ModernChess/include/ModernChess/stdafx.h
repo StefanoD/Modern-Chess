@@ -1,5 +1,7 @@
 #pragma once
 
+#include "smove.h"
+
 #include <iostream>
 #include <cassert>
 #include <cstdio>
@@ -96,21 +98,6 @@ struct sboard {
 extern sboard b;
 
 
-struct smove {
-    uint8_t id;
-    uint8_t from;
-    uint8_t to;
-    uint8_t piece_from;
-    uint8_t piece_to;
-    uint8_t piece_cap;
-    char flags;
-    uint8_t castle;
-    char ply;
-    uint8_t ep;
-    int score;
-};
-
-
 struct sSearchDriver {
     int myside;
     uint8_t depth;
@@ -121,7 +108,8 @@ struct sSearchDriver {
     int32_t movetime;
     uint64_t q_nodes;
     unsigned long starttime;
-} extern sd;
+};
+extern sSearchDriver sd;
 
 enum etimef {
     FTIME=1,
@@ -138,7 +126,8 @@ enum etask {
 	TASK_NOTHING,
 	TASK_SEARCH,
 	TASK_PONDER
-} extern task;
+};
+extern etask task;
 
 struct structtime {
     int time[2];
@@ -149,11 +138,11 @@ struct structtime {
     int mate;
     int movetime;
     uint8_t flags;
-} extern chronos;
+};
+extern structtime chronos;
 
 struct s_options {
 	int ponder;
-
 };
 extern s_options options;
 
@@ -229,13 +218,6 @@ uint8_t movegen(smove * moves, uint8_t tt_move);
 uint8_t movegen_qs(smove * moves);
 void movegen_sort(uint8_t movecount, smove *m, uint8_t current);
 
-
-void convert_0x88_a(uint8_t sq, char * a);
-uint8_t convert_a_0x88(char * a);
-char * algebraic_writemove(smove m, char * a);
-int algebraic_moves(char * a);
-
-
 int move_make(smove move);
 int move_unmake(smove move);
 int move_makeNull();
@@ -248,9 +230,6 @@ int move_isprom(smove m);
 int move_canSimplify(smove m);
 int move_countLegal();
 int move_isLegal(smove m);
-
-
-smove strToMove(char * a);
 
 // subsidiary functions used to initialize opening book are hidden in book.h
 void initBook();
@@ -287,11 +266,7 @@ int straightAttack(char byColor, uint8_t sq, int vect);
 int diagAttack(int byColor, uint8_t sq, int vect);
 int bishAttack(int byColor, uint8_t sq, int vect);
 
-void perft_start(char * command);
 uint64_t perft(uint8_t depth);
-
-void util_bench(char * command);
-int util_pv(char * pv);
 
 unsigned int gettime();
 int time_uci_ponderhit();

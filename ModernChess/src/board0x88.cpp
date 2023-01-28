@@ -1,6 +1,7 @@
 #include "ModernChess/board0x88.h"
 #include "ModernChess/stdafx.h"
 #include "ModernChess/0x88_math.h"
+#include "ModernChess/utils.h"
 #include "ModernChess/transposition.h"
 
 sboard b;

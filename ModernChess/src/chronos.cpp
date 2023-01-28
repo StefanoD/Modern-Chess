@@ -8,8 +8,8 @@ extern sSearchDriver sd;
 
 extern bool time_over;
 
-#define TIMEBUFFER 500
-#define MOVESTOGO 24
+constexpr int TIMEBUFFER = 500;
+constexpr int MOVESTOGO = 24;
 
 
 #if defined(_MSC_VER) || defined(_WINDOWS_)
