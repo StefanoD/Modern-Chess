@@ -2,6 +2,7 @@
 #include "ModernChess/stdafx.h"
 #include "ModernChess/transposition.h"
 #include "ModernChess/0x88_math.h"
+#include "ModernChess/board0x88.h"
 
 int com_init();
 void setDefaultEval();

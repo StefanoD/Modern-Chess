@@ -200,8 +200,6 @@ void board_display();
 void clearBoard();
 void fillSq(uint8_t color, uint8_t piece, uint8_t sq);
 void clearSq(uint8_t sq);
-int board_loadFromFen(char * fen);
-
 
 int com_send(char * command);
 int com_sendmove(smove m);

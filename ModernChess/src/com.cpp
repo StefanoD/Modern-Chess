@@ -2,6 +2,7 @@
 #include "ModernChess/stdafx.h"
 #include "ModernChess/transposition.h"
 #include "ModernChess/utils.h"
+#include "ModernChess/board0x88.h"
 
 enum eproto {
     PROTO_NOTHING,

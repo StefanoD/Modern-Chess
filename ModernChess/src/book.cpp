@@ -1,5 +1,6 @@
 #include "ModernChess/stdafx.h"
 #include "ModernChess/book.h"
+#include "ModernChess/board0x88.h"
 #include "ModernChess/utils.h"
 
 #define BOOK_SIZE 36000
