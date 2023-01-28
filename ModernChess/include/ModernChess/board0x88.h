@@ -18,7 +18,7 @@ void fillSq(uint8_t color, uint8_t piece, uint8_t sq);
 void clearSq(uint8_t sq);
 
 
-int board_loadFromFen(char * fen);
+int board_loadFromFen(const char * fen);
 
 
 void board_display();

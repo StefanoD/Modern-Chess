@@ -23,7 +23,7 @@ int debug = 0;
 #include "sys/select.h"
 int com_init()
 {
-
+    return 0;
 }
 
 int input()

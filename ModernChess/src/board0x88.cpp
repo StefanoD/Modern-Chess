@@ -150,12 +150,12 @@ void clearSq(uint8_t sq) {
 }
 
 
-int board_loadFromFen(char * fen) {
+int board_loadFromFen(const char * fen) {
 
     clearBoard();
     clearHistoryTable();
 
-    char * f = fen;
+    const char * f = fen;
 
     char col = 0;
     char row = 7;

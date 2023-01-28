@@ -21,7 +21,7 @@
 #define SORT_PROM  90000000
 #define SORT_KILL  80000000
 
-#define STARTFEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+constexpr const char* STARTFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 #define VERSION_STRING "1.1"
 #define COMPILE_STRING " compiled 30.12.2014"

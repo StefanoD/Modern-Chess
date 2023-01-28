@@ -220,7 +220,7 @@ void convert_0x88_a(uint8_t sq, char * a) {
     a[2] = 0;
 }
 
-uint8_t convert_a_0x88(char * a) {
+uint8_t convert_a_0x88(const char * a) {
     uint8_t sq;
     sq = a[0] - 'a';
     sq += (a[1] - '1') * 16;
