@@ -1,0 +1,17 @@
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/CMakeFiles/rebuild_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/CMakeFiles/rebuild_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/include/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/include/CMakeFiles/rebuild_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/include/ModernChess/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/include/ModernChess/CMakeFiles/rebuild_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/src/CMakeFiles/modern-chess-lib.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/src/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/src/CMakeFiles/rebuild_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/test/CMakeFiles/modern-chess-lib-test.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/test/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/test/CMakeFiles/rebuild_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/test_integration/CMakeFiles/modern-chess-lib-test_integration.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/test_integration/CMakeFiles/edit_cache.dir
+/Users/stefano/Documents/Programming/C++-Projects/ModernChess/build/ModernChess/test_integration/CMakeFiles/rebuild_cache.dir
