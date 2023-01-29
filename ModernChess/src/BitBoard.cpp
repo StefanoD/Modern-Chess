@@ -7,66 +7,66 @@ namespace ModernChess
 
     BitBoard::BitBoard()
     {
-        m_whiteRookBitBoard.set(0, true);
-        m_whiteRookBitBoard.set(7, true);
+        whiteRookBitBoard.set(0, true);
+        whiteRookBitBoard.set(7, true);
 
-        m_whiteKnightBitBoard.set(1, true);
-        m_whiteKnightBitBoard.set(6, true);
+        whiteKnightBitBoard.set(1, true);
+        whiteKnightBitBoard.set(6, true);
 
-        m_whiteBishopBitBoard.set(2, true);
-        m_whiteBishopBitBoard.set(5, true);
+        whiteBishopBitBoard.set(2, true);
+        whiteBishopBitBoard.set(5, true);
 
-        m_whiteQueenBitBoard.set(3, true);
+        whiteQueenBitBoard.set(3, true);
 
-        m_whiteKingBitBoard.set(4, true);
+        whiteKingBitBoard.set(4, true);
 
         for (int i = 8; i < 16; ++i)
         {
-            m_whitePawnBitBoard.set(i, true);
+            whitePawnBitBoard.set(i, true);
         }
 
-        m_blackRookBitBoard = std::rotr(m_whiteRookBitBoard.to_ulong(), 8);
-        m_blackKnightBitBoard = std::rotr(m_whiteKnightBitBoard.to_ulong(), 8);
-        m_blackBishopBitBoard = std::rotr(m_whiteBishopBitBoard.to_ulong(), 8);
-        m_blackQueenBitBoard = std::rotr(m_whiteQueenBitBoard.to_ulong(), 8);
-        m_blackKingBitBoard = std::rotr(m_whiteKingBitBoard.to_ulong(), 8);
-        m_blackPawnBitBoard = std::rotr(m_whitePawnBitBoard.to_ulong(), 24);
+        blackRookBitBoard = std::rotr(whiteRookBitBoard.to_ulong(), 8);
+        blackKnightBitBoard = std::rotr(whiteKnightBitBoard.to_ulong(), 8);
+        blackBishopBitBoard = std::rotr(whiteBishopBitBoard.to_ulong(), 8);
+        blackQueenBitBoard = std::rotr(whiteQueenBitBoard.to_ulong(), 8);
+        blackKingBitBoard = std::rotr(whiteKingBitBoard.to_ulong(), 8);
+        blackPawnBitBoard = std::rotr(whitePawnBitBoard.to_ulong(), 24);
     }
 
     BitBoardState BitBoard::getOccupiedSquares() const
     {
-        return m_blackRookBitBoard | \
-               m_blackKnightBitBoard | \
-               m_blackBishopBitBoard | \
-               m_blackQueenBitBoard | \
-               m_blackKingBitBoard | \
-               m_blackPawnBitBoard | \
-               m_whiteRookBitBoard | \
-               m_whiteKnightBitBoard | \
-               m_whiteBishopBitBoard | \
-               m_whiteQueenBitBoard | \
-               m_whiteKingBitBoard | \
-               m_whitePawnBitBoard;
+        return blackRookBitBoard | \
+               blackKnightBitBoard | \
+               blackBishopBitBoard | \
+               blackQueenBitBoard | \
+               blackKingBitBoard | \
+               blackPawnBitBoard | \
+               whiteRookBitBoard | \
+               whiteKnightBitBoard | \
+               whiteBishopBitBoard | \
+               whiteQueenBitBoard | \
+               whiteKingBitBoard | \
+               whitePawnBitBoard;
     }
 
     BitBoardState BitBoard::getWhiteFigures() const
     {
-        return m_whiteRookBitBoard | \
-               m_whiteKnightBitBoard | \
-               m_whiteBishopBitBoard | \
-               m_whiteQueenBitBoard | \
-               m_whiteKingBitBoard | \
-               m_whitePawnBitBoard;
+        return whiteRookBitBoard | \
+               whiteKnightBitBoard | \
+               whiteBishopBitBoard | \
+               whiteQueenBitBoard | \
+               whiteKingBitBoard | \
+               whitePawnBitBoard;
     }
 
     BitBoardState BitBoard::getBlackFigures() const
     {
-        return m_blackRookBitBoard | \
-               m_blackKnightBitBoard | \
-               m_blackBishopBitBoard | \
-               m_blackQueenBitBoard | \
-               m_blackKingBitBoard | \
-               m_blackPawnBitBoard;
+        return blackRookBitBoard | \
+               blackKnightBitBoard | \
+               blackBishopBitBoard | \
+               blackQueenBitBoard | \
+               blackKingBitBoard | \
+               blackPawnBitBoard;
     }
 
     BitBoardState BitBoard::getEmptySquares() const

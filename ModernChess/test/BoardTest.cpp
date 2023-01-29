@@ -6,33 +6,28 @@ namespace
 {
     using namespace ModernChess;
 
-    class ExtendedBoard : public BitBoard
+    BitBoardState getBitBoardConjunctions(const BitBoard &bitBoard)
     {
-    public:
-
-        BitBoardState getBitBoardConjunctions()
-        {
-            return m_blackRookBitBoard & \
-                   m_blackKnightBitBoard & \
-                   m_blackBishopBitBoard & \
-                   m_blackQueenBitBoard & \
-                   m_blackKingBitBoard & \
-                   m_blackPawnBitBoard & \
-                   m_whiteRookBitBoard & \
-                   m_whiteKnightBitBoard & \
-                   m_whiteBishopBitBoard & \
-                   m_whiteQueenBitBoard & \
-                   m_whiteKingBitBoard & \
-                   m_whitePawnBitBoard;
-        }
-    };
+        return bitBoard.blackRookBitBoard & \
+               bitBoard.blackKnightBitBoard & \
+               bitBoard.blackBishopBitBoard & \
+               bitBoard.blackQueenBitBoard & \
+               bitBoard.blackKingBitBoard & \
+               bitBoard.blackPawnBitBoard & \
+               bitBoard.whiteRookBitBoard & \
+               bitBoard.whiteKnightBitBoard & \
+               bitBoard.whiteBishopBitBoard & \
+               bitBoard.whiteQueenBitBoard & \
+               bitBoard.whiteKingBitBoard & \
+               bitBoard.whitePawnBitBoard;
+    }
 
     TEST(Board, SquaresAreUniquelyOccupied)
     {
-        ExtendedBoard board;
+        BitBoard board;
 
         // This tests, that figures don't occupy the same square
-        EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0U);
+        EXPECT_EQ(getBitBoardConjunctions(board).to_ulong(), 0U);
 
         const BitBoardState bitBoardState = board.getOccupiedSquares();
 
