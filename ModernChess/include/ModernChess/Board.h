@@ -21,6 +21,7 @@ namespace ModernChess
         Board();
 
         [[nodiscard]] BitBoard getOccupiedSquares() const;
+        [[nodiscard]] BitBoard getEmptySquares() const;
         [[nodiscard]] std::string printOccupiedSquares() const;
 
     protected:

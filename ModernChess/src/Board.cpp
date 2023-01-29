@@ -49,6 +49,11 @@ namespace ModernChess
                m_whitePawnBitBoard;
     }
 
+    BitBoard Board::getEmptySquares() const
+    {
+        return ~getOccupiedSquares();
+    }
+
     std::string Board::printOccupiedSquares() const
     {
         const BitBoard bitBoardState = getOccupiedSquares();

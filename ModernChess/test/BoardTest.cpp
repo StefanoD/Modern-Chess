@@ -60,6 +60,17 @@ namespace
 
         std::cout << board.printOccupiedSquares() << std::endl;
     }
+
+    TEST(Board, GetEmptySquares)
+    {
+        const ModernChess::Board board;
+        const ModernChess::BitBoard occupiedSquares = board.getOccupiedSquares();
+        const ModernChess::BitBoard emptySquares = board.getEmptySquares();
+
+        // Empty and occupied squares must be disjoint. This can be tested with logical AND and testing to 0.
+        // See https://www.chessprogramming.org/General_Setwise_Operations
+        EXPECT_EQ(occupiedSquares & emptySquares, 0);
+    }
 }
 
 
