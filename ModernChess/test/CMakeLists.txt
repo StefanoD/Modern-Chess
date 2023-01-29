@@ -1,11 +1,11 @@
 set(target modern-chess-lib-test)
 
 add_executable(${target}
-        main.cpp
+        BoardTest.cpp
         )
 
 target_link_libraries(${target} PRIVATE
-        GTest::GTest
+        GTest::gtest_main
         modern-chess-lib
         )
 

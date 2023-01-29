@@ -18,7 +18,7 @@ namespace ModernChess
 
         Board();
 
-    private:
+    protected:
         std::bitset<64> m_blackRookBitBoard;
         std::bitset<64> m_blackKnightBitBoard;
         std::bitset<64> m_blackBishopBitBoard;
