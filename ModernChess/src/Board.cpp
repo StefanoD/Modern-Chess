@@ -59,7 +59,7 @@ namespace ModernChess
         const BitBoard bitBoardState = getOccupiedSquares();
         std::strstream stream;
 
-        for (uint8_t square = 0; square < 64; ++square)
+        for (uint8_t square = 0; square < bitBoardState.size(); ++square)
         {
             if (square % 8 == 0)
             {
