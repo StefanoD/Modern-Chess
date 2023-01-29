@@ -8,7 +8,7 @@ namespace
     {
     public:
 
-        std::bitset<64> getBitBoardConjunctions()
+        ModernChess::BitBoard getBitBoardConjunctions()
         {
             return m_blackRookBitBoard & \
                    m_blackKnightBitBoard & \
