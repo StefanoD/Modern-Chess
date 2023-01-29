@@ -1,14 +1,16 @@
-#include "ModernChess/Board.h"
+#include "ModernChess/BitBoard.h"
 
 #include <gtest/gtest.h>
 
 namespace
 {
-    class ExtendedBoard : public ModernChess::Board
+    using namespace ModernChess;
+
+    class ExtendedBoard : public BitBoard
     {
     public:
 
-        ModernChess::BitBoard getBitBoardConjunctions()
+        BitBoardState getBitBoardConjunctions()
         {
             return m_blackRookBitBoard & \
                    m_blackKnightBitBoard & \
@@ -32,7 +34,7 @@ namespace
         // This tests, that figures don't occupy the same square
         EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0U);
 
-        const ModernChess::BitBoard bitBoardState = board.getOccupiedSquares();
+        const BitBoardState bitBoardState = board.getOccupiedSquares();
 
         // Test occupation of white figures
         for (int square = 0; square < 16; ++square)
@@ -61,11 +63,11 @@ namespace
         std::cout << board.printBitBoard(bitBoardState) << std::endl;
     }
 
-    TEST(Board, GetEmptySquares)
+    TEST(BitBoard, GetEmptySquares)
     {
-        const ModernChess::Board board;
-        const ModernChess::BitBoard occupiedSquares = board.getOccupiedSquares();
-        const ModernChess::BitBoard emptySquares = board.getEmptySquares();
+        const BitBoard board;
+        const BitBoardState occupiedSquares = board.getOccupiedSquares();
+        const BitBoardState emptySquares = board.getEmptySquares();
 
         // Empty and occupied squares must be disjoint.
         // This can be tested with logical AND-operator and testing to 0.

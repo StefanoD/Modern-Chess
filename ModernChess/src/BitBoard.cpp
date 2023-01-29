@@ -1,11 +1,11 @@
-#include "ModernChess/Board.h"
+#include "ModernChess/BitBoard.h"
 
 #include <strstream>
 
 namespace ModernChess
 {
 
-    Board::Board()
+    BitBoard::BitBoard()
     {
         m_blackRookBitBoard.set(0, true);
         m_blackRookBitBoard.set(7, true);
@@ -33,7 +33,7 @@ namespace ModernChess
         m_whitePawnBitBoard = std::rotr(m_blackPawnBitBoard.to_ulong(), 24);
     }
 
-    BitBoard Board::getOccupiedSquares() const
+    BitBoardState BitBoard::getOccupiedSquares() const
     {
         return m_blackRookBitBoard | \
                m_blackKnightBitBoard | \
@@ -49,12 +49,12 @@ namespace ModernChess
                m_whitePawnBitBoard;
     }
 
-    BitBoard Board::getEmptySquares() const
+    BitBoardState BitBoard::getEmptySquares() const
     {
         return ~getOccupiedSquares();
     }
 
-    std::string Board::printBitBoard(const BitBoard &bitBoard)
+    std::string BitBoard::printBitBoard(const BitBoardState &bitBoard)
     {
         std::strstream stream;
 
