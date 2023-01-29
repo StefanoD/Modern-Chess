@@ -30,7 +30,7 @@ namespace
         ExtendedBoard board;
 
         // This tests, that figures don't occupy the same square
-        EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0u);
+        EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0U);
 
         const std::bitset<64> bitBoardState = board.getBitBoardState();
         // Test occupation of white figures

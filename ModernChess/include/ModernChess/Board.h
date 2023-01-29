@@ -8,7 +8,7 @@ namespace ModernChess
     // TODO function to set starting state
     // TODO function to map from geometric to bitmap
     // TODO function to bitwise or all bitmaps -> board state
-    // TODO function to bitwise and all bitmaps -> Piece captures (heterogeneous colors), illegal moves (homogenous colors) etc.
+    // TODO function to bitwise and all bitmaps -> Piece captures (different colors), illegal moves (same colors) etc.
     // TODO function to map FEN notation to board state
     /**
      * @brief Every piece-type and every color has its own board representation
@@ -19,7 +19,7 @@ namespace ModernChess
 
         Board();
 
-        std::bitset<64> getBitBoardState() const;
+        [[nodiscard]] std::bitset<64> getBitBoardState() const;
 
     protected:
         std::bitset<64> m_blackRookBitBoard;

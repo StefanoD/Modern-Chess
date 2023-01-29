@@ -1,3 +1,4 @@
 Checks:
-    modernize-*
+    modernize-*, -modernize-use-trailing-return-type
     portability-*
+    readability-*, -readability-magic-numbers
