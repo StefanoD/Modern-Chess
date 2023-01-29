@@ -52,7 +52,7 @@ namespace ModernChess
 
     std::string Board::toString() const
     {
-        const std::bitset<64> bitBoardSate = getBitBoardState();
+        const uint64_t bitBoardSate = getBitBoardState().to_ulong();
         std::strstream stream;
 
         // We AND always with the most significant byte
@@ -60,7 +60,7 @@ namespace ModernChess
 
         for (int rank = 0; rank < 8; ++rank)
         {
-            const uint64_t shiftedRanks = (bitBoardSate.to_ulong() << (rank * 8));
+            const uint64_t shiftedRanks = bitBoardSate << (rank * 8);
             const std::bitset<8> currentRank = (mostSignificantByte & shiftedRanks) >> 56;
             stream << currentRank << std::endl;
         }
