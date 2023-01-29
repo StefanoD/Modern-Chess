@@ -58,7 +58,7 @@ namespace
             EXPECT_TRUE(bitBoardState[square]);
         }
 
-        std::cout << board.printOccupiedSquares() << std::endl;
+        std::cout << board.printBitBoard(bitBoardState) << std::endl;
     }
 
     TEST(Board, GetEmptySquares)

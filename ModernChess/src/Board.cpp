@@ -54,19 +54,18 @@ namespace ModernChess
         return ~getOccupiedSquares();
     }
 
-    std::string Board::printOccupiedSquares() const
+    std::string Board::printBitBoard(const BitBoard &bitBoard)
     {
-        const BitBoard bitBoardState = getOccupiedSquares();
         std::strstream stream;
 
-        for (uint8_t square = 0; square < bitBoardState.size(); ++square)
+        for (uint8_t square = 0; square < bitBoard.size(); ++square)
         {
             if (square % 8 == 0)
             {
                 stream << std::endl;
             }
 
-            stream << bitBoardState[square];
+            stream << bitBoard[square];
         }
 
         return stream.str();
