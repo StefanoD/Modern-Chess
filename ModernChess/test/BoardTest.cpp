@@ -57,7 +57,7 @@ namespace
             EXPECT_TRUE(bitBoardState[square]);
         }
 
-        std::cout << bitBoardState << std::endl;
+        std::cout << board.toString() << std::endl;
     }
 }
 

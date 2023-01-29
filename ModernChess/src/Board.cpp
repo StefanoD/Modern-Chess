@@ -1,5 +1,8 @@
 #include "ModernChess/Board.h"
 
+#include <strstream>
+#include <limits>
+
 namespace ModernChess
 {
 
@@ -45,5 +48,23 @@ namespace ModernChess
                m_whiteQueenBitBoard | \
                m_whiteKingBitBoard | \
                m_whitePawnBitBoard;
+    }
+
+    std::string Board::toString() const
+    {
+        const std::bitset<64> bitBoardSate = getBitBoardState();
+        std::strstream stream;
+
+        // We AND always with the most significant byte
+        constexpr uint64_t mostSignificantByte = uint64_t(0xFF) << 56;
+
+        for (int rank = 0; rank < 8; ++rank)
+        {
+            const uint64_t shiftedRanks = (bitBoardSate.to_ulong() << (rank * 8));
+            const std::bitset<8> currentRank = (mostSignificantByte & shiftedRanks) >> 56;
+            stream << currentRank << std::endl;
+        }
+
+        return stream.str();
     }
 }

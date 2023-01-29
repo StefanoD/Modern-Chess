@@ -2,6 +2,7 @@
 
 #include <bitset>
 #include <bit>
+#include <string>
 
 namespace ModernChess
 {
@@ -18,6 +19,7 @@ namespace ModernChess
         Board();
 
         [[nodiscard]] std::bitset<64> getBitBoardState() const;
+        [[nodiscard]] std::string toString() const;
 
     protected:
         std::bitset<64> m_blackRookBitBoard;
