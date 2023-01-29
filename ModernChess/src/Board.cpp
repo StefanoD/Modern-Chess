@@ -49,7 +49,7 @@ namespace ModernChess
                m_whitePawnBitBoard;
     }
 
-    std::string Board::toString() const
+    std::string Board::printOccupiedSquares() const
     {
         const BitBoard bitBoardState = getOccupiedSquares();
         std::strstream stream;

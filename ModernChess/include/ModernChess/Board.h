@@ -21,7 +21,7 @@ namespace ModernChess
         Board();
 
         [[nodiscard]] BitBoard getOccupiedSquares() const;
-        [[nodiscard]] std::string toString() const;
+        [[nodiscard]] std::string printOccupiedSquares() const;
 
     protected:
         // Every piece-type and every color has its own board representation
