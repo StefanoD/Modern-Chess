@@ -1,1 +1,0 @@
-/usr/bin/clang++  -Wall -Wextra -pedantic -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names "CMakeFiles/modern-chess-lib-test_integration.dir/main.cpp.o" -o ../../bin/modern-chess-lib-test_integration  ../../lib/libmodern-chess-lib.a 

@@ -1,1 +1,0 @@
-#include "ModernChess/stdafx.h"
