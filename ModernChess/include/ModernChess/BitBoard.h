@@ -22,6 +22,9 @@ namespace ModernChess
 
         [[nodiscard]] BitBoardState getOccupiedSquares() const;
         [[nodiscard]] BitBoardState getEmptySquares() const;
+        [[nodiscard]] BitBoardState getWhiteFigures() const;
+        [[nodiscard]] BitBoardState getBlackFigures() const;
+
         [[nodiscard]] static std::string printBitBoard(const BitBoardState &bitBoard);
 
     protected:

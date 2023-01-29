@@ -42,12 +42,6 @@ namespace
             EXPECT_TRUE(bitBoardState[square]);
         }
 
-        // Test occupation of white figures
-        for (int square = 0; square < 16; ++square)
-        {
-            EXPECT_TRUE(bitBoardState[square]);
-        }
-
         // Test if squares are not occupied
         for (int square = 16; square < 48; ++square)
         {
@@ -58,6 +52,46 @@ namespace
         for (int square = 48; square < 64; ++square)
         {
             EXPECT_TRUE(bitBoardState[square]);
+        }
+
+        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+    }
+
+    TEST(Board, BlackFiguresAreSet)
+    {
+        const BitBoard board;
+        const BitBoardState bitBoardState = board.getBlackFigures();
+
+        // Test if squares are not occupied
+        for (int square = 0; square < 48; ++square)
+        {
+            EXPECT_FALSE(bitBoardState[square]);
+        }
+
+        // Test occupation of black figures
+        for (int square = 48; square < 64; ++square)
+        {
+            EXPECT_TRUE(bitBoardState[square]);
+        }
+
+        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+    }
+
+    TEST(Board, WhiteFiguresAreSet)
+    {
+        const BitBoard board;
+        const BitBoardState bitBoardState = board.getWhiteFigures();
+
+        // Test occupation of white figures
+        for (int square = 0; square < 16; ++square)
+        {
+            EXPECT_TRUE(bitBoardState[square]);
+        }
+
+        // Test if squares are not occupied
+        for (int square = 16; square < 64; ++square)
+        {
+            EXPECT_FALSE(bitBoardState[square]);
         }
 
         std::cout << board.printBitBoard(bitBoardState) << std::endl;

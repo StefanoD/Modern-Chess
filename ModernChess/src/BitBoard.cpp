@@ -49,6 +49,26 @@ namespace ModernChess
                m_whitePawnBitBoard;
     }
 
+    BitBoardState BitBoard::getWhiteFigures() const
+    {
+        return m_whiteRookBitBoard | \
+               m_whiteKnightBitBoard | \
+               m_whiteBishopBitBoard | \
+               m_whiteQueenBitBoard | \
+               m_whiteKingBitBoard | \
+               m_whitePawnBitBoard;
+    }
+
+    BitBoardState BitBoard::getBlackFigures() const
+    {
+        return m_blackRookBitBoard | \
+               m_blackKnightBitBoard | \
+               m_blackBishopBitBoard | \
+               m_blackQueenBitBoard | \
+               m_blackKingBitBoard | \
+               m_blackPawnBitBoard;
+    }
+
     BitBoardState BitBoard::getEmptySquares() const
     {
         return ~getOccupiedSquares();
