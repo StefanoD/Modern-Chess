@@ -6,8 +6,8 @@
 
 namespace ModernChess
 {
-
-    using BitBoardState = std::bitset<64>;
+    constexpr int numberSquares = 64;
+    using BitBoardState = std::bitset<numberSquares>;
 
     // TODO Square-centric representation \
     //  - function to map FEN notation to board state
