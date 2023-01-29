@@ -1,7 +1,6 @@
 #include "ModernChess/Board.h"
 
 #include <strstream>
-#include <limits>
 
 namespace ModernChess
 {
