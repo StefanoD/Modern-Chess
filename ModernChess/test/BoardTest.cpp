@@ -8,7 +8,7 @@ namespace
     {
     public:
 
-        std::bitset<64> getBoardState()
+        std::bitset<64> getBitBoardConjunctions()
         {
             return m_blackRookBitBoard & \
                    m_blackKnightBitBoard & \
@@ -29,7 +29,35 @@ namespace
     {
         ExtendedBoard board;
 
-        EXPECT_EQ(board.getBoardState().to_ulong(), 0u);
+        // This tests, that figures don't occupy the same square
+        EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0u);
+
+        const std::bitset<64> bitBoardState = board.getBitBoardState();
+        // Test occupation of white figures
+        for (int square = 0; square < 16; ++square)
+        {
+            EXPECT_TRUE(bitBoardState[square]);
+        }
+
+        // Test occupation of white figures
+        for (int square = 0; square < 16; ++square)
+        {
+            EXPECT_TRUE(bitBoardState[square]);
+        }
+
+        // Test if squares are not occupied
+        for (int square = 16; square < 48; ++square)
+        {
+            EXPECT_FALSE(bitBoardState[square]);
+        }
+
+        // Test occupation of black figures
+        for (int square = 48; square < 64; ++square)
+        {
+            EXPECT_TRUE(bitBoardState[square]);
+        }
+
+        std::cout << bitBoardState << std::endl;
     }
 }
 
