@@ -43,6 +43,4 @@ namespace ModernChess
         BitBoardState m_whiteKingBitBoard;
         BitBoardState m_whitePawnBitBoard;
     };
-
-
 }
