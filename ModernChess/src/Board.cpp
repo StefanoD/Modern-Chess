@@ -57,7 +57,7 @@ namespace ModernChess
         // We AND always with the most significant byte
         constexpr uint64_t mostSignificantByte = uint64_t(0xFF) << 56;
 
-        for (int rank = 0; rank < 8; ++rank)
+        for (uint8_t rank = 0; rank < 8; ++rank)
         {
             const uint64_t shiftedRanks = bitBoardSate << (rank * 8);
             const std::bitset<8> currentRank = (mostSignificantByte & shiftedRanks) >> 56;
