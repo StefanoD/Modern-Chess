@@ -51,17 +51,17 @@ namespace ModernChess
 
     std::string Board::toString() const
     {
-        const uint64_t bitBoardSate = getBitBoardState().to_ulong();
+        const std::bitset<64> bitBoardSate = getBitBoardState();
         std::strstream stream;
 
-        // We AND always with the most significant byte
-        constexpr uint64_t mostSignificantByte = uint64_t(0xFF) << 56;
-
-        for (uint8_t rank = 0; rank < 8; ++rank)
+        for (uint8_t square = 0; square < 64; ++square)
         {
-            const uint64_t shiftedRanks = bitBoardSate << (rank * 8);
-            const std::bitset<8> currentRank = (mostSignificantByte & shiftedRanks) >> 56;
-            stream << currentRank << std::endl;
+            if (square % 8 == 0)
+            {
+                stream << std::endl;
+            }
+
+            stream << bitBoardSate[square];
         }
 
         return stream.str();
