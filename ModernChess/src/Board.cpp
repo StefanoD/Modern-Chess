@@ -33,7 +33,7 @@ namespace ModernChess
         m_whitePawnBitBoard = std::rotr(m_blackPawnBitBoard.to_ulong(), 24);
     }
 
-    BitBoard Board::getBitBoardState() const
+    BitBoard Board::getOccupiedSquares() const
     {
         return m_blackRookBitBoard | \
                m_blackKnightBitBoard | \
@@ -51,7 +51,7 @@ namespace ModernChess
 
     std::string Board::toString() const
     {
-        const BitBoard bitBoardState = getBitBoardState();
+        const BitBoard bitBoardState = getOccupiedSquares();
         std::strstream stream;
 
         for (uint8_t square = 0; square < 64; ++square)

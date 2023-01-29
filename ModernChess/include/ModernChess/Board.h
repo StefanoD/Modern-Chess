@@ -9,16 +9,18 @@ namespace ModernChess
 
     using BitBoard = std::bitset<64>;
 
-    // TODO function to map from geometric to bitmap
+    // TODO Square-centric representation \
+    //  - function to map FEN notation to board state
+    //  - function to map from geometric to bitmap
+
     // TODO function to bitwise and all bitmaps -> Piece captures (different colors), illegal moves (same colors) etc.
-    // TODO function to map FEN notation to board state
     class Board
     {
     public:
 
         Board();
 
-        [[nodiscard]] BitBoard getBitBoardState() const;
+        [[nodiscard]] BitBoard getOccupiedSquares() const;
         [[nodiscard]] std::string toString() const;
 
     protected:

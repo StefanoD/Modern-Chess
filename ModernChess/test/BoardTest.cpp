@@ -32,7 +32,7 @@ namespace
         // This tests, that figures don't occupy the same square
         EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0U);
 
-        const ModernChess::BitBoard bitBoardState = board.getBitBoardState();
+        const ModernChess::BitBoard bitBoardState = board.getOccupiedSquares();
 
         // Test occupation of white figures
         for (int square = 0; square < 16; ++square)
