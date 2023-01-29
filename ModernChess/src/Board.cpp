@@ -30,4 +30,20 @@ namespace ModernChess
         m_whiteKingBitBoard = std::rotr(m_blackKingBitBoard.to_ulong(), 8);
         m_whitePawnBitBoard = std::rotr(m_blackPawnBitBoard.to_ulong(), 24);
     }
+
+    std::bitset<64> Board::getBitBoardState() const
+    {
+        return m_blackRookBitBoard | \
+               m_blackKnightBitBoard | \
+               m_blackBishopBitBoard | \
+               m_blackQueenBitBoard | \
+               m_blackKingBitBoard | \
+               m_blackPawnBitBoard | \
+               m_whiteRookBitBoard | \
+               m_whiteKnightBitBoard | \
+               m_whiteBishopBitBoard | \
+               m_whiteQueenBitBoard | \
+               m_whiteKingBitBoard | \
+               m_whitePawnBitBoard;
+    }
 }
