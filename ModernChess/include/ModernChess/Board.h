@@ -6,6 +6,9 @@
 
 namespace ModernChess
 {
+
+    using BitBoard = std::bitset<64>;
+
     // TODO function to map from geometric to bitmap
     // TODO function to bitwise and all bitmaps -> Piece captures (different colors), illegal moves (same colors) etc.
     // TODO function to map FEN notation to board state
@@ -18,23 +21,23 @@ namespace ModernChess
 
         Board();
 
-        [[nodiscard]] std::bitset<64> getBitBoardState() const;
+        [[nodiscard]] BitBoard getBitBoardState() const;
         [[nodiscard]] std::string toString() const;
 
     protected:
-        std::bitset<64> m_blackRookBitBoard;
-        std::bitset<64> m_blackKnightBitBoard;
-        std::bitset<64> m_blackBishopBitBoard;
-        std::bitset<64> m_blackQueenBitBoard;
-        std::bitset<64> m_blackKingBitBoard;
-        std::bitset<64> m_blackPawnBitBoard;
+        BitBoard m_blackRookBitBoard;
+        BitBoard m_blackKnightBitBoard;
+        BitBoard m_blackBishopBitBoard;
+        BitBoard m_blackQueenBitBoard;
+        BitBoard m_blackKingBitBoard;
+        BitBoard m_blackPawnBitBoard;
 
-        std::bitset<64> m_whiteRookBitBoard;
-        std::bitset<64> m_whiteKnightBitBoard;
-        std::bitset<64> m_whiteBishopBitBoard;
-        std::bitset<64> m_whiteQueenBitBoard;
-        std::bitset<64> m_whiteKingBitBoard;
-        std::bitset<64> m_whitePawnBitBoard;
+        BitBoard m_whiteRookBitBoard;
+        BitBoard m_whiteKnightBitBoard;
+        BitBoard m_whiteBishopBitBoard;
+        BitBoard m_whiteQueenBitBoard;
+        BitBoard m_whiteKingBitBoard;
+        BitBoard m_whitePawnBitBoard;
     };
 
 
