@@ -58,7 +58,7 @@ namespace ModernChess
     {
         std::strstream stream;
 
-        for (uint8_t square = 0; square < bitBoard.size(); ++square)
+        for (std::size_t square = 0; square < bitBoard.size(); ++square)
         {
             if (square % 8 == 0)
             {
