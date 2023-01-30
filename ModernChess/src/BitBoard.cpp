@@ -35,37 +35,37 @@ namespace ModernChess
 
     BitBoardState BitBoard::getOccupiedSquares() const
     {
-        return m_blackRookBitBoard | \
-               m_blackKnightBitBoard | \
-               m_blackBishopBitBoard | \
-               m_blackQueenBitBoard | \
-               m_blackKingBitBoard | \
-               m_blackPawnBitBoard | \
-               m_whiteRookBitBoard | \
-               m_whiteKnightBitBoard | \
-               m_whiteBishopBitBoard | \
-               m_whiteQueenBitBoard | \
-               m_whiteKingBitBoard | \
+        return m_blackRookBitBoard |
+               m_blackKnightBitBoard |
+               m_blackBishopBitBoard |
+               m_blackQueenBitBoard |
+               m_blackKingBitBoard |
+               m_blackPawnBitBoard |
+               m_whiteRookBitBoard |
+               m_whiteKnightBitBoard |
+               m_whiteBishopBitBoard |
+               m_whiteQueenBitBoard |
+               m_whiteKingBitBoard |
                m_whitePawnBitBoard;
     }
 
     BitBoardState BitBoard::getWhiteFigures() const
     {
-        return m_whiteRookBitBoard | \
-               m_whiteKnightBitBoard | \
-               m_whiteBishopBitBoard | \
-               m_whiteQueenBitBoard | \
-               m_whiteKingBitBoard | \
+        return m_whiteRookBitBoard |
+               m_whiteKnightBitBoard |
+               m_whiteBishopBitBoard |
+               m_whiteQueenBitBoard |
+               m_whiteKingBitBoard |
                m_whitePawnBitBoard;
     }
 
     BitBoardState BitBoard::getBlackFigures() const
     {
-        return m_blackRookBitBoard | \
-               m_blackKnightBitBoard | \
-               m_blackBishopBitBoard | \
-               m_blackQueenBitBoard | \
-               m_blackKingBitBoard | \
+        return m_blackRookBitBoard |
+               m_blackKnightBitBoard |
+               m_blackBishopBitBoard |
+               m_blackQueenBitBoard |
+               m_blackKingBitBoard |
                m_blackPawnBitBoard;
     }
 
