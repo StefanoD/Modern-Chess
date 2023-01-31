@@ -38,19 +38,19 @@ namespace
         const BitBoardState bitBoardState = board.getOccupiedSquares();
 
         // Test occupation of white figures
-        for (uint8_t square = Square::a1; square <= Square::h2; ++square)
+        for (Square square = Square::a1; square <= Square::h2; ++square)
         {
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test if squares are not occupied
-        for (uint8_t square = Square::a3; square <= Square::h6; ++square)
+        for (Square square = Square::a3; square <= Square::h6; ++square)
         {
             EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test occupation of black figures
-        for (uint8_t square = Square::a7; square <= Square::h8; ++square)
+        for (Square square = Square::a7; square <= Square::h8; ++square)
         {
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
@@ -64,13 +64,13 @@ namespace
         const BitBoardState bitBoardState = board.getBlackFigures();
 
         // Test if squares are not occupied
-        for (uint8_t square = Square::a1; square <= Square::h6; ++square)
+        for (Square square = Square::a1; square <= Square::h6; ++square)
         {
             EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test occupation of black figures
-        for (uint8_t square = Square::a7; square <= Square::h8; ++square)
+        for (Square square = Square::a7; square <= Square::h8; ++square)
         {
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
@@ -84,13 +84,13 @@ namespace
         const BitBoardState bitBoardState = board.getWhiteFigures();
 
         // Test occupation of white figures
-        for (uint8_t square = Square::a1; square <= Square::h2; ++square)
+        for (Square square = Square::a1; square <= Square::h2; ++square)
         {
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test if squares are not occupied
-        for (uint8_t square = Square::a3; square <= Square::h8; ++square)
+        for (Square square = Square::a3; square <= Square::h8; ++square)
         {
             EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }

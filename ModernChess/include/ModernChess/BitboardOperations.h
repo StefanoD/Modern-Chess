@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BitBoardConstants.h"
+#include "Square.h"
 
 namespace ModernChess::BitboardOperations
 {

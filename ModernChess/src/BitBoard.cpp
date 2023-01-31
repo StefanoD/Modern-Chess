@@ -20,7 +20,7 @@ namespace ModernChess
         m_whiteQueenBitBoard = BitboardOperations::occupySquare(m_whiteQueenBitBoard, Square::d1);
         m_whiteKingBitBoard = BitboardOperations::occupySquare(m_whiteKingBitBoard, Square::e1);
 
-        for (uint8_t square = Square::a2; square <= Square::h2; ++square)
+        for (Square square = Square::a2; square <= Square::h2; ++square)
         {
             m_whitePawnBitBoard = BitboardOperations::occupySquare(m_whitePawnBitBoard, Square(square));
         }
@@ -79,7 +79,7 @@ namespace ModernChess
     {
         std::strstream stream;
 
-        for (int square = numberSquares - 1; square >= 0; --square)
+        for (Square square = Square::h8; square >= Square::a1; --square)
         {
             stream << BitboardOperations::isOccupied(bitBoard, Square(square));
 

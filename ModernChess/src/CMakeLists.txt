@@ -7,6 +7,7 @@ add_library(${target}
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/MoveGeneration.h
         ../include/ModernChess/BitboardOperations.h
+        ../include/ModernChess/Square.h
 
         BitBoard.cpp
         MoveGeneration.cpp
