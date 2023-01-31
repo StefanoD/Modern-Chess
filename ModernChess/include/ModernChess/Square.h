@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 namespace ModernChess {
     // Constants from https://www.chessprogramming.org/Square_Mapping_Considerations
     // We use Little-Endian Rank-File Mapping
