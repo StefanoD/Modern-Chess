@@ -6,7 +6,10 @@ namespace ModernChess {
     // Constants from https://www.chessprogramming.org/Square_Mapping_Considerations
     // We use Little-Endian Rank-File Mapping
 
-    enum Square
+    constexpr int numberSquares = 64;
+    using BitBoardState = uint64_t;
+
+    enum Square : uint8_t
     {
         a1, b1, c1, d1, e1, f1, g1, h1,
         a2, b2, c2, d2, e2, f2, g2, h2,
@@ -30,14 +33,14 @@ namespace ModernChess {
         SouthEast = -7,
     };
 
-    constexpr uint64_t aFile = 0x0101010101010101;
-    constexpr uint64_t hFile = 0x8080808080808080;
-    constexpr uint64_t firstRank = 0x00000000000000FF;
-    constexpr uint64_t eightsRank = 0xFF00000000000000;
-    constexpr uint64_t a1H8Diagonal = 0x8040201008040201;
-    constexpr uint64_t h1A8Antidiagonal = 0x0102040810204080;
-    constexpr uint64_t lightSquares = 0x55AA55AA55AA55AA;
-    constexpr uint64_t darkSquares = 0xAA55AA55AA55AA55;
-    constexpr uint64_t notAFile = ~aFile;
-    constexpr uint64_t notHFile = ~hFile;
+    constexpr BitBoardState aFile = 0x0101010101010101;
+    constexpr BitBoardState hFile = 0x8080808080808080;
+    constexpr BitBoardState firstRank = 0x00000000000000FF;
+    constexpr BitBoardState eightsRank = 0xFF00000000000000;
+    constexpr BitBoardState a1H8Diagonal = 0x8040201008040201;
+    constexpr BitBoardState h1A8Antidiagonal = 0x0102040810204080;
+    constexpr BitBoardState lightSquares = 0x55AA55AA55AA55AA;
+    constexpr BitBoardState darkSquares = 0xAA55AA55AA55AA55;
+    constexpr BitBoardState notAFile = ~aFile;
+    constexpr BitBoardState notHFile = ~hFile;
 }

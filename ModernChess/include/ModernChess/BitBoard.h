@@ -1,13 +1,13 @@
 #pragma once
 
-#include <bitset>
+#include "BitBoardConstants.h"
+
 #include <bit>
 #include <string>
 
 namespace ModernChess
 {
-    constexpr int numberSquares = 64;
-    using BitBoardState = std::bitset<numberSquares>;
+
 
     // TODO Square-centric representation \
     //  - function to map FEN notation to board state
@@ -29,18 +29,18 @@ namespace ModernChess
 
     protected:
         // Every piece-type and every color has its own board representation
-        BitBoardState m_blackRookBitBoard;
-        BitBoardState m_blackKnightBitBoard;
-        BitBoardState m_blackBishopBitBoard;
-        BitBoardState m_blackQueenBitBoard;
-        BitBoardState m_blackKingBitBoard;
-        BitBoardState m_blackPawnBitBoard;
+        BitBoardState m_blackRookBitBoard{};
+        BitBoardState m_blackKnightBitBoard{};
+        BitBoardState m_blackBishopBitBoard{};
+        BitBoardState m_blackQueenBitBoard{};
+        BitBoardState m_blackKingBitBoard{};
+        BitBoardState m_blackPawnBitBoard{};
 
-        BitBoardState m_whiteRookBitBoard;
-        BitBoardState m_whiteKnightBitBoard;
-        BitBoardState m_whiteBishopBitBoard;
-        BitBoardState m_whiteQueenBitBoard;
-        BitBoardState m_whiteKingBitBoard;
-        BitBoardState m_whitePawnBitBoard;
+        BitBoardState m_whiteRookBitBoard{};
+        BitBoardState m_whiteKnightBitBoard{};
+        BitBoardState m_whiteBishopBitBoard{};
+        BitBoardState m_whiteQueenBitBoard{};
+        BitBoardState m_whiteKingBitBoard{};
+        BitBoardState m_whitePawnBitBoard{};
     };
 }

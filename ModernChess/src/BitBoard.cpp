@@ -1,4 +1,5 @@
 #include "ModernChess/BitBoard.h"
+#include "ModernChess/BitboardOperations.h"
 
 #include <strstream>
 
@@ -7,30 +8,30 @@ namespace ModernChess
 
     BitBoard::BitBoard()
     {
-        m_whiteRookBitBoard.set(0, true);
-        m_whiteRookBitBoard.set(7, true);
+        m_whiteRookBitBoard = BitboardOperations::occupySquare(m_whiteRookBitBoard, Square::a1);
+        m_whiteRookBitBoard = BitboardOperations::occupySquare(m_whiteRookBitBoard, Square::h1);
 
-        m_whiteKnightBitBoard.set(1, true);
-        m_whiteKnightBitBoard.set(6, true);
+        m_whiteKnightBitBoard = BitboardOperations::occupySquare(m_whiteKnightBitBoard, Square::b1);
+        m_whiteKnightBitBoard = BitboardOperations::occupySquare(m_whiteKnightBitBoard, Square::g1);
 
-        m_whiteBishopBitBoard.set(2, true);
-        m_whiteBishopBitBoard.set(5, true);
+        m_whiteBishopBitBoard = BitboardOperations::occupySquare(m_whiteBishopBitBoard, Square::c1);
+        m_whiteBishopBitBoard = BitboardOperations::occupySquare(m_whiteBishopBitBoard, Square::f1);
 
-        m_whiteQueenBitBoard.set(3, true);
+        m_whiteQueenBitBoard = BitboardOperations::occupySquare(m_whiteQueenBitBoard, Square::d1);
+        m_whiteKingBitBoard = BitboardOperations::occupySquare(m_whiteKingBitBoard, Square::e1);
 
-        m_whiteKingBitBoard.set(4, true);
-
-        for (int i = 8; i < 16; ++i)
+        for (uint8_t square = Square::a2; square <= Square::h2; ++square)
         {
-            m_whitePawnBitBoard.set(i, true);
+            m_whitePawnBitBoard = BitboardOperations::occupySquare(m_whitePawnBitBoard, Square(square));
         }
 
-        m_blackRookBitBoard = std::rotr(m_whiteRookBitBoard.to_ulong(), 8);
-        m_blackKnightBitBoard = std::rotr(m_whiteKnightBitBoard.to_ulong(), 8);
-        m_blackBishopBitBoard = std::rotr(m_whiteBishopBitBoard.to_ulong(), 8);
-        m_blackQueenBitBoard = std::rotr(m_whiteQueenBitBoard.to_ulong(), 8);
-        m_blackKingBitBoard = std::rotr(m_whiteKingBitBoard.to_ulong(), 8);
-        m_blackPawnBitBoard = std::rotr(m_whitePawnBitBoard.to_ulong(), 24);
+        // Black figures have essentially the same position, just rotated by 180 degrees
+        m_blackRookBitBoard = BitboardOperations::rotate180(m_whiteRookBitBoard);
+        m_blackKnightBitBoard = BitboardOperations::rotate180(m_whiteKnightBitBoard);
+        m_blackBishopBitBoard = BitboardOperations::rotate180(m_whiteBishopBitBoard);
+        m_blackQueenBitBoard = BitboardOperations::rotate180(m_whiteQueenBitBoard);
+        m_blackKingBitBoard = BitboardOperations::rotate180(m_whiteKingBitBoard);
+        m_blackPawnBitBoard = BitboardOperations::rotate180(m_whitePawnBitBoard);
     }
 
     BitBoardState BitBoard::getOccupiedSquares() const
@@ -80,7 +81,7 @@ namespace ModernChess
 
         for (int square = numberSquares - 1; square >= 0; --square)
         {
-            stream << bitBoard[square];
+            stream << BitboardOperations::isOccupied(bitBoard, Square(square));
 
             if (square % 8 == 0)
             {

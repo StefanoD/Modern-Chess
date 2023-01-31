@@ -1,4 +1,5 @@
 #include "ModernChess/BitBoard.h"
+#include "ModernChess/BitboardOperations.h"
 
 #include <gtest/gtest.h>
 
@@ -32,26 +33,26 @@ namespace
         ExtendedBoard board;
 
         // This tests, that figures don't occupy the same square
-        EXPECT_EQ(board.getBitBoardConjunctions().to_ulong(), 0U);
+        EXPECT_EQ(board.getBitBoardConjunctions(), 0U);
 
         const BitBoardState bitBoardState = board.getOccupiedSquares();
 
         // Test occupation of white figures
-        for (int square = 0; square < 16; ++square)
+        for (uint8_t square = Square::a1; square <= Square::h2; ++square)
         {
-            EXPECT_TRUE(bitBoardState[square]);
+            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test if squares are not occupied
-        for (int square = 16; square < 48; ++square)
+        for (uint8_t square = Square::a3; square <= Square::h6; ++square)
         {
-            EXPECT_FALSE(bitBoardState[square]);
+            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test occupation of black figures
-        for (int square = 48; square < 64; ++square)
+        for (uint8_t square = Square::a7; square <= Square::h8; ++square)
         {
-            EXPECT_TRUE(bitBoardState[square]);
+            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         std::cout << board.printBitBoard(bitBoardState) << std::endl;
@@ -63,15 +64,15 @@ namespace
         const BitBoardState bitBoardState = board.getBlackFigures();
 
         // Test if squares are not occupied
-        for (int square = 0; square < 48; ++square)
+        for (uint8_t square = Square::a1; square <= Square::h6; ++square)
         {
-            EXPECT_FALSE(bitBoardState[square]);
+            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test occupation of black figures
-        for (int square = 48; square < 64; ++square)
+        for (uint8_t square = Square::a7; square <= Square::h8; ++square)
         {
-            EXPECT_TRUE(bitBoardState[square]);
+            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         std::cout << board.printBitBoard(bitBoardState) << std::endl;
@@ -83,15 +84,15 @@ namespace
         const BitBoardState bitBoardState = board.getWhiteFigures();
 
         // Test occupation of white figures
-        for (int square = 0; square < 16; ++square)
+        for (uint8_t square = Square::a1; square <= Square::h2; ++square)
         {
-            EXPECT_TRUE(bitBoardState[square]);
+            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test if squares are not occupied
-        for (int square = 16; square < 64; ++square)
+        for (uint8_t square = Square::a3; square <= Square::h8; ++square)
         {
-            EXPECT_FALSE(bitBoardState[square]);
+            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         std::cout << board.printBitBoard(bitBoardState) << std::endl;
