@@ -75,13 +75,16 @@ namespace ModernChess
         return ~getOccupiedSquares();
     }
 
-    std::string BitBoard::printBitBoard(const BitBoardState &bitBoard)
+    std::string BitBoard::printBitBoard(BitBoardState bitBoard)
     {
         std::strstream stream;
 
+        // The enumeration is actually mirrored. So correct this for printing.
+        const BitBoardState mirroredBoard = BitboardOperations::mirrorHorizontal(bitBoard);
+
         for (Square square = Square::h8; square >= Square::a1; --square)
         {
-            stream << BitboardOperations::isOccupied(bitBoard, Square(square));
+            stream << BitboardOperations::isOccupied(mirroredBoard, Square(square));
 
             if (square % 8 == 0)
             {

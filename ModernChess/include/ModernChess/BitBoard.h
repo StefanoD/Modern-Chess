@@ -25,7 +25,7 @@ namespace ModernChess
         [[nodiscard]] BitBoardState getWhiteFigures() const;
         [[nodiscard]] BitBoardState getBlackFigures() const;
 
-        [[nodiscard]] static std::string printBitBoard(const BitBoardState &bitBoard);
+        [[nodiscard]] static std::string printBitBoard(BitBoardState bitBoard);
 
     protected:
         // Every piece-type and every color has its own board representation
