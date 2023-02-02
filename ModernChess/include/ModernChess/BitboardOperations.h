@@ -8,12 +8,12 @@ namespace ModernChess::BitboardOperations
 
     static constexpr BitBoardState oneStepNorth(BitBoardState state)
     {
-        return state >> 8;
+        return state << 8;
     }
 
     static constexpr BitBoardState oneStepSouth(BitBoardState state)
     {
-        return state << 8;
+        return state >> 8;
     }
 
     static constexpr BitBoardState occupySquare(BitBoardState board, Square square)
