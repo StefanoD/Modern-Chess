@@ -1,5 +1,8 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitboardOperations.h"
+#include "ModernChess/BitBoardConstants.h"
+
+#include <limits>
 
 #include <gtest/gtest.h>
 
@@ -27,6 +30,53 @@ namespace
                    m_whitePawnBitBoard;
         }
     };
+
+    TEST(Board, BoardPrintBitBoard)
+    {
+        BitBoardState board = BoardState::empty;
+        board = BitboardOperations::occupySquare(board, Square::a1);
+
+        // We expect a1 to be on the left file on the 8. rank
+        const std::string strBoard = BitBoard::printBitBoard(board);
+        const size_t numberOfNewLines = 7;
+        // Add also numberOfNewLines, because \n counts also as character
+        const size_t position = 8 * numberOfNewLines + numberOfNewLines;
+        EXPECT_EQ(strBoard.substr(position, 1), "1");
+        std::cout << strBoard << std::endl;
+    }
+
+    TEST(Board, notHFile)
+    {
+        BitBoardState board = BoardState::allSquaresOccupied;
+        board &= BitBoardConstants::notHFile;
+
+        std::vector<Square> hFile {
+            h1, h2, h3, h4, h5, h6, h7, h8
+        };
+
+        std::vector<Square> notHFile {
+            a1, b1, c1, d1, e1, f1, g1,
+            a2, b2, c2, d2, e2, f2, g2,
+            a3, b3, c3, d3, e3, f3, g3,
+            a4, b4, c4, d4, e4, f4, g4,
+            a5, b5, c5, d5, e5, f5, g5,
+            a6, b6, c6, d6, e6, f6, g6,
+            a7, b7, c7, d7, e7, f7, g7,
+            a8, b8, c8, d8, e8, f8, g8,
+        };
+
+        for (Square square : hFile)
+        {
+            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+        }
+
+        for (Square square : notHFile)
+        {
+            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+        }
+
+        std::cout << BitBoard::printBitBoard(board) << std::endl;
+    }
 
     TEST(Board, SquaresAreUniquelyOccupied)
     {
