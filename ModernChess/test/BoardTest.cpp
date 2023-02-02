@@ -75,6 +75,40 @@ namespace
         std::cout << BitBoard::printBitBoard(board) << std::endl;
     }
 
+    TEST(Board, OneStepNorth)
+    {
+        BitBoard board; // Has initial board state with correct positions
+
+        // All figures have been moved one step north
+        const BitBoardState bitBoardState = BitboardOperations::oneStepNorth(board.getOccupiedSquares());
+
+        // Test if squares are not occupied
+        for (Square square = Square::a1; square <= Square::h1; ++square)
+        {
+            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of white figures
+        for (Square square = Square::a2; square <= Square::h3; ++square)
+        {
+            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for un-occupation of black figures, because they moved north
+        for (Square square = Square::a7; square <= Square::h7; ++square)
+        {
+            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of black figures
+        for (Square square = Square::a8; square <= Square::h8; ++square)
+        {
+            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+    }
+
     TEST(Board, SquaresAreUniquelyOccupied)
     {
         ExtendedBoard board;
