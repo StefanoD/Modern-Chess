@@ -1,8 +1,5 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitboardOperations.h"
-#include "ModernChess/BitBoardConstants.h"
-
-#include <limits>
 
 #include <gtest/gtest.h>
 
