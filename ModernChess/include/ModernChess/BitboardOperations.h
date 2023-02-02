@@ -16,9 +16,39 @@ namespace ModernChess::BitboardOperations
         return state >> 8;
     }
 
+    static constexpr BitBoardState oneStepEast(BitBoardState state)
+    {
+        return (state << 1) & BitBoardConstants::notAFile;
+    }
+
+    static constexpr BitBoardState oneStepNorthEast(BitBoardState state)
+    {
+        return (state << 9) & BitBoardConstants::notAFile;
+    }
+
+    static constexpr BitBoardState oneStepSouthEast(BitBoardState state)
+    {
+        return (state >> 7) & BitBoardConstants::notAFile;
+    }
+
+    static constexpr BitBoardState oneStepWest(BitBoardState state)
+    {
+        return (state >> 1) & BitBoardConstants::notHFile;
+    }
+
+    static constexpr BitBoardState oneStepSouthWest(BitBoardState state)
+    {
+        return (state >> 9) & BitBoardConstants::notHFile;
+    }
+
+    static constexpr BitBoardState oneStepNorthWest(BitBoardState state)
+    {
+        return (state << 7) & BitBoardConstants::notHFile;
+    }
+
     static constexpr BitBoardState occupySquare(BitBoardState board, Square square)
     {
-        const uint64_t state = 1UL << square;
+        const BitBoardState state = 1UL << square;
         board |= state;
 
         return board;
@@ -26,7 +56,7 @@ namespace ModernChess::BitboardOperations
 
     static constexpr bool isOccupied(BitBoardState board, Square square)
     {
-        const uint64_t state = 1UL << square;
+        const BitBoardState state = 1UL << square;
         board &= state;
 
         return board == state;
@@ -41,9 +71,9 @@ namespace ModernChess::BitboardOperations
      */
     static constexpr BitBoardState mirrorHorizontal (BitBoardState board)
     {
-        constexpr uint64_t k1 = 0x5555555555555555;
-        constexpr uint64_t k2 = 0x3333333333333333;
-        constexpr uint64_t k4 = 0x0f0f0f0f0f0f0f0f;
+        constexpr BitBoardState k1 = 0x5555555555555555;
+        constexpr BitBoardState k2 = 0x3333333333333333;
+        constexpr BitBoardState k4 = 0x0f0f0f0f0f0f0f0f;
         board = ((board >> 1) & k1) + 2 * (board & k1);
         board = ((board >> 2) & k2) + 4 * (board & k2);
         board = ((board >> 4) & k4) + 16 * (board & k4);
@@ -59,8 +89,8 @@ namespace ModernChess::BitboardOperations
      */
     static constexpr BitBoardState flipVertical(BitBoardState board)
     {
-        constexpr uint64_t k1 = 0x00FF00FF00FF00FF;
-        constexpr uint64_t k2 = 0x0000FFFF0000FFFF;
+        constexpr BitBoardState k1 = 0x00FF00FF00FF00FF;
+        constexpr BitBoardState k2 = 0x0000FFFF0000FFFF;
         board = ((board >> 8) & k1) | ((board & k1) << 8);
         board = ((board >> 16) & k2) | ((board & k2) << 16);
         board = ( board >> 32) | ( board << 32);
