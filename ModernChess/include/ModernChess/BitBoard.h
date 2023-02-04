@@ -2,8 +2,6 @@
 
 #include "BitBoardConstants.h"
 
-#include <string>
-
 namespace ModernChess
 {
 
