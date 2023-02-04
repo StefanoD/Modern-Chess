@@ -1,7 +1,7 @@
 Checks:
     abseil-*
     bugprone-*
-    cppcoreguidelines-*
+    cppcoreguidelines-*, -cppcoreguidelines-avoid-magic-numbers
     misc-*
     modernize-*, -modernize-use-trailing-return-type
     performance-*
