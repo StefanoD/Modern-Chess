@@ -113,6 +113,44 @@ namespace
 
         print(std::cout, bitBoardState) << std::endl;
     }
+
+    TEST(BitBoardOperationsTest, OneStepWest)
+    {
+        BitBoard board; // Has initial board state with correct positions
+
+        // All figures have been moved one step north
+        const BitBoardState bitBoardState = BitBoardOperations::oneStepWest(board.getOccupiedSquares());
+
+        // Test if squares are occupied
+        for (Square square = Square::b1; square <= Square::g1; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of white figures
+        for (Square square = Square::b2; square <= Square::g2; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of black figures
+        for (Square square = Square::a7; square <= Square::g7; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of black figures
+        for (Square square = Square::a8; square <= Square::g8; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        const BitBoardState aFile = bitBoardState & BitBoardConstants::hFile;
+        // Because the pieces moved to east, we expect the complete h-file to be empty!
+        EXPECT_EQ(aFile, BoardState::empty);
+
+        print(std::cout, bitBoardState) << std::endl;
+    }
 }
 
 
