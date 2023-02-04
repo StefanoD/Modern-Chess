@@ -2,7 +2,7 @@
 #include "ModernChess/BitboardOperations.h"
 
 namespace ModernChess {
-    std::ostream& print(std::ostream &os, const ModernChess::BitBoardState &bitBoardState)
+    std::ostream& print(std::ostream &os, const ModernChess::BitBoardState bitBoardState)
     {
         // The enumeration is actually mirrored. So correct this for printing.
         const BitBoardState mirroredBoard = BitBoardOperations::mirrorHorizontal(bitBoardState);

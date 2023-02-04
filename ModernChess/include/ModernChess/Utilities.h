@@ -5,5 +5,5 @@
 
 namespace ModernChess
 {
-    std::ostream& print(std::ostream& os, const ModernChess::BitBoardState &bitBoardState);
+    std::ostream& print(std::ostream& os, const ModernChess::BitBoardState bitBoardState);
 }
