@@ -2,6 +2,7 @@ Checks:
     abseil-*
     bugprone-*
     cppcoreguidelines-*, -cppcoreguidelines-avoid-magic-numbers
+    hicpp-
     misc-*
     modernize-*, -modernize-use-trailing-return-type
     performance-*
