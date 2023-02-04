@@ -56,7 +56,7 @@ namespace
         }
 
         // Test for un-occupation of white figures
-        for (Square square = Square::a2; square <= Square::h3; ++square)
+        for (Square square = Square::a2; square <= Square::h5; ++square)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
@@ -143,6 +143,50 @@ namespace
         for (Square square = Square::a8; square <= Square::g8; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        const BitBoardState aFile = bitBoardState & BitBoardConstants::hFile;
+        // Because the pieces moved to west, we expect the complete h-file to be empty!
+        EXPECT_EQ(aFile, BoardState::empty);
+
+        print(std::cout, bitBoardState) << std::endl;
+    }
+
+    TEST(BitBoardOperationsTest, OneStepSouthWest)
+    {
+        BitBoard board; // Has initial board state with correct positions
+
+        // All figures have been moved one step north
+        const BitBoardState bitBoardState = BitBoardOperations::oneStepSouthWest(board.getOccupiedSquares());
+
+        // Test if squares are occupied
+        for (Square square = Square::a1; square <= Square::g1; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for un-occupation of white figures
+        for (Square square = Square::a2; square <= Square::h5; ++square)
+        {
+            EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of black figures
+        for (Square square = Square::a6; square <= Square::g6; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for occupation of black figures
+        for (Square square = Square::a7; square <= Square::g7; ++square)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
+        }
+
+        // Test for un-occupation of black figures
+        for (Square square = Square::a8; square <= Square::h8; ++square)
+        {
+            EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         const BitBoardState aFile = bitBoardState & BitBoardConstants::hFile;
