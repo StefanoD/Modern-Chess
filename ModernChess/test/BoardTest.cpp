@@ -1,5 +1,6 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitboardOperations.h"
+#include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
 
@@ -34,7 +35,9 @@ namespace
         board = BitboardOperations::occupySquare(board, Square::a1);
 
         // We expect a1 to be on the left file on the 8. rank
-        const std::string strBoard = BitBoard::printBitBoard(board);
+        std::stringstream stream;
+        print(stream, board);
+        const std::string strBoard = stream.str();
         const size_t numberOfNewLines = 7;
         // Add also numberOfNewLines, because \n counts also as character
         const size_t position = 8 * numberOfNewLines + numberOfNewLines;
@@ -47,18 +50,18 @@ namespace
         const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::notHFile;
 
         const std::vector<Square> hFile {
-            h1, h2, h3, h4, h5, h6, h7, h8
+                h1, h2, h3, h4, h5, h6, h7, h8
         };
 
         const std::vector<Square> notHFile {
-            a1, b1, c1, d1, e1, f1, g1,
-            a2, b2, c2, d2, e2, f2, g2,
-            a3, b3, c3, d3, e3, f3, g3,
-            a4, b4, c4, d4, e4, f4, g4,
-            a5, b5, c5, d5, e5, f5, g5,
-            a6, b6, c6, d6, e6, f6, g6,
-            a7, b7, c7, d7, e7, f7, g7,
-            a8, b8, c8, d8, e8, f8, g8,
+                a1, b1, c1, d1, e1, f1, g1,
+                a2, b2, c2, d2, e2, f2, g2,
+                a3, b3, c3, d3, e3, f3, g3,
+                a4, b4, c4, d4, e4, f4, g4,
+                a5, b5, c5, d5, e5, f5, g5,
+                a6, b6, c6, d6, e6, f6, g6,
+                a7, b7, c7, d7, e7, f7, g7,
+                a8, b8, c8, d8, e8, f8, g8,
         };
 
         for (Square square : hFile)
@@ -71,7 +74,7 @@ namespace
             EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
         }
 
-        std::cout << BitBoard::printBitBoard(board) << std::endl;
+        print(std::cout, board) << std::endl;
     }
 
     TEST(Board, AFile)
@@ -79,18 +82,18 @@ namespace
         const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::aFile;
 
         const std::vector<Square> aFile {
-            a1, a2, a3, a4, a5, a6, a7, a8,
+                a1, a2, a3, a4, a5, a6, a7, a8,
         };
 
         const std::vector<Square> notAFile {
-            b1, c1, d1, e1, f1, g1, h1,
-            b2, c2, d2, e2, f2, g2, h2,
-            b3, c3, d3, e3, f3, g3, h3,
-            b4, c4, d4, e4, f4, g4, h4,
-            b5, c5, d5, e5, f5, g5, h5,
-            b6, c6, d6, e6, f6, g6, h6,
-            b7, c7, d7, e7, f7, g7, h7,
-            b8, c8, d8, e8, f8, g8, h8
+                b1, c1, d1, e1, f1, g1, h1,
+                b2, c2, d2, e2, f2, g2, h2,
+                b3, c3, d3, e3, f3, g3, h3,
+                b4, c4, d4, e4, f4, g4, h4,
+                b5, c5, d5, e5, f5, g5, h5,
+                b6, c6, d6, e6, f6, g6, h6,
+                b7, c7, d7, e7, f7, g7, h7,
+                b8, c8, d8, e8, f8, g8, h8
         };
 
         for (Square square : aFile)
@@ -103,7 +106,7 @@ namespace
             EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
         }
 
-        std::cout << BitBoard::printBitBoard(board) << std::endl;
+        print(std::cout,board) << std::endl;
     }
 
     TEST(Board, OneStepNorth)
@@ -137,7 +140,7 @@ namespace
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, OneStepSouth)
@@ -171,7 +174,7 @@ namespace
             EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, OneStepEast)
@@ -209,7 +212,7 @@ namespace
         // Because the pieces moved to east, we expect the complete a-file to be empty!
         EXPECT_EQ(aFile, BoardState::empty);
 
-        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, SquaresAreUniquelyOccupied)
@@ -239,7 +242,7 @@ namespace
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, BlackFiguresAreSet)
@@ -259,7 +262,7 @@ namespace
             EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, WhiteFiguresAreSet)
@@ -279,7 +282,7 @@ namespace
             EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << board.printBitBoard(bitBoardState) << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(BitBoard, GetEmptySquares)
