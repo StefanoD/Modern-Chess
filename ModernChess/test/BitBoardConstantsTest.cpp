@@ -1,5 +1,4 @@
 #include "ModernChess/BitboardOperations.h"
-#include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
 
@@ -36,7 +35,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout,board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, NotAFile)
@@ -68,7 +67,7 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout,board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, A1H8Diagonal)
@@ -100,7 +99,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout,board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, H1A8Antidiagonal)
@@ -132,7 +131,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout,board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, HFile)
@@ -164,7 +163,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout, board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, notHFile)
@@ -196,7 +195,7 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout, board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, FirstRank)
@@ -227,7 +226,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout, board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, EightsRank)
@@ -258,7 +257,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout, board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, LightSquares)
@@ -295,7 +294,7 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout, board) << std::endl;
+        std::cout << board << std::endl;
     }
 
     TEST(BitBoardConstantsTest, DarkSquares)
@@ -332,7 +331,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        print(std::cout, board) << std::endl;
+        std::cout << board << std::endl;
     }
 }
 
