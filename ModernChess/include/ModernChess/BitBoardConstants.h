@@ -1,7 +1,5 @@
 #pragma once
 
-#include "BitBoardState.h"
-
 #include <cinttypes>
 #include <limits>
 
@@ -9,11 +7,11 @@ namespace ModernChess {
     // Constants from https://www.chessprogramming.org/Square_Mapping_Considerations#LittleEndianRankFileMapping
     // We use Little-Endian Rank-File Mapping
 
-    //using BitBoardState = uint64_t;
+    using BitBoardState = uint64_t;
 
     namespace BoardState {
         constexpr BitBoardState empty = 0;
-        constexpr BitBoardState allSquaresOccupied = std::numeric_limits<uint64_t>::max();
+        constexpr BitBoardState allSquaresOccupied = std::numeric_limits<BitBoardState>::max();
     }
 
     enum RayDirections : int

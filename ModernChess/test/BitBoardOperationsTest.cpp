@@ -1,5 +1,6 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitboardOperations.h"
+#include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
 
@@ -38,7 +39,7 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(BitBoardOperationsTest, OneStepSouth)
@@ -72,7 +73,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(BitBoardOperationsTest, OneStepEast)
@@ -110,7 +111,7 @@ namespace
         // Because the pieces moved to east, we expect the complete a-file to be empty!
         EXPECT_EQ(aFile, BoardState::empty);
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(BitBoardOperationsTest, OneStepWest)
@@ -148,7 +149,7 @@ namespace
         // Because the pieces moved to west, we expect the complete h-file to be empty!
         EXPECT_EQ(aFile, BoardState::empty);
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(BitBoardOperationsTest, OneStepSouthWest)
@@ -192,7 +193,7 @@ namespace
         // Because the pieces moved to east, we expect the complete h-file to be empty!
         EXPECT_EQ(aFile, BoardState::empty);
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 }
 
