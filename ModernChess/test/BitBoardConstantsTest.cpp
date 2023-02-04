@@ -260,6 +260,80 @@ namespace
 
         print(std::cout, board) << std::endl;
     }
+
+    TEST(BitBoardConstantsTest, LightSquares)
+    {
+        const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::lightSquares;
+
+        const std::vector<Square> darkSquares {
+                a1,     c1,     e1,     g1,
+                    b2,     d2,     f2,     h2,
+                a3,     c3,     e3,     g3,
+                    b4,     d4,     f4,     h4,
+                a5,     c5,     e5,     g5,
+                    b6,     d6,     f6,     h6,
+                a7,     c7,     e7,     g7,
+        };
+
+        const std::vector<Square> lightSquares {
+                    b1,     d1,     f1,     h1,
+                a2,     c2,     e2,     g2,
+                    b3,     d3,     f3,     h3,
+                a4,     c4,     e4,     g4,
+                    b5,     d5,     f5,     h5,
+                a6,     c6,     e6,     g6,
+                    b7,     d7,     f7,     h7,
+        };
+
+        for (Square square : darkSquares)
+        {
+            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+        }
+
+        for (Square square : lightSquares)
+        {
+            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+        }
+
+        print(std::cout, board) << std::endl;
+    }
+
+    TEST(BitBoardConstantsTest, DarkSquares)
+    {
+        const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::darkSquares;
+
+        const std::vector<Square> darkSquares {
+                a1,     c1,     e1,     g1,
+                b2,     d2,     f2,     h2,
+                a3,     c3,     e3,     g3,
+                b4,     d4,     f4,     h4,
+                a5,     c5,     e5,     g5,
+                b6,     d6,     f6,     h6,
+                a7,     c7,     e7,     g7,
+        };
+
+        const std::vector<Square> lightSquares {
+                b1,     d1,     f1,     h1,
+                a2,     c2,     e2,     g2,
+                b3,     d3,     f3,     h3,
+                a4,     c4,     e4,     g4,
+                b5,     d5,     f5,     h5,
+                a6,     c6,     e6,     g6,
+                b7,     d7,     f7,     h7,
+        };
+
+        for (Square square : darkSquares)
+        {
+            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+        }
+
+        for (Square square : lightSquares)
+        {
+            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+        }
+
+        print(std::cout, board) << std::endl;
+    }
 }
 
 
