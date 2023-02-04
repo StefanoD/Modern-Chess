@@ -36,6 +36,6 @@ namespace ModernChess {
         constexpr BitBoardState a1H8Diagonal = 0x8040201008040201;
         constexpr BitBoardState h1A8Antidiagonal = 0x0102040810204080;
         constexpr BitBoardState lightSquares = 0x55AA55AA55AA55AA;
-        constexpr BitBoardState darkSquares = 0xAA55AA55AA55AA55;
+        constexpr BitBoardState darkSquares = ~lightSquares;
     }
 }
