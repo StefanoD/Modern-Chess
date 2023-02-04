@@ -10,7 +10,7 @@ namespace
 
     TEST(BitBoardOperationsTest, OneStepNorth)
     {
-        BitBoard board; // Has initial board state with correct positions
+        const BitBoard board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = BitBoardOperations::oneStepNorth(board.getOccupiedSquares());
@@ -44,7 +44,7 @@ namespace
 
     TEST(BitBoardOperationsTest, OneStepSouth)
     {
-        BitBoard board; // Has initial board state with correct positions
+        const BitBoard board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = BitBoardOperations::oneStepSouth(board.getOccupiedSquares());
@@ -78,7 +78,7 @@ namespace
 
     TEST(BitBoardOperationsTest, OneStepEast)
     {
-        BitBoard board; // Has initial board state with correct positions
+        const BitBoard board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = BitBoardOperations::oneStepEast(board.getOccupiedSquares());
@@ -116,7 +116,7 @@ namespace
 
     TEST(BitBoardOperationsTest, OneStepWest)
     {
-        BitBoard board; // Has initial board state with correct positions
+        const BitBoard board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = BitBoardOperations::oneStepWest(board.getOccupiedSquares());
@@ -154,7 +154,7 @@ namespace
 
     TEST(BitBoardOperationsTest, OneStepSouthWest)
     {
-        BitBoard board; // Has initial board state with correct positions
+        const BitBoard board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = BitBoardOperations::oneStepSouthWest(board.getOccupiedSquares());
