@@ -6,30 +6,30 @@ namespace ModernChess
 
     BitBoard::BitBoard()
     {
-        m_whiteRookBitBoard = BitboardOperations::occupySquare(m_whiteRookBitBoard, Square::a1);
-        m_whiteRookBitBoard = BitboardOperations::occupySquare(m_whiteRookBitBoard, Square::h1);
+        m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::a1);
+        m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::h1);
 
-        m_whiteKnightBitBoard = BitboardOperations::occupySquare(m_whiteKnightBitBoard, Square::b1);
-        m_whiteKnightBitBoard = BitboardOperations::occupySquare(m_whiteKnightBitBoard, Square::g1);
+        m_whiteKnightBitBoard = BitBoardOperations::occupySquare(m_whiteKnightBitBoard, Square::b1);
+        m_whiteKnightBitBoard = BitBoardOperations::occupySquare(m_whiteKnightBitBoard, Square::g1);
 
-        m_whiteBishopBitBoard = BitboardOperations::occupySquare(m_whiteBishopBitBoard, Square::c1);
-        m_whiteBishopBitBoard = BitboardOperations::occupySquare(m_whiteBishopBitBoard, Square::f1);
+        m_whiteBishopBitBoard = BitBoardOperations::occupySquare(m_whiteBishopBitBoard, Square::c1);
+        m_whiteBishopBitBoard = BitBoardOperations::occupySquare(m_whiteBishopBitBoard, Square::f1);
 
-        m_whiteQueenBitBoard = BitboardOperations::occupySquare(m_whiteQueenBitBoard, Square::d1);
-        m_whiteKingBitBoard = BitboardOperations::occupySquare(m_whiteKingBitBoard, Square::e1);
+        m_whiteQueenBitBoard = BitBoardOperations::occupySquare(m_whiteQueenBitBoard, Square::d1);
+        m_whiteKingBitBoard = BitBoardOperations::occupySquare(m_whiteKingBitBoard, Square::e1);
 
         for (Square square = Square::a2; square <= Square::h2; ++square)
         {
-            m_whitePawnBitBoard = BitboardOperations::occupySquare(m_whitePawnBitBoard, Square(square));
+            m_whitePawnBitBoard = BitBoardOperations::occupySquare(m_whitePawnBitBoard, Square(square));
         }
 
         // Black figures have essentially the same position, just rotated by 180 degrees
-        m_blackRookBitBoard = BitboardOperations::rotate180(m_whiteRookBitBoard);
-        m_blackKnightBitBoard = BitboardOperations::rotate180(m_whiteKnightBitBoard);
-        m_blackBishopBitBoard = BitboardOperations::rotate180(m_whiteBishopBitBoard);
-        m_blackQueenBitBoard = BitboardOperations::rotate180(m_whiteQueenBitBoard);
-        m_blackKingBitBoard = BitboardOperations::rotate180(m_whiteKingBitBoard);
-        m_blackPawnBitBoard = BitboardOperations::rotate180(m_whitePawnBitBoard);
+        m_blackRookBitBoard = BitBoardOperations::rotate180(m_whiteRookBitBoard);
+        m_blackKnightBitBoard = BitBoardOperations::rotate180(m_whiteKnightBitBoard);
+        m_blackBishopBitBoard = BitBoardOperations::rotate180(m_whiteBishopBitBoard);
+        m_blackQueenBitBoard = BitBoardOperations::rotate180(m_whiteQueenBitBoard);
+        m_blackKingBitBoard = BitBoardOperations::rotate180(m_whiteKingBitBoard);
+        m_blackPawnBitBoard = BitBoardOperations::rotate180(m_whitePawnBitBoard);
     }
 
     BitBoardState BitBoard::getOccupiedSquares() const

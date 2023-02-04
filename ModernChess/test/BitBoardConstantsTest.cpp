@@ -28,12 +28,12 @@ namespace
 
         for (Square square : aFile)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notAFile)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout,board) << std::endl;
@@ -60,12 +60,12 @@ namespace
 
         for (Square square : aFile)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notAFile)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout,board) << std::endl;
@@ -92,12 +92,12 @@ namespace
 
         for (Square square : a1H8Diagonal)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notA1H8Diagonal)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout,board) << std::endl;
@@ -124,12 +124,12 @@ namespace
 
         for (Square square : h1A8Antidiagonal)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notH1A8Antidiagonal)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout,board) << std::endl;
@@ -156,12 +156,12 @@ namespace
 
         for (Square square : hFile)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notHFile)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout, board) << std::endl;
@@ -188,12 +188,12 @@ namespace
 
         for (Square square : hFile)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notHFile)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout, board) << std::endl;
@@ -219,12 +219,12 @@ namespace
 
         for (Square square : firstRank)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notFirstRank)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout, board) << std::endl;
@@ -250,12 +250,12 @@ namespace
 
         for (Square square : eightsRank)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : notEightsRank)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout, board) << std::endl;
@@ -287,12 +287,12 @@ namespace
 
         for (Square square : darkSquares)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : lightSquares)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout, board) << std::endl;
@@ -324,12 +324,12 @@ namespace
 
         for (Square square : darkSquares)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(board, square));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
         for (Square square : lightSquares)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(board, square));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
         print(std::cout, board) << std::endl;

@@ -32,7 +32,7 @@ namespace
     TEST(Board, BoardPrintBitBoard)
     {
         BitBoardState board = BoardState::empty;
-        board = BitboardOperations::occupySquare(board, Square::a1);
+        board = BitBoardOperations::occupySquare(board, Square::a1);
 
         // We expect a1 to be on the left file on the 8. rank
         std::stringstream stream;
@@ -57,19 +57,19 @@ namespace
         // Test occupation of white figures
         for (Square square = Square::a1; square <= Square::h2; ++square)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test if squares are not occupied
         for (Square square = Square::a3; square <= Square::h6; ++square)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test occupation of black figures
         for (Square square = Square::a7; square <= Square::h8; ++square)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         print(std::cout, bitBoardState) << std::endl;
@@ -83,13 +83,13 @@ namespace
         // Test if squares are not occupied
         for (Square square = Square::a1; square <= Square::h6; ++square)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test occupation of black figures
         for (Square square = Square::a7; square <= Square::h8; ++square)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         print(std::cout, bitBoardState) << std::endl;
@@ -103,13 +103,13 @@ namespace
         // Test occupation of white figures
         for (Square square = Square::a1; square <= Square::h2; ++square)
         {
-            EXPECT_TRUE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         // Test if squares are not occupied
         for (Square square = Square::a3; square <= Square::h8; ++square)
         {
-            EXPECT_FALSE(BitboardOperations::isOccupied(bitBoardState, Square(square)));
+            EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
         print(std::cout, bitBoardState) << std::endl;

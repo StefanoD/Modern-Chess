@@ -3,7 +3,7 @@
 #include "BitBoardConstants.h"
 #include "Square.h"
 
-namespace ModernChess::BitboardOperations
+namespace ModernChess::BitBoardOperations
 {
 
     static constexpr BitBoardState oneStepNorth(BitBoardState state)
