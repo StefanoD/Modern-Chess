@@ -3,6 +3,7 @@ set(target modern-chess-lib-test)
 add_executable(${target}
         BoardTest.cpp
         BitBoardConstantsTest.cpp
+        BitboardOperationsTest.cpp
         )
 
 target_link_libraries(${target} PRIVATE
