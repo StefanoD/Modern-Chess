@@ -22,7 +22,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = AttacksGeneration::northAttacks(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = RookAttack::north(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 a2, a3, a4, a5, a6, a7, // attacks from the left rook

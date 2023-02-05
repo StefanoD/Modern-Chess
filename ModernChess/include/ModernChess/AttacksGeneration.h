@@ -4,7 +4,7 @@
 #include "BitBoardOperations.h"
 #include "Square.h"
 
-namespace ModernChess::AttacksGeneration
+namespace ModernChess
 {
     // Attack calculations on an empty board.
     // See https://www.chessemptyBoardgramming.org/On_an_empty_Board and
@@ -99,52 +99,58 @@ namespace ModernChess::AttacksGeneration
         }
     }
 
+    namespace RookAttack {
+        /**
+         * @brief A north ray attack from rooks
+         * @param rooks board with rooks
+         * @param emptySquares Board where empty squares bits are set to 1.
+         * @return All attacking squares
+         */
+        constexpr BitBoardState north(BitBoardState rooks, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepNorth(Ray::northOccluded(rooks, emptySquares));
+        }
 
-    /**
-     * @brief A north ray attack from rooks
-     * @param rooks board with rooks
-     * @param emptyBoard Board where empty squares bit are set to 1.
-     * @return All attacking squares
-     */
-    constexpr BitBoardState northAttacks(BitBoardState rooks, BitBoardState emptyBoard)
-    {
-        return BitBoardOperations::oneStepNorth(Ray::northOccluded(rooks, emptyBoard));
-    }
-    
-    BitBoardState southAttacks (BitBoardState rooks,   BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepSouth(Ray::southOccluded(rooks, empty));
-    }
+        BitBoardState south (BitBoardState rooks, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepSouth(Ray::southOccluded(rooks, emptySquares));
+        }
 
-    BitBoardState eastAttacks (BitBoardState rooks,   BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepEast(Ray::eastOccluded(rooks, empty));
-    }
+        BitBoardState east (BitBoardState rooks, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepEast(Ray::eastOccluded(rooks, emptySquares));
+        }
 
-    BitBoardState northEastAttacks (BitBoardState bishops, BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepNorthEast(Ray::northEastOccluded(bishops, empty));
-    }
-
-    BitBoardState southEastAttacks (BitBoardState bishops, BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepSouthEast(Ray::southEastOccluded(bishops, empty));
+        BitBoardState west (BitBoardState rooks, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepWest(Ray::westOccluded(rooks, emptySquares));
+        }
     }
 
-    BitBoardState westAttacks (BitBoardState rooks,   BitBoardState empty)
+    namespace BishopAttack
     {
-        return BitBoardOperations::oneStepWest(Ray::westOccluded(rooks, empty));
+        BitBoardState northEast(BitBoardState bishops, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepNorthEast(Ray::northEastOccluded(bishops, emptySquares));
+        }
+
+        BitBoardState southEast(BitBoardState bishops, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepSouthEast(Ray::southEastOccluded(bishops, emptySquares));
+        }
+
+        BitBoardState southWest(BitBoardState bishops, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepSouthWest(Ray::southWestOccluded(bishops, emptySquares));
+        }
+
+        BitBoardState northWest(BitBoardState bishops, BitBoardState emptySquares)
+        {
+            return BitBoardOperations::oneStepNorthWest(Ray::northWestOccluded(bishops, emptySquares));
+        }
     }
 
-    BitBoardState soutWestAttacks (BitBoardState bishops, BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepSouthWest(Ray::southWestOccluded(bishops, empty));
-    }
 
-    BitBoardState northWestAttacks (BitBoardState bishops, BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepNorthWest(Ray::northWestOccluded(bishops, empty));
-    }
 
     
     constexpr BitBoardState northFill(BitBoardState gen)
