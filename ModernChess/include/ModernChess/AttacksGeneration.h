@@ -7,149 +7,149 @@
 namespace ModernChess::AttacksGeneration
 {
     // Attack calculations on an empty board.
-    // See https://www.chessprogramming.org/On_an_empty_Board and
-    // https://www.chessprogramming.org/Kogge-Stone_Algorithm
+    // See https://www.chessemptyBoardgramming.org/On_an_empty_Board and
+    // https://www.chessemptyBoardgramming.org/Kogge-Stone_Algorithm
 
-    constexpr BitBoardState fillUpOccluded(BitBoardState pieceBoard, BitBoardState emptySquaresBoard)
-    {
-        pieceBoard |= emptySquaresBoard & (pieceBoard << 8);
-        emptySquaresBoard &= (emptySquaresBoard << 8);
-        pieceBoard |= emptySquaresBoard & (pieceBoard << 16);
-        emptySquaresBoard &= (emptySquaresBoard << 16);
-        pieceBoard |= emptySquaresBoard & (pieceBoard << 32);
-        return pieceBoard;
+    namespace Ray {
+
+        constexpr BitBoardState northOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            pieceBoard |= emptyBoard & (pieceBoard << 8);
+            emptyBoard &= (emptyBoard << 8);
+            pieceBoard |= emptyBoard & (pieceBoard << 16);
+            emptyBoard &= (emptyBoard << 16);
+            pieceBoard |= emptyBoard & (pieceBoard << 32);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState southOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            pieceBoard |= emptyBoard & (pieceBoard >>  8);
+            emptyBoard &=       (emptyBoard >>  8);
+            pieceBoard |= emptyBoard & (pieceBoard >> 16);
+            emptyBoard &=       (emptyBoard >> 16);
+            pieceBoard |= emptyBoard & (pieceBoard >> 32);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState eastOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            emptyBoard &= BitBoardConstants::notAFile;
+            pieceBoard |= emptyBoard & (pieceBoard << 1);
+            emptyBoard &=       (emptyBoard << 1);
+            pieceBoard |= emptyBoard & (pieceBoard << 2);
+            emptyBoard &=       (emptyBoard << 2);
+            pieceBoard |= emptyBoard & (pieceBoard << 4);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState northEastOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            emptyBoard &= BitBoardConstants::notAFile;
+            pieceBoard |= emptyBoard & (pieceBoard <<  9);
+            emptyBoard &=       (emptyBoard <<  9);
+            pieceBoard |= emptyBoard & (pieceBoard << 18);
+            emptyBoard &=       (emptyBoard << 18);
+            pieceBoard |= emptyBoard & (pieceBoard << 36);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState southEastOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            emptyBoard &= BitBoardConstants::notAFile;
+            pieceBoard |= emptyBoard & (pieceBoard >>  7);
+            emptyBoard &=       (emptyBoard >>  7);
+            pieceBoard |= emptyBoard & (pieceBoard >> 14);
+            emptyBoard &=       (emptyBoard >> 14);
+            pieceBoard |= emptyBoard & (pieceBoard >> 28);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState westOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            emptyBoard &= BitBoardConstants::notHFile;
+            pieceBoard |= emptyBoard & (pieceBoard >> 1);
+            emptyBoard &=       (emptyBoard >> 1);
+            pieceBoard |= emptyBoard & (pieceBoard >> 2);
+            emptyBoard &=       (emptyBoard >> 2);
+            pieceBoard |= emptyBoard & (pieceBoard >> 4);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState southWestOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            emptyBoard &= BitBoardConstants::notHFile;
+            pieceBoard |= emptyBoard & (pieceBoard >>  9);
+            emptyBoard &=       (emptyBoard >>  9);
+            pieceBoard |= emptyBoard & (pieceBoard >> 18);
+            emptyBoard &=       (emptyBoard >> 18);
+            pieceBoard |= emptyBoard & (pieceBoard >> 36);
+            return pieceBoard;
+        }
+
+        constexpr BitBoardState northWestOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        {
+            emptyBoard &= BitBoardConstants::notHFile;
+            pieceBoard |= emptyBoard & (pieceBoard <<  7);
+            emptyBoard &=       (emptyBoard <<  7);
+            pieceBoard |= emptyBoard & (pieceBoard << 14);
+            emptyBoard &=       (emptyBoard << 14);
+            pieceBoard |= emptyBoard & (pieceBoard << 28);
+            return pieceBoard;
+        }
     }
 
-    constexpr BitBoardState northOccluded(BitBoardState pieceBoard, BitBoardState emptySquaresBoard)
-    {
-        pieceBoard |= emptySquaresBoard & (pieceBoard << 8);
-        emptySquaresBoard &= (emptySquaresBoard << 8);
-        pieceBoard |= emptySquaresBoard & (pieceBoard << 16);
-        emptySquaresBoard &= (emptySquaresBoard << 16);
-        pieceBoard |= emptySquaresBoard & (pieceBoard << 32);
-        return pieceBoard;
-    }
 
-    constexpr BitBoardState southOccluded(BitBoardState gen, BitBoardState pro)
+    /**
+     * @brief A north ray attack from rooks
+     * @param rooks board with rooks
+     * @param emptyBoard Board where empty squares bit are set to 1.
+     * @return All attacking squares
+     */
+    constexpr BitBoardState northAttacks(BitBoardState rooks, BitBoardState emptyBoard)
     {
-        gen |= pro & (gen >>  8);
-        pro &=       (pro >>  8);
-        gen |= pro & (gen >> 16);
-        pro &=       (pro >> 16);
-        gen |= pro & (gen >> 32);
-        return gen;
-    }
-
-    constexpr BitBoardState eastOccluded(BitBoardState gen, BitBoardState pro)
-    {
-        pro &= BitBoardConstants::notAFile;
-        gen |= pro & (gen << 1);
-        pro &=       (pro << 1);
-        gen |= pro & (gen << 2);
-        pro &=       (pro << 2);
-        gen |= pro & (gen << 4);
-        return gen;
-    }
-
-    constexpr BitBoardState northEastOccluded(BitBoardState gen, BitBoardState pro)
-    {
-        pro &= BitBoardConstants::notAFile;
-        gen |= pro & (gen <<  9);
-        pro &=       (pro <<  9);
-        gen |= pro & (gen << 18);
-        pro &=       (pro << 18);
-        gen |= pro & (gen << 36);
-        return gen;
-    }
-
-    constexpr BitBoardState southEastOccluded(BitBoardState gen, BitBoardState pro)
-    {
-        pro &= BitBoardConstants::notAFile;
-        gen |= pro & (gen >>  7);
-        pro &=       (pro >>  7);
-        gen |= pro & (gen >> 14);
-        pro &=       (pro >> 14);
-        gen |= pro & (gen >> 28);
-        return gen;
-    }
-
-    constexpr BitBoardState westOccluded(BitBoardState gen, BitBoardState pro)
-    {
-        pro &= BitBoardConstants::notHFile;
-        gen |= pro & (gen >> 1);
-        pro &=       (pro >> 1);
-        gen |= pro & (gen >> 2);
-        pro &=       (pro >> 2);
-        gen |= pro & (gen >> 4);
-        return gen;
-    }
-
-    constexpr BitBoardState southWestOccluded(BitBoardState gen, BitBoardState pro)
-    {
-        pro &= BitBoardConstants::notHFile;
-        gen |= pro & (gen >>  9);
-        pro &=       (pro >>  9);
-        gen |= pro & (gen >> 18);
-        pro &=       (pro >> 18);
-        gen |= pro & (gen >> 36);
-        return gen;
-    }
-
-    constexpr BitBoardState northWestOccluded(BitBoardState gen, BitBoardState pro)
-    {
-        pro &= BitBoardConstants::notHFile;
-        gen |= pro & (gen <<  7);
-        pro &=       (pro <<  7);
-        gen |= pro & (gen << 14);
-        pro &=       (pro << 14);
-        gen |= pro & (gen << 28);
-        return gen;
-    }
-
-    constexpr BitBoardState northAttacks(BitBoardState rooks, BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepNorth(northOccluded(rooks, empty));
+        return BitBoardOperations::oneStepNorth(Ray::northOccluded(rooks, emptyBoard));
     }
     
     BitBoardState southAttacks (BitBoardState rooks,   BitBoardState empty)
     {
-        return BitBoardOperations::oneStepSouth(southOccluded(rooks, empty));
+        return BitBoardOperations::oneStepSouth(Ray::southOccluded(rooks, empty));
     }
 
     BitBoardState eastAttacks (BitBoardState rooks,   BitBoardState empty)
     {
-        return BitBoardOperations::oneStepEast(eastOccluded(rooks,   empty));
+        return BitBoardOperations::oneStepEast(Ray::eastOccluded(rooks, empty));
     }
 
     BitBoardState northEastAttacks (BitBoardState bishops, BitBoardState empty)
     {
-        return BitBoardOperations::oneStepNorthEast(northEastOccluded(bishops, empty));
+        return BitBoardOperations::oneStepNorthEast(Ray::northEastOccluded(bishops, empty));
     }
 
     BitBoardState southEastAttacks (BitBoardState bishops, BitBoardState empty)
     {
-        return BitBoardOperations::oneStepSouthEast(southEastOccluded(bishops, empty));
+        return BitBoardOperations::oneStepSouthEast(Ray::southEastOccluded(bishops, empty));
     }
 
     BitBoardState westAttacks (BitBoardState rooks,   BitBoardState empty)
     {
-        return BitBoardOperations::oneStepWest(westOccluded(rooks,   empty));
+        return BitBoardOperations::oneStepWest(Ray::westOccluded(rooks, empty));
     }
 
     BitBoardState soutWestAttacks (BitBoardState bishops, BitBoardState empty)
     {
-        return BitBoardOperations::oneStepSouthWest(southWestOccluded(bishops, empty));
+        return BitBoardOperations::oneStepSouthWest(Ray::southWestOccluded(bishops, empty));
     }
 
     BitBoardState northWestAttacks (BitBoardState bishops, BitBoardState empty)
     {
-        return BitBoardOperations::oneStepNorthWest(northWestOccluded(bishops, empty));
+        return BitBoardOperations::oneStepNorthWest(Ray::northWestOccluded(bishops, empty));
     }
 
     
     constexpr BitBoardState northFill(BitBoardState gen)
     {
-        gen |= (gen <<  8);
+        gen |= (gen << 8);
         gen |= (gen << 16);
         gen |= (gen << 32);
         return gen;
