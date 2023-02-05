@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cinttypes>
+#include <ostream>
 #include <concepts>
 
 namespace ModernChess {
@@ -119,3 +120,5 @@ namespace ModernChess {
         return y + x;
     }
 }
+
+std::ostream& operator<<(std::ostream& os, ModernChess::BitBoardState bitBoardState);

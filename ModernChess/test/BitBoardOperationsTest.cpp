@@ -1,6 +1,5 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitboardOperations.h"
-#include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
 
