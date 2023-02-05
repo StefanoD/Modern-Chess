@@ -9,10 +9,12 @@ add_library(${target}
         ../include/ModernChess/BitboardOperations.h
         ../include/ModernChess/MoveGeneration.h
         ../include/ModernChess/Square.h
+        ../include/ModernChess/Utilities.h
 
         BitBoard.cpp
         MoveGeneration.cpp
-        BitBoardState.cpp)
+        Utilities.cpp
+        )
 
 target_include_directories(${target} PUBLIC ../include)
 
