@@ -6,7 +6,7 @@ add_library(${target}
         ../include/ModernChess/AttacksGeneration.h
         ../include/ModernChess/BitBoard.h
         ../include/ModernChess/BitBoardConstants.h
-        ../include/ModernChess/BitboardOperations.h
+        ../include/ModernChess/BitBoardOperations.h
         ../include/ModernChess/Square.h
         ../include/ModernChess/Utilities.h
 

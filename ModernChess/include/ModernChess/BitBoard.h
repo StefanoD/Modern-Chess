@@ -21,6 +21,7 @@ namespace ModernChess
         [[nodiscard]] BitBoardState getEmptySquares() const;
         [[nodiscard]] BitBoardState getWhiteFigures() const;
         [[nodiscard]] BitBoardState getBlackFigures() const;
+        [[nodiscard]] BitBoardState getWhiteRooks() const { return m_whiteRookBitBoard; }
 
     protected:
         // Every piece-type and every color has its own board representation

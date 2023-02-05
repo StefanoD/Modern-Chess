@@ -1,6 +1,7 @@
 set(target modern-chess-lib-test)
 
 add_executable(${target}
+        AttacksGenerationTest.cpp
         BoardTest.cpp
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp

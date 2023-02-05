@@ -1,5 +1,5 @@
 #include "ModernChess/BitBoardConstants.h"
-#include "ModernChess/BitboardOperations.h"
+#include "ModernChess/BitBoardOperations.h"
 
 using namespace ModernChess;
 
