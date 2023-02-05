@@ -20,8 +20,7 @@ namespace ModernChess::AttacksGeneration
         return pieceBoard;
     }
 
-
-    constexpr BitBoardState nortOccl(BitBoardState pieceBoard, BitBoardState emptySquaresBoard)
+    constexpr BitBoardState northOccluded(BitBoardState pieceBoard, BitBoardState emptySquaresBoard)
     {
         pieceBoard |= emptySquaresBoard & (pieceBoard << 8);
         emptySquaresBoard &= (emptySquaresBoard << 8);
@@ -31,6 +30,123 @@ namespace ModernChess::AttacksGeneration
         return pieceBoard;
     }
 
+    constexpr BitBoardState southOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        gen |= pro & (gen >>  8);
+        pro &=       (pro >>  8);
+        gen |= pro & (gen >> 16);
+        pro &=       (pro >> 16);
+        gen |= pro & (gen >> 32);
+        return gen;
+    }
+
+    constexpr BitBoardState eastOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        pro &= BitBoardConstants::notAFile;
+        gen |= pro & (gen << 1);
+        pro &=       (pro << 1);
+        gen |= pro & (gen << 2);
+        pro &=       (pro << 2);
+        gen |= pro & (gen << 4);
+        return gen;
+    }
+
+    constexpr BitBoardState northEastOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        pro &= BitBoardConstants::notAFile;
+        gen |= pro & (gen <<  9);
+        pro &=       (pro <<  9);
+        gen |= pro & (gen << 18);
+        pro &=       (pro << 18);
+        gen |= pro & (gen << 36);
+        return gen;
+    }
+
+    constexpr BitBoardState southEastOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        pro &= BitBoardConstants::notAFile;
+        gen |= pro & (gen >>  7);
+        pro &=       (pro >>  7);
+        gen |= pro & (gen >> 14);
+        pro &=       (pro >> 14);
+        gen |= pro & (gen >> 28);
+        return gen;
+    }
+
+    constexpr BitBoardState westOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        pro &= BitBoardConstants::notHFile;
+        gen |= pro & (gen >> 1);
+        pro &=       (pro >> 1);
+        gen |= pro & (gen >> 2);
+        pro &=       (pro >> 2);
+        gen |= pro & (gen >> 4);
+        return gen;
+    }
+
+    constexpr BitBoardState southWestOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        pro &= BitBoardConstants::notHFile;
+        gen |= pro & (gen >>  9);
+        pro &=       (pro >>  9);
+        gen |= pro & (gen >> 18);
+        pro &=       (pro >> 18);
+        gen |= pro & (gen >> 36);
+        return gen;
+    }
+
+    constexpr BitBoardState northWestOccluded(BitBoardState gen, BitBoardState pro)
+    {
+        pro &= BitBoardConstants::notHFile;
+        gen |= pro & (gen <<  7);
+        pro &=       (pro <<  7);
+        gen |= pro & (gen << 14);
+        pro &=       (pro << 14);
+        gen |= pro & (gen << 28);
+        return gen;
+    }
+
+    constexpr BitBoardState northAttacks(BitBoardState rooks, BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepNorth(northOccluded(rooks, empty));
+    }
+    
+    BitBoardState southAttacks (BitBoardState rooks,   BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepSouth(southOccluded(rooks, empty));
+    }
+
+    BitBoardState eastAttacks (BitBoardState rooks,   BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepEast(eastOccluded(rooks,   empty));
+    }
+
+    BitBoardState northEastAttacks (BitBoardState bishops, BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepNorthEast(northEastOccluded(bishops, empty));
+    }
+
+    BitBoardState southEastAttacks (BitBoardState bishops, BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepSouthEast(southEastOccluded(bishops, empty));
+    }
+
+    BitBoardState westAttacks (BitBoardState rooks,   BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepWest(westOccluded(rooks,   empty));
+    }
+
+    BitBoardState soutWestAttacks (BitBoardState bishops, BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepSouthWest(southWestOccluded(bishops, empty));
+    }
+
+    BitBoardState northWestAttacks (BitBoardState bishops, BitBoardState empty)
+    {
+        return BitBoardOperations::oneStepNorthWest(northWestOccluded(bishops, empty));
+    }
+
+    
     constexpr BitBoardState northFill(BitBoardState gen)
     {
         gen |= (gen <<  8);
@@ -38,13 +154,6 @@ namespace ModernChess::AttacksGeneration
         gen |= (gen << 32);
         return gen;
     }
-
-    constexpr BitBoardState northAttacks(BitBoardState rooks, BitBoardState empty)
-    {
-        return BitBoardOperations::oneStepNorth(nortOccl(rooks,   empty));
-    }
-
-
 
     constexpr BitBoardState rankMask(Square square)
     {
