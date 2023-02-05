@@ -25,9 +25,9 @@ namespace ModernChess
         constexpr BitBoardState southOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
         {
             pieceBoard |= emptyBoard & (pieceBoard >>  8);
-            emptyBoard &=       (emptyBoard >>  8);
+            emptyBoard &= (emptyBoard >>  8);
             pieceBoard |= emptyBoard & (pieceBoard >> 16);
-            emptyBoard &=       (emptyBoard >> 16);
+            emptyBoard &= (emptyBoard >> 16);
             pieceBoard |= emptyBoard & (pieceBoard >> 32);
             return pieceBoard;
         }
@@ -36,9 +36,9 @@ namespace ModernChess
         {
             emptyBoard &= BitBoardConstants::notAFile;
             pieceBoard |= emptyBoard & (pieceBoard << 1);
-            emptyBoard &=       (emptyBoard << 1);
+            emptyBoard &= (emptyBoard << 1);
             pieceBoard |= emptyBoard & (pieceBoard << 2);
-            emptyBoard &=       (emptyBoard << 2);
+            emptyBoard &= (emptyBoard << 2);
             pieceBoard |= emptyBoard & (pieceBoard << 4);
             return pieceBoard;
         }
@@ -47,9 +47,9 @@ namespace ModernChess
         {
             emptyBoard &= BitBoardConstants::notAFile;
             pieceBoard |= emptyBoard & (pieceBoard <<  9);
-            emptyBoard &=       (emptyBoard <<  9);
+            emptyBoard &= (emptyBoard <<  9);
             pieceBoard |= emptyBoard & (pieceBoard << 18);
-            emptyBoard &=       (emptyBoard << 18);
+            emptyBoard &= (emptyBoard << 18);
             pieceBoard |= emptyBoard & (pieceBoard << 36);
             return pieceBoard;
         }
@@ -58,9 +58,9 @@ namespace ModernChess
         {
             emptyBoard &= BitBoardConstants::notAFile;
             pieceBoard |= emptyBoard & (pieceBoard >>  7);
-            emptyBoard &=       (emptyBoard >>  7);
+            emptyBoard &= (emptyBoard >>  7);
             pieceBoard |= emptyBoard & (pieceBoard >> 14);
-            emptyBoard &=       (emptyBoard >> 14);
+            emptyBoard &= (emptyBoard >> 14);
             pieceBoard |= emptyBoard & (pieceBoard >> 28);
             return pieceBoard;
         }
@@ -69,9 +69,9 @@ namespace ModernChess
         {
             emptyBoard &= BitBoardConstants::notHFile;
             pieceBoard |= emptyBoard & (pieceBoard >> 1);
-            emptyBoard &=       (emptyBoard >> 1);
+            emptyBoard &= (emptyBoard >> 1);
             pieceBoard |= emptyBoard & (pieceBoard >> 2);
-            emptyBoard &=       (emptyBoard >> 2);
+            emptyBoard &= (emptyBoard >> 2);
             pieceBoard |= emptyBoard & (pieceBoard >> 4);
             return pieceBoard;
         }
@@ -80,9 +80,9 @@ namespace ModernChess
         {
             emptyBoard &= BitBoardConstants::notHFile;
             pieceBoard |= emptyBoard & (pieceBoard >>  9);
-            emptyBoard &=       (emptyBoard >>  9);
+            emptyBoard &= (emptyBoard >>  9);
             pieceBoard |= emptyBoard & (pieceBoard >> 18);
-            emptyBoard &=       (emptyBoard >> 18);
+            emptyBoard &= (emptyBoard >> 18);
             pieceBoard |= emptyBoard & (pieceBoard >> 36);
             return pieceBoard;
         }
@@ -91,9 +91,9 @@ namespace ModernChess
         {
             emptyBoard &= BitBoardConstants::notHFile;
             pieceBoard |= emptyBoard & (pieceBoard <<  7);
-            emptyBoard &=       (emptyBoard <<  7);
+            emptyBoard &= (emptyBoard <<  7);
             pieceBoard |= emptyBoard & (pieceBoard << 14);
-            emptyBoard &=       (emptyBoard << 14);
+            emptyBoard &= (emptyBoard << 14);
             pieceBoard |= emptyBoard & (pieceBoard << 28);
             return pieceBoard;
         }
@@ -111,17 +111,17 @@ namespace ModernChess
             return BitBoardOperations::oneStepNorth(Ray::northOccluded(rooks, emptySquares));
         }
 
-        BitBoardState south (BitBoardState rooks, BitBoardState emptySquares)
+        BitBoardState south(BitBoardState rooks, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepSouth(Ray::southOccluded(rooks, emptySquares));
         }
 
-        BitBoardState east (BitBoardState rooks, BitBoardState emptySquares)
+        BitBoardState east(BitBoardState rooks, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepEast(Ray::eastOccluded(rooks, emptySquares));
         }
 
-        BitBoardState west (BitBoardState rooks, BitBoardState emptySquares)
+        BitBoardState west(BitBoardState rooks, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepWest(Ray::westOccluded(rooks, emptySquares));
         }
@@ -152,7 +152,7 @@ namespace ModernChess
 
 
 
-    
+
     constexpr BitBoardState northFill(BitBoardState gen)
     {
         gen |= (gen << 8);
