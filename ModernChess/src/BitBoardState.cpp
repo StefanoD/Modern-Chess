@@ -1,4 +1,4 @@
-#include "ModernChess/BitBoardState.h"
+#include "ModernChess/BitBoardConstants.h"
 #include "ModernChess/BitboardOperations.h"
 
 using namespace ModernChess;

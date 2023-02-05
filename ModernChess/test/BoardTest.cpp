@@ -1,5 +1,6 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitboardOperations.h"
+#include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
 
@@ -35,7 +36,7 @@ namespace
 
         // We expect a1 to be on the left file on the 8. rank
         std::stringstream stream;
-        stream << board;
+        print(stream, board);
         const std::string strBoard = stream.str();
         const size_t numberOfNewLines = 7;
         // Add also numberOfNewLines, because \n counts also as character
@@ -71,7 +72,7 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, BlackFiguresAreSet)
@@ -91,7 +92,7 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(Board, WhiteFiguresAreSet)
@@ -111,7 +112,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        std::cout << bitBoardState << std::endl;
+        print(std::cout, bitBoardState) << std::endl;
     }
 
     TEST(BitBoard, GetEmptySquares)
