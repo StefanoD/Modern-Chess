@@ -9,9 +9,11 @@ namespace
 
     TEST(AttacksGenerationTest, RookNorthAttacks)
     {
-        // Occupy rooks on a1 and h2
+        // Occupy rooks on a1, h2, g8
         BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::a1);
         whiteRooksBoard = BitBoardOperations::occupySquare(whiteRooksBoard, Square::h2);
+        // Edge case: rook is on g8 which is already the most north position
+        whiteRooksBoard = BitBoardOperations::occupySquare(whiteRooksBoard, Square::g8);
 
         // Occupy figures on a7 and h6
         BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::a7);
@@ -52,6 +54,8 @@ namespace
 
         print(std::cout, rayAttackBoard) << std::endl;
     }
+
+
 
 
 }
