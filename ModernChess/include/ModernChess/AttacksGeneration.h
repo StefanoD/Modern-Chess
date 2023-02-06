@@ -103,7 +103,7 @@ namespace ModernChess
         /**
          * @brief A north ray attack from rooks
          * @param rooks board with rooks
-         * @param emptySquares Board where empty squares bits are set to 1.
+         * @param emptySquares An inverted play board where empty square bits are set to 1.
          * @return All attacking squares
          */
         constexpr BitBoardState north(BitBoardState rooks, BitBoardState emptySquares)
