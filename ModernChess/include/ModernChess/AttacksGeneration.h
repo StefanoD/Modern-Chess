@@ -111,17 +111,17 @@ namespace ModernChess
             return BitBoardOperations::oneStepNorth(Ray::northOccluded(rooks, emptySquares));
         }
 
-        BitBoardState south(BitBoardState rooks, BitBoardState emptySquares)
+        constexpr BitBoardState south(BitBoardState rooks, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepSouth(Ray::southOccluded(rooks, emptySquares));
         }
 
-        BitBoardState east(BitBoardState rooks, BitBoardState emptySquares)
+        constexpr BitBoardState east(BitBoardState rooks, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepEast(Ray::eastOccluded(rooks, emptySquares));
         }
 
-        BitBoardState west(BitBoardState rooks, BitBoardState emptySquares)
+        constexpr BitBoardState west(BitBoardState rooks, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepWest(Ray::westOccluded(rooks, emptySquares));
         }
@@ -129,22 +129,22 @@ namespace ModernChess
 
     namespace BishopAttack
     {
-        BitBoardState northEast(BitBoardState bishops, BitBoardState emptySquares)
+        constexpr BitBoardState northEast(BitBoardState bishops, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepNorthEast(Ray::northEastOccluded(bishops, emptySquares));
         }
 
-        BitBoardState southEast(BitBoardState bishops, BitBoardState emptySquares)
+        constexpr BitBoardState southEast(BitBoardState bishops, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepSouthEast(Ray::southEastOccluded(bishops, emptySquares));
         }
 
-        BitBoardState southWest(BitBoardState bishops, BitBoardState emptySquares)
+        constexpr BitBoardState southWest(BitBoardState bishops, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepSouthWest(Ray::southWestOccluded(bishops, emptySquares));
         }
 
-        BitBoardState northWest(BitBoardState bishops, BitBoardState emptySquares)
+        constexpr BitBoardState northWest(BitBoardState bishops, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepNorthWest(Ray::northWestOccluded(bishops, emptySquares));
         }
