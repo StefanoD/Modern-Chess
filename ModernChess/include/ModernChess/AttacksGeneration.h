@@ -150,9 +150,6 @@ namespace ModernChess
         }
     }
 
-
-
-
     constexpr BitBoardState northFill(BitBoardState gen)
     {
         gen |= (gen << 8);
