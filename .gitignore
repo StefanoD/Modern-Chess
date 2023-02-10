@@ -1,6 +1,6 @@
 ### VS Code
 .vscode/*
-
+build/*
 # Local History for Visual Studio Code
 .history/
 
