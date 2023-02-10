@@ -103,6 +103,54 @@ namespace
         print(std::cout, rayAttackBoard) << std::endl;
     }
 
+    TEST(AttacksGenerationTest, RookEastAttacks)
+    {
+        // Occupy rooks on b1, a8, h7
+        BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::b1);
+        whiteRooksBoard = BitBoardOperations::occupySquare(whiteRooksBoard, Square::a8);
+        // Edge case: rook is on h7 which is already the most east position
+        whiteRooksBoard = BitBoardOperations::occupySquare(whiteRooksBoard, Square::h7);
+
+        // Occupy figures on f1 and h8
+        BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::f1);
+        playBoard = BitBoardOperations::occupySquare(playBoard, Square::h8);
+
+        // Seem not to be necessary, but the attacking pieces are usually also part of the play board
+        playBoard |= whiteRooksBoard;
+
+        // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
+        const BitBoardState emptySquaresBoard = ~playBoard;
+        const BitBoardState rayAttackBoard = RookAttack::east(whiteRooksBoard, emptySquaresBoard);
+
+        const std::vector<Square> attackRay {
+                    c1, d1, e1, f1,
+                b8, c8, d8, e8, f8, g8, h8
+        };
+
+        const std::vector<Square> notAttackedSquares {
+                a1, b1,                 g1, h1,
+                    b2, c2, d2, e2, f2, g2, h2,
+                    b3, c3, d3, e3, f3, g3,
+                    b4, c4, d4, e4, f4, g4,
+                    b5, c5, d5, e5, f5, g5,
+                    b6, c6, d6, e6, f6, g6,
+                    b7, c7, d7, e7, f7, g7, h7,
+                a8,
+        };
+
+        for (const Square square : attackRay)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(rayAttackBoard, square));
+        }
+
+        for (const Square square : notAttackedSquares)
+        {
+            EXPECT_FALSE(BitBoardOperations::isOccupied(rayAttackBoard, square));
+        }
+
+        print(std::cout, rayAttackBoard) << std::endl;
+    }
+
 
 }
 
