@@ -6,7 +6,7 @@
 namespace ModernChess::BitBoardOperations
 {
 
-    static constexpr BitBoardState occupySquare(BitBoardState board, Square square)
+    constexpr BitBoardState occupySquare(BitBoardState board, Square square)
     {
         const BitBoardState state = 1UL << square;
         board |= state;
@@ -29,7 +29,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating
      * @return bitboard board mirrored horizontally
      */
-    static constexpr BitBoardState mirrorHorizontal (BitBoardState board)
+    constexpr BitBoardState mirrorHorizontal (BitBoardState board)
     {
         constexpr BitBoardState k1 = 0x5555555555555555;
         constexpr BitBoardState k2 = 0x3333333333333333;
@@ -47,7 +47,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating
      * @return bitboard board flipped vertically
      */
-    static constexpr BitBoardState flipVertical(BitBoardState board)
+    constexpr BitBoardState flipVertical(BitBoardState board)
     {
         constexpr BitBoardState k1 = 0x00FF00FF00FF00FF;
         constexpr BitBoardState k2 = 0x0000FFFF0000FFFF;
@@ -64,7 +64,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating
      * @return bitboard board rotated 180 degrees
      */
-    static constexpr BitBoardState rotate180(BitBoardState board)
+    constexpr BitBoardState rotate180(BitBoardState board)
     {
         return mirrorHorizontal(flipVertical(board));
     }
