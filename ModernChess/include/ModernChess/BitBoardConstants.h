@@ -31,8 +31,10 @@ namespace ModernChess {
         constexpr BitBoardState notAFile = ~aFile;
         constexpr BitBoardState hFile = 0x8080808080808080;
         constexpr BitBoardState notHFile = ~hFile;
-        constexpr BitBoardState firstRank = 0x00000000000000FF;
-        constexpr BitBoardState eightsRank = 0xFF00000000000000;
+        constexpr BitBoardState rank1 = 0x00000000000000FF;
+        constexpr BitBoardState rank4 = 0x00000000FF000000;
+        constexpr BitBoardState rank5 = 0x000000FF00000000;
+        constexpr BitBoardState rank8 = 0xFF00000000000000;
         constexpr BitBoardState a1H8Diagonal = 0x8040201008040201;
         constexpr BitBoardState h1A8Antidiagonal = 0x0102040810204080;
         constexpr BitBoardState lightSquares = 0x55AA55AA55AA55AA;
