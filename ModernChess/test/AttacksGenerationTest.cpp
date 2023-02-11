@@ -283,6 +283,49 @@ namespace
 
         print(std::cout, rayAttackBoard) << std::endl;
     }
+
+    TEST(AttacksGenerationTest, BishopSouthWestAttacks)
+    {
+        // Occupy bishop on g7
+        BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::g7);
+
+        // Occupy figures on a1
+        BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::a1);
+
+        // Seem not to be necessary, but the attacking pieces are usually also part of the play board
+        playBoard |= whiteRooksBoard;
+
+        // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
+        const BitBoardState emptySquaresBoard = ~playBoard;
+        const BitBoardState rayAttackBoard = BishopAttack::southWest(whiteRooksBoard, emptySquaresBoard);
+
+        const std::vector<Square> attackRay {
+                f6, e5, d4, c3, b2, a1
+        };
+
+        const std::vector<Square> notAttackedSquares {
+                    b1, c1, d1, e1, f1, g1, h1,
+                a2,     c2, d2, e2, f2, g2, h2,
+                a3, b3,     d3, e3, f3, g3, h3,
+                a4, b4, c4,     e4, f4, g4, h4,
+                a5, b5, c5, d5,     f5, g5, h5,
+                a6, b6, c6, d6, e6,     g6, h6,
+                a7, b7, c7, d7, e7, f7, g7, h7,
+                a8, b8, c8, d8, e8, f8, g8, h8
+        };
+
+        for (const Square square : attackRay)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(rayAttackBoard, square));
+        }
+
+        for (const Square square : notAttackedSquares)
+        {
+            EXPECT_FALSE(BitBoardOperations::isOccupied(rayAttackBoard, square));
+        }
+
+        print(std::cout, rayAttackBoard) << std::endl;
+    }
 }
 
 
