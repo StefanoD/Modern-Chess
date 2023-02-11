@@ -6,95 +6,101 @@
 
 namespace ModernChess
 {
-    // Attack calculations on an empty board.
+    // Attack calculations on an empty board which is here named "empty squares".
     // See https://www.chessemptyBoardgramming.org/On_an_empty_Board and
     // https://www.chessemptyBoardgramming.org/Kogge-Stone_Algorithm
 
     namespace Ray {
 
-        constexpr BitBoardState northOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        /**
+         * @brief Attacking ray towards north until it hits a figure
+         * @param pieceBoard Board which has the attacking pieces of one kind
+         * @param emptySquares An inverted play board where empty square bits are set to 1.
+         * @return All attacking squares until the ray hits a figure
+         */
+        constexpr BitBoardState northOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            pieceBoard |= emptyBoard & (pieceBoard << 8);
-            emptyBoard &= (emptyBoard << 8);
-            pieceBoard |= emptyBoard & (pieceBoard << 16);
-            emptyBoard &= (emptyBoard << 16);
-            pieceBoard |= emptyBoard & (pieceBoard << 32);
+            pieceBoard |= emptySquares & (pieceBoard << 8);
+            emptySquares &= (emptySquares << 8);
+            pieceBoard |= emptySquares & (pieceBoard << 16);
+            emptySquares &= (emptySquares << 16);
+            pieceBoard |= emptySquares & (pieceBoard << 32);
             return pieceBoard;
         }
 
-        constexpr BitBoardState southOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState southOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            pieceBoard |= emptyBoard & (pieceBoard >>  8);
-            emptyBoard &= (emptyBoard >>  8);
-            pieceBoard |= emptyBoard & (pieceBoard >> 16);
-            emptyBoard &= (emptyBoard >> 16);
-            pieceBoard |= emptyBoard & (pieceBoard >> 32);
+            pieceBoard |= emptySquares & (pieceBoard >> 8);
+            emptySquares &= (emptySquares >> 8);
+            pieceBoard |= emptySquares & (pieceBoard >> 16);
+            emptySquares &= (emptySquares >> 16);
+            pieceBoard |= emptySquares & (pieceBoard >> 32);
             return pieceBoard;
         }
 
-        constexpr BitBoardState eastOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState eastOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            emptyBoard &= BitBoardConstants::notAFile;
-            pieceBoard |= emptyBoard & (pieceBoard << 1);
-            emptyBoard &= (emptyBoard << 1);
-            pieceBoard |= emptyBoard & (pieceBoard << 2);
-            emptyBoard &= (emptyBoard << 2);
-            pieceBoard |= emptyBoard & (pieceBoard << 4);
+            emptySquares &= BitBoardConstants::notAFile;
+            pieceBoard |= emptySquares & (pieceBoard << 1);
+            emptySquares &= (emptySquares << 1);
+            pieceBoard |= emptySquares & (pieceBoard << 2);
+            emptySquares &= (emptySquares << 2);
+            pieceBoard |= emptySquares & (pieceBoard << 4);
             return pieceBoard;
         }
 
-        constexpr BitBoardState northEastOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState northEastOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            emptyBoard &= BitBoardConstants::notAFile;
-            pieceBoard |= emptyBoard & (pieceBoard <<  9);
-            emptyBoard &= (emptyBoard <<  9);
-            pieceBoard |= emptyBoard & (pieceBoard << 18);
-            emptyBoard &= (emptyBoard << 18);
-            pieceBoard |= emptyBoard & (pieceBoard << 36);
+            emptySquares &= BitBoardConstants::notAFile;
+            pieceBoard |= emptySquares & (pieceBoard << 9);
+            emptySquares &= (emptySquares << 9);
+            pieceBoard |= emptySquares & (pieceBoard << 18);
+            emptySquares &= (emptySquares << 18);
+            pieceBoard |= emptySquares & (pieceBoard << 36);
             return pieceBoard;
         }
 
-        constexpr BitBoardState southEastOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState southEastOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            emptyBoard &= BitBoardConstants::notAFile;
-            pieceBoard |= emptyBoard & (pieceBoard >>  7);
-            emptyBoard &= (emptyBoard >>  7);
-            pieceBoard |= emptyBoard & (pieceBoard >> 14);
-            emptyBoard &= (emptyBoard >> 14);
-            pieceBoard |= emptyBoard & (pieceBoard >> 28);
+            emptySquares &= BitBoardConstants::notAFile;
+            pieceBoard |= emptySquares & (pieceBoard >> 7);
+            emptySquares &= (emptySquares >> 7);
+            pieceBoard |= emptySquares & (pieceBoard >> 14);
+            emptySquares &= (emptySquares >> 14);
+            pieceBoard |= emptySquares & (pieceBoard >> 28);
             return pieceBoard;
         }
 
-        constexpr BitBoardState westOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState westOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            emptyBoard &= BitBoardConstants::notHFile;
-            pieceBoard |= emptyBoard & (pieceBoard >> 1);
-            emptyBoard &= (emptyBoard >> 1);
-            pieceBoard |= emptyBoard & (pieceBoard >> 2);
-            emptyBoard &= (emptyBoard >> 2);
-            pieceBoard |= emptyBoard & (pieceBoard >> 4);
+            emptySquares &= BitBoardConstants::notHFile;
+            pieceBoard |= emptySquares & (pieceBoard >> 1);
+            emptySquares &= (emptySquares >> 1);
+            pieceBoard |= emptySquares & (pieceBoard >> 2);
+            emptySquares &= (emptySquares >> 2);
+            pieceBoard |= emptySquares & (pieceBoard >> 4);
             return pieceBoard;
         }
 
-        constexpr BitBoardState southWestOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState southWestOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            emptyBoard &= BitBoardConstants::notHFile;
-            pieceBoard |= emptyBoard & (pieceBoard >>  9);
-            emptyBoard &= (emptyBoard >>  9);
-            pieceBoard |= emptyBoard & (pieceBoard >> 18);
-            emptyBoard &= (emptyBoard >> 18);
-            pieceBoard |= emptyBoard & (pieceBoard >> 36);
+            emptySquares &= BitBoardConstants::notHFile;
+            pieceBoard |= emptySquares & (pieceBoard >> 9);
+            emptySquares &= (emptySquares >> 9);
+            pieceBoard |= emptySquares & (pieceBoard >> 18);
+            emptySquares &= (emptySquares >> 18);
+            pieceBoard |= emptySquares & (pieceBoard >> 36);
             return pieceBoard;
         }
 
-        constexpr BitBoardState northWestOccluded(BitBoardState pieceBoard, BitBoardState emptyBoard)
+        constexpr BitBoardState northWestOccluded(BitBoardState pieceBoard, BitBoardState emptySquares)
         {
-            emptyBoard &= BitBoardConstants::notHFile;
-            pieceBoard |= emptyBoard & (pieceBoard <<  7);
-            emptyBoard &= (emptyBoard <<  7);
-            pieceBoard |= emptyBoard & (pieceBoard << 14);
-            emptyBoard &= (emptyBoard << 14);
-            pieceBoard |= emptyBoard & (pieceBoard << 28);
+            emptySquares &= BitBoardConstants::notHFile;
+            pieceBoard |= emptySquares & (pieceBoard << 7);
+            emptySquares &= (emptySquares << 7);
+            pieceBoard |= emptySquares & (pieceBoard << 14);
+            emptySquares &= (emptySquares << 14);
+            pieceBoard |= emptySquares & (pieceBoard << 28);
             return pieceBoard;
         }
     }
