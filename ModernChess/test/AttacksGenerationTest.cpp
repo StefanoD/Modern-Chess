@@ -201,7 +201,7 @@ namespace
     TEST(AttacksGenerationTest, BishopNorthEastAttacks)
     {
         // Occupy bishop on b2
-        BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::b2);
+        const BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::b2);
 
         // Occupy figures on h8
         BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::h8);
@@ -244,7 +244,7 @@ namespace
     TEST(AttacksGenerationTest, BishopSouthEastAttacks)
     {
         // Occupy bishop on b7
-        BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::b7);
+        const BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::b7);
 
         // Occupy figures on h1
         BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::h1);
@@ -287,7 +287,7 @@ namespace
     TEST(AttacksGenerationTest, BishopSouthWestAttacks)
     {
         // Occupy bishop on g7
-        BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::g7);
+        const BitBoardState whiteRooksBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::g7);
 
         // Occupy figures on a1
         BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::a1);
