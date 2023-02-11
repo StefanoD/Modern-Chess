@@ -129,6 +129,12 @@ namespace ModernChess
 
     namespace BishopAttack
     {
+        /**
+         * @brief A north-east ray attack from bishops
+         * @param bishops board with bishops
+         * @param emptySquares An inverted play board where empty square bits are set to 1.
+         * @return All attacking squares
+         */
         constexpr BitBoardState northEast(BitBoardState bishops, BitBoardState emptySquares)
         {
             return BitBoardOperations::oneStepNorthEast(Ray::northEastOccluded(bishops, emptySquares));
