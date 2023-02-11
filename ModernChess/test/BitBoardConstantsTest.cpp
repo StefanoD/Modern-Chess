@@ -201,7 +201,7 @@ namespace
 
     TEST(BitBoardConstantsTest, FirstRank)
     {
-        const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::firstRank;
+        const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::rank1;
 
         const std::vector<Square> firstRank {
                 a1, b1, c1, d1, e1, f1, g1,
@@ -232,7 +232,7 @@ namespace
 
     TEST(BitBoardConstantsTest, EightsRank)
     {
-        const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::eightsRank;
+        const BitBoardState board = BoardState::allSquaresOccupied & BitBoardConstants::rank8;
 
         const std::vector<Square> eightsRank {
                 a8, b8, c8, d8, e8, f8, g8, h8

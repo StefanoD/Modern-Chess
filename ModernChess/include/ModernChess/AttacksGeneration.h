@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BitBoardConstants.h"
-#include "BitBoardOperations.h"
+#include "MoveGenerations.h"
 #include "Square.h"
 
 namespace ModernChess
@@ -114,22 +114,22 @@ namespace ModernChess
          */
         constexpr BitBoardState north(BitBoardState rooks, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepNorth(Ray::northOccluded(rooks, emptySquares));
+            return MoveGenerations::oneStepNorth(Ray::northOccluded(rooks, emptySquares));
         }
 
         constexpr BitBoardState south(BitBoardState rooks, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepSouth(Ray::southOccluded(rooks, emptySquares));
+            return MoveGenerations::oneStepSouth(Ray::southOccluded(rooks, emptySquares));
         }
 
         constexpr BitBoardState east(BitBoardState rooks, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepEast(Ray::eastOccluded(rooks, emptySquares));
+            return MoveGenerations::oneStepEast(Ray::eastOccluded(rooks, emptySquares));
         }
 
         constexpr BitBoardState west(BitBoardState rooks, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepWest(Ray::westOccluded(rooks, emptySquares));
+            return MoveGenerations::oneStepWest(Ray::westOccluded(rooks, emptySquares));
         }
     }
 
@@ -143,22 +143,22 @@ namespace ModernChess
          */
         constexpr BitBoardState northEast(BitBoardState bishops, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepNorthEast(Ray::northEastOccluded(bishops, emptySquares));
+            return MoveGenerations::oneStepNorthEast(Ray::northEastOccluded(bishops, emptySquares));
         }
 
         constexpr BitBoardState southEast(BitBoardState bishops, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepSouthEast(Ray::southEastOccluded(bishops, emptySquares));
+            return MoveGenerations::oneStepSouthEast(Ray::southEastOccluded(bishops, emptySquares));
         }
 
         constexpr BitBoardState southWest(BitBoardState bishops, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepSouthWest(Ray::southWestOccluded(bishops, emptySquares));
+            return MoveGenerations::oneStepSouthWest(Ray::southWestOccluded(bishops, emptySquares));
         }
 
         constexpr BitBoardState northWest(BitBoardState bishops, BitBoardState emptySquares)
         {
-            return BitBoardOperations::oneStepNorthWest(Ray::northWestOccluded(bishops, emptySquares));
+            return MoveGenerations::oneStepNorthWest(Ray::northWestOccluded(bishops, emptySquares));
         }
     }
 
@@ -172,7 +172,7 @@ namespace ModernChess
 
     constexpr BitBoardState rankMask(Square square)
     {
-        return  BitBoardConstants::firstRank << (square & 56);
+        return  BitBoardConstants::rank1 << (square & 56);
     }
 
     constexpr BitBoardState fileMask(Square square)

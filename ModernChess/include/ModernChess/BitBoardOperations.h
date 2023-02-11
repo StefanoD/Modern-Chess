@@ -6,46 +6,6 @@
 namespace ModernChess::BitBoardOperations
 {
 
-    static constexpr BitBoardState oneStepNorth(BitBoardState state)
-    {
-        return state << 8;
-    }
-
-    static constexpr BitBoardState oneStepSouth(BitBoardState state)
-    {
-        return state >> 8;
-    }
-
-    static constexpr BitBoardState oneStepEast(BitBoardState state)
-    {
-        return (state << 1) & BitBoardConstants::notAFile;
-    }
-
-    static constexpr BitBoardState oneStepNorthEast(BitBoardState state)
-    {
-        return (state << 9) & BitBoardConstants::notAFile;
-    }
-
-    static constexpr BitBoardState oneStepSouthEast(BitBoardState state)
-    {
-        return (state >> 7) & BitBoardConstants::notAFile;
-    }
-
-    static constexpr BitBoardState oneStepWest(BitBoardState state)
-    {
-        return (state >> 1) & BitBoardConstants::notHFile;
-    }
-
-    static constexpr BitBoardState oneStepSouthWest(BitBoardState state)
-    {
-        return (state >> 9) & BitBoardConstants::notHFile;
-    }
-
-    static constexpr BitBoardState oneStepNorthWest(BitBoardState state)
-    {
-        return (state << 7) & BitBoardConstants::notHFile;
-    }
-
     static constexpr BitBoardState occupySquare(BitBoardState board, Square square)
     {
         const BitBoardState state = 1UL << square;

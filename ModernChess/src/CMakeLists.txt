@@ -13,7 +13,7 @@ add_library(${target}
         AttacksGeneration.cpp
         BitBoard.cpp
         Utilities.cpp
-        )
+        ../include/ModernChess/MoveGenerations.h)
 
 target_include_directories(${target} PUBLIC ../include)
 
