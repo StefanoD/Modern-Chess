@@ -69,14 +69,14 @@ namespace ModernChess::MoveGenerations
             return oneStepNorth(singlePushs) & emptySquares & BitBoardConstants::rank4;
         }
 
-        static constexpr bool singlePushPossible(BitBoardState whitePawns, BitBoardState emptySquares)
+        constexpr bool singlePushPossible(BitBoardState whitePawns, BitBoardState emptySquares)
         {
             // To get the set of source squares of pawns able to push is about intersection of pawns with the shifted
             // empty squares in opposite direction:
             return oneStepSouth(emptySquares) & whitePawns;
         }
 
-        static constexpr bool doublePushPossible(BitBoardState whitePawns, BitBoardState emptySquares)
+        constexpr bool doublePushPossible(BitBoardState whitePawns, BitBoardState emptySquares)
         {
             const BitBoardState emptyRank3 = oneStepSouth(emptySquares & BitBoardConstants::rank4) & emptySquares;
             return singlePushPossible(whitePawns, emptyRank3);
@@ -108,14 +108,14 @@ namespace ModernChess::MoveGenerations
             return oneStepSouth(singlePushs) & emptySquares & BitBoardConstants::rank5;
         }
 
-        static constexpr bool singlePushPossible(BitBoardState blackPawns, BitBoardState emptySquares)
+        constexpr bool singlePushPossible(BitBoardState blackPawns, BitBoardState emptySquares)
         {
             // To get the set of source squares of pawns able to push is about intersection of pawns with the shifted
             // empty squares in opposite direction:
             return oneStepNorth(emptySquares) & blackPawns;
         }
 
-        static constexpr bool doublePushPossible(BitBoardState blackPawns, BitBoardState emptySquares)
+        constexpr bool doublePushPossible(BitBoardState blackPawns, BitBoardState emptySquares)
         {
             const BitBoardState emptyRank6 = oneStepNorth(emptySquares & BitBoardConstants::rank5) & emptySquares;
             return singlePushPossible(blackPawns, emptyRank6);
