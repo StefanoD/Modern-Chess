@@ -181,7 +181,7 @@ namespace ModernChess
             return east(whitePawns) | west(whitePawns);
         }
 
-        constexpr BitBoardState doubleAttacks(BitBoardState whitePawns)
+        constexpr BitBoardState two(BitBoardState whitePawns)
         {
             return east(whitePawns) & west(whitePawns);
         }
@@ -211,7 +211,7 @@ namespace ModernChess
             return east(blackPawns) | west(blackPawns);
         }
 
-        constexpr BitBoardState doubleAttacks(BitBoardState blackPawns)
+        constexpr BitBoardState two(BitBoardState blackPawns)
         {
             return east(blackPawns) & west(blackPawns);
         }
