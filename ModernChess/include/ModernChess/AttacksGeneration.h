@@ -162,18 +162,33 @@ namespace ModernChess
         }
     }
 
-    namespace WhitePawnsAttacks
+    namespace WhitePawns
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
-        constexpr BitBoardState east(BitBoardState whitePawns)
+        constexpr BitBoardState eastAttacks(BitBoardState whitePawns)
         {
             return MoveGenerations::oneStepNorthEast(whitePawns);
         }
 
-        constexpr BitBoardState west(BitBoardState whitePawns)
+        constexpr BitBoardState westAttacks(BitBoardState whitePawns)
         {
             return MoveGenerations::oneStepNorthWest(whitePawns);
+        }
+
+        constexpr BitBoardState anyAttacks(BitBoardState whitePawns)
+        {
+            return eastAttacks(whitePawns) | westAttacks(whitePawns);
+        }
+
+        constexpr BitBoardState doubleAttacks(BitBoardState whitePawns)
+        {
+            return eastAttacks(whitePawns) & westAttacks(whitePawns);
+        }
+
+        constexpr BitBoardState singleAttacks(BitBoardState whitePawns)
+        {
+            return eastAttacks(whitePawns) ^ westAttacks(whitePawns);
         }
     }
 
@@ -181,14 +196,29 @@ namespace ModernChess
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
-        constexpr BitBoardState east(BitBoardState blackPawns)
+        constexpr BitBoardState eastAttacks(BitBoardState blackPawns)
         {
             return MoveGenerations::oneStepSouthEast(blackPawns);
         }
 
-        constexpr BitBoardState west(BitBoardState blackPawns)
+        constexpr BitBoardState westAttacks(BitBoardState blackPawns)
         {
             return MoveGenerations::oneStepSouthWest(blackPawns);
+        }
+
+        constexpr BitBoardState anyAttacks(BitBoardState blackPawns)
+        {
+            return eastAttacks(blackPawns) | westAttacks(blackPawns);
+        }
+
+        constexpr BitBoardState doubleAttacks(BitBoardState blackPawns)
+        {
+            return eastAttacks(blackPawns) & westAttacks(blackPawns);
+        }
+
+        constexpr BitBoardState singleAttacks(BitBoardState blackPawns)
+        {
+            return eastAttacks(blackPawns) ^ westAttacks(blackPawns);
         }
     }
 
