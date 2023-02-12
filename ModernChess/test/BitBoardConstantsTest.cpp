@@ -26,12 +26,12 @@ namespace
                 b8, c8, d8, e8, f8, g8, h8
         };
 
-        for (Square square : aFile)
+        for (const Square square : aFile)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notAFile)
+        for (const Square square : notAFile)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
@@ -58,12 +58,12 @@ namespace
                 b8, c8, d8, e8, f8, g8, h8
         };
 
-        for (Square square : aFile)
+        for (const Square square : aFile)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notAFile)
+        for (const Square square : notAFile)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
@@ -91,12 +91,12 @@ namespace
                 c8, d8, e8, f8, g8, h8
         };
 
-        for (Square square : aFile)
+        for (const Square square : aFile)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notABFile)
+        for (const Square square : notABFile)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
@@ -130,12 +130,12 @@ namespace
                 a8, b8, c8, d8, e8, f8,
         };
 
-        for (Square square : aFile)
+        for (const Square square : aFile)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notGHFile)
+        for (const Square square : notGHFile)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
@@ -162,12 +162,12 @@ namespace
                 a8, b8, c8, d8, e8, f8, g8,
         };
 
-        for (Square square : a1H8Diagonal)
+        for (const Square square : a1H8Diagonal)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notA1H8Diagonal)
+        for (const Square square : notA1H8Diagonal)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
@@ -194,12 +194,12 @@ namespace
                     b8, c8, d8, e8, f8, g8, h8
         };
 
-        for (Square square : h1A8Antidiagonal)
+        for (const Square square : h1A8Antidiagonal)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notH1A8Antidiagonal)
+        for (const Square square : notH1A8Antidiagonal)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
@@ -226,12 +226,12 @@ namespace
                 a8, b8, c8, d8, e8, f8, g8,
         };
 
-        for (Square square : hFile)
+        for (const Square square : hFile)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notHFile)
+        for (const Square square : notHFile)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
@@ -258,12 +258,12 @@ namespace
                 a8, b8, c8, d8, e8, f8, g8,
         };
 
-        for (Square square : hFile)
+        for (const Square square : hFile)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notHFile)
+        for (const Square square : notHFile)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
@@ -289,12 +289,12 @@ namespace
                 a8, b8, c8, d8, e8, f8, g8, h8
         };
 
-        for (Square square : firstRank)
+        for (const Square square : firstRank)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notFirstRank)
+        for (const Square square : notFirstRank)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
@@ -320,12 +320,12 @@ namespace
                 a7, b7, c7, d7, e7, f7, g7, h7,
         };
 
-        for (Square square : eightsRank)
+        for (const Square square : eightsRank)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : notEightsRank)
+        for (const Square square : notEightsRank)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
@@ -357,12 +357,12 @@ namespace
                     b7,     d7,     f7,     h7,
         };
 
-        for (Square square : darkSquares)
+        for (const Square square : darkSquares)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : lightSquares)
+        for (const Square square : lightSquares)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
@@ -394,12 +394,12 @@ namespace
                 b7,     d7,     f7,     h7,
         };
 
-        for (Square square : darkSquares)
+        for (const Square square : darkSquares)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
         }
 
-        for (Square square : lightSquares)
+        for (const Square square : lightSquares)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
