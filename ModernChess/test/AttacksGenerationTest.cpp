@@ -449,6 +449,21 @@ namespace
         print(std::cout, blackPawnAttackBoard) << std::endl;
     }
 
+    TEST(AttacksGenerationTest, BlackPawnsAttackWest)
+    {
+        // Occupy white pawn on d4
+        const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+
+        // Black pawn should move to c3
+        const BitBoardState blackPawnAttackBoard = BlackPawnsAttack::west(blackPawnsBoard);
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::d4));
+
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::c3));
+
+        print(std::cout, blackPawnAttackBoard) << std::endl;
+    }
+
 }
 
 
