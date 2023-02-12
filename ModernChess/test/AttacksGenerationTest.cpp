@@ -403,9 +403,8 @@ namespace
     TEST(AttacksGenerationTest, WhitePawnsAttackTwo)
     {
         // Occupy white pawn on d4 & f4
-        const BitBoardState whitePawnsBoard =
-                BitBoardOperations::occupySquare(BitBoardOperations::occupySquare(BoardState::empty, Square::d4),
-                                                 Square::f4);
+        BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+        whitePawnsBoard = BitBoardOperations::occupySquare(whitePawnsBoard, Square::f4);
 
         // White pawn should move to c5 & e5
         const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::two(whitePawnsBoard);
