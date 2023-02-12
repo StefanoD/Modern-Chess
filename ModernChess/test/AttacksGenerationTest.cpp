@@ -434,6 +434,21 @@ namespace
         EXPECT_TRUE(ableToCaptureEast);
     }
 
+    TEST(AttacksGenerationTest, BlackPawnsAttackEast)
+    {
+        // Occupy white pawn on d4
+        const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+
+        // Black pawn should move to e3
+        const BitBoardState blackPawnAttackBoard = BlackPawnsAttack::east(blackPawnsBoard);
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::d4));
+
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::e3));
+
+        print(std::cout, blackPawnAttackBoard) << std::endl;
+    }
+
 }
 
 
