@@ -192,7 +192,7 @@ namespace ModernChess
         }
     }
 
-    namespace BlackPawnsAttacks
+    namespace BlackPawnsAttack
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
@@ -228,17 +228,17 @@ namespace ModernChess
 
         constexpr bool ableToCaptureEast(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return whitePawns & BlackPawnsAttacks::west(blackFigures);
+            return whitePawns & BlackPawnsAttack::west(blackFigures);
         }
 
         constexpr bool ableToCaptureWest(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return whitePawns & BlackPawnsAttacks::east(blackFigures);
+            return whitePawns & BlackPawnsAttack::east(blackFigures);
         }
 
         constexpr bool ableToCaptureAny(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return whitePawns & BlackPawnsAttacks::any(blackFigures);
+            return whitePawns & BlackPawnsAttack::any(blackFigures);
         }
 
         /**
@@ -254,8 +254,8 @@ namespace ModernChess
         {
             const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttack::east(whitePawns);
             const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttack::west(whitePawns);
-            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttacks::east(blackPawns);
-            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttacks::west(blackPawns);
+            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttack::east(blackPawns);
+            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttack::west(blackPawns);
             const BitBoardState whitePawnsTwiceAttacks  = whitePawnsEastAttacks & whitePawnsWestAttacks;
             const BitBoardState whitePawnsSingleAttacks  = whitePawnsEastAttacks ^ whitePawnsWestAttacks;
             const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
@@ -299,8 +299,8 @@ namespace ModernChess
             const BitBoardState whitePawnsAnyAttacks  = whitePawnsEastAttacks | whitePawnsWestAttacks;
             const BitBoardState whitePawnsTwiceAttacks  = whitePawnsEastAttacks & whitePawnsWestAttacks;
 
-            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttacks::east(blackPawns);
-            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttacks::west(blackPawns);
+            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttack::east(blackPawns);
+            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttack::west(blackPawns);
             const BitBoardState blackPawnsSingleAttacks  = blackPawnsEastAttacks ^ blackPawnsWestAttacks;
             const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
             return blackPawnsTwiceAttacks | ~whitePawnsAnyAttacks | (blackPawnsSingleAttacks & ~whitePawnsTwiceAttacks);
