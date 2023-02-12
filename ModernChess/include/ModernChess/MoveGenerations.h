@@ -126,44 +126,44 @@ namespace ModernChess::MoveGenerations
     {
         // See https://www.chessprogramming.org/Knight_Pattern
         // and https://www.chessprogramming.org/Direction#Knight_Directions
-        constexpr BitBoardState northNorthEast(BitBoardState b)
+        constexpr BitBoardState northNorthEast(BitBoardState knights)
         {
-            return (b << 17) & BitBoardConstants::notAFile ;
+            return (knights << 17) & BitBoardConstants::notAFile ;
         }
 
-        constexpr BitBoardState northEastEast(BitBoardState b)
+        constexpr BitBoardState northEastEast(BitBoardState knights)
         {
-            return (b << 10) & BitBoardConstants::notABFile;
+            return (knights << 10) & BitBoardConstants::notABFile;
         }
 
-        constexpr BitBoardState southEastEast(BitBoardState b)
+        constexpr BitBoardState southEastEast(BitBoardState knights)
         {
-            return (b >> 6) & BitBoardConstants::notABFile;
+            return (knights >> 6) & BitBoardConstants::notABFile;
         }
 
-        constexpr BitBoardState southSouthEast(BitBoardState b)
+        constexpr BitBoardState southSouthEast(BitBoardState knights)
         {
-            return (b >> 15) & BitBoardConstants::notAFile ;
+            return (knights >> 15) & BitBoardConstants::notAFile ;
         }
 
-        constexpr BitBoardState northNorthWest(BitBoardState b)
+        constexpr BitBoardState northNorthWest(BitBoardState knights)
         {
-            return (b << 15) & BitBoardConstants::notHFile ;
+            return (knights << 15) & BitBoardConstants::notHFile ;
         }
 
-        constexpr BitBoardState northWestWest(BitBoardState b)
+        constexpr BitBoardState northWestWest(BitBoardState knights)
         {
-            return (b << 6) & BitBoardConstants::notGHFile;
+            return (knights << 6) & BitBoardConstants::notGHFile;
         }
 
-        constexpr BitBoardState southWestWest(BitBoardState b)
+        constexpr BitBoardState southWestWest(BitBoardState knights)
         {
-            return (b >> 10) & BitBoardConstants::notGHFile;
+            return (knights >> 10) & BitBoardConstants::notGHFile;
         }
 
-        constexpr BitBoardState southSouthWest(BitBoardState b)
+        constexpr BitBoardState southSouthWest(BitBoardState knights)
         {
-            return (b >> 17) & BitBoardConstants::notHFile ;
+            return (knights >> 17) & BitBoardConstants::notHFile ;
         }
     }
 }
