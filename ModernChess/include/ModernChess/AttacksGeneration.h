@@ -313,10 +313,10 @@ namespace ModernChess
         // See https://www.chessprogramming.org/Knight_Pattern#MultipleKnightAttacks
         constexpr BitBoardState attack(BitBoardState knights)
         {
-            const BitBoardState l1 = (knights >> 1) & 0x7f7f7f7f7f7f7f7f;
-            const BitBoardState l2 = (knights >> 2) & 0x3f3f3f3f3f3f3f3f;
-            const BitBoardState r1 = (knights << 1) & 0xfefefefefefefefe;
-            const BitBoardState r2 = (knights << 2) & 0xfcfcfcfcfcfcfcfc;
+            const BitBoardState l1 = (knights >> 1) & BitBoardConstants::notHFile;
+            const BitBoardState l2 = (knights >> 2) & BitBoardConstants::notGHFile;
+            const BitBoardState r1 = (knights << 1) & BitBoardConstants::notAFile;
+            const BitBoardState r2 = (knights << 2) & BitBoardConstants::notABFile;
             const BitBoardState h1 = l1 | r1;
             const BitBoardState h2 = l2 | r2;
             return (h1 << 16) | (h1 >> 16) | (h2 << 8) | (h2 >> 8);
