@@ -236,7 +236,6 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
         }
 
-
         print(std::cout, board) << std::endl;
     }
 }
