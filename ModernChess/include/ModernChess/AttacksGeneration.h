@@ -308,6 +308,52 @@ namespace ModernChess
         }
     }
 
+    namespace Knights
+    {
+        // See https://www.chessprogramming.org/Knight_Pattern#MultipleKnightAttacks
+        constexpr BitBoardState attack(BitBoardState knights)
+        {
+            const BitBoardState l1 = (knights >> 1) & 0x7f7f7f7f7f7f7f7f;
+            const BitBoardState l2 = (knights >> 2) & 0x3f3f3f3f3f3f3f3f;
+            const BitBoardState r1 = (knights << 1) & 0xfefefefefefefefe;
+            const BitBoardState r2 = (knights << 2) & 0xfcfcfcfcfcfcfcfc;
+            const BitBoardState h1 = l1 | r1;
+            const BitBoardState h2 = l2 | r2;
+            return (h1 << 16) | (h1 >> 16) | (h2 << 8) | (h2 >> 8);
+        }
+
+        // See https://www.chessprogramming.org/Knight_Pattern#Knight_Forks
+        /**
+         * @brief The intersection of those targets with squares not occupied by own pieces or attacked by opponent
+         *        pawns and knights, but attacked by own knight(s) leaves a move target set with some forced properties.
+         * @param targets
+         * @return
+         */
+        constexpr BitBoardState forkTargetSquare(BitBoardState targets) 
+        {
+            BitBoardState west, east, attak, forks;
+            east   = MoveGenerations::oneStepEast(targets);
+            west   = MoveGenerations::oneStepWest(targets);
+            attak  =  east << 16;
+            forks  = (west << 16) & attak;
+            attak |=  west << 16;
+            forks |= (east >> 16) & attak;
+            attak |=  east >> 16;
+            forks |= (west >> 16) & attak;
+            attak |=  west >> 16;
+            east   = MoveGenerations::oneStepEast(east);
+            west   = MoveGenerations::oneStepWest(west);
+            forks |= (east <<  8) & attak;
+            attak |=  east <<  8;
+            forks |= (west <<  8) & attak;
+            attak |=  west <<  8;
+            forks |= (east >>  8) & attak;
+            attak |=  east >>  8;
+            forks |= (west >>  8) & attak;
+            return forks;
+        }
+    }
+
     constexpr BitBoardState northFill(BitBoardState gen)
     {
         gen |= (gen << 8);
