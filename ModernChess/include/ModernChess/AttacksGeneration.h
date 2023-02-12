@@ -162,63 +162,103 @@ namespace ModernChess
         }
     }
 
-    namespace WhitePawns
+    namespace WhitePawnsAttack
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
-        constexpr BitBoardState eastAttacks(BitBoardState whitePawns)
+        constexpr BitBoardState east(BitBoardState whitePawns)
         {
             return MoveGenerations::oneStepNorthEast(whitePawns);
         }
 
-        constexpr BitBoardState westAttacks(BitBoardState whitePawns)
+        constexpr BitBoardState west(BitBoardState whitePawns)
         {
             return MoveGenerations::oneStepNorthWest(whitePawns);
         }
 
-        constexpr BitBoardState anyAttacks(BitBoardState whitePawns)
+        constexpr BitBoardState any(BitBoardState whitePawns)
         {
-            return eastAttacks(whitePawns) | westAttacks(whitePawns);
+            return east(whitePawns) | west(whitePawns);
         }
 
         constexpr BitBoardState doubleAttacks(BitBoardState whitePawns)
         {
-            return eastAttacks(whitePawns) & westAttacks(whitePawns);
+            return east(whitePawns) & west(whitePawns);
         }
 
-        constexpr BitBoardState singleAttacks(BitBoardState whitePawns)
+        constexpr BitBoardState single(BitBoardState whitePawns)
         {
-            return eastAttacks(whitePawns) ^ westAttacks(whitePawns);
+            return east(whitePawns) ^ west(whitePawns);
         }
     }
 
-    namespace BlackPawns
+    namespace BlackPawnsAttacks
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
-        constexpr BitBoardState eastAttacks(BitBoardState blackPawns)
+        constexpr BitBoardState east(BitBoardState blackPawns)
         {
             return MoveGenerations::oneStepSouthEast(blackPawns);
         }
 
-        constexpr BitBoardState westAttacks(BitBoardState blackPawns)
+        constexpr BitBoardState west(BitBoardState blackPawns)
         {
             return MoveGenerations::oneStepSouthWest(blackPawns);
         }
 
-        constexpr BitBoardState anyAttacks(BitBoardState blackPawns)
+        constexpr BitBoardState any(BitBoardState blackPawns)
         {
-            return eastAttacks(blackPawns) | westAttacks(blackPawns);
+            return east(blackPawns) | west(blackPawns);
         }
 
         constexpr BitBoardState doubleAttacks(BitBoardState blackPawns)
         {
-            return eastAttacks(blackPawns) & westAttacks(blackPawns);
+            return east(blackPawns) & west(blackPawns);
         }
 
-        constexpr BitBoardState singleAttacks(BitBoardState blackPawns)
+        constexpr BitBoardState single(BitBoardState blackPawns)
         {
-            return eastAttacks(blackPawns) ^ westAttacks(blackPawns);
+            return east(blackPawns) ^ west(blackPawns);
+        }
+    }
+
+    namespace WhitePawnsQueries
+    {
+        // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
+
+        constexpr BitBoardState ableToCaptureEast(BitBoardState whitePawns, BitBoardState blackFigures)
+        {
+            return whitePawns & BlackPawnsAttacks::west(blackFigures);
+        }
+
+        constexpr BitBoardState ableToCaptureWest(BitBoardState whitePawns, BitBoardState blackFigures)
+        {
+            return whitePawns & BlackPawnsAttacks::east(blackFigures);
+        }
+
+        constexpr BitBoardState ableToCaptureAny(BitBoardState whitePawns, BitBoardState blackFigures)
+        {
+            return whitePawns & BlackPawnsAttacks::any(blackFigures);
+        }
+    }
+
+    namespace BlackPawnsQueries
+    {
+        // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
+
+        constexpr BitBoardState ableToCaptureEast(BitBoardState blackPawns, BitBoardState whiteFigures)
+        {
+            return blackPawns & WhitePawnsAttack::west(whiteFigures);
+        }
+
+        constexpr BitBoardState ableToCaptureWest(BitBoardState blackPawns, BitBoardState whiteFigures)
+        {
+            return blackPawns & WhitePawnsAttack::east(whiteFigures);
+        }
+
+        constexpr BitBoardState ableToCaptureAny(BitBoardState blackPawns, BitBoardState whiteFigures)
+        {
+            return blackPawns & WhitePawnsAttack::any(whiteFigures);
         }
     }
 
