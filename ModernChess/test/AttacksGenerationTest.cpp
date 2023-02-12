@@ -487,6 +487,19 @@ namespace
         print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
+    TEST(AttacksGenerationTest, BlackPawnsAbleToCaptureEast)
+    {
+        // Occupy white pawn on d4
+        const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+
+        // Occupy black figure on e3
+        const BitBoardState whiteFiguresBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::e3);
+
+        const bool ableToCaptureEast = BlackPawnsQueries::ableToCaptureEast(blackPawnsBoard, whiteFiguresBoard);
+
+        EXPECT_TRUE(ableToCaptureEast);
+    }
+
 }
 
 
