@@ -192,7 +192,7 @@ namespace ModernChess
         }
     }
 
-    namespace BlackPawnsAttacks
+    namespace BlackPawns
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
