@@ -294,6 +294,7 @@ namespace ModernChess
          */
         constexpr bool onSafePawnSquares(BitBoardState blackPawns, BitBoardState whitePawns)
         {
+            // TODO Should maybe be tested
             const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttack::east(whitePawns);
             const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttack::west(whitePawns);
             const BitBoardState whitePawnsAnyAttacks  = whitePawnsEastAttacks | whitePawnsWestAttacks;
