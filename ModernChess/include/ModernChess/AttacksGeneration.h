@@ -240,6 +240,28 @@ namespace ModernChess
         {
             return whitePawns & BlackPawnsAttacks::any(blackFigures);
         }
+
+        /**
+         * @brief A kind if of set-wise static exchange evaluation - only considering pawn-attacks from both sides.
+         *        A square is assumed safe, if the number of own pawn defends if greater or equal than opponent
+         *        pawn attacks. That is true if the own side defends a square twice, or the opposite side has no
+         *        attacks at all, or own side attacks once and opponent not twice.
+         * @param whitePawns
+         * @param blackPawns
+         * @return true if white pawns are on safe square, false otherwise
+         */
+        constexpr bool onSafePawnSquares(BitBoardState whitePawns, BitBoardState blackPawns)
+        {
+            const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttack::east(whitePawns);
+            const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttack::west(whitePawns);
+            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttacks::east(blackPawns);
+            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttacks::west(blackPawns);
+            const BitBoardState whitePawnsTwiceAttacks  = whitePawnsEastAttacks & whitePawnsWestAttacks;
+            const BitBoardState whitePawnsSingleAttacks  = whitePawnsEastAttacks ^ whitePawnsWestAttacks;
+            const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
+            const BitBoardState blackPawnsAnyAttacks  = blackPawnsEastAttacks | blackPawnsWestAttacks;
+            return whitePawnsTwiceAttacks | ~blackPawnsAnyAttacks | (whitePawnsSingleAttacks & ~blackPawnsTwiceAttacks);
+        }
     }
 
     namespace BlackPawnsQueries
@@ -259,6 +281,29 @@ namespace ModernChess
         constexpr BitBoardState ableToCaptureAny(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
             return blackPawns & WhitePawnsAttack::any(whiteFigures);
+        }
+
+        /**
+         * @brief A kind if of set-wise static exchange evaluation - only considering pawn-attacks from both sides.
+         *        A square is assumed safe, if the number of own pawn defends if greater or equal than opponent
+         *        pawn attacks. That is true if the own side defends a square twice, or the opposite side has no
+         *        attacks at all, or own side attacks once and opponent not twice.
+         * @param blackPawns
+         * @param whitePawns
+         * @return true if black pawns are on safe square, false otherwise
+         */
+        constexpr bool onSafePawnSquares(BitBoardState blackPawns, BitBoardState whitePawns)
+        {
+            const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttack::east(whitePawns);
+            const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttack::west(whitePawns);
+            const BitBoardState whitePawnsAnyAttacks  = whitePawnsEastAttacks | whitePawnsWestAttacks;
+            const BitBoardState whitePawnsTwiceAttacks  = whitePawnsEastAttacks & whitePawnsWestAttacks;
+
+            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttacks::east(blackPawns);
+            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttacks::west(blackPawns);
+            const BitBoardState blackPawnsSingleAttacks  = blackPawnsEastAttacks ^ blackPawnsWestAttacks;
+            const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
+            return blackPawnsTwiceAttacks | ~whitePawnsAnyAttacks | (blackPawnsSingleAttacks & ~whitePawnsTwiceAttacks);
         }
     }
 
