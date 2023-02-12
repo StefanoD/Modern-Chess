@@ -226,17 +226,17 @@ namespace ModernChess
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
-        constexpr BitBoardState ableToCaptureEast(BitBoardState whitePawns, BitBoardState blackFigures)
+        constexpr bool ableToCaptureEast(BitBoardState whitePawns, BitBoardState blackFigures)
         {
             return whitePawns & BlackPawnsAttacks::west(blackFigures);
         }
 
-        constexpr BitBoardState ableToCaptureWest(BitBoardState whitePawns, BitBoardState blackFigures)
+        constexpr bool ableToCaptureWest(BitBoardState whitePawns, BitBoardState blackFigures)
         {
             return whitePawns & BlackPawnsAttacks::east(blackFigures);
         }
 
-        constexpr BitBoardState ableToCaptureAny(BitBoardState whitePawns, BitBoardState blackFigures)
+        constexpr bool ableToCaptureAny(BitBoardState whitePawns, BitBoardState blackFigures)
         {
             return whitePawns & BlackPawnsAttacks::any(blackFigures);
         }
@@ -268,17 +268,17 @@ namespace ModernChess
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
-        constexpr BitBoardState ableToCaptureEast(BitBoardState blackPawns, BitBoardState whiteFigures)
+        constexpr bool ableToCaptureEast(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
             return blackPawns & WhitePawnsAttack::west(whiteFigures);
         }
 
-        constexpr BitBoardState ableToCaptureWest(BitBoardState blackPawns, BitBoardState whiteFigures)
+        constexpr bool ableToCaptureWest(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
             return blackPawns & WhitePawnsAttack::east(whiteFigures);
         }
 
-        constexpr BitBoardState ableToCaptureAny(BitBoardState blackPawns, BitBoardState whiteFigures)
+        constexpr bool ableToCaptureAny(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
             return blackPawns & WhitePawnsAttack::any(whiteFigures);
         }
