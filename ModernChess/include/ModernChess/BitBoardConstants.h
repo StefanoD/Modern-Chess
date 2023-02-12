@@ -28,9 +28,13 @@ namespace ModernChess {
 
     namespace BitBoardConstants {
         constexpr BitBoardState aFile = 0x0101010101010101;
+        constexpr BitBoardState bFile = 0x0202020202020202;
         constexpr BitBoardState notAFile = ~aFile;
+        constexpr BitBoardState notABFile = ~(aFile | bFile);
+        constexpr BitBoardState gFile = 0x4040404040404040;
         constexpr BitBoardState hFile = 0x8080808080808080;
         constexpr BitBoardState notHFile = ~hFile;
+        constexpr BitBoardState notGHFile = ~(gFile | hFile);
         constexpr BitBoardState rank1 = 0x00000000000000FF;
         constexpr BitBoardState rank4 = 0x00000000FF000000;
         constexpr BitBoardState rank5 = 0x000000FF00000000;
