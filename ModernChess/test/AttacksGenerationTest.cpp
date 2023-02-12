@@ -370,6 +370,36 @@ namespace
         print(std::cout, rayAttackBoard) << std::endl;
     }
 
+    TEST(AttacksGenerationTest, WhitePawnsAttackEast)
+    {
+        // Occupy white pawn on d4
+        const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+
+        // White pawn should move to e5
+        const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::east(whitePawnsBoard);
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
+
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::e5));
+
+        print(std::cout, whitePawnAttackBoard) << std::endl;
+    }
+
+    TEST(AttacksGenerationTest, WhitePawnsAttackWest)
+    {
+        // Occupy white pawn on d4
+        const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+
+        // White pawn should move to c5
+        const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::west(whitePawnsBoard);
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
+
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::c5));
+
+        print(std::cout, whitePawnAttackBoard) << std::endl;
+    }
+
     TEST(AttacksGenerationTest, WhitePawnsAbleToCaptureEast)
     {
         // Occupy white pawn on d4
