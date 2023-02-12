@@ -400,6 +400,28 @@ namespace
         print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
+    TEST(AttacksGenerationTest, WhitePawnsAttackTwo)
+    {
+        // Occupy white pawn on d4 & f4
+        const BitBoardState whitePawnsBoard =
+                BitBoardOperations::occupySquare(BitBoardOperations::occupySquare(BoardState::empty, Square::d4),
+                                                 Square::f4);
+
+        // White pawn should move to c5 & e5
+        const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::two(whitePawnsBoard);
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::f4));
+
+        // c5 is not attacked by two pawns
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::c5));
+
+        // e5 is attacked by two pawns
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::e5));
+
+        print(std::cout, whitePawnAttackBoard) << std::endl;
+    }
+
     TEST(AttacksGenerationTest, WhitePawnsAbleToCaptureEast)
     {
         // Occupy white pawn on d4
