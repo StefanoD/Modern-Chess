@@ -406,7 +406,7 @@ namespace
         BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
         whitePawnsBoard = BitBoardOperations::occupySquare(whitePawnsBoard, Square::f4);
 
-        // White pawn should move to c5 & e5
+        // Both white pawns attack e5
         const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::two(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
@@ -414,6 +414,7 @@ namespace
 
         // c5 is not attacked by two pawns
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::c5));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::g5));
 
         // e5 is attacked by two pawns
         EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::e5));
@@ -462,6 +463,28 @@ namespace
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::c3));
 
         print(std::cout, blackPawnAttackBoard) << std::endl;
+    }
+
+    TEST(AttacksGenerationTest, BlackPawnsAttackTwo)
+    {
+        // Occupy white pawn on d4 & f4
+        BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
+        blackPawnsBoard = BitBoardOperations::occupySquare(blackPawnsBoard, Square::f4);
+
+        // Both white pawns attack e3
+        const BitBoardState whitePawnAttackBoard = BlackPawnsAttack::two(blackPawnsBoard);
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::f4));
+
+        // c3 is not attacked by two pawns
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::c3));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::g3));
+
+        // e5 is attacked by two pawns
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::e3));
+
+        print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
 }
