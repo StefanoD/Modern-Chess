@@ -162,6 +162,36 @@ namespace ModernChess
         }
     }
 
+    namespace WhitePawnsAttacks
+    {
+        // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
+
+        constexpr BitBoardState east(BitBoardState whitePawns)
+        {
+            return MoveGenerations::oneStepNorthEast(whitePawns);
+        }
+
+        constexpr BitBoardState west(BitBoardState whitePawns)
+        {
+            return MoveGenerations::oneStepNorthWest(whitePawns);
+        }
+    }
+
+    namespace BlackPawnsAttacks
+    {
+        // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
+
+        constexpr BitBoardState east(BitBoardState blackPawns)
+        {
+            return MoveGenerations::oneStepSouthEast(blackPawns);
+        }
+
+        constexpr BitBoardState west(BitBoardState blackPawns)
+        {
+            return MoveGenerations::oneStepSouthWest(blackPawns);
+        }
+    }
+
     constexpr BitBoardState northFill(BitBoardState gen)
     {
         gen |= (gen << 8);
