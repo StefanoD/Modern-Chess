@@ -121,4 +121,49 @@ namespace ModernChess::MoveGenerations
             return singlePushPossible(blackPawns, emptyRank6);
         }
     }
+
+    namespace Knights
+    {
+        // See https://www.chessprogramming.org/Knight_Pattern
+        // and https://www.chessprogramming.org/Direction#Knight_Directions
+        constexpr BitBoardState northNorthEast(BitBoardState b)
+        {
+            return (b << 17) & BitBoardConstants::notAFile ;
+        }
+
+        constexpr BitBoardState northEastEast(BitBoardState b)
+        {
+            return (b << 10) & BitBoardConstants::notABFile;
+        }
+
+        constexpr BitBoardState southEastEast(BitBoardState b)
+        {
+            return (b >> 6) & BitBoardConstants::notABFile;
+        }
+
+        constexpr BitBoardState southSouthEast(BitBoardState b)
+        {
+            return (b >> 15) & BitBoardConstants::notAFile ;
+        }
+
+        constexpr BitBoardState northNorthWest(BitBoardState b)
+        {
+            return (b << 15) & BitBoardConstants::notHFile ;
+        }
+
+        constexpr BitBoardState northWestWest(BitBoardState b)
+        {
+            return (b << 6) & BitBoardConstants::notGHFile;
+        }
+
+        constexpr BitBoardState southWestWest(BitBoardState b)
+        {
+            return (b >> 10) & BitBoardConstants::notGHFile;
+        }
+
+        constexpr BitBoardState southSouthWest(BitBoardState b)
+        {
+            return (b >> 17) & BitBoardConstants::notHFile ;
+        }
+    }
 }
