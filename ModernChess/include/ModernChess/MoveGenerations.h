@@ -65,8 +65,8 @@ namespace ModernChess::MoveGenerations
          */
         constexpr BitBoardState doublePush(BitBoardState whitePawns, BitBoardState emptySquares)
         {
-            const BitBoardState singlePush = singlePush(whitePawns, emptySquares);
-            return oneStepNorth(singlePush) & emptySquares & BitBoardConstants::rank4;
+            const BitBoardState singlePushs = singlePush(whitePawns, emptySquares);
+            return oneStepNorth(singlePushs) & emptySquares & BitBoardConstants::rank4;
         }
 
         constexpr bool singlePushPossible(BitBoardState whitePawns, BitBoardState emptySquares)
@@ -104,8 +104,8 @@ namespace ModernChess::MoveGenerations
          */
         constexpr BitBoardState doublePush(BitBoardState blackPawns, BitBoardState emptySquares)
         {
-            const BitBoardState singlePush = singlePush(blackPawns, emptySquares);
-            return oneStepSouth(singlePush) & emptySquares & BitBoardConstants::rank5;
+            const BitBoardState singlePushs = singlePush(blackPawns, emptySquares);
+            return oneStepSouth(singlePushs) & emptySquares & BitBoardConstants::rank5;
         }
 
         constexpr bool singlePushPossible(BitBoardState blackPawns, BitBoardState emptySquares)
