@@ -9,8 +9,8 @@ namespace ModernChess
     {
     public:
 
-        BitBoard board;
+        BitBoard board{};
         bool onTurn{};
-        Color color{};
+        Color color = Color::Undefined;
     };
 }

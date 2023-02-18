@@ -4,7 +4,8 @@ namespace ModernChess
 {
     enum class Color
     {
+        Undefined,
         Black,
-        White
+        White,
     };
 }
