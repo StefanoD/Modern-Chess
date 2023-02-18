@@ -131,6 +131,14 @@ namespace ModernChess
         {
             return MoveGenerations::oneStepWest(Ray::westOccluded(rooks, emptySquares));
         }
+
+        constexpr BitBoardState any(BitBoardState rooks, BitBoardState emptySquares)
+        {
+            return north(rooks, emptySquares) |
+                   south(rooks, emptySquares) |
+                   east(rooks, emptySquares) |
+                   west(rooks, emptySquares);
+        }
     }
 
     namespace BishopAttack
@@ -159,6 +167,23 @@ namespace ModernChess
         constexpr BitBoardState northWest(BitBoardState bishops, BitBoardState emptySquares)
         {
             return MoveGenerations::oneStepNorthWest(Ray::northWestOccluded(bishops, emptySquares));
+        }
+
+        constexpr BitBoardState any(BitBoardState bishops, BitBoardState emptySquares)
+        {
+            return northEast(bishops, emptySquares) |
+                   northWest(bishops, emptySquares) |
+                   southEast(bishops, emptySquares) |
+                   southWest(bishops, emptySquares);
+        }
+    }
+
+    namespace QueenAttack
+    {
+        constexpr BitBoardState any(BitBoardState queens, BitBoardState emptySquares)
+        {
+            return RookAttack::any(queens, emptySquares) |
+                   BishopAttack::any(queens, emptySquares);
         }
     }
 
