@@ -24,7 +24,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = RookAttack::north(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = RooksAttacks::north(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 a2, a3, a4, a5, a6, a7, // attacks from the left rook
@@ -72,7 +72,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = RookAttack::south(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = RooksAttacks::south(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 a2, a3, a4, a5, a6, a7, // attacks from the left rook
@@ -120,7 +120,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = RookAttack::east(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = RooksAttacks::east(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                     c1, d1, e1, f1,
@@ -168,7 +168,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = RookAttack::west(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = RooksAttacks::west(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 a1, b1, c1, d1, e1, f1,
@@ -211,7 +211,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = BishopAttack::northEast(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = BishopsAttacks::northEast(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 c3, d4, e5, f6, g7, h8
@@ -254,7 +254,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = BishopAttack::southEast(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = BishopsAttacks::southEast(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 c6, d5, e4, f3, g2, h1
@@ -297,7 +297,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = BishopAttack::southWest(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = BishopsAttacks::southWest(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 f6, e5, d4, c3, b2, a1
@@ -340,7 +340,7 @@ namespace
 
         // We need to pass a rayAttackBoard with empty squares as second parameter where the bits are set to 1
         const BitBoardState emptySquaresBoard = ~playBoard;
-        const BitBoardState rayAttackBoard = BishopAttack::northWest(whiteRooksBoard, emptySquaresBoard);
+        const BitBoardState rayAttackBoard = BishopsAttacks::northWest(whiteRooksBoard, emptySquaresBoard);
 
         const std::vector<Square> attackRay {
                 a8, b7, c6, d5, e4, f3,
@@ -376,7 +376,7 @@ namespace
         const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
         // White pawn should move to e5
-        const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::east(whitePawnsBoard);
+        const BitBoardState whitePawnAttackBoard = WhitePawnsAttacks::east(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
 
@@ -391,7 +391,7 @@ namespace
         const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
         // White pawn should move to c5
-        const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::west(whitePawnsBoard);
+        const BitBoardState whitePawnAttackBoard = WhitePawnsAttacks::west(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
 
@@ -406,8 +406,8 @@ namespace
         BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
         whitePawnsBoard = BitBoardOperations::occupySquare(whitePawnsBoard, Square::f4);
 
-        // Both white pawns attack e5
-        const BitBoardState whitePawnAttackBoard = WhitePawnsAttack::two(whitePawnsBoard);
+        // Both white pawns attacks e5
+        const BitBoardState whitePawnAttackBoard = WhitePawnsAttacks::two(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::f4));
@@ -441,7 +441,7 @@ namespace
         const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
         // Black pawn should move to e3
-        const BitBoardState blackPawnAttackBoard = BlackPawnsAttack::east(blackPawnsBoard);
+        const BitBoardState blackPawnAttackBoard = BlackPawnsAttacks::east(blackPawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::d4));
 
@@ -456,7 +456,7 @@ namespace
         const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
         // Black pawn should move to c3
-        const BitBoardState blackPawnAttackBoard = BlackPawnsAttack::west(blackPawnsBoard);
+        const BitBoardState blackPawnAttackBoard = BlackPawnsAttacks::west(blackPawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::d4));
 
@@ -471,8 +471,8 @@ namespace
         BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
         blackPawnsBoard = BitBoardOperations::occupySquare(blackPawnsBoard, Square::f4);
 
-        // Both white pawns attack e3
-        const BitBoardState whitePawnAttackBoard = BlackPawnsAttack::two(blackPawnsBoard);
+        // Both white pawns attacks e3
+        const BitBoardState whitePawnAttackBoard = BlackPawnsAttacks::two(blackPawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::f4));

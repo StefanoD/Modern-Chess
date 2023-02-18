@@ -105,9 +105,9 @@ namespace ModernChess
         }
     }
 
-    namespace RookAttack {
+    namespace RooksAttacks {
         /**
-         * @brief A north ray attack from rooks
+         * @brief A north ray attacks from rooks
          * @param rooks board with rooks
          * @param emptySquares An inverted play board where empty square bits are set to 1.
          * @return All attacking squares
@@ -141,10 +141,10 @@ namespace ModernChess
         }
     }
 
-    namespace BishopAttack
+    namespace BishopsAttacks
     {
         /**
-         * @brief A north-east ray attack from bishops
+         * @brief A north-east ray attacks from bishops
          * @param bishops board with bishops
          * @param emptySquares An inverted play board where empty square bits are set to 1.
          * @return All attacking squares
@@ -178,16 +178,16 @@ namespace ModernChess
         }
     }
 
-    namespace QueenAttack
+    namespace QueensAttacks
     {
         constexpr BitBoardState any(BitBoardState queens, BitBoardState emptySquares)
         {
-            return RookAttack::any(queens, emptySquares) |
-                   BishopAttack::any(queens, emptySquares);
+            return RooksAttacks::any(queens, emptySquares) |
+                   BishopsAttacks::any(queens, emptySquares);
         }
     }
 
-    namespace WhitePawnsAttack
+    namespace WhitePawnsAttacks
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
@@ -217,7 +217,7 @@ namespace ModernChess
         }
     }
 
-    namespace BlackPawnsAttack
+    namespace BlackPawnsAttacks
     {
         // See https://www.chessprogramming.org/Pawn_Attacks_(Bitboards)
 
@@ -253,17 +253,17 @@ namespace ModernChess
 
         constexpr bool ableToCaptureEast(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return (whitePawns & BlackPawnsAttack::west(blackFigures)) != 0;
+            return (whitePawns & BlackPawnsAttacks::west(blackFigures)) != 0;
         }
 
         constexpr bool ableToCaptureWest(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return (whitePawns & BlackPawnsAttack::east(blackFigures)) != 0;
+            return (whitePawns & BlackPawnsAttacks::east(blackFigures)) != 0;
         }
 
         constexpr bool ableToCaptureAny(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return (whitePawns & BlackPawnsAttack::any(blackFigures)) != 0;
+            return (whitePawns & BlackPawnsAttacks::any(blackFigures)) != 0;
         }
 
         /**
@@ -277,10 +277,10 @@ namespace ModernChess
          */
         constexpr bool onSafePawnSquares(BitBoardState whitePawns, BitBoardState blackPawns)
         {
-            const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttack::east(whitePawns);
-            const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttack::west(whitePawns);
-            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttack::east(blackPawns);
-            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttack::west(blackPawns);
+            const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttacks::east(whitePawns);
+            const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttacks::west(whitePawns);
+            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttacks::east(blackPawns);
+            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttacks::west(blackPawns);
             const BitBoardState whitePawnsTwiceAttacks  = whitePawnsEastAttacks & whitePawnsWestAttacks;
             const BitBoardState whitePawnsSingleAttacks  = whitePawnsEastAttacks ^ whitePawnsWestAttacks;
             const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
@@ -295,17 +295,17 @@ namespace ModernChess
 
         constexpr bool ableToCaptureEast(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
-            return (blackPawns & WhitePawnsAttack::west(whiteFigures)) != 0;
+            return (blackPawns & WhitePawnsAttacks::west(whiteFigures)) != 0;
         }
 
         constexpr bool ableToCaptureWest(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
-            return (blackPawns & WhitePawnsAttack::east(whiteFigures)) != 0;
+            return (blackPawns & WhitePawnsAttacks::east(whiteFigures)) != 0;
         }
 
         constexpr bool ableToCaptureAny(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
-            return (blackPawns & WhitePawnsAttack::any(whiteFigures)) != 0;
+            return (blackPawns & WhitePawnsAttacks::any(whiteFigures)) != 0;
         }
 
         /**
@@ -320,13 +320,13 @@ namespace ModernChess
         constexpr bool onSafePawnSquares(BitBoardState blackPawns, BitBoardState whitePawns)
         {
             // TODO Should maybe be tested
-            const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttack::east(whitePawns);
-            const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttack::west(whitePawns);
+            const BitBoardState whitePawnsEastAttacks =  WhitePawnsAttacks::east(whitePawns);
+            const BitBoardState whitePawnsWestAttacks =  WhitePawnsAttacks::west(whitePawns);
             const BitBoardState whitePawnsAnyAttacks  = whitePawnsEastAttacks | whitePawnsWestAttacks;
             const BitBoardState whitePawnsTwiceAttacks  = whitePawnsEastAttacks & whitePawnsWestAttacks;
 
-            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttack::east(blackPawns);
-            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttack::west(blackPawns);
+            const BitBoardState blackPawnsEastAttacks =  BlackPawnsAttacks::east(blackPawns);
+            const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttacks::west(blackPawns);
             const BitBoardState blackPawnsSingleAttacks  = blackPawnsEastAttacks ^ blackPawnsWestAttacks;
             const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
             return (blackPawnsTwiceAttacks | ~whitePawnsAnyAttacks | (blackPawnsSingleAttacks & ~whitePawnsTwiceAttacks)) != 0;
@@ -336,7 +336,7 @@ namespace ModernChess
     namespace Knights
     {
         // See https://www.chessprogramming.org/Knight_Pattern#MultipleKnightAttacks
-        constexpr BitBoardState attack(BitBoardState knights)
+        constexpr BitBoardState attacks(BitBoardState knights)
         {
             const BitBoardState l1 = (knights >> 1) & BitBoardConstants::notHFile;
             const BitBoardState l2 = (knights >> 2) & BitBoardConstants::notGHFile;
