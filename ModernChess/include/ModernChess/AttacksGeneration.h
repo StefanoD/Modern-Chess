@@ -228,17 +228,17 @@ namespace ModernChess
 
         constexpr bool ableToCaptureEast(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return whitePawns & BlackPawnsAttack::west(blackFigures);
+            return (whitePawns & BlackPawnsAttack::west(blackFigures)) != 0;
         }
 
         constexpr bool ableToCaptureWest(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return whitePawns & BlackPawnsAttack::east(blackFigures);
+            return (whitePawns & BlackPawnsAttack::east(blackFigures)) != 0;
         }
 
         constexpr bool ableToCaptureAny(BitBoardState whitePawns, BitBoardState blackFigures)
         {
-            return whitePawns & BlackPawnsAttack::any(blackFigures);
+            return (whitePawns & BlackPawnsAttack::any(blackFigures)) != 0;
         }
 
         /**
@@ -260,7 +260,7 @@ namespace ModernChess
             const BitBoardState whitePawnsSingleAttacks  = whitePawnsEastAttacks ^ whitePawnsWestAttacks;
             const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
             const BitBoardState blackPawnsAnyAttacks  = blackPawnsEastAttacks | blackPawnsWestAttacks;
-            return whitePawnsTwiceAttacks | ~blackPawnsAnyAttacks | (whitePawnsSingleAttacks & ~blackPawnsTwiceAttacks);
+            return (whitePawnsTwiceAttacks | ~blackPawnsAnyAttacks | (whitePawnsSingleAttacks & ~blackPawnsTwiceAttacks)) != 0;
         }
     }
 
@@ -270,17 +270,17 @@ namespace ModernChess
 
         constexpr bool ableToCaptureEast(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
-            return blackPawns & WhitePawnsAttack::west(whiteFigures);
+            return (blackPawns & WhitePawnsAttack::west(whiteFigures)) != 0;
         }
 
         constexpr bool ableToCaptureWest(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
-            return blackPawns & WhitePawnsAttack::east(whiteFigures);
+            return (blackPawns & WhitePawnsAttack::east(whiteFigures)) != 0;
         }
 
         constexpr bool ableToCaptureAny(BitBoardState blackPawns, BitBoardState whiteFigures)
         {
-            return blackPawns & WhitePawnsAttack::any(whiteFigures);
+            return (blackPawns & WhitePawnsAttack::any(whiteFigures)) != 0;
         }
 
         /**
@@ -304,7 +304,7 @@ namespace ModernChess
             const BitBoardState blackPawnsWestAttacks =  BlackPawnsAttack::west(blackPawns);
             const BitBoardState blackPawnsSingleAttacks  = blackPawnsEastAttacks ^ blackPawnsWestAttacks;
             const BitBoardState blackPawnsTwiceAttacks  = blackPawnsEastAttacks & blackPawnsWestAttacks;
-            return blackPawnsTwiceAttacks | ~whitePawnsAnyAttacks | (blackPawnsSingleAttacks & ~whitePawnsTwiceAttacks);
+            return (blackPawnsTwiceAttacks | ~whitePawnsAnyAttacks | (blackPawnsSingleAttacks & ~whitePawnsTwiceAttacks)) != 0;
         }
     }
 
@@ -331,25 +331,24 @@ namespace ModernChess
          */
         constexpr BitBoardState forkTargetSquare(BitBoardState targets) 
         {
-            BitBoardState west, east, attak, forks;
-            east   = MoveGenerations::oneStepEast(targets);
-            west   = MoveGenerations::oneStepWest(targets);
-            attak  =  east << 16;
-            forks  = (west << 16) & attak;
-            attak |=  west << 16;
-            forks |= (east >> 16) & attak;
-            attak |=  east >> 16;
-            forks |= (west >> 16) & attak;
-            attak |=  west >> 16;
+            BitBoardState west = MoveGenerations::oneStepWest(targets);
+            BitBoardState east = MoveGenerations::oneStepEast(targets);
+            BitBoardState attack = east << 16;
+            BitBoardState forks = (west << 16) & attack;
+            attack |=  west << 16;
+            forks |= (east >> 16) & attack;
+            attack |=  east >> 16;
+            forks |= (west >> 16) & attack;
+            attack |=  west >> 16;
             east   = MoveGenerations::oneStepEast(east);
             west   = MoveGenerations::oneStepWest(west);
-            forks |= (east <<  8) & attak;
-            attak |=  east <<  8;
-            forks |= (west <<  8) & attak;
-            attak |=  west <<  8;
-            forks |= (east >>  8) & attak;
-            attak |=  east >>  8;
-            forks |= (west >>  8) & attak;
+            forks |= (east <<  8) & attack;
+            attack |=  east << 8;
+            forks |= (west <<  8) & attack;
+            attack |=  west << 8;
+            forks |= (east >>  8) & attack;
+            attack |=  east >> 8;
+            forks |= (west >>  8) & attack;
             return forks;
         }
     }

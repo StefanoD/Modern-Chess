@@ -73,7 +73,7 @@ namespace ModernChess::MoveGenerations
         {
             // To get the set of source squares of pawns able to push is about intersection of pawns with the shifted
             // empty squares in opposite direction:
-            return oneStepSouth(emptySquares) & whitePawns;
+            return (oneStepSouth(emptySquares) & whitePawns) != 0;
         }
 
         constexpr bool doublePushPossible(BitBoardState whitePawns, BitBoardState emptySquares)
@@ -112,7 +112,7 @@ namespace ModernChess::MoveGenerations
         {
             // To get the set of source squares of pawns able to push is about intersection of pawns with the shifted
             // empty squares in opposite direction:
-            return oneStepNorth(emptySquares) & blackPawns;
+            return (oneStepNorth(emptySquares) & blackPawns) != 0;
         }
 
         constexpr bool doublePushPossible(BitBoardState blackPawns, BitBoardState emptySquares)
