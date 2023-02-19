@@ -8,6 +8,7 @@ add_library(${target}
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
         ../include/ModernChess/Color.h
+        ../include/ModernChess/GameState.h
         ../include/ModernChess/MoveGenerations.h
         ../include/ModernChess/Player.h
         ../include/ModernChess/Square.h
@@ -17,6 +18,7 @@ add_library(${target}
         BitBoard.cpp
         Utilities.cpp
         Player.cpp
+        GameState.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)
