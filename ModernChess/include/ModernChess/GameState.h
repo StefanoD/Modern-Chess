@@ -17,6 +17,6 @@ namespace ModernChess
         Color m_sideToMove = Color::White;
         bool m_whiteHasCastleRights = true;
         bool m_blackHasCastleRights = true;
-        Square enPassantTarget = Square::undefined;
+        Square m_enPassantTarget = Square::undefined;
     };
 }
