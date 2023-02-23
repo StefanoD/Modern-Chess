@@ -105,7 +105,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/BitScan
      * @return index (0..63) of most significant one bit
      */
-    int bitScanReverse(BitBoardState bitBoard)
+    Square bitScanReverse(BitBoardState bitBoard)
     {
         constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
         //assert (bitBoard != 0);
@@ -115,6 +115,6 @@ namespace ModernChess::BitBoardOperations
         bitBoard |= bitBoard >> 8;
         bitBoard |= bitBoard >> 16;
         bitBoard |= bitBoard >> 32;
-        return bitScanLookup[(bitBoard * debruijn64) >> 58];
+        return Square(bitScanLookup[(bitBoard * debruijn64) >> 58]);
     }
 }
