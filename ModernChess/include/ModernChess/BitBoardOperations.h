@@ -69,7 +69,7 @@ namespace ModernChess::BitBoardOperations
         return mirrorHorizontal(flipVertical(board));
     }
 
-    constexpr int bitScanForwardLookup[64] =
+    constexpr int bitScanLookup[64] =
     {
             0, 47,  1, 56, 48, 27,  2, 60,
             57, 49, 41, 37, 28, 16,  3, 61,
@@ -93,6 +93,28 @@ namespace ModernChess::BitBoardOperations
     {
         constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
         //assert (bitBoard != 0);
-        return Square(bitScanForwardLookup[((bitBoard ^ (bitBoard - 1)) * debruijn64) >> 58]);
+        return Square(bitScanLookup[((bitBoard ^ (bitBoard - 1)) * debruijn64) >> 58]);
+    }
+
+
+    /**
+     * bitScanReverse
+     * @authors Kim Walisch, Mark Dickinson
+     * @param bitBoard bitboard to scan
+     * @precondition bitBoard != 0
+     * @see https://www.chessprogramming.org/BitScan
+     * @return index (0..63) of most significant one bit
+     */
+    int bitScanReverse(BitBoardState bitBoard)
+    {
+        constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
+        //assert (bitBoard != 0);
+        bitBoard |= bitBoard >> 1;
+        bitBoard |= bitBoard >> 2;
+        bitBoard |= bitBoard >> 4;
+        bitBoard |= bitBoard >> 8;
+        bitBoard |= bitBoard >> 16;
+        bitBoard |= bitBoard >> 32;
+        return bitScanLookup[(bitBoard * debruijn64) >> 58];
     }
 }
