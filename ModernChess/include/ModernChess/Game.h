@@ -10,6 +10,6 @@ namespace ModernChess {
     public:
 
     private:
-        std::vector<GameState> m_gameStates;
+        std::vector<GameState> m_gameHistory;
     };
 }
