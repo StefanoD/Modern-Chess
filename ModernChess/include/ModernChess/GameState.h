@@ -10,7 +10,7 @@ namespace ModernChess
     {
     public:
 
-    private:
+    //private:
         BitBoard m_board{};
         // See https://www.chessprogramming.org/Halfmove_Clock
         uint32_t m_halfMoveClock = 0;

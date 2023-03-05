@@ -10,6 +10,7 @@ add_library(${target}
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
+        ../include/ModernChess/Move.h
         ../include/ModernChess/MoveGenerations.h
         ../include/ModernChess/Player.h
         ../include/ModernChess/Square.h
@@ -21,6 +22,8 @@ add_library(${target}
         Player.cpp
         GameState.cpp
         Game.cpp
+        Move.cpp
+
         )
 
 target_include_directories(${target} PUBLIC ../include)
