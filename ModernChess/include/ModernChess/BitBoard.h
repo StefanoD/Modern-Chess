@@ -6,7 +6,7 @@ namespace ModernChess
 {
 
 
-    // TODO Square-centric representation \
+    // TODO Square-centric representation
     //  - function to map FEN notation to board state
     //  - function to map from geometric to bitmap
 
