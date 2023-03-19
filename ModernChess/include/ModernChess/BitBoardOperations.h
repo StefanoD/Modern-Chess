@@ -8,7 +8,7 @@ namespace ModernChess::BitBoardOperations
 
     constexpr BitBoardState occupySquare(BitBoardState board, Square square)
     {
-        const BitBoardState state = 1UL << square;
+        const BitBoardState state = uint64_t(1) << square;
         board |= state;
 
         return board;
@@ -16,7 +16,7 @@ namespace ModernChess::BitBoardOperations
 
     constexpr bool isOccupied(BitBoardState board, Square square)
     {
-        const BitBoardState state = 1UL << square;
+        const BitBoardState state = uint64_t(1) << square;
         board &= state;
 
         return board == state;
