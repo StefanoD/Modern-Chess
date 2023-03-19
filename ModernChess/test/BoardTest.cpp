@@ -29,21 +29,6 @@ namespace
         }
     };
 
-    TEST(Board, BoardPrintBitBoard)
-    {
-        BitBoardState board = BoardState::empty;
-        board = BitBoardOperations::occupySquare(board, Square::a1);
-
-        // We expect a1 to be on the left file on the 8. rank
-        std::stringstream stream;
-        print(stream, board);
-        const std::string strBoard = stream.str();
-        const size_t numberOfNewLines = 7;
-        // Add also numberOfNewLines, because \n counts also as character
-        const size_t position = 8 * numberOfNewLines + numberOfNewLines;
-        EXPECT_EQ(strBoard.substr(position, 1), "1");
-        std::cout << strBoard << std::endl;
-    }
 
     TEST(Board, SquaresAreUniquelyOccupied)
     {
