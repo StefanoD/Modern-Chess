@@ -22,6 +22,14 @@ namespace ModernChess::BitBoardOperations
         return board == state;
     }
 
+    constexpr BitBoardState eraseSquare(BitBoardState board, Square square)
+    {
+        const BitBoardState state = ~(uint64_t(1) << square);
+        board &= state;
+
+        return board;
+    }
+
     /**
      * @brief Mirror a bitboard horizontally about the center files.
      *        File a is mapped to file h and vice versa.
