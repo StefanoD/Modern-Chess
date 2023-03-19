@@ -14,20 +14,20 @@ namespace ModernChess::BitBoardOperations
         return board;
     }
 
-    constexpr bool isOccupied(BitBoardState board, Square square)
-    {
-        const BitBoardState state = uint64_t(1) << square;
-        board &= state;
-
-        return board == state;
-    }
-
     constexpr BitBoardState eraseSquare(BitBoardState board, Square square)
     {
         const BitBoardState state = ~(uint64_t(1) << square);
         board &= state;
 
         return board;
+    }
+
+    constexpr bool isOccupied(BitBoardState board, Square square)
+    {
+        const BitBoardState state = uint64_t(1) << square;
+        board &= state;
+
+        return board == state;
     }
 
     /**
