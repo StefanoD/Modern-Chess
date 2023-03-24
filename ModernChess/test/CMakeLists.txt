@@ -5,7 +5,9 @@ add_executable(${target}
         BoardTest.cpp
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp
-        MoveGenerationsTest.cpp)
+        MoveGenerationsTest.cpp
+        SquareTest.cpp
+        )
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
