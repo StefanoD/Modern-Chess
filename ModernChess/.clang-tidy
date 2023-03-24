@@ -4,12 +4,10 @@ Checks:
         -bugprone-easily-swappable-parameters
     cppcoreguidelines-*
         -cppcoreguidelines-avoid-magic-numbers
-        -cppcoreguidelines-avoid-c-arrays
     hicpp-
     misc-*
     modernize-*
         -modernize-use-trailing-return-type
-        -modernize-avoid-c-arrays
     performance-*
     portability-*
     readability-*
