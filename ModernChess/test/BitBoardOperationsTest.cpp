@@ -18,4 +18,24 @@ namespace
         EXPECT_EQ(bitBoardState, 0);
     }
 
+    TEST(BitBoardOperationsTest, bitScanForward)
+    {
+        BitBoardState bitBoardState = 0;
+        bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
+        bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a2);
+
+        const Square square = BitBoardOperations::bitScanForward(bitBoardState);
+        EXPECT_EQ(square, Square::a1);
+    }
+
+    TEST(BitBoardOperationsTest, bitScanReverse)
+    {
+        BitBoardState bitBoardState = 0;
+        bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
+        bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a2);
+
+        const Square square = BitBoardOperations::bitScanReverse(bitBoardState);
+        EXPECT_EQ(square, Square::a2);
+    }
+
 }
