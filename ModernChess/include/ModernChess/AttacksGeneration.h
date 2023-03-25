@@ -7,8 +7,8 @@
 namespace ModernChess
 {
     // Attack calculations on an empty board which is here named "empty squares".
-    // See https://www.chessemptyBoardgramming.org/On_an_empty_Board and
-    // https://www.chessemptyBoardgramming.org/Kogge-Stone_Algorithm
+    // See https://www.chessprogramming.org/On_an_empty_Board and
+    // https://www.chessprogramming.org/Kogge-Stone_Algorithm
 
     namespace Ray {
 
