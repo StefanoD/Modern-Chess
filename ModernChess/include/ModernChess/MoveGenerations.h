@@ -49,9 +49,9 @@ namespace ModernChess::MoveGenerations
         // See https://www.chessprogramming.org/Pawn_Pushes_(Bitboards)#GeneralizedPush
 
         /**
-         * @param whitePawns board with white pawns
+         * @param whitePawns board with White pawns
          * @param emptySquares An inverted play board where empty square bits are set to 1.
-         * @return Resulting board where all white pawns have been pushed by one square
+         * @return Resulting board where all White pawns have been pushed by one square
          */
         constexpr BitBoardState singlePush(BitBoardState whitePawns, BitBoardState emptySquares)
         {
@@ -59,9 +59,9 @@ namespace ModernChess::MoveGenerations
         }
 
         /**
-         * @param whitePawns board with white pawns
+         * @param whitePawns board with White pawns
          * @param emptySquares An inverted play board where empty square bits are set to 1.
-         * @return Resulting board where all white pawns have been pushed by two square
+         * @return Resulting board where all White pawns have been pushed by two square
          */
         constexpr BitBoardState doublePush(BitBoardState whitePawns, BitBoardState emptySquares)
         {
@@ -88,9 +88,9 @@ namespace ModernChess::MoveGenerations
         // See https://www.chessprogramming.org/Pawn_Pushes_(Bitboards)#GeneralizedPush
 
         /**
-         * @param blackPawns board with black pawns
+         * @param blackPawns board with Black pawns
          * @param emptySquares An inverted play board where empty square bits are set to 1.
-         * @return Resulting board where all black pawns have been pushed by one square
+         * @return Resulting board where all Black pawns have been pushed by one square
          */
         constexpr BitBoardState singlePush(BitBoardState blackPawns, BitBoardState emptySquares)
         {
@@ -98,9 +98,9 @@ namespace ModernChess::MoveGenerations
         }
 
         /**
-         * @param blackPawns board with black pawns
+         * @param blackPawns board with Black pawns
          * @param emptySquares An inverted play board where empty square bits are set to 1.
-         * @return Resulting board where all black pawns have been pushed by two square
+         * @return Resulting board where all Black pawns have been pushed by two square
          */
         constexpr BitBoardState doublePush(BitBoardState blackPawns, BitBoardState emptySquares)
         {

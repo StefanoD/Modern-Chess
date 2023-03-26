@@ -7,6 +7,7 @@ add_executable(${target}
         BitBoardOperationsTest.cpp
         MoveGenerationsTest.cpp
         SquareTest.cpp
+        PawnQueriesTest.cpp
         )
 
 target_link_libraries(${target} PRIVATE

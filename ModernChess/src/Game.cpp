@@ -1,5 +1,6 @@
-//
-// Created by Stefano Di Martino on 19.02.23.
-//
-
 #include "ModernChess/Game.h"
+
+namespace ModernChess
+{
+    std::array<std::array<BitBoardState, 64>, 2> Game::pawnAttackTable = AttackGeneration::generatePawnAttacks();
+}

@@ -12,6 +12,8 @@ add_library(${target}
         ../include/ModernChess/GameState.h
         ../include/ModernChess/Move.h
         ../include/ModernChess/MoveGenerations.h
+        ../include/ModernChess/PawnAttackGeneration.h
+        ../include/ModernChess/PawnQueries.h
         ../include/ModernChess/Player.h
         ../include/ModernChess/Square.h
         ../include/ModernChess/Utilities.h
@@ -23,7 +25,7 @@ add_library(${target}
         GameState.cpp
         Game.cpp
         Move.cpp
-
+        PawnAttackGeneration.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)

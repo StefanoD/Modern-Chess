@@ -23,19 +23,19 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of white figures
+        // Test for occupation of White figures
         for (Square square = Square::a2; square <= Square::h3; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for un-occupation of black figures, because they moved north
+        // Test for un-occupation of Black figures, because they moved north
         for (Square square = Square::a7; square <= Square::h7; ++square)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::a8; square <= Square::h8; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -57,19 +57,19 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for un-occupation of white figures
+        // Test for un-occupation of White figures
         for (Square square = Square::a2; square <= Square::h5; ++square)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures, because they moved south
+        // Test for occupation of Black figures, because they moved south
         for (Square square = Square::a6; square <= Square::h7; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for un-occupation of black figures, because they moved south
+        // Test for un-occupation of Black figures, because they moved south
         for (Square square = Square::a8; square <= Square::h8; ++square)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -91,19 +91,19 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of white figures
+        // Test for occupation of White figures
         for (Square square = Square::b2; square <= Square::h2; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::b7; square <= Square::h7; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::b8; square <= Square::h8; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -129,19 +129,19 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of white figures
+        // Test for occupation of White figures
         for (Square square = Square::b2; square <= Square::g2; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::a7; square <= Square::g7; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::a8; square <= Square::g8; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -167,25 +167,25 @@ namespace
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for un-occupation of white figures
+        // Test for un-occupation of White figures
         for (Square square = Square::a2; square <= Square::h5; ++square)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::a6; square <= Square::g6; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for occupation of black figures
+        // Test for occupation of Black figures
         for (Square square = Square::a7; square <= Square::g7; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test for un-occupation of black figures
+        // Test for un-occupation of Black figures
         for (Square square = Square::a8; square <= Square::h8; ++square)
         {
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -200,7 +200,7 @@ namespace
 
     TEST(MoveGenerationsTest, KnightsNorthNorthEast)
     {
-        // Occupy white pawn on d4
+        // Occupy White pawnAttackTable on d4
         BitBoardState knightsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
         knightsBoard = BitBoardOperations::occupySquare(knightsBoard, Square::c4);
 

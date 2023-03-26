@@ -2,10 +2,10 @@
 
 namespace ModernChess
 {
-    enum class Color : uint8_t
+    enum Color : uint8_t
     {
-        Undefined,
-        Black,
-        White,
+        White = 0,
+        Black = 1,
+        Undefined = 255,
     };
 }

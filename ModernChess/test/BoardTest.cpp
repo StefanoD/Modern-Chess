@@ -39,7 +39,7 @@ namespace
 
         const BitBoardState bitBoardState = board.getOccupiedSquares();
 
-        // Test occupation of white figures
+        // Test occupation of White figures
         for (Square square = Square::a1; square <= Square::h2; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -51,7 +51,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test occupation of black figures
+        // Test occupation of Black figures
         for (Square square = Square::a7; square <= Square::h8; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -71,7 +71,7 @@ namespace
             EXPECT_FALSE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
         }
 
-        // Test occupation of black figures
+        // Test occupation of Black figures
         for (Square square = Square::a7; square <= Square::h8; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));
@@ -85,7 +85,7 @@ namespace
         const BitBoard board;
         const BitBoardState bitBoardState = board.getWhiteFigures();
 
-        // Test occupation of white figures
+        // Test occupation of White figures
         for (Square square = Square::a1; square <= Square::h2; ++square)
         {
             EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square(square)));

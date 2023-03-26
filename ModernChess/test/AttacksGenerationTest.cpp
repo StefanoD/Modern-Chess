@@ -1,4 +1,5 @@
 #include "ModernChess/AttacksGeneration.h"
+#include "ModernChess/PawnAttackGeneration.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
@@ -6,6 +7,7 @@
 namespace
 {
     using namespace ModernChess;
+    using namespace AttackGeneration;
 
     TEST(AttacksGenerationTest, RookNorthAttacks)
     {
@@ -372,10 +374,10 @@ namespace
 
     TEST(AttacksGenerationTest, WhitePawnsAttackEast)
     {
-        // Occupy white pawn on d4
+        // Occupy White pawnAttackTable on d4
         const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
-        // White pawn should move to e5
+        // White pawnAttackTable should move to e5
         const BitBoardState whitePawnAttackBoard = WhitePawnsAttacks::east(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
@@ -387,10 +389,10 @@ namespace
 
     TEST(AttacksGenerationTest, WhitePawnsAttackWest)
     {
-        // Occupy white pawn on d4
+        // Occupy White pawnAttackTable on d4
         const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
-        // White pawn should move to c5
+        // White pawnAttackTable should move to c5
         const BitBoardState whitePawnAttackBoard = WhitePawnsAttacks::west(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
@@ -402,11 +404,11 @@ namespace
 
     TEST(AttacksGenerationTest, WhitePawnsAttackTwo)
     {
-        // Occupy white pawn on d4 & f4
+        // Occupy White pawnAttackTable on d4 & f4
         BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
         whitePawnsBoard = BitBoardOperations::occupySquare(whitePawnsBoard, Square::f4);
 
-        // Both white pawns attacks e5
+        // Both White pawns attacks e5
         const BitBoardState whitePawnAttackBoard = WhitePawnsAttacks::two(whitePawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
@@ -422,25 +424,12 @@ namespace
         print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
-    TEST(AttacksGenerationTest, WhitePawnsAbleToCaptureEast)
-    {
-        // Occupy white pawn on d4
-        const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
-
-        // Occupy black figure on e5
-        const BitBoardState blackFiguresBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::e5);
-
-        const bool ableToCaptureEast = WhitePawnsQueries::ableToCaptureEast(whitePawnsBoard, blackFiguresBoard);
-
-        EXPECT_TRUE(ableToCaptureEast);
-    }
-
     TEST(AttacksGenerationTest, BlackPawnsAttackEast)
     {
-        // Occupy white pawn on d4
+        // Occupy White pawnAttackTable on d4
         const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
-        // Black pawn should move to e3
+        // Black pawnAttackTable should move to e3
         const BitBoardState blackPawnAttackBoard = BlackPawnsAttacks::east(blackPawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::d4));
@@ -452,10 +441,10 @@ namespace
 
     TEST(AttacksGenerationTest, BlackPawnsAttackWest)
     {
-        // Occupy white pawn on d4
+        // Occupy White pawnAttackTable on d4
         const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
 
-        // Black pawn should move to c3
+        // Black pawnAttackTable should move to c3
         const BitBoardState blackPawnAttackBoard = BlackPawnsAttacks::west(blackPawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(blackPawnAttackBoard, Square::d4));
@@ -467,11 +456,11 @@ namespace
 
     TEST(AttacksGenerationTest, BlackPawnsAttackTwo)
     {
-        // Occupy white pawn on d4 & f4
+        // Occupy White pawnAttackTable on d4 & f4
         BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
         blackPawnsBoard = BitBoardOperations::occupySquare(blackPawnsBoard, Square::f4);
 
-        // Both white pawns attacks e3
+        // Both White pawns attacks e3
         const BitBoardState whitePawnAttackBoard = BlackPawnsAttacks::two(blackPawnsBoard);
 
         EXPECT_FALSE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::d4));
@@ -485,19 +474,6 @@ namespace
         EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnAttackBoard, Square::e3));
 
         print(std::cout, whitePawnAttackBoard) << std::endl;
-    }
-
-    TEST(AttacksGenerationTest, BlackPawnsAbleToCaptureEast)
-    {
-        // Occupy white pawn on d4
-        const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
-
-        // Occupy black figure on e3
-        const BitBoardState whiteFiguresBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::e3);
-
-        const bool ableToCaptureEast = BlackPawnsQueries::ableToCaptureEast(blackPawnsBoard, whiteFiguresBoard);
-
-        EXPECT_TRUE(ableToCaptureEast);
     }
 
 }
