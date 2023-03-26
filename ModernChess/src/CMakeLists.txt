@@ -10,6 +10,7 @@ add_library(${target}
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
+        ../include/ModernChess/KingAttackGeneration.h
         ../include/ModernChess/KnightAttackGeneration.h
         ../include/ModernChess/Move.h
         ../include/ModernChess/MoveGenerations.h
