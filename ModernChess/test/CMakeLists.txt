@@ -8,7 +8,7 @@ add_executable(${target}
         MoveGenerationsTest.cpp
         SquareTest.cpp
         PawnQueriesTest.cpp
-        )
+        SlidingPieceAttackGenerationTest.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
