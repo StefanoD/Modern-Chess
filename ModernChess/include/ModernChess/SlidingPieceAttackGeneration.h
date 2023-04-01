@@ -46,6 +46,44 @@ namespace ModernChess::AttackGeneration::SlidingPieces
             return attacks;
         }
 
+        // mask rook attacks
+        constexpr BitBoardState maskRookAttacks(Square square)
+        {
+            // result attacks bitboard
+            BitBoardState attacks = BoardState::empty;
+
+            // init target rank & files
+            const int targetRank = square / 8;
+            const int targetFile = square % 8;
+
+            // init ranks & files
+            int rank, file;
+
+            // mask relevant bishop occupancy bits
+            for (rank = targetRank + 1; rank <= 6; rank++)
+            {
+                attacks |= (1ULL << (rank * 8 + targetFile));
+            }
+
+            for (rank = targetRank - 1; rank >= 1; rank--)
+            {
+                attacks |= (1ULL << (rank * 8 + targetFile));
+            }
+
+            for (file = targetFile + 1; file <= 6; file++)
+            {
+                attacks |= (1ULL << (targetRank * 8 + file));
+            }
+
+            for (file = targetFile - 1; file >= 1; file--)
+            {
+                attacks |= (1ULL << (targetRank * 8 + file));
+            }
+
+            // return attack map
+            return attacks;
+        }
+
 
         /*BitBoardState attack_table[...]; // ~840 KiB all rook and bishop attacks, less with constructive collisions optimization
 
