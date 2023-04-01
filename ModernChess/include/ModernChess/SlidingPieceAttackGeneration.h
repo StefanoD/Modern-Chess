@@ -22,25 +22,25 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
         int file;
 
         // mask relevant bishop occupancy bits
-        for (rank = targetRank + 1, file = targetFile + 1; rank <= 6 && file <= 6; rank++, file++)
+        for (rank = targetRank + 1, file = targetFile + 1; rank <= 6 && file <= 6; ++rank, ++file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
         }
 
-        for (rank = targetRank - 1, file = targetFile + 1; rank >= 1 && file <= 6; rank--, file++)
+        for (rank = targetRank - 1, file = targetFile + 1; rank >= 1 && file <= 6; --rank, ++file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
         }
 
-        for (rank = targetRank + 1, file = targetFile - 1; rank <= 6 && file >= 1; rank++, file--)
+        for (rank = targetRank + 1, file = targetFile - 1; rank <= 6 && file >= 1; ++rank, --file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
         }
 
-        for (rank = targetRank - 1, file = targetFile - 1; rank >= 1 && file >= 1; rank--, file--)
+        for (rank = targetRank - 1, file = targetFile - 1; rank >= 1 && file >= 1; --rank, --file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -65,7 +65,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
         int file;
 
         // generate bishop attacks
-        for (rank = targetRank + 1, file = targetFile + 1; rank <= 7 && file <= 7; rank++, file++)
+        for (rank = targetRank + 1, file = targetFile + 1; rank <= 7 && file <= 7; ++rank, ++file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -76,7 +76,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             }
         }
 
-        for (rank = targetRank - 1, file = targetFile + 1; rank >= 0 && file <= 7; rank--, file++)
+        for (rank = targetRank - 1, file = targetFile + 1; rank >= 0 && file <= 7; --rank, ++file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -87,7 +87,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             }
         }
 
-        for (rank = targetRank + 1, file = targetFile - 1; rank <= 7 && file >= 0; rank++, file--)
+        for (rank = targetRank + 1, file = targetFile - 1; rank <= 7 && file >= 0; ++rank, --file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -98,7 +98,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             }
         }
 
-        for (rank = targetRank - 1, file = targetFile - 1; rank >= 0 && file >= 0; rank--, file--)
+        for (rank = targetRank - 1, file = targetFile - 1; rank >= 0 && file >= 0; --rank, --file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -128,25 +128,25 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
         int file;
 
         // mask relevant bishop occupancy bits
-        for (rank = targetRank + 1; rank <= 6; rank++)
+        for (rank = targetRank + 1; rank <= 6; ++rank)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, targetFile);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
         }
 
-        for (rank = targetRank - 1; rank >= 1; rank--)
+        for (rank = targetRank - 1; rank >= 1; --rank)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, targetFile);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
         }
 
-        for (file = targetFile + 1; file <= 6; file++)
+        for (file = targetFile + 1; file <= 6; ++file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(targetRank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
         }
 
-        for (file = targetFile - 1; file >= 1; file--)
+        for (file = targetFile - 1; file >= 1; --file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(targetRank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -171,7 +171,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
         int file;
 
         // generate rook attacks
-        for (rank = targetRank + 1; rank <= 7; rank++)
+        for (rank = targetRank + 1; rank <= 7; ++rank)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, targetFile);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -182,7 +182,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             }
         }
 
-        for (rank = targetRank - 1; rank >= 0; rank--)
+        for (rank = targetRank - 1; rank >= 0; --rank)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, targetFile);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -193,7 +193,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             }
         }
 
-        for (file = targetFile + 1; file <= 7; file++)
+        for (file = targetFile + 1; file <= 7; ++file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(targetRank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
@@ -204,7 +204,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             }
         }
 
-        for (file = targetFile - 1; file >= 0; file--)
+        for (file = targetFile - 1; file >= 0; --file)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(targetRank, file);
             attacks = BitBoardOperations::occupySquare(attacks, attackedSquare);
