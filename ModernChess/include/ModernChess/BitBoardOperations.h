@@ -31,6 +31,17 @@ namespace ModernChess::BitBoardOperations
     }
 
     /**
+     * @brief Deducts square from rank and file
+     * @param rank
+     * @param file
+     * @see https://www.chessprogramming.org/Square_Mapping_Considerations#Deduction_on_Files_and_Ranks
+     */
+    constexpr Square getSquare(int rank, int file)
+    {
+        return Square{rank * 8 + file};
+    }
+
+    /**
      * @brief Mirror a bitboard horizontally about the center files.
      *        File a is mapped to file h and vice versa.
      * @param board any bitboard
