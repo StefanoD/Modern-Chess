@@ -64,7 +64,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
         int rank;
         int file;
 
-        // generate bishop atacks
+        // generate bishop attacks
         for (rank = targetRank + 1, file = targetFile + 1; rank <= 7 && file <= 7; rank++, file++)
         {
             const Square attackedSquare = BitBoardOperations::getSquare(rank, file);
