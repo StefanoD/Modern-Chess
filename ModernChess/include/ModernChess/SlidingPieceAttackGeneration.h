@@ -4,6 +4,7 @@
 #include "ModernChess/BitBoardOperations.h"
 #include "MoveGenerations.h"
 #include "Square.h"
+#include <_types/_uint32_t.h>
 
 namespace ModernChess::AttackGeneration::SlidingPieces {
 
@@ -217,6 +218,33 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
         // return attack map
         return attacks;
+    }
+
+    // set occupancies
+    constexpr BitBoardState setOccupancy(uint32_t index, uint32_t bitsInMask, BitBoardState attackMask)
+    {
+        // occupancy map
+        BitBoardState occupancy = BoardState::empty;
+
+        // loop over the range of bits within attack mask
+        for (uint32_t count = 0; count < bitsInMask; ++count)
+        {
+            // get LS1B index of attacks mask
+            const Square square = BitBoardOperations::bitScanForward(attackMask);
+
+            // pop LS1B in attack map
+            attackMask = BitBoardOperations::eraseSquare(attackMask, square);
+
+            // make sure occupancy is on board
+            const uint32_t occupancyBit = 1U << count;
+            if ((index & occupancyBit) == occupancyBit)
+            {    // populate occupancy map
+                occupancy = BitBoardOperations::occupySquare(occupancy, square);
+            }
+        }
+
+        // return occupancy map
+        return occupancy;
     }
 
 
