@@ -154,7 +154,7 @@ namespace {
         const BitBoardState attackMask = AttackGeneration::SlidingPieces::maskRookAttacks(Square::a1);
         const uint32_t numberBits = BitBoardOperations::countBits(attackMask);
         const uint32_t magicNumber = 4095;
-        const BitBoardState board = AttackGeneration::SlidingPieces::setOccupancy(uint32_t, numberBits, attackMask);
+        const BitBoardState board = AttackGeneration::SlidingPieces::setOccupancy(magicNumber, numberBits, attackMask);
 
         const std::vector<Square> expectedOccupiedSquares{
                    b1, c1, d1, e1, f1, g1,
