@@ -1,9 +1,6 @@
 #include "ModernChess/SlidingPieceAttackGeneration.h"
-#include "ModernChess/BitBoardOperations.h"
-#include "ModernChess/Square.h"
 #include "ModernChess/Utilities.h"
 
-#include <_types/_uint32_t.h>
 #include <gtest/gtest.h>
 
 namespace {
