@@ -112,7 +112,7 @@ namespace ModernChess::BitBoardOperations
     constexpr Square bitScanForward(BitBoardState bitBoard)
     {
         constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
-        //assert (bitBoard != 0);
+        assert (bitBoard != BoardState::empty);
         return Square(bitScanLookup[((bitBoard ^ (bitBoard - 1)) * debruijn64) >> 58]);
     }
 
