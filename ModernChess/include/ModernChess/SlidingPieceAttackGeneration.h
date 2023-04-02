@@ -51,7 +51,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     }
 
     // generate bishop attacks on the fly
-    constexpr BitBoardState bishopAttacksOnTheFly(Square square, BitBoardState occupiedSquares)
+    constexpr BitBoardState bishopAttacksOnTheFly(BitBoardState occupiedSquares, Square square)
     {
         // result attacks bitboard
         BitBoardState attacks = BoardState::empty;
@@ -157,7 +157,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     }
 
     // generate rook attacks on the fly
-    constexpr BitBoardState rookAttacksOnTheFly(Square square, BitBoardState occupiedSquares)
+    constexpr BitBoardState rookAttacksOnTheFly(BitBoardState occupiedSquares, Square square)
     {
         // result attacks bitboard
         BitBoardState attacks = BoardState::empty;

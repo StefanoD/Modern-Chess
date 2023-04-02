@@ -1,8 +1,4 @@
 #include "ModernChess/SlidingPieceAttackGeneration.h"
-#include "ModernChess/BitBoard.h"
-#include "ModernChess/BitBoardConstants.h"
-#include "ModernChess/BitBoardOperations.h"
-#include "ModernChess/Square.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
@@ -12,7 +8,7 @@ namespace {
 
     TEST(SlidingPieceAttackGeneration, maskBishopAttacksD4)
     {
-        const BitBoardState board = AttackGeneration::SlidingPieces::maskBishopAttacks(d4);;
+        const BitBoardState board = AttackGeneration::SlidingPieces::maskBishopAttacks(d4);
 
         const std::vector<Square> expectedOccupiedSquares{
                     b2,             f2,
@@ -50,7 +46,7 @@ namespace {
     TEST(SlidingPieceAttackGeneration, bishopAttacksOnTheFly)
     {
         const BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::e5);
-        const BitBoardState board = AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(Square::d4, playBoard);
+        const BitBoardState board = AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(playBoard, Square::d4);
 
         const std::vector<Square> expectedOccupiedSquares{
                 a7, b2, b6, c3, c5, e3, e5, f2, g1
@@ -82,7 +78,7 @@ namespace {
 
     TEST(SlidingPieceAttackGeneration, maskRookAttacksD4)
     {
-        const BitBoardState board = AttackGeneration::SlidingPieces::maskRookAttacks(d4);;
+        const BitBoardState board = AttackGeneration::SlidingPieces::maskRookAttacks(d4);
 
         const std::vector<Square> expectedOccupiedSquares{
                             d2,
@@ -101,6 +97,39 @@ namespace {
                 a5, b5, c5,     e5, f5, g5, h5,
                 a6, b6, c6,     e6, f6, g6, h6,
                 a7, b7, c7,     e7, f7, g7, h7,
+                a8, b8, c8, d8, e8, f8, g8, h8,
+        };
+
+        for (const Square square: expectedOccupiedSquares)
+        {
+            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
+        }
+
+        for (const Square square: expectedEmptySquares)
+        {
+            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
+        }
+
+        print(std::cout, board) << std::endl;
+    }
+
+    TEST(SlidingPieceAttackGeneration, rookAttacksOnTheFlyD4)
+    {
+        const BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d6);
+        const BitBoardState board = AttackGeneration::SlidingPieces::rookAttacksOnTheFly(playBoard, d4);
+
+        const std::vector<Square> expectedOccupiedSquares{
+            a4, b4, c4, d1, d2, d3, d5, d6, e4, f4, g4, h4,
+        };
+
+        const std::vector<Square> expectedEmptySquares{
+                a1, b1, c1,     e1, f1, g1, h1,
+                a2, b2, c2,     e2, f2, g2, h2,
+                a3, b3, c3,     e3, f3, g3, h3,
+                            d4,
+                a5, b5, c5,     e5, f5, g5, h5,
+                a6, b6, c6,     e6, f6, g6, h6,
+                a7, b7, c7, d7, e7, f7, g7, h7,
                 a8, b8, c8, d8, e8, f8, g8, h8,
         };
 
