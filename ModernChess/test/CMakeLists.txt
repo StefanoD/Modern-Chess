@@ -9,8 +9,7 @@ add_executable(${target}
         SquareTest.cpp
         PawnQueriesTest.cpp
         SlidingPieceAttackGenerationTest.cpp
-        UtilitiesTest.cpp
-        )
+        MagicNumberCandidatesGeneration.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
