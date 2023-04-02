@@ -38,4 +38,14 @@ namespace
         EXPECT_EQ(square, Square::a2);
     }
 
+    TEST(BitBoardOperationsTest, countBits)
+    {
+        BitBoardState bitBoardState = 0;
+        EXPECT_EQ(BitBoardOperations::countBits(bitBoardState), 0);
+        bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
+        EXPECT_EQ(BitBoardOperations::countBits(bitBoardState), 1);
+        bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a2);
+        EXPECT_EQ(BitBoardOperations::countBits(bitBoardState), 2);
+    }
+
 }
