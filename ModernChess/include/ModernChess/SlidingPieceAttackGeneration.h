@@ -45,7 +45,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
         // init target rank & files
         const int targetRank = square / 8;
-        int const targetFile = square % 8;
+        const int targetFile = square % 8;
 
         // init ranks and files
         int rank;
