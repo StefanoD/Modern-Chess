@@ -2,6 +2,7 @@
 
 #include "BitBoardConstants.h"
 #include "Square.h"
+#include <_types/_uint32_t.h>
 
 namespace ModernChess::BitBoardOperations
 {
@@ -127,7 +128,7 @@ namespace ModernChess::BitBoardOperations
     constexpr Square bitScanReverse(BitBoardState bitBoard)
     {
         constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
-        //assert (bitBoard != 0);
+        assert (bitBoard != BoardState::empty);
         bitBoard |= bitBoard >> 1;
         bitBoard |= bitBoard >> 2;
         bitBoard |= bitBoard >> 4;
@@ -135,5 +136,23 @@ namespace ModernChess::BitBoardOperations
         bitBoard |= bitBoard >> 16;
         bitBoard |= bitBoard >> 32;
         return Square(bitScanLookup[(bitBoard * debruijn64) >> 58]);
+    }
+
+    /**
+     * @brief Counts the set bits (state is 1) within a bitboard
+     * @param bitBoard
+     * @see https://www.chessprogramming.org/Population_Count
+     * @return Number of bits where state is 1
+     */
+    constexpr uint32_t countBits(BitBoardState bitBoard)
+    {
+        uint32_t count = 0;
+
+        while (bitBoard != BoardState::empty)
+        {
+            ++count;
+            bitBoard &= bitBoard - 1; // reset LS1B
+        }
+        return count;
     }
 }
