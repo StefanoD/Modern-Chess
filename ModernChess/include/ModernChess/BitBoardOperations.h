@@ -2,12 +2,13 @@
 
 #include "BitBoardConstants.h"
 #include "Square.h"
-#include <_types/_uint32_t.h>
+#include <_types/_uint64_t.h>
+#include <array>
 
 namespace ModernChess::BitBoardOperations
 {
 
-    constexpr BitBoardState occupySquare(BitBoardState board, Square square)
+    [[nodiscard]] constexpr BitBoardState occupySquare(BitBoardState board, Square square)
     {
         const BitBoardState state = uint64_t(1) << square;
         board |= state;
@@ -15,7 +16,7 @@ namespace ModernChess::BitBoardOperations
         return board;
     }
 
-    constexpr BitBoardState eraseSquare(BitBoardState board, Square square)
+    [[nodiscard]] constexpr BitBoardState eraseSquare(BitBoardState board, Square square)
     {
         const BitBoardState state = ~(uint64_t(1) << square);
         board &= state;
@@ -23,7 +24,7 @@ namespace ModernChess::BitBoardOperations
         return board;
     }
 
-    constexpr bool isOccupied(BitBoardState board, Square square)
+    [[nodiscard]] constexpr bool isOccupied(BitBoardState board, Square square)
     {
         const BitBoardState state = uint64_t(1) << square;
         board &= state;
@@ -37,7 +38,7 @@ namespace ModernChess::BitBoardOperations
      * @param file
      * @see https://www.chessprogramming.org/Square_Mapping_Considerations#Deduction_on_Files_and_Ranks
      */
-    constexpr Square getSquare(int rank, int file)
+    [[nodiscard]] constexpr Square getSquare(int rank, int file)
     {
         return Square{rank * 8 + file};
     }
@@ -49,7 +50,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating
      * @return bitboard board mirrored horizontally
      */
-    constexpr BitBoardState mirrorHorizontal (BitBoardState board)
+    [[nodiscard]] constexpr BitBoardState mirrorHorizontal (BitBoardState board)
     {
         constexpr BitBoardState k1 = 0x5555555555555555;
         constexpr BitBoardState k2 = 0x3333333333333333;
@@ -67,7 +68,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating
      * @return bitboard board flipped vertically
      */
-    constexpr BitBoardState flipVertical(BitBoardState board)
+    [[nodiscard]] constexpr BitBoardState flipVertical(BitBoardState board)
     {
         constexpr BitBoardState k1 = 0x00FF00FF00FF00FF;
         constexpr BitBoardState k2 = 0x0000FFFF0000FFFF;
@@ -84,12 +85,12 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating
      * @return bitboard board rotated 180 degrees
      */
-    constexpr BitBoardState rotate180(BitBoardState board)
+    [[nodiscard]] constexpr BitBoardState rotate180(BitBoardState board)
     {
         return mirrorHorizontal(flipVertical(board));
     }
 
-    constexpr int bitScanLookup[64] =
+    constexpr std::array<int32_t, 64> bitScanLookup =
     {
             0, 47,  1, 56, 48, 27,  2, 60,
             57, 49, 41, 37, 28, 16,  3, 61,
@@ -109,11 +110,12 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/BitScan
      * @return index (0..63) of least significant one bit
      */
-    constexpr Square bitScanForward(BitBoardState bitBoard)
+    [[nodiscard]] constexpr Square bitScanForward(BitBoardState bitBoard)
     {
         constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
         assert (bitBoard != BoardState::empty);
-        return Square(bitScanLookup[((bitBoard ^ (bitBoard - 1)) * debruijn64) >> 58]);
+        const uint64_t index = ((bitBoard ^ (bitBoard - 1)) * debruijn64) >> 58;
+        return Square(bitScanLookup[index]);
     }
 
 
@@ -125,7 +127,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/BitScan
      * @return index (0..63) of most significant one bit
      */
-    constexpr Square bitScanReverse(BitBoardState bitBoard)
+    [[nodiscard]] constexpr Square bitScanReverse(BitBoardState bitBoard)
     {
         constexpr BitBoardState debruijn64 = 0x03f79d71b4cb0a89;
         assert (bitBoard != BoardState::empty);
@@ -144,7 +146,7 @@ namespace ModernChess::BitBoardOperations
      * @see https://www.chessprogramming.org/Population_Count
      * @return Number of bits where state is 1
      */
-    constexpr uint32_t countBits(BitBoardState bitBoard)
+    [[nodiscard]] constexpr uint32_t countBits(BitBoardState bitBoard)
     {
         uint32_t count = 0;
 
