@@ -1,9 +1,15 @@
+#include "ModernChess/BitBoardOperations.h"
+#include "ModernChess/SlidingPieceAttackGeneration.h"
+#include "ModernChess/Figure.h"
+
 #include <gtest/gtest.h>
 
 #include <iostream>
+#include <array>
 
-namespace
-{
+namespace {
+    using namespace ModernChess;
+
     /**
      * @return generates 32-bit pseudo legal numbers
      */
@@ -31,10 +37,10 @@ namespace
     uint64_t getRandomU64Number()
     {
         // init random numbers slicing 16 bits from MS1B side
-        const auto n1 = (uint64_t)(getRandomU32Number() & 0xFFFF);
-        const auto n2 = (uint64_t)(getRandomU32Number() & 0xFFFF);
-        const auto n3 = (uint64_t)(getRandomU32Number() & 0xFFFF);
-        const auto n4 = (uint64_t)(getRandomU32Number() & 0xFFFF);
+        const auto n1 = uint64_t(getRandomU32Number()) & 0xFFFF;
+        const auto n2 = uint64_t(getRandomU32Number()) & 0xFFFF;
+        const auto n3 = uint64_t(getRandomU32Number()) & 0xFFFF;
+        const auto n4 = uint64_t(getRandomU32Number()) & 0xFFFF;
 
         // return random number
         return n1 | (n2 << 16) | (n3 << 32) | (n4 << 48);
@@ -44,6 +50,108 @@ namespace
     uint64_t generateMagicNumber()
     {
         return getRandomU64Number() & getRandomU64Number() & getRandomU64Number();
+    }
+
+    // find appropriate magic number
+    uint64_t findMagicNumber(Square square, int relevantBits, Figure figure)
+    {
+        // init occupancies
+        std::array<uint64_t, 4096> occupancies{};
+
+        // init attack tables
+        std::array<uint64_t, 4096> attacks{};
+
+        // init used attacks
+        std::array<uint64_t, 4096> usedAttacks{};
+
+        // init attack mask for a current piece
+        const uint64_t attackMask = Figure::Bishop == figure ? AttackGeneration::SlidingPieces::maskBishopAttacks(square) :
+                              AttackGeneration::SlidingPieces::maskRookAttacks(square);
+
+        // init occupancy indices
+        int occupancyIndices = 1 << relevantBits;
+
+        // loop over occupancy indices
+        for (int index = 0; index < occupancyIndices; index++)
+        {
+            // init occupancies
+            occupancies[index] = AttackGeneration::SlidingPieces::setOccupancy(index, relevantBits, attackMask);
+
+            // init attacks
+            attacks[index] = Figure::Bishop ==figure ? AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(occupancies[index], square)
+                                    :
+                             AttackGeneration::SlidingPieces::rookAttacksOnTheFly(occupancies[index], square);
+        }
+
+        // test magic numbers loop
+        constexpr int maxRetries = 100000000;
+
+        for (int randomCount = 0; randomCount < maxRetries; ++randomCount)
+        {
+            // generate magic number candidate
+            const uint64_t magicNumber = generateMagicNumber();
+
+            // skip inappropriate magic numbers
+            if (BitBoardOperations::countBits((attackMask * magicNumber) & 0xFF00000000000000) < 6) 
+            {
+                continue;
+            }
+
+            // reset used attacks
+            usedAttacks = {};
+
+            // init index & fail flag
+            int index;
+            bool fail;
+
+            // test magic index loop
+            for (index = 0, fail = false; !fail && index < occupancyIndices; index++)
+            {
+                // init magic index
+                int magicIndex = (int)((occupancies[index] * magicNumber) >> (64 - relevantBits));
+
+                // if magic index works
+                if (usedAttacks[magicIndex] == 0ULL)
+                {    // init used attacks
+                    usedAttacks[magicIndex] = attacks[index];
+                }
+                else if (usedAttacks[magicIndex] != attacks[index])
+                {    // magic index doesn't work, because of collision
+                    fail = true;
+                }
+            }
+
+            // if magic number works
+            if (!fail)
+                // return it
+                return magicNumber;
+        }
+
+        // if magic number doesn't work
+        printf("  Magic number failed!\n");
+        return 0ULL;
+    }
+
+    // init magic numbers
+    void initMagicNumbers()
+    {
+        std::array<uint64_t, 64> rookMagicNumbers{};
+        std::array<uint64_t, 64> bishopMagicNumbers{};
+
+        // loop over 64 board squares
+        for (Square square = Square::h8; square >= Square::a1; --square)
+        {    // init rook magic numbers
+            rookMagicNumbers[square] = findMagicNumber(square,
+                                                       AttackGeneration::SlidingPieces::rookRelevantBits[square],
+                                                       Figure::Rook);
+        }
+        // loop over 64 board squares
+        for (Square square = Square::h8; square >= Square::a1; --square)
+        {    // init bishop magic numbers
+            bishopMagicNumbers[square] = findMagicNumber(square,
+                                                         AttackGeneration::SlidingPieces::bishopRelevantBits[square],
+                                                         Figure::Bishop);
+        }
     }
 
     TEST(UtilitiesTest, getRandomU32Number)
@@ -58,6 +166,11 @@ namespace
     TEST(UtilitiesTest, generateMagicNumber)
     {
         EXPECT_EQ(generateMagicNumber(), 27162335321796624);
+    }
+
+    TEST(UtilitiesTest, initMagicNumbers)
+    {
+        initMagicNumbers();
     }
 }
 
