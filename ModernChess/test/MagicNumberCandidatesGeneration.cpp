@@ -53,7 +53,7 @@ namespace {
     }
 
     // find appropriate magic number
-    uint64_t findMagicNumber(Square square, int relevantBits, Figure figure)
+    uint64_t findMagicNumber(Square square, uint32_t relevantBits, Figure figure)
     {
         // init occupancies
         std::array<uint64_t, 4096> occupancies{};
@@ -69,24 +69,24 @@ namespace {
                               AttackGeneration::SlidingPieces::maskRookAttacks(square);
 
         // init occupancy indices
-        int occupancyIndices = 1 << relevantBits;
+        const uint32_t occupancyIndices = 1 << relevantBits;
 
         // loop over occupancy indices
-        for (int index = 0; index < occupancyIndices; index++)
+        for (uint32_t index = 0; index < occupancyIndices; index++)
         {
             // init occupancies
-            occupancies[index] = AttackGeneration::SlidingPieces::setOccupancy(index, relevantBits, attackMask);
+            occupancies.at(index) = AttackGeneration::SlidingPieces::setOccupancy(index, relevantBits, attackMask);
 
             // init attacks
-            attacks[index] = Figure::Bishop ==figure ? AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(occupancies[index], square)
+            attacks.at(index) = Figure::Bishop == figure ? AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(occupancies.at(index), square)
                                     :
-                             AttackGeneration::SlidingPieces::rookAttacksOnTheFly(occupancies[index], square);
+                             AttackGeneration::SlidingPieces::rookAttacksOnTheFly(occupancies.at(index), square);
         }
 
         // test magic numbers loop
-        constexpr int maxRetries = 100000000;
+        constexpr uint32_t maxRetries = 100000000;
 
-        for (int randomCount = 0; randomCount < maxRetries; ++randomCount)
+        for (uint32_t randomCount = 0; randomCount < maxRetries; ++randomCount)
         {
             // generate magic number candidate
             const uint64_t magicNumber = generateMagicNumber();
@@ -101,56 +101,61 @@ namespace {
             usedAttacks = {};
 
             // init index & fail flag
-            int index;
+            uint32_t index;
             bool fail;
 
             // test magic index loop
             for (index = 0, fail = false; !fail && index < occupancyIndices; index++)
             {
                 // init magic index
-                int magicIndex = (int)((occupancies[index] * magicNumber) >> (64 - relevantBits));
+                const uint32_t magicIndex = (occupancies.at(index) * magicNumber) >> (64 - relevantBits);
 
                 // if magic index works
-                if (usedAttacks[magicIndex] == 0ULL)
+                if (usedAttacks.at(magicIndex) == 0ULL)
                 {    // init used attacks
-                    usedAttacks[magicIndex] = attacks[index];
+                    usedAttacks.at(magicIndex) = attacks.at(index);
                 }
-                else if (usedAttacks[magicIndex] != attacks[index])
+                else if (usedAttacks.at(magicIndex) != attacks.at(index))
                 {    // magic index doesn't work, because of collision
                     fail = true;
                 }
             }
 
-            // if magic number works
-            if (!fail)
-                // return it
+            if (!fail) {
+                // if magic number works return it
                 return magicNumber;
+            }
         }
 
         // if magic number doesn't work
-        printf("  Magic number failed!\n");
+        std::cout << "Magic number failed!" << std::endl;
         return 0ULL;
     }
 
     // init magic numbers
     void initMagicNumbers()
     {
-        std::array<uint64_t, 64> rookMagicNumbers{};
-        std::array<uint64_t, 64> bishopMagicNumbers{};
+        std::cout << "Rook Magic Numbers:" << std::endl;
 
         // loop over 64 board squares
-        for (Square square = Square::h8; square >= Square::a1; --square)
+        for (int i = 0; i < 64; ++i)
         {    // init rook magic numbers
-            rookMagicNumbers[square] = findMagicNumber(square,
-                                                       AttackGeneration::SlidingPieces::rookRelevantBits[square],
-                                                       Figure::Rook);
+            const Square square{i};
+            std::cout <<  "0x" << std::hex <<  findMagicNumber(square,
+                                                       AttackGeneration::SlidingPieces::rookRelevantBits.at(square),
+                                                       Figure::Rook) << "ULL, " << std::endl;
         }
+
+        std::cout << std::endl << std::endl;
+        std::cout << "Bishop Magic Numbers:" << std::endl;
+
         // loop over 64 board squares
-        for (Square square = Square::h8; square >= Square::a1; --square)
+        for (int i = 0; i < 64; ++i)
         {    // init bishop magic numbers
-            bishopMagicNumbers[square] = findMagicNumber(square,
-                                                         AttackGeneration::SlidingPieces::bishopRelevantBits[square],
-                                                         Figure::Bishop);
+            const Square square{i};
+            std::cout <<  "0x" << std::hex << findMagicNumber(square,
+                                                         AttackGeneration::SlidingPieces::bishopRelevantBits.at(square),
+                                                         Figure::Bishop) << "ULL, " << std::endl;
         }
     }
 
