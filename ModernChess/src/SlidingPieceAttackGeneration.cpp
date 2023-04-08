@@ -10,10 +10,10 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             const Square square{squareIndex};
 
             // init figure & bishop masks
-            bishopMasks[square] = maskBishopAttacks(square);
+            bishopAttackMasks[square] = maskBishopAttacks(square);
 
             // init current mask
-            const uint64_t attackMask = bishopMasks[square];
+            const uint64_t attackMask = bishopAttackMasks[square];
 
             // init relevant occupancy bit count
             const uint32_t relevantBitsCount = BitBoardOperations::countBits(attackMask);
@@ -45,10 +45,10 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             const Square square{squareIndex};
 
             // init figure & rook masks
-            rookMasks[square] = maskRookAttacks(square);
+            rookAttackMasks[square] = maskRookAttacks(square);
 
             // init current mask
-            const uint64_t attackMask = rookMasks[square];
+            const uint64_t attackMask = rookAttackMasks[square];
 
             // init relevant occupancy bit count
             const uint32_t relevantBitsCount = BitBoardOperations::countBits(attackMask);
