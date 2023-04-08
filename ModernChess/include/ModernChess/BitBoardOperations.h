@@ -2,7 +2,7 @@
 
 #include "BitBoardConstants.h"
 #include "Square.h"
-#include <_types/_uint64_t.h>
+
 #include <array>
 
 namespace ModernChess::BitBoardOperations
