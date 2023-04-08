@@ -54,7 +54,7 @@ namespace {
     }
 
     // find appropriate magic number
-    uint64_t findMagicNumber(Square square, uint32_t relevantBits, Figure figure)
+    uint64_t findMagicNumber(Square square, uint32_t relevantBits, FigureTypes figure)
     {
         // init occupancies
         std::array<uint64_t, 4096> occupancies{};
@@ -66,8 +66,8 @@ namespace {
         std::array<uint64_t, 4096> usedAttacks{};
 
         // init attack mask for a current piece
-        const uint64_t attackMask = Figure::Bishop == figure ? BishopAttackHelperFunctions::maskBishopAttacks(square) :
-                              RookAttackHelperFunctions::maskRookAttacks(square);
+        const uint64_t attackMask = FigureTypes::Bishop == figure ? BishopAttackHelperFunctions::maskBishopAttacks(square) :
+                                    RookAttackHelperFunctions::maskRookAttacks(square);
 
         // init occupancy indices
         const uint32_t occupancyIndices = 1 << relevantBits;
@@ -79,7 +79,7 @@ namespace {
             occupancies.at(index) = BitBoardOperations::setOccupancy(index, relevantBits, attackMask);
 
             // init attacks
-            if (Figure::Bishop == figure)
+            if (FigureTypes::Bishop == figure)
             {
                 attacks.at(index) = BishopAttackHelperFunctions::bishopAttacksOnTheFly(occupancies.at(index),
                                                                                            square);
@@ -148,9 +148,9 @@ namespace {
         for (int i = 0; i < 64; ++i)
         {    // init rook magic numbers
             const Square square{i};
-            std::cout <<  "0x" << std::hex <<  findMagicNumber(square,
-                                                               RookAttackHelperFunctions::RookMetaData::relevantBits.at(square),
-                                                       Figure::Rook) << "ULL, " << std::endl;
+            std::cout << "0x" << std::hex << findMagicNumber(square,
+                                                             RookAttackHelperFunctions::RookMetaData::relevantBits.at(square),
+                                                             FigureTypes::Rook) << "ULL, " << std::endl;
         }
 
         std::cout << std::endl << std::endl;
@@ -160,9 +160,9 @@ namespace {
         for (int i = 0; i < 64; ++i)
         {    // init bishop magic numbers
             const Square square{i};
-            std::cout <<  "0x" << std::hex << findMagicNumber(square,
-                                                         BishopAttackHelperFunctions::BishopMetaData::relevantBits.at(square),
-                                                         Figure::Bishop) << "ULL, " << std::endl;
+            std::cout << "0x" << std::hex << findMagicNumber(square,
+                                                             BishopAttackHelperFunctions::BishopMetaData::relevantBits.at(square),
+                                                             FigureTypes::Bishop) << "ULL, " << std::endl;
         }
     }
 
