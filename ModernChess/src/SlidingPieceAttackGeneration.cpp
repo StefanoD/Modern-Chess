@@ -10,10 +10,10 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             const Square square{squareIndex};
 
             // init figure & bishop masks
-            bishopMasks.at(square) = maskBishopAttacks(square);
+            bishopMasks[square] = maskBishopAttacks(square);
 
             // init current mask
-            const uint64_t attackMask = bishopMasks.at(square);
+            const uint64_t attackMask = bishopMasks[square];
 
             // init relevant occupancy bit count
             const uint32_t relevantBitsCount = BitBoardOperations::countBits(attackMask);
@@ -28,10 +28,10 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
                 const uint64_t occupancy = setOccupancy(index, relevantBitsCount, attackMask);
 
                 // init magic index
-                const uint32_t magicIndex = (occupancy * BishopMetaData::bishopMagicNumbers.at(square)) >> (64 - BishopMetaData::bishopRelevantBits.at(square));
+                const uint32_t magicIndex = (occupancy * BishopMetaData::magicNumbers[square]) >> (64 - BishopMetaData::relevantBits[square]);
 
                 // init figure attacks
-                bishopAttacks.at(square).at(magicIndex) = bishopAttacksOnTheFly(occupancy, square);
+                bishopAttacks[square][magicIndex] = bishopAttacksOnTheFly(occupancy, square);
             }
         }
     }
@@ -45,10 +45,10 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
             const Square square{squareIndex};
 
             // init figure & rook masks
-            rookMasks.at(square) = maskRookAttacks(square);
+            rookMasks[square] = maskRookAttacks(square);
 
             // init current mask
-            const uint64_t attackMask = rookMasks.at(square);
+            const uint64_t attackMask = rookMasks[square];
 
             // init relevant occupancy bit count
             const uint32_t relevantBitsCount = BitBoardOperations::countBits(attackMask);
@@ -63,10 +63,10 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
                 const uint64_t occupancy = setOccupancy(index, relevantBitsCount, attackMask);
 
                 // init magic index
-                const uint32_t magicIndex = (occupancy * RookMetaData::rookMagicNumbers.at(square)) >> (64 - RookMetaData::rookRelevantBits.at(square));
+                const uint32_t magicIndex = (occupancy * RookMetaData::magicNumbers[square]) >> (64 - RookMetaData::relevantBits[square]);
 
                 // init figure attacks
-                rookAttacks.at(square).at(magicIndex) = rookAttacksOnTheFly(occupancy, square);
+                rookAttacks[square][magicIndex] = rookAttacksOnTheFly(occupancy, square);
             }
         }
     }
