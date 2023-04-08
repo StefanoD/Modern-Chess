@@ -30,6 +30,7 @@ add_library(${target}
         Game.cpp
         Move.cpp
         PawnAttackGeneration.cpp
+        SlidingPieceAttackGeneration.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)

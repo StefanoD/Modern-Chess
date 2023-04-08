@@ -148,7 +148,7 @@ namespace {
         {    // init rook magic numbers
             const Square square{i};
             std::cout <<  "0x" << std::hex <<  findMagicNumber(square,
-                                                       AttackGeneration::SlidingPieces::rookRelevantBits.at(square),
+                                                       AttackGeneration::SlidingPieces::RookMetaData::rookRelevantBits.at(square),
                                                        Figure::Rook) << "ULL, " << std::endl;
         }
 
@@ -160,7 +160,7 @@ namespace {
         {    // init bishop magic numbers
             const Square square{i};
             std::cout <<  "0x" << std::hex << findMagicNumber(square,
-                                                         AttackGeneration::SlidingPieces::bishopRelevantBits.at(square),
+                                                         AttackGeneration::SlidingPieces::BishopMetaData::bishopRelevantBits.at(square),
                                                          Figure::Bishop) << "ULL, " << std::endl;
         }
     }
