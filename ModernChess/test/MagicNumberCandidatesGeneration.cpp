@@ -78,9 +78,15 @@ namespace {
             occupancies.at(index) = AttackGeneration::SlidingPieces::setOccupancy(index, relevantBits, attackMask);
 
             // init attacks
-            attacks.at(index) = Figure::Bishop == figure ? AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(occupancies.at(index), square)
-                                    :
-                             AttackGeneration::SlidingPieces::rookAttacksOnTheFly(occupancies.at(index), square);
+            if (Figure::Bishop == figure)
+            {
+                attacks.at(index) = AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(occupancies.at(index),
+                                                                                           square);
+            }
+            else
+            {
+                attacks.at(index) = AttackGeneration::SlidingPieces::rookAttacksOnTheFly(occupancies.at(index), square);
+            }
         }
 
         // test magic numbers loop

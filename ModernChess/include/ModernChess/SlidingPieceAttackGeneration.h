@@ -174,7 +174,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     };
 
     // mask bishop attacks
-    constexpr BitBoardState maskBishopAttacks(Square square)
+    [[nodiscard]] constexpr BitBoardState maskBishopAttacks(Square square)
     {
         // result attacks bitboard
         BitBoardState attacks = BoardState::empty;
@@ -217,7 +217,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     }
 
     // generate bishop attacks on the fly
-    constexpr BitBoardState bishopAttacksOnTheFly(BitBoardState occupiedSquares, Square square)
+    [[nodiscard]] constexpr BitBoardState bishopAttacksOnTheFly(BitBoardState occupiedSquares, Square square)
     {
         // result attacks bitboard
         BitBoardState attacks = BoardState::empty;
@@ -280,7 +280,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     }
 
     // mask rook attacks
-    constexpr BitBoardState maskRookAttacks(Square square)
+    [[nodiscard]] constexpr BitBoardState maskRookAttacks(Square square)
     {
         // result attacks bitboard
         BitBoardState attacks = BoardState::empty;
@@ -323,7 +323,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     }
 
     // generate rook attacks on the fly
-    constexpr BitBoardState rookAttacksOnTheFly(BitBoardState occupiedSquares, Square square)
+    [[nodiscard]] constexpr BitBoardState rookAttacksOnTheFly(BitBoardState occupiedSquares, Square square)
     {
         // result attacks bitboard
         BitBoardState attacks = BoardState::empty;
@@ -386,7 +386,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
     }
 
     // set occupancies
-    constexpr BitBoardState setOccupancy(uint32_t index, uint32_t bitsInMask, BitBoardState attackMask)
+    [[nodiscard]] constexpr BitBoardState setOccupancy(uint32_t index, uint32_t bitsInMask, BitBoardState attackMask)
     {
         // occupancy map
         BitBoardState occupancy = BoardState::empty;
