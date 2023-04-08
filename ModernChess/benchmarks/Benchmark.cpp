@@ -22,13 +22,13 @@ namespace {
             ['k'] = BlackKing
     };
 
-    static void ArrayDesignators(benchmark::State &state)
+    void ArrayDesignators(benchmark::State &state)
     {
-        constexpr std::array<char, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _: state)
         {
-            for (char figure: figures)
+            for (const uint8_t figure: figures)
             {
                 const auto value = char_pieces[figure];
                 benchmark::DoNotOptimize(value);
@@ -36,7 +36,7 @@ namespace {
         }
     }
 
-    constexpr FlatMap<char, ColoredFigureTypes, 12> fenToEnum {
+    constexpr FlatMap<uint8_t, ColoredFigureTypes, 12> fenToEnum {
             {{
                      {'P', WhitePawn},
                      {'N', WhiteKnight},
@@ -56,13 +56,13 @@ namespace {
     BENCHMARK(ArrayDesignators);
 
 
-    static void Enum(benchmark::State &state)
+    void Enum(benchmark::State &state)
     {
-        constexpr std::array<char, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _: state)
         {
-            for (char figure: figures)
+            for (const uint8_t figure: figures)
             {
                 const auto value = ColoredFigureTypes(figure);
                 benchmark::DoNotOptimize(value);
@@ -72,12 +72,12 @@ namespace {
 
     BENCHMARK(Enum);
 
-    static void FlatMapToEnum(benchmark::State& state) {
-        constexpr std::array<char, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+    void FlatMapToEnum(benchmark::State& state) {
+        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _ : state)
         {
-            for (char figure : figures)
+            for (const uint8_t figure : figures)
             {
                 const auto value = fenToEnum.at(figure);
                 benchmark::DoNotOptimize(value);
