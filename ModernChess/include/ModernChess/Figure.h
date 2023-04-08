@@ -13,9 +13,21 @@ namespace ModernChess {
         King
     };
 
-    enum ColoredFigureTypes
+    ///< FEN notation to ColoredFigureTypes
+    enum class ColoredFigureTypes : char
     {
-        WhitePawn, WhiteKnight, WhiteBishop, WhiteRook, WhiteQueen, WhiteKing,
-        BlackPawn, BlackKnight, BlackBishop, BlackRook, BlackQueen, BlackKing
+        WhitePawn = 'P',
+        WhiteKnight = 'N',
+        WhiteBishop = 'B',
+        WhiteRook = 'R',
+        WhiteQueen = 'Q',
+        WhiteKing = 'K',
+        BlackPawn = 'p',
+        BlackKnight = 'n',
+        BlackBishop = 'b',
+        BlackRook = 'r',
+        BlackQueen = 'q',
+        BlackKing = 'k',
+        UndefinedColoredFigure
     };
 }

@@ -11,6 +11,6 @@ namespace ModernChess
 
         BitBoard board{};
         bool onTurn{};
-        Color color = Color::Undefined;
+        Color color = Color::UndefinedColor;
     };
 }
