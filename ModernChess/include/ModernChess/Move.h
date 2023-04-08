@@ -2,8 +2,6 @@
 
 #include "Square.h"
 
-#include <cinttypes>
-
 namespace ModernChess {
 
     enum SpecialMove : uint16_t {
