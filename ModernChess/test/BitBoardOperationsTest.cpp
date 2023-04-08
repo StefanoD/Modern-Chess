@@ -8,7 +8,7 @@ namespace
 
     TEST(BitBoardOperationsTest, occupyAndEraseSquare)
     {
-        BitBoardState bitBoardState = 0;
+        BitBoardState bitBoardState = BoardState::empty;
         bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
         EXPECT_TRUE(BitBoardOperations::isOccupied(bitBoardState, Square::a1));
         EXPECT_NE(bitBoardState, 0);
@@ -20,7 +20,7 @@ namespace
 
     TEST(BitBoardOperationsTest, bitScanForward)
     {
-        BitBoardState bitBoardState = 0;
+        BitBoardState bitBoardState = BoardState::empty;
         bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
         bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a2);
 
@@ -30,7 +30,7 @@ namespace
 
     TEST(BitBoardOperationsTest, bitScanReverse)
     {
-        BitBoardState bitBoardState = 0;
+        BitBoardState bitBoardState = BoardState::empty;
         bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
         bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a2);
 
@@ -40,7 +40,7 @@ namespace
 
     TEST(BitBoardOperationsTest, countBits)
     {
-        BitBoardState bitBoardState = 0;
+        BitBoardState bitBoardState = BoardState::empty;
         EXPECT_EQ(BitBoardOperations::countBits(bitBoardState), 0);
         bitBoardState = BitBoardOperations::occupySquare(bitBoardState, Square::a1);
         EXPECT_EQ(BitBoardOperations::countBits(bitBoardState), 1);
