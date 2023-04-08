@@ -2,13 +2,14 @@ set(target modern-chess-lib-test)
 
 add_executable(${target}
         AttacksGenerationTest.cpp
-        BoardTest.cpp
+        BishopAttackGenerationTest.cpp
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp
+        BoardTest.cpp
         MoveGenerationsTest.cpp
         SquareTest.cpp
         PawnQueriesTest.cpp
-        SlidingPieceAttackGenerationTest.cpp
+        RookAttackGenerationTest.cpp
         MagicNumberCandidatesGeneration.cpp)
 
 target_link_libraries(${target} PRIVATE

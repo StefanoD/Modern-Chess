@@ -1,5 +1,6 @@
 #include "ModernChess/BitBoardOperations.h"
-#include "ModernChess/SlidingPieceAttackGeneration.h"
+#include "ModernChess/RookAttackGeneration.h"
+#include "ModernChess/BishopAttackGeneration.h"
 #include "ModernChess/Figure.h"
 
 #include <gtest/gtest.h>
@@ -65,8 +66,8 @@ namespace {
         std::array<uint64_t, 4096> usedAttacks{};
 
         // init attack mask for a current piece
-        const uint64_t attackMask = Figure::Bishop == figure ? AttackGeneration::SlidingPieces::maskBishopAttacks(square) :
-                              AttackGeneration::SlidingPieces::maskRookAttacks(square);
+        const uint64_t attackMask = Figure::Bishop == figure ? BishopAttackHelperFunctions::maskBishopAttacks(square) :
+                              RookAttackHelperFunctions::maskRookAttacks(square);
 
         // init occupancy indices
         const uint32_t occupancyIndices = 1 << relevantBits;
@@ -75,17 +76,17 @@ namespace {
         for (uint32_t index = 0; index < occupancyIndices; index++)
         {
             // init occupancies
-            occupancies.at(index) = AttackGeneration::SlidingPieces::setOccupancy(index, relevantBits, attackMask);
+            occupancies.at(index) = BitBoardOperations::setOccupancy(index, relevantBits, attackMask);
 
             // init attacks
             if (Figure::Bishop == figure)
             {
-                attacks.at(index) = AttackGeneration::SlidingPieces::bishopAttacksOnTheFly(occupancies.at(index),
+                attacks.at(index) = BishopAttackHelperFunctions::bishopAttacksOnTheFly(occupancies.at(index),
                                                                                            square);
             }
             else
             {
-                attacks.at(index) = AttackGeneration::SlidingPieces::rookAttacksOnTheFly(occupancies.at(index), square);
+                attacks.at(index) = RookAttackHelperFunctions::rookAttacksOnTheFly(occupancies.at(index), square);
             }
         }
 
@@ -148,7 +149,7 @@ namespace {
         {    // init rook magic numbers
             const Square square{i};
             std::cout <<  "0x" << std::hex <<  findMagicNumber(square,
-                                                       AttackGeneration::SlidingPieces::RookMetaData::relevantBits.at(square),
+                                                               RookAttackHelperFunctions::RookMetaData::relevantBits.at(square),
                                                        Figure::Rook) << "ULL, " << std::endl;
         }
 
@@ -160,7 +161,7 @@ namespace {
         {    // init bishop magic numbers
             const Square square{i};
             std::cout <<  "0x" << std::hex << findMagicNumber(square,
-                                                         AttackGeneration::SlidingPieces::BishopMetaData::relevantBits.at(square),
+                                                         BishopAttackHelperFunctions::BishopMetaData::relevantBits.at(square),
                                                          Figure::Bishop) << "ULL, " << std::endl;
         }
     }

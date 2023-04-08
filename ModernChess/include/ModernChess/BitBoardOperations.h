@@ -157,4 +157,36 @@ namespace ModernChess::BitBoardOperations
         }
         return count;
     }
+
+    /**
+     * @brief Used for magic bitboard generation
+     * @param index
+     * @param numberBitsInMask
+     * @param attackMask
+     * @return occupancy map
+     */
+    [[nodiscard]] constexpr BitBoardState setOccupancy(uint32_t index, uint32_t numberBitsInMask, BitBoardState attackMask)
+    {
+        BitBoardState occupancyMap = BoardState::empty;
+
+        // loop over the range of bits within attack mask
+        for (uint32_t count = 0; count < numberBitsInMask; ++count)
+        {
+            // get LS1B index of attacks mask
+            const Square square = bitScanForward(attackMask);
+
+            // pop LS1B in attack map
+            attackMask = eraseSquare(attackMask, square);
+
+            // make sure occupancy is on board
+            const uint32_t occupancyBit = 1U << count;
+            if ((index & occupancyBit) == occupancyBit)
+            {    // populate occupancyMap map
+                occupancyMap = occupySquare(occupancyMap, square);
+            }
+        }
+
+        // return occupancyMap map
+        return occupancyMap;
+    }
 }

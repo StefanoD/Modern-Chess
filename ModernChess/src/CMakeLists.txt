@@ -18,7 +18,7 @@ add_library(${target}
         ../include/ModernChess/PawnAttackGeneration.h
         ../include/ModernChess/PawnQueries.h
         ../include/ModernChess/Player.h
-        ../include/ModernChess/SlidingPieceAttackGeneration.h
+        ../include/ModernChess/RookAttackGeneration.h
         ../include/ModernChess/Square.h
         ../include/ModernChess/Utilities.h
 
@@ -30,8 +30,8 @@ add_library(${target}
         Game.cpp
         Move.cpp
         PawnAttackGeneration.cpp
-        SlidingPieceAttackGeneration.cpp
-        )
+        RookAttackGeneration.cpp
+        BishopAttackGeneration.cpp ../include/ModernChess/BishopAttackGeneration.h)
 
 target_include_directories(${target} PUBLIC ../include)
 
