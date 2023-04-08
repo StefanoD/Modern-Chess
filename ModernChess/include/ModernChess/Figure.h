@@ -14,7 +14,7 @@ namespace ModernChess {
     };
 
     ///< FEN notation to ColoredFigureTypes
-    enum class ColoredFigureTypes : char
+    enum ColoredFigureTypes : char
     {
         WhitePawn = 'P',
         WhiteKnight = 'N',

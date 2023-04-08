@@ -5,3 +5,4 @@ project(modern-chess-lib
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(test_integration)
+add_subdirectory(benchmarks)
