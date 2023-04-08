@@ -7,6 +7,9 @@ add_library(${target}
         ../include/ModernChess/BitBoard.h
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
+        ../include/ModernChess/BishopAttackGeneration.h
+        ../include/ModernChess/FlatMap.h
+        ../include/ModernChess/FenParsing.h
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
@@ -31,7 +34,8 @@ add_library(${target}
         Move.cpp
         PawnAttackGeneration.cpp
         RookAttackGeneration.cpp
-        BishopAttackGeneration.cpp ../include/ModernChess/BishopAttackGeneration.h)
+        BishopAttackGeneration.cpp
+        )
 
 target_include_directories(${target} PUBLIC ../include)
 
