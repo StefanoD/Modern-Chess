@@ -4,19 +4,17 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
     BishopAttacks::BishopAttacks()
     {
-        // loop over 64 board squares
-        for (int squareIndex = 0; squareIndex < 64; ++squareIndex)
+        // loop over all squares
+        for (Square square = Square::a1; square <= Square::h8; ++square)
         {
-            const Square square{squareIndex};
-
-            // init figure & bishop masks
-            bishopAttackMasks[square] = maskBishopAttacks(square);
+            // init bishop attack masks
+            attackMasks[square] = maskBishopAttacks(square);
 
             // init current mask
-            const uint64_t attackMask = bishopAttackMasks[square];
+            const uint64_t attackMask = attackMasks[square];
 
             // init relevant occupancy bit count
-            const uint32_t relevantBitsCount = BitBoardOperations::countBits(attackMask);
+            const uint32_t relevantBitsCount = BishopMetaData::relevantBits[square];
 
             // init occupancy indices
             const uint32_t occupancyIndices = (1 << relevantBitsCount);
@@ -28,7 +26,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
                 const uint64_t occupancy = setOccupancy(index, relevantBitsCount, attackMask);
 
                 // init magic index
-                const uint32_t magicIndex = (occupancy * BishopMetaData::magicNumbers[square]) >> (64 - BishopMetaData::relevantBits[square]);
+                const uint32_t magicIndex = (occupancy * BishopMetaData::magicNumbers[square]) >> (64 - relevantBitsCount);
 
                 // init figure attacks
                 bishopAttacks[square][magicIndex] = bishopAttacksOnTheFly(occupancy, square);
@@ -38,20 +36,17 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
     RookAttacks::RookAttacks()
     {
-        // init slider piece's attack tables
-        // loop over 64 board squares
-        for (int squareIndex = 0; squareIndex < 64; ++squareIndex)
+        // loop over all squares
+        for (Square square = Square::a1; square <= Square::h8; ++square)
         {
-            const Square square{squareIndex};
-
-            // init figure & rook masks
-            rookAttackMasks[square] = maskRookAttacks(square);
+            // init rook attack masks
+            attackMasks[square] = maskRookAttacks(square);
 
             // init current mask
-            const uint64_t attackMask = rookAttackMasks[square];
+            const uint64_t attackMask = attackMasks[square];
 
             // init relevant occupancy bit count
-            const uint32_t relevantBitsCount = BitBoardOperations::countBits(attackMask);
+            const uint32_t relevantBitsCount = RookMetaData::relevantBits[square];
 
             // init occupancy indices
             const uint32_t occupancyIndices = (1 << relevantBitsCount);
@@ -63,7 +58,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
                 const uint64_t occupancy = setOccupancy(index, relevantBitsCount, attackMask);
 
                 // init magic index
-                const uint32_t magicIndex = (occupancy * RookMetaData::magicNumbers[square]) >> (64 - RookMetaData::relevantBits[square]);
+                const uint32_t magicIndex = (occupancy * RookMetaData::magicNumbers[square]) >> (64 - relevantBitsCount);
 
                 // init figure attacks
                 rookAttacks[square][magicIndex] = rookAttacksOnTheFly(occupancy, square);

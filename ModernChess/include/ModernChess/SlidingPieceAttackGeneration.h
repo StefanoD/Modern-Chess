@@ -187,7 +187,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
         [[nodiscard]] inline BitBoardState getAttacks(Square square, BitBoardState occupiedSquares) const
         {
-            occupiedSquares &= bishopAttackMasks[square];
+            occupiedSquares &= attackMasks[square];
             occupiedSquares *= BishopMetaData::magicNumbers[square];
             occupiedSquares >>= 64 - BishopMetaData::relevantBits[square];
 
@@ -196,7 +196,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
     private:
         // bishop attack masks
-        std::array<BitBoardState, 64> bishopAttackMasks{};
+        std::array<BitBoardState, 64> attackMasks{};
 
         // bishop attacks table [square][occupancies]
         std::array<std::array<BitBoardState, 512>, 64> bishopAttacks{};
@@ -208,7 +208,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
 
         [[nodiscard]] inline BitBoardState getAttacks(Square square, BitBoardState occupiedSquares) const
         {
-            occupiedSquares &= rookAttackMasks[square];
+            occupiedSquares &= attackMasks[square];
             occupiedSquares *= RookMetaData::magicNumbers[square];
             occupiedSquares >>= 64 - RookMetaData::relevantBits[square];
 
@@ -216,7 +216,7 @@ namespace ModernChess::AttackGeneration::SlidingPieces {
         }
     private:
         // rook attack masks
-        std::array<BitBoardState, 64> rookAttackMasks{};
+        std::array<BitBoardState, 64> attackMasks{};
 
         // rook attacks table [square][occupancies]
         std::array<std::array<BitBoardState, 4096>, 64>  rookAttacks{};
