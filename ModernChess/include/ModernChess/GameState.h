@@ -7,9 +7,6 @@
 
 namespace ModernChess
 {
-
-
-
     class GameState
     {
     public:
