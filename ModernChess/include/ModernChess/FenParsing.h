@@ -6,7 +6,7 @@
 #include <string_view>
 #include <string>
 
-namespace ModernChess {
+namespace ModernChess::FenParsing {
     // See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation
 
     // ASCII pieces

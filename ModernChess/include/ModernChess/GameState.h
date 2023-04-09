@@ -20,3 +20,5 @@ namespace ModernChess
         Square m_enPassantTarget = Square::undefined;
     };
 }
+
+std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState);

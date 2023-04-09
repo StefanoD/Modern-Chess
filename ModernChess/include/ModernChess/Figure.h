@@ -27,6 +27,19 @@ namespace ModernChess {
         BlackRook,
         BlackQueen,
         BlackKing,
-        UndefinedColoredFigure
+        None
     };
+
+    // This makes it possible to use Square in for-loops
+    inline ColoredFigureTypes& operator++(ColoredFigureTypes& state)
+    {
+        state = ColoredFigureTypes(uint8_t(state)+1);
+        return state;
+    }
+
+    inline ColoredFigureTypes& operator--(ColoredFigureTypes& state)
+    {
+        state = ColoredFigureTypes(uint8_t(state)-1);
+        return state;
+    }
 }

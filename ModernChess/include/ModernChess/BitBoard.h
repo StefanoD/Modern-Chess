@@ -3,6 +3,7 @@
 #include "BitBoardConstants.h"
 
 #include <array>
+#include <ostream>
 
 namespace ModernChess
 {
@@ -24,7 +25,6 @@ namespace ModernChess
         [[nodiscard]] BitBoardState getWhiteFigures() const;
         [[nodiscard]] BitBoardState getBlackFigures() const;
 
-    protected:
         // Every piece-type and every color has its own board representation
         BitBoardState m_blackRookBitBoard{};
         BitBoardState m_blackKnightBitBoard{};
@@ -44,3 +44,5 @@ namespace ModernChess
         std::array<BitBoardState, 12> bitboards{};
     };
 }
+
+std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard);

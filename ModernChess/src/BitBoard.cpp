@@ -1,13 +1,11 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitBoardOperations.h"
+#include "ModernChess/FenParsing.h"
 
 namespace ModernChess
 {
-
     BitBoard::BitBoard()
     {
-
-
         m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::a1);
         m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::h1);
 
@@ -74,4 +72,52 @@ namespace ModernChess
     {
         return ~getOccupiedSquares();
     }
+}
+
+std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard)
+{
+    using namespace ModernChess;
+
+    os << std::endl;
+
+    for (int rank = 0; rank < 8; ++rank)
+    {
+        for (int file = 0; file < 8; ++file)
+        {
+            const Square square = BitBoardOperations::getSquare(rank, file);
+
+            // print ranks
+            if (file != 0)
+            {
+                os << "  " << (8 - rank);
+            }
+
+            ColoredFigureTypes figureOnSquare = ColoredFigureTypes::None;
+
+            // loop over all figures bitboards
+            for (ColoredFigureTypes figure = WhitePawn; figure <= BlackKing; ++figure)
+            {
+                if (BitBoardOperations::isOccupied(bitBoard.bitboards[figure], square))
+                {
+                    figureOnSquare = figure;
+                    break;
+                }
+            }
+
+            // print different figureOnSquare set depending on OS
+#ifdef WIN64
+            os << " " << ((figureOnSquare == ColoredFigureTypes::None) ? "." : FenParsing::asciiFigures[figureOnSquare]);
+#else
+            os << " " << ((figureOnSquare == ColoredFigureTypes::None) ? "." : FenParsing::unicodeFigures[figureOnSquare]);
+#endif
+        }
+
+        // print new line every rank
+        os << std::endl;
+    }
+
+    // print board files
+    os << std::endl << "     a b c d e f g h" << std::endl << std::endl;
+
+    return os;
 }

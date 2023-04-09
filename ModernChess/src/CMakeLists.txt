@@ -36,7 +36,7 @@ add_library(${target}
         PawnAttackGeneration.cpp
         RookAttackGeneration.cpp
         BishopAttackGeneration.cpp
-        )
+        CastleRights.cpp)
 
 target_include_directories(${target} PUBLIC ../include)
 

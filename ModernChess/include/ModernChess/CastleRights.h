@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 namespace ModernChess
 {
     /**
@@ -18,7 +20,31 @@ namespace ModernChess
     {
         WhiteKingSide = 1,
         WhiteQueenSide = 2,
-        BlackKindSide = 4,
-        BlackQueenSide = 8
+        WhiteAnySide = WhiteKingSide + WhiteQueenSide,
+        BlackKingSide = 4,
+        BlackQueenSide = 8,
+        BlackAnySide = BlackKingSide + BlackQueenSide
     };
+
+    constexpr bool whiteCanKingSideCastle(CastleRights castleRights)
+    {
+        return (castleRights & CastleRights::WhiteKingSide) == CastleRights::WhiteKingSide;
+    }
+
+    constexpr bool whiteCanQueenSideCastle(CastleRights castleRights)
+    {
+        return (castleRights & CastleRights::WhiteQueenSide) == CastleRights::WhiteQueenSide;
+    }
+
+    constexpr bool blackCanKingSideCastle(CastleRights castleRights)
+    {
+        return (castleRights & CastleRights::BlackKingSide) == CastleRights::BlackKingSide;
+    }
+
+    constexpr bool blackCanQueenSideCastle(CastleRights castleRights)
+    {
+        return (castleRights & CastleRights::BlackQueenSide) == CastleRights::BlackQueenSide;
+    }
 }
+
+std::ostream& operator<<(std::ostream& os, ModernChess::CastleRights castleRights);
