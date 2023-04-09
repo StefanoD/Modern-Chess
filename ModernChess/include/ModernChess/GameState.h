@@ -20,7 +20,7 @@ namespace ModernChess
                   white king => king side
     */
 
-    enum CasteRights
+    enum CastleRights
     {
         WhiteKingSide = 1,
         WhiteQueenSide = 2,
@@ -37,7 +37,7 @@ namespace ModernChess
         // See https://www.chessprogramming.org/Halfmove_Clock
         uint32_t m_halfMoveClock = 0;
         Color m_sideToMove = Color::White;
-        CasteRights casteRights{};
+        CastleRights casteRights{};
         Square m_enPassantTarget = Square::undefined;
     };
 }
