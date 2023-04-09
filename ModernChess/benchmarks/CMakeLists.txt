@@ -1,7 +1,7 @@
 set(target modern-chess-lib-benchmarks)
 
 add_executable(${target}
-        Benchmark.cpp)
+        FenFigureToEnumConversionTest.cpp)
 
 set(BENCHMARK_ENABLE_TESTING NO)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
