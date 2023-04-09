@@ -3,6 +3,8 @@
 
 #include <benchmark/benchmark.h>
 
+#include <string>
+
 using namespace ModernChess;
 
 namespace {
@@ -40,7 +42,7 @@ namespace {
              }}
     };
 
-    FenEnums charToEnum(char fenChar)
+    constexpr FenEnums charToEnum(char fenChar)
     {
         switch (fenChar)
         {
@@ -56,7 +58,7 @@ namespace {
             case 'r': return r;
             case 'q': return q;
             case 'k': return k;
-            default: throw std::range_error("Not Found");
+            default: throw std::range_error("Could not parse FEN character '" + std::string(1, fenChar) + "' to Figure");
         }
     }
 
