@@ -6,6 +6,8 @@ namespace ModernChess
 
     BitBoard::BitBoard()
     {
+
+
         m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::a1);
         m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::h1);
 

@@ -8,12 +8,13 @@ add_library(${target}
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
         ../include/ModernChess/BishopAttackGeneration.h
-        ../include/ModernChess/FlatMap.h
-        ../include/ModernChess/FenParsing.h
+        ../include/ModernChess/CastleRights.h
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
+        ../include/ModernChess/FenParsing.h
         ../include/ModernChess/Figure.h
+        ../include/ModernChess/FlatMap.h
         ../include/ModernChess/KingAttackGeneration.h
         ../include/ModernChess/KnightAttackGeneration.h
         ../include/ModernChess/Move.h

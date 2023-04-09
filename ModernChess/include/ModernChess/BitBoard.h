@@ -2,6 +2,8 @@
 
 #include "BitBoardConstants.h"
 
+#include <array>
+
 namespace ModernChess
 {
 
@@ -21,7 +23,6 @@ namespace ModernChess
         [[nodiscard]] BitBoardState getEmptySquares() const;
         [[nodiscard]] BitBoardState getWhiteFigures() const;
         [[nodiscard]] BitBoardState getBlackFigures() const;
-        [[nodiscard]] BitBoardState getWhiteRooks() const { return m_whiteRookBitBoard; }
 
     protected:
         // Every piece-type and every color has its own board representation
@@ -38,5 +39,8 @@ namespace ModernChess
         BitBoardState m_whiteQueenBitBoard{};
         BitBoardState m_whiteKingBitBoard{};
         BitBoardState m_whitePawnBitBoard{};
+
+        // figure bitboards
+        std::array<BitBoardState, 12> bitboards{};
     };
 }
