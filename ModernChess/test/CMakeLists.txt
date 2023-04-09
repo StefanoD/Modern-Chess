@@ -6,11 +6,13 @@ add_executable(${target}
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp
         BoardTest.cpp
+        GameStateTest.cpp
+        MagicNumberCandidatesGeneration.cpp
         MoveGenerationsTest.cpp
-        SquareTest.cpp
         PawnQueriesTest.cpp
         RookAttackGenerationTest.cpp
-        MagicNumberCandidatesGeneration.cpp)
+        SquareTest.cpp
+        )
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
