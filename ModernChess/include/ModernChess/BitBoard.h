@@ -25,22 +25,7 @@ namespace ModernChess
         [[nodiscard]] BitBoardState getWhiteFigures() const;
         [[nodiscard]] BitBoardState getBlackFigures() const;
 
-        // Every piece-type and every color has its own board representation
-        BitBoardState m_blackRookBitBoard{};
-        BitBoardState m_blackKnightBitBoard{};
-        BitBoardState m_blackBishopBitBoard{};
-        BitBoardState m_blackQueenBitBoard{};
-        BitBoardState m_blackKingBitBoard{};
-        BitBoardState m_blackPawnBitBoard{};
-
-        BitBoardState m_whiteRookBitBoard{};
-        BitBoardState m_whiteKnightBitBoard{};
-        BitBoardState m_whiteBishopBitBoard{};
-        BitBoardState m_whiteQueenBitBoard{};
-        BitBoardState m_whiteKingBitBoard{};
-        BitBoardState m_whitePawnBitBoard{};
-
-        // figure bitboards
+        // Every figure-type and every color has its own board representation
         std::array<BitBoardState, 12> bitboards{};
     };
 }

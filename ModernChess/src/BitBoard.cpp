@@ -6,66 +6,68 @@ namespace ModernChess
 {
     BitBoard::BitBoard()
     {
-        m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::a1);
-        m_whiteRookBitBoard = BitBoardOperations::occupySquare(m_whiteRookBitBoard, Square::h1);
 
-        m_whiteKnightBitBoard = BitBoardOperations::occupySquare(m_whiteKnightBitBoard, Square::b1);
-        m_whiteKnightBitBoard = BitBoardOperations::occupySquare(m_whiteKnightBitBoard, Square::g1);
 
-        m_whiteBishopBitBoard = BitBoardOperations::occupySquare(m_whiteBishopBitBoard, Square::c1);
-        m_whiteBishopBitBoard = BitBoardOperations::occupySquare(m_whiteBishopBitBoard, Square::f1);
+        bitboards[ColoredFigureTypes::WhiteRook] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteRook], Square::a1);
+        bitboards[ColoredFigureTypes::WhiteRook] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteRook], Square::h1);
 
-        m_whiteQueenBitBoard = BitBoardOperations::occupySquare(m_whiteQueenBitBoard, Square::d1);
-        m_whiteKingBitBoard = BitBoardOperations::occupySquare(m_whiteKingBitBoard, Square::e1);
+        bitboards[ColoredFigureTypes::WhiteKnight] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteKnight], Square::b1);
+        bitboards[ColoredFigureTypes::WhiteKnight] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteKnight], Square::g1);
+
+        bitboards[ColoredFigureTypes::WhiteBishop] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteBishop], Square::c1);
+        bitboards[ColoredFigureTypes::WhiteBishop] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteBishop], Square::f1);
+
+        bitboards[ColoredFigureTypes::WhiteQueen] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteQueen], Square::d1);
+        bitboards[ColoredFigureTypes::WhiteKing] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhiteKing], Square::e1);
 
         for (Square square = Square::a2; square <= Square::h2; ++square)
         {
-            m_whitePawnBitBoard = BitBoardOperations::occupySquare(m_whitePawnBitBoard, Square(square));
+            bitboards[ColoredFigureTypes::WhitePawn] = BitBoardOperations::occupySquare(bitboards[ColoredFigureTypes::WhitePawn], Square(square));
         }
 
         // Black figures have essentially the same position, just rotated by 180 degrees
-        m_blackRookBitBoard = BitBoardOperations::rotate180(m_whiteRookBitBoard);
-        m_blackKnightBitBoard = BitBoardOperations::rotate180(m_whiteKnightBitBoard);
-        m_blackBishopBitBoard = BitBoardOperations::rotate180(m_whiteBishopBitBoard);
-        m_blackQueenBitBoard = BitBoardOperations::rotate180(m_whiteQueenBitBoard);
-        m_blackKingBitBoard = BitBoardOperations::rotate180(m_whiteKingBitBoard);
-        m_blackPawnBitBoard = BitBoardOperations::rotate180(m_whitePawnBitBoard);
+        bitboards[ColoredFigureTypes::BlackRook] = BitBoardOperations::rotate180(bitboards[ColoredFigureTypes::WhiteRook]);
+        bitboards[ColoredFigureTypes::BlackKnight] = BitBoardOperations::rotate180(bitboards[ColoredFigureTypes::WhiteKnight]);
+        bitboards[ColoredFigureTypes::BlackBishop] = BitBoardOperations::rotate180(bitboards[ColoredFigureTypes::WhiteBishop]);
+        bitboards[ColoredFigureTypes::BlackQueen] = BitBoardOperations::rotate180(bitboards[ColoredFigureTypes::WhiteQueen]);
+        bitboards[ColoredFigureTypes::BlackKing] = BitBoardOperations::rotate180(bitboards[ColoredFigureTypes::WhiteKing]);
+        bitboards[ColoredFigureTypes::BlackPawn] = BitBoardOperations::rotate180(bitboards[ColoredFigureTypes::WhitePawn]);
     }
 
     BitBoardState BitBoard::getOccupiedSquares() const
     {
-        return m_blackRookBitBoard |
-               m_blackKnightBitBoard |
-               m_blackBishopBitBoard |
-               m_blackQueenBitBoard |
-               m_blackKingBitBoard |
-               m_blackPawnBitBoard |
-               m_whiteRookBitBoard |
-               m_whiteKnightBitBoard |
-               m_whiteBishopBitBoard |
-               m_whiteQueenBitBoard |
-               m_whiteKingBitBoard |
-               m_whitePawnBitBoard;
+        return bitboards[ColoredFigureTypes::BlackRook]  |
+               bitboards[ColoredFigureTypes::BlackKnight]  |
+               bitboards[ColoredFigureTypes::BlackBishop]  |
+               bitboards[ColoredFigureTypes::BlackQueen]  |
+               bitboards[ColoredFigureTypes::BlackKing]  |
+               bitboards[ColoredFigureTypes::BlackPawn]  |
+               bitboards[ColoredFigureTypes::WhiteRook] |
+               bitboards[ColoredFigureTypes::WhiteKnight] |
+               bitboards[ColoredFigureTypes::WhiteBishop] |
+               bitboards[ColoredFigureTypes::WhiteQueen] |
+               bitboards[ColoredFigureTypes::WhiteKing] |
+               bitboards[ColoredFigureTypes::WhitePawn];
     }
 
     BitBoardState BitBoard::getWhiteFigures() const
     {
-        return m_whiteRookBitBoard |
-               m_whiteKnightBitBoard |
-               m_whiteBishopBitBoard |
-               m_whiteQueenBitBoard |
-               m_whiteKingBitBoard |
-               m_whitePawnBitBoard;
+        return bitboards[ColoredFigureTypes::WhiteRook] |
+               bitboards[ColoredFigureTypes::WhiteKnight] |
+               bitboards[ColoredFigureTypes::WhiteBishop] |
+               bitboards[ColoredFigureTypes::WhiteQueen] |
+               bitboards[ColoredFigureTypes::WhiteKing] |
+               bitboards[ColoredFigureTypes::WhitePawn];
     }
 
     BitBoardState BitBoard::getBlackFigures() const
     {
-        return m_blackRookBitBoard |
-               m_blackKnightBitBoard |
-               m_blackBishopBitBoard |
-               m_blackQueenBitBoard |
-               m_blackKingBitBoard |
-               m_blackPawnBitBoard;
+        return bitboards[ColoredFigureTypes::BlackRook]  |
+               bitboards[ColoredFigureTypes::BlackKnight]  |
+               bitboards[ColoredFigureTypes::BlackBishop]  |
+               bitboards[ColoredFigureTypes::BlackQueen]  |
+               bitboards[ColoredFigureTypes::BlackKing]  |
+               bitboards[ColoredFigureTypes::BlackPawn];
     }
 
     BitBoardState BitBoard::getEmptySquares() const
@@ -87,7 +89,7 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard
             const Square square = BitBoardOperations::getSquare(rank, file);
 
             // print ranks
-            if (file != 0)
+            if (file == 0)
             {
                 os << "  " << (8 - rank);
             }
@@ -117,7 +119,7 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard
     }
 
     // print board files
-    os << std::endl << "     a b c d e f g h" << std::endl << std::endl;
+    os << std::endl << "    a b c d e f g h" << std::endl << std::endl;
 
     return os;
 }

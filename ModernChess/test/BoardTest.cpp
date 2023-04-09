@@ -1,6 +1,7 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitBoardOperations.h"
 #include "ModernChess/Utilities.h"
+#include "ModernChess/Figure.h"
 
 #include <gtest/gtest.h>
 
@@ -14,18 +15,18 @@ namespace
 
         BitBoardState getBitBoardConjunctions()
         {
-            return m_blackRookBitBoard & \
-                   m_blackKnightBitBoard & \
-                   m_blackBishopBitBoard & \
-                   m_blackQueenBitBoard & \
-                   m_blackKingBitBoard & \
-                   m_blackPawnBitBoard & \
-                   m_whiteRookBitBoard & \
-                   m_whiteKnightBitBoard & \
-                   m_whiteBishopBitBoard & \
-                   m_whiteQueenBitBoard & \
-                   m_whiteKingBitBoard & \
-                   m_whitePawnBitBoard;
+            return bitboards[ColoredFigureTypes::BlackRook]     &
+                   bitboards[ColoredFigureTypes::BlackKnight]   &
+                   bitboards[ColoredFigureTypes::BlackBishop]   &
+                   bitboards[ColoredFigureTypes::BlackQueen]    &
+                   bitboards[ColoredFigureTypes::BlackKing]     &
+                   bitboards[ColoredFigureTypes::BlackPawn]     &
+                   bitboards[ColoredFigureTypes::WhiteRook]     &
+                   bitboards[ColoredFigureTypes::WhiteKnight]   &
+                   bitboards[ColoredFigureTypes::WhiteBishop]   &
+                   bitboards[ColoredFigureTypes::WhiteQueen]    &
+                   bitboards[ColoredFigureTypes::WhiteKing]     &
+                   bitboards[ColoredFigureTypes::WhitePawn];
         }
     };
 
@@ -58,6 +59,8 @@ namespace
         }
 
         print(std::cout, bitBoardState) << std::endl;
+
+        std::cout << board;
     }
 
     TEST(Board, BlackFiguresAreSet)
