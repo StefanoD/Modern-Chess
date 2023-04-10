@@ -86,4 +86,15 @@ namespace
 
         std::cout << gameState;
     }
+
+    TEST(FenParsingTest, BlackPawnAtA8)
+    {
+        constexpr auto fenString = "p7/8/8/8/8/8/8/8 w KQkq - 0 1";
+        const GameState gameState = FenParsing::parse(fenString);
+
+        const BitBoardState blackPawnsBitboard = gameState.board.bitboards[ColoredFigureType::BlackPawn];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::a8));
+
+        std::cout << gameState;
+    }
 }
