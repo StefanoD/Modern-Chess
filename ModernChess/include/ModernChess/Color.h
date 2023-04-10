@@ -6,7 +6,7 @@ namespace ModernChess
     {
         White = 0,
         Black = 1,
-        Any = 2, ///< White or black
+        Both = 2, ///< White or black
         UndefinedColor = 255,
     };
 }
