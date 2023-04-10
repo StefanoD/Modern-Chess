@@ -91,7 +91,7 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard
             // print ranks
             if (file == 0)
             {
-                os << "  " << (8 - rank);
+                os << "  " << (rank + 1);
             }
 
             ColoredFigureType figureOnSquare = ColoredFigureType::None;
