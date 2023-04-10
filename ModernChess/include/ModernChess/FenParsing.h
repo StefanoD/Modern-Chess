@@ -36,7 +36,7 @@ namespace ModernChess::FenParsing {
         }
     }
 
-    constexpr auto startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
+    constexpr auto startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
     GameState parse(std::string_view fen);
 }

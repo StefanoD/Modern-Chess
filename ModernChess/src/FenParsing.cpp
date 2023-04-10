@@ -52,7 +52,7 @@ namespace ModernChess::FenParsing {
 
         char character;
 
-        // FEN strings begin at the top left (a8)
+        // FEN strings begin at the top left (a8) and continue to the right position
         for (int rank = 7; rank >= 0; --rank)
         {
             for (int file = 0; file < 8; ++file)
