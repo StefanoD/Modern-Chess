@@ -66,6 +66,29 @@ namespace ModernChess::FenParsing {
         return (currentPos+1) != endPos;
     }
 
+    Color parseColor(std::string_view::iterator beginPos,
+                     std::string_view::iterator currentPos,
+                     char character)
+    {
+        Color color;
+
+        if (character == 'w')
+        {
+            color = Color::White;
+        }
+        else if (character == 'b')
+        {
+            color = Color::Black;
+        }
+        else
+        {
+            throw std::range_error("Expected 'w' or 'b' for color, but got '" + std::string(1, character) +
+                                   "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
+        }
+
+        return color;
+    }
+
     Square parseSquare(std::string_view::iterator beginPos,
                        std::string_view::iterator &currentPos,
                        std::string_view::iterator endPos)
@@ -213,19 +236,8 @@ namespace ModernChess::FenParsing {
         character = getNextCharacter(beginPos, currentPos, endPos);
 
         // parse side to move
-        if (character == 'w')
-        {
-            gameState.sideToMove = Color::White;
-        }
-        else if (character == 'b')
-        {
-            gameState.sideToMove = Color::Black;
-        }
-        else
-        {
-            throw std::range_error("Expected 'w' or 'b' for side to move, but got '" + std::string(1, character) +
-                                   "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
-        }
+        gameState.sideToMove = parseColor(beginPos, currentPos, character);
+
         // go to parsing castling rights
         nextPosition(beginPos, currentPos, endPos);
         character = getNextCharacter(beginPos, currentPos, endPos);
