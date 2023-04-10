@@ -7,6 +7,11 @@ using namespace ModernChess;
 
 namespace ModernChess::FenParsing {
 
+    std::string getCurrentPosition(std::string_view::iterator beginPos, std::string_view::iterator currentPos)
+    {
+        return std::to_string(currentPos - beginPos + 1);
+    }
+
     bool isAlphabetic(char character)
     {
         return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
@@ -17,9 +22,17 @@ namespace ModernChess::FenParsing {
         return character >= '0' && character <= '9';
     }
 
-    std::string getCurrentPosition(std::string_view::iterator beginPos, std::string_view::iterator currentPos)
+    bool isRankNumber(std::string_view::iterator beginPos,
+                      std::string_view::iterator currentPos,
+                      char character)
     {
-        return std::to_string(currentPos - beginPos + 1);
+        if (character == '9')
+        {
+            throw std::range_error("Invalid rank number '9' at position " +
+                                   getCurrentPosition(beginPos, currentPos) + "!");
+        }
+
+        return isNumerical(character);
     }
 
     void nextPosition(std::string_view::iterator beginPos,
@@ -47,7 +60,7 @@ namespace ModernChess::FenParsing {
         return *currentPos;
     }
 
-    bool hasNextCharacter(std::string_view::iterator &currentPos,
+    bool hasNextCharacter(std::string_view::iterator currentPos,
                           std::string_view::iterator endPos)
     {
         return (currentPos+1) != endPos;
@@ -99,8 +112,8 @@ namespace ModernChess::FenParsing {
         std::stringstream strNumberHalfMoves;
 
         for (char character = getNextCharacter(beginPos, currentPos, endPos);
-                isNumerical(character);
-                character = getNextCharacter(beginPos, currentPos, endPos))
+             isNumerical(character);
+             character = getNextCharacter(beginPos, currentPos, endPos))
         {
             strNumberHalfMoves << character;
 
@@ -116,7 +129,7 @@ namespace ModernChess::FenParsing {
         if (strNumberHalfMoves.fail())
         {
             throw std::range_error("Could not parse number \"" + strNumberHalfMoves.str() +
-                "\" at position " + getCurrentPosition(beginPos, currentPos) + "!");
+                                   "\" at position " + getCurrentPosition(beginPos, currentPos) + "!");
         }
 
         // The last character was not a number. Therefore, decrement position again
@@ -159,7 +172,7 @@ namespace ModernChess::FenParsing {
                 }
 
                 // match empty square numbers within FEN string
-                if (isNumerical(character))
+                if (isRankNumber(beginPos, currentPos, character))
                 {
                     // init offset (convert char 0 to int 0)
                     const int offset = character - '0';
@@ -211,7 +224,7 @@ namespace ModernChess::FenParsing {
         else
         {
             throw std::range_error("Expected 'w' or 'b' for side to move, but got '" + std::string(1, character) +
-                "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
+                                   "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
         }
         // go to parsing castling rights
         nextPosition(beginPos, currentPos, endPos);
@@ -228,7 +241,8 @@ namespace ModernChess::FenParsing {
                 case 'q': gameState.castleRights = addBlackQueenSideCastleRights(gameState.castleRights); break;
                 case '-': break;
                 default: throw std::range_error("Could not parse castling rights character '" +
-                    std::string(1, character) + "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
+                                                std::string(1, character) + "' at position " +
+                                                getCurrentPosition(beginPos, currentPos) + "!");
             }
 
             character = getNextCharacter(beginPos, currentPos, endPos);
