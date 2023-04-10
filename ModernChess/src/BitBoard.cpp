@@ -82,7 +82,7 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard
 
     os << std::endl;
 
-    for (int rank = 0; rank < 8; ++rank)
+    for (int rank = 7; rank >=0; --rank)
     {
         for (int file = 0; file < 8; ++file)
         {
