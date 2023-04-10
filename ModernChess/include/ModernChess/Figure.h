@@ -30,7 +30,7 @@ namespace ModernChess {
         None
     };
 
-    // This makes it possible to use Square in for-loops
+    // This makes it possible to use ColoredFigureTypes in for-loops
     inline ColoredFigureTypes& operator++(ColoredFigureTypes& state)
     {
         state = ColoredFigureTypes(uint8_t(state)+1);
