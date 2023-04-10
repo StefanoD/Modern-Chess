@@ -55,7 +55,7 @@ namespace ModernChess::FenParsing {
         // FEN strings begin at the top left (a8)
         for (int rank = 7; rank >= 0; --rank)
         {
-            for (int file = 7; file >= 0; --file)
+            for (int file = 0; file < 8; ++file)
             {
                 const Square square = BitBoardOperations::getSquare(rank, file);
 
@@ -94,11 +94,11 @@ namespace ModernChess::FenParsing {
 
                     if (figureOnSquare == ColoredFigureType::None)
                     {
-                        ++file;
+                        --file;
                     }
 
                     // adjust file counter
-                    file -= offset;
+                    file += offset;
 
                     character = getNextCharacter(beginPos, currentPos, endPos);
                 }
