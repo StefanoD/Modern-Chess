@@ -9,7 +9,8 @@ namespace
 {
     TEST(FenParsingTest, Init)
     {
-        const GameState gameState = FenParsing::parse(FenParsing::startPosition);
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(FenParsing::startPosition);
 
         // Test occupation of white pawns
         const BitBoardState whitePawnsBitboard = gameState.board.bitboards[ColoredFigureType::WhitePawn];
@@ -90,7 +91,8 @@ namespace
     TEST(FenParsingTest, BlackPawnAtA8)
     {
         constexpr auto fenString = "p7/8/8/8/8/8/8/8 w KQkq - 0 1";
-        const GameState gameState = FenParsing::parse(fenString);
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(fenString);
 
         const BitBoardState blackPawnsBitboard = gameState.board.bitboards[ColoredFigureType::BlackPawn];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::a8));

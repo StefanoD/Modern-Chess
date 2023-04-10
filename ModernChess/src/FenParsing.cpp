@@ -7,7 +7,7 @@ using namespace ModernChess;
 
 namespace ModernChess::FenParsing {
 
-    std::string getCurrentPosition(std::string_view::iterator beginPos, std::string_view::iterator currentPos)
+    std::string FenParser::getCurrentPosition()
     {
         return std::to_string(currentPos - beginPos + 1);
     }
@@ -22,53 +22,44 @@ namespace ModernChess::FenParsing {
         return character >= '0' && character <= '9';
     }
 
-    bool isRankNumber(std::string_view::iterator beginPos,
-                      std::string_view::iterator currentPos,
-                      char character)
+    bool FenParser::isRankNumber(char character)
     {
         if (character == '9')
         {
             throw std::range_error("Invalid rank number '9' at position " +
-                                   getCurrentPosition(beginPos, currentPos) + "!");
+                                   getCurrentPosition() + "!");
         }
 
         return isNumerical(character);
     }
 
-    void nextPosition(std::string_view::iterator beginPos,
-                      std::string_view::iterator &currentPos,
-                      std::string_view::iterator endPos)
+    void FenParser::nextPosition()
     {
         ++currentPos;
         if (currentPos == endPos)
         {
-            const std::string position = getCurrentPosition(beginPos, currentPos);
+            const std::string position = getCurrentPosition();
             throw std::range_error("Error at position " + position + ": Unexpected end of line!");
         }
     }
 
-    char getNextCharacter(std::string_view::iterator beginPos,
-                          std::string_view::iterator &currentPos,
-                          std::string_view::iterator endPos)
+    char FenParser::getNextCharacter()
     {
         ++currentPos;
         if (currentPos == endPos)
         {
-            const std::string position = getCurrentPosition(beginPos, currentPos);
+            const std::string position = getCurrentPosition();
             throw std::range_error("Error at position " + position + ": Unexpected end of line!");
         }
         return *currentPos;
     }
 
-    bool hasNextCharacter(std::string_view::iterator currentPos,
-                          std::string_view::iterator endPos)
+    bool FenParser::hasNextCharacter()
     {
         return (currentPos+1) != endPos;
     }
 
-    Color parseColor(std::string_view::iterator beginPos,
-                     std::string_view::iterator currentPos,
-                     char character)
+    Color FenParser::parseColor(char character)
     {
         Color color;
 
@@ -83,15 +74,13 @@ namespace ModernChess::FenParsing {
         else
         {
             throw std::range_error("Expected 'w' or 'b' for color, but got '" + std::string(1, character) +
-                                   "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
+                                   "' at position " + getCurrentPosition() + "!");
         }
 
         return color;
     }
 
-    Square parseSquare(std::string_view::iterator beginPos,
-                       std::string_view::iterator &currentPos,
-                       std::string_view::iterator endPos)
+    Square FenParser::parseSquare()
     {
         char character = *currentPos;
         Square square = Square::undefined;
@@ -101,12 +90,12 @@ namespace ModernChess::FenParsing {
             // parse en passant file & rank
             const int file = character - 'a';
 
-            character = getNextCharacter(beginPos, currentPos, endPos);
+            character = getNextCharacter();
 
             if (!isNumerical(character))
             {
                 throw std::range_error("Could not parse square from character '" +
-                                       std::string(1, character) + "' at position " + getCurrentPosition(beginPos, currentPos) +
+                                       std::string(1, character) + "' at position " + getCurrentPosition() +
                                        "! Expected a number!");
             }
 
@@ -122,37 +111,35 @@ namespace ModernChess::FenParsing {
         else
         {
             throw std::range_error("Could not parse square from character '" +
-                                   std::string(1, character) + "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
+                                   std::string(1, character) + "' at position " + getCurrentPosition() + "!");
         }
 
         return square;
     }
 
-    uint32_t parseNumber(std::string_view::iterator beginPos,
-                         std::string_view::iterator &currentPos,
-                         std::string_view::iterator endPos)
+    uint32_t FenParser::parseNumber()
     {
-        std::stringstream strNumberHalfMoves;
+        std::stringstream strNumber;
 
-        for (char character = getNextCharacter(beginPos, currentPos, endPos);
+        for (char character = getNextCharacter();
              isNumerical(character);
-             character = getNextCharacter(beginPos, currentPos, endPos))
+             character = getNextCharacter())
         {
-            strNumberHalfMoves << character;
+            strNumber << character;
 
-            if (!hasNextCharacter(currentPos, endPos))
+            if (!hasNextCharacter())
             {
                 break;
             }
         }
 
         uint32_t number = 0;
-        strNumberHalfMoves >> number;
+        strNumber >> number;
 
-        if (strNumberHalfMoves.fail())
+        if (strNumber.fail())
         {
-            throw std::range_error("Could not parse number \"" + strNumberHalfMoves.str() +
-                                   "\" at position " + getCurrentPosition(beginPos, currentPos) + "!");
+            throw std::range_error("Could not parse number \"" + strNumber.str() +
+                                   "\" at position " + getCurrentPosition() + "!");
         }
 
         // The last character was not a number. Therefore, decrement position again
@@ -161,15 +148,38 @@ namespace ModernChess::FenParsing {
         return number;
     }
 
-    GameState parse(std::string_view fen)
+    void FenParser::parseCastlingRights(GameState &gameState)
+    {
+        char character = getNextCharacter();
+
+        // parse castling rights
+        while (character != ' ')
+        {
+            switch (character)
+            {
+                case 'K': gameState.castleRights = addWhiteKingSideCastleRights(gameState.castleRights); break;
+                case 'Q': gameState.castleRights = addWhiteQueenSideCastleRights(gameState.castleRights); break;
+                case 'k': gameState.castleRights = addBlackKingSideCastleRights(gameState.castleRights); break;
+                case 'q': gameState.castleRights = addBlackQueenSideCastleRights(gameState.castleRights); break;
+                case '-': break;
+                default: throw std::range_error("Could not parse castling rights character '" +
+                                                std::string(1, character) + "' at position " +
+                                                getCurrentPosition() + "!");
+            }
+
+            character = getNextCharacter();
+        }
+    }
+
+    GameState FenParser::parse(std::string_view fen)
     {
         GameState gameState;
         gameState.board.bitboards = {};
         gameState.board.occupancies = {};
 
-        const auto *const beginPos = fen.begin();
-        const auto *currentPos = fen.begin();
-        const auto *const endPos = fen.end();
+        beginPos = fen.begin();
+        currentPos = fen.begin();
+        endPos = fen.end();
 
         char character;
 
@@ -191,19 +201,18 @@ namespace ModernChess::FenParsing {
                     // set figureType on corresponding bitboard
                     gameState.board.bitboards[figureType] = BitBoardOperations::occupySquare(gameState.board.bitboards[figureType], square);
 
-                    character = getNextCharacter(beginPos, currentPos, endPos);
+                    character = getNextCharacter();
                 }
 
                 // match empty square numbers within FEN string
-                if (isRankNumber(beginPos, currentPos, character))
+                if (isRankNumber(character))
                 {
                     // init offset (convert char 0 to int 0)
                     const int offset = character - '0';
 
-                    // define figureOnSquare variable
                     ColoredFigureType figureOnSquare = ColoredFigureType::None;
 
-                    // loop over all figureOnSquare bitboards
+                    // loop over all bitboards
                     for (ColoredFigureType figureType = ColoredFigureType::WhitePawn; figureType <= ColoredFigureType::BlackKing; ++figureType)
                     {
                         if (BitBoardOperations::isOccupied(gameState.board.bitboards[figureType], square))
@@ -221,59 +230,49 @@ namespace ModernChess::FenParsing {
                     // adjust file counter
                     file += offset;
 
-                    character = getNextCharacter(beginPos, currentPos, endPos);
+                    character = getNextCharacter();
                 }
 
-                // match rank separator
-                if (character== '/')
+                const bool characterIsRankSeparator = (character == '/');
+
+                if (characterIsRankSeparator)
                 {
-                    nextPosition(beginPos, currentPos, endPos);
+                    nextPosition();
                 }
             }
         }
 
         // got to parsing side to move (increment pointer to FEN string)
-        character = getNextCharacter(beginPos, currentPos, endPos);
+        character = getNextCharacter();
 
         // parse side to move
-        gameState.sideToMove = parseColor(beginPos, currentPos, character);
+        gameState.sideToMove = parseColor(character);
 
         // go to parsing castling rights
-        nextPosition(beginPos, currentPos, endPos);
-        character = getNextCharacter(beginPos, currentPos, endPos);
-
-        // parse castling rights
-        while (character != ' ')
-        {
-            switch (character)
-            {
-                case 'K': gameState.castleRights = addWhiteKingSideCastleRights(gameState.castleRights); break;
-                case 'Q': gameState.castleRights = addWhiteQueenSideCastleRights(gameState.castleRights); break;
-                case 'k': gameState.castleRights = addBlackKingSideCastleRights(gameState.castleRights); break;
-                case 'q': gameState.castleRights = addBlackQueenSideCastleRights(gameState.castleRights); break;
-                case '-': break;
-                default: throw std::range_error("Could not parse castling rights character '" +
-                                                std::string(1, character) + "' at position " +
-                                                getCurrentPosition(beginPos, currentPos) + "!");
-            }
-
-            character = getNextCharacter(beginPos, currentPos, endPos);
-        }
+        nextPosition();
+        parseCastlingRights(gameState);
 
         // got to parsing en passant square
-        nextPosition(beginPos, currentPos, endPos);
+        nextPosition();
 
         // parse en passant square
-        gameState.enPassantTarget = parseSquare(beginPos, currentPos, endPos);
+        gameState.enPassantTarget = parseSquare();
 
         // Skip space and parse half moves
-        nextPosition(beginPos, currentPos, endPos);
-        gameState.halfMoveClock = parseNumber(beginPos, currentPos, endPos);
+        nextPosition();
+        gameState.halfMoveClock = parseNumber();
 
         // Skip space and parse number of next move
-        nextPosition(beginPos, currentPos, endPos);
-        gameState.nextMoveClock = parseNumber(beginPos, currentPos, endPos);
+        nextPosition();
+        gameState.nextMoveClock = parseNumber();
 
+        initOccupancyMaps(gameState);
+
+        return gameState;
+    }
+
+    void FenParser::initOccupancyMaps(GameState &gameState)
+    {
         // Init white occupancy map
         for (ColoredFigureType figureType = ColoredFigureType::WhitePawn; figureType <= ColoredFigureType::WhiteKing; ++figureType)
         {
@@ -289,7 +288,5 @@ namespace ModernChess::FenParsing {
         // init all occupancies
         gameState.board.occupancies[Color::Both] |= gameState.board.occupancies[Color::White];
         gameState.board.occupancies[Color::Both] |= gameState.board.occupancies[Color::Black];
-
-        return gameState;
     }
 }

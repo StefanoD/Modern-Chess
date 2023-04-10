@@ -38,5 +38,36 @@ namespace ModernChess::FenParsing {
 
     constexpr auto startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    GameState parse(std::string_view fen);
+    class FenParser
+    {
+    public:
+        GameState parse(std::string_view fen);
+    private:
+
+        std::string_view::iterator beginPos{};
+        std::string_view::iterator currentPos{};
+        std::string_view::iterator endPos{};
+
+        std::string getCurrentPosition();
+
+        bool isRankNumber(char character);
+
+        void nextPosition();
+
+        char getNextCharacter();
+
+        bool hasNextCharacter();
+
+        Color parseColor(char character);
+
+        Square parseSquare();
+
+        uint32_t parseNumber();
+
+        void parseCastlingRights(GameState &gameState);
+
+        void initOccupancyMaps(GameState &gameState);
+    };
+
+
 }
