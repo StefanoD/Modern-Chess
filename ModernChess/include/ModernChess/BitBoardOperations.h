@@ -175,7 +175,7 @@ namespace ModernChess::BitBoardOperations
             // get LS1B index of attacks mask
             const Square square = bitScanForward(attackMask);
 
-            // pop LS1B in attack map
+            // erase LS1B in attack map
             attackMask = eraseSquare(attackMask, square);
 
             // make sure occupancy is on board
