@@ -1,6 +1,8 @@
 #include "ModernChess/FenParsing.h"
 #include "ModernChess/BitBoardOperations.h"
 
+#include <sstream>
+
 using namespace ModernChess;
 
 namespace ModernChess::FenParsing {
@@ -15,15 +17,20 @@ namespace ModernChess::FenParsing {
         return character >= '0' && character <= '9';
     }
 
-    void skipNextCharacter(std::string_view::iterator beginPos,
-                           std::string_view::iterator &currentPos,
-                           std::string_view::iterator endPos)
+    std::string getCurrentPosition(std::string_view::iterator beginPos, std::string_view::iterator currentPos)
+    {
+        return std::to_string(currentPos - beginPos + 1);
+    }
+
+    void nextPosition(std::string_view::iterator beginPos,
+                      std::string_view::iterator &currentPos,
+                      std::string_view::iterator endPos)
     {
         ++currentPos;
         if (currentPos == endPos)
         {
-            const size_t position = currentPos - beginPos + 1;
-            throw std::range_error("Error at position " + std::to_string(position) + ": Unexpected end of line!");
+            const std::string position = getCurrentPosition(beginPos, currentPos);
+            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
         }
     }
 
@@ -34,10 +41,88 @@ namespace ModernChess::FenParsing {
         ++currentPos;
         if (currentPos == endPos)
         {
-            const size_t position = currentPos - beginPos + 1;
-            throw std::range_error("Error at position " + std::to_string(position) + ": Unexpected end of line!");
+            const std::string position = getCurrentPosition(beginPos, currentPos);
+            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
         }
         return *currentPos;
+    }
+
+    bool hasNextCharacter(std::string_view::iterator &currentPos,
+                          std::string_view::iterator endPos)
+    {
+        return (currentPos+1) != endPos;
+    }
+
+    Square parseSquare(std::string_view::iterator beginPos,
+                       std::string_view::iterator &currentPos,
+                       std::string_view::iterator endPos)
+    {
+        char character = *currentPos;
+        Square square = Square::undefined;
+
+        if (isAlphabetic(character))
+        {
+            // parse en passant file & rank
+            const int file = character - 'a';
+
+            character = getNextCharacter(beginPos, currentPos, endPos);
+
+            if (!isNumerical(character))
+            {
+                throw std::range_error("Could not parse square from character '" +
+                                       std::string(1, character) + "' at position " + getCurrentPosition(beginPos, currentPos) +
+                                       "! Expected a number!");
+            }
+
+            const int rank = 8 - (character - '0');
+
+            // init en passant square
+            square = BitBoardOperations::getSquare(rank, file);
+        }
+        else if (character == '-')
+        {
+            // Do nothing
+        }
+        else
+        {
+            throw std::range_error("Could not parse square from character '" +
+                                   std::string(1, character) + "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
+        }
+
+        return square;
+    }
+
+    uint32_t parseNumber(std::string_view::iterator beginPos,
+                         std::string_view::iterator &currentPos,
+                         std::string_view::iterator endPos)
+    {
+        std::stringstream strNumberHalfMoves;
+
+        for (char character = getNextCharacter(beginPos, currentPos, endPos);
+                isNumerical(character);
+                character = getNextCharacter(beginPos, currentPos, endPos))
+        {
+            strNumberHalfMoves << character;
+
+            if (!hasNextCharacter(currentPos, endPos))
+            {
+                break;
+            }
+        }
+
+        uint32_t number = 0;
+        strNumberHalfMoves >> number;
+
+        if (strNumberHalfMoves.fail())
+        {
+            throw std::range_error("Could not parse number \"" + strNumberHalfMoves.str() +
+                "\" at position " + getCurrentPosition(beginPos, currentPos) + "!");
+        }
+
+        // The last character was not a number. Therefore, decrement position again
+        --currentPos;
+
+        return number;
     }
 
     GameState parse(std::string_view fen)
@@ -106,7 +191,7 @@ namespace ModernChess::FenParsing {
                 // match rank separator
                 if (character== '/')
                 {
-                    skipNextCharacter(beginPos, currentPos, endPos);
+                    nextPosition(beginPos, currentPos, endPos);
                 }
             }
         }
@@ -126,10 +211,10 @@ namespace ModernChess::FenParsing {
         else
         {
             throw std::range_error("Expected 'w' or 'b' for side to move, but got '" + std::string(1, character) +
-                "' at position" + std::to_string(currentPos - beginPos + 1) + "!");
+                "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
         }
         // go to parsing castling rights
-        skipNextCharacter(beginPos, currentPos, endPos);
+        nextPosition(beginPos, currentPos, endPos);
         character = getNextCharacter(beginPos, currentPos, endPos);
 
         // parse castling rights
@@ -143,42 +228,35 @@ namespace ModernChess::FenParsing {
                 case 'q': gameState.castleRights = addBlackQueenSideCastleRights(gameState.castleRights); break;
                 case '-': break;
                 default: throw std::range_error("Could not parse castling rights character '" +
-                    std::string(1, character) + "' at position" + std::to_string(currentPos - beginPos + 1) + "!");
+                    std::string(1, character) + "' at position " + getCurrentPosition(beginPos, currentPos) + "!");
             }
 
             character = getNextCharacter(beginPos, currentPos, endPos);
         }
 
-        // got to parsing en passant square (increment pointer to FEN string)
-        character = getNextCharacter(beginPos, currentPos, endPos);
+        // got to parsing en passant square
+        nextPosition(beginPos, currentPos, endPos);
 
         // parse en passant square
-        if (character != '-')
-        {
-            // parse en passant file & rank
-            const int file = character - 'a';
+        gameState.enPassantTarget = parseSquare(beginPos, currentPos, endPos);
 
-            character = getNextCharacter(beginPos, currentPos, endPos);
+        // Skip space and parse half moves
+        nextPosition(beginPos, currentPos, endPos);
+        gameState.halfMoveClock = parseNumber(beginPos, currentPos, endPos);
 
-            const int rank = 8 - (character - '0');
+        // Skip space and parse number of next move
+        nextPosition(beginPos, currentPos, endPos);
+        gameState.nextMoveClock = parseNumber(beginPos, currentPos, endPos);
 
-            // init en passant square
-            gameState.enPassantTarget = BitBoardOperations::getSquare(rank, file);
-        }
-        else
-        {
-            gameState.enPassantTarget = Square::undefined;
-        }
-
-        // loop over white pieces bitboards
+        // Init white occupancy map
         for (ColoredFigureType figureType = ColoredFigureType::WhitePawn; figureType <= ColoredFigureType::WhiteKing; ++figureType)
-        {    // populate white occupancy bitboard
+        {
             gameState.board.occupancies[Color::White] |= gameState.board.bitboards[figureType];
         }
 
-        // loop over black pieces bitboards
+        // Init black occupancy map
         for (ColoredFigureType figureType = ColoredFigureType::BlackPawn; figureType <= ColoredFigureType::BlackKing; ++figureType)
-        {    // populate white occupancy bitboard
+        {
             gameState.board.occupancies[Color::Black] |= gameState.board.bitboards[figureType];
         }
 
