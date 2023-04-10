@@ -99,4 +99,38 @@ namespace
 
         std::cout << gameState;
     }
+
+    TEST(FenParsingTest, TrickyPosition)
+    {
+        constexpr auto trickyPosition = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(trickyPosition);
+
+        // Test occupation of black rooks
+        const BitBoardState blackRooksBitboard = gameState.board.bitboards[ColoredFigureType::BlackRook];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackRooksBitboard, Square::a8));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackRooksBitboard, Square::h8));
+
+        // Test occupation of black king
+        const BitBoardState blackKingBitboard = gameState.board.bitboards[ColoredFigureType::BlackKing];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackKingBitboard, Square::e8));
+
+        // Test occupation of black pawns
+        const BitBoardState blackPawnsBitboard = gameState.board.bitboards[ColoredFigureType::BlackPawn];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::a7));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::c7));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::d7));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::f7));
+
+        // Test occupation of black queen
+        const BitBoardState blackQueenBitboard = gameState.board.bitboards[ColoredFigureType::BlackQueen];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackQueenBitboard, Square::e7));
+
+        // Test occupation of black bishops
+        const BitBoardState blackBishopsBitboard = gameState.board.bitboards[ColoredFigureType::BlackBishop];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackBishopsBitboard, Square::g7));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackBishopsBitboard, Square::a6));
+
+        std::cout << gameState;
+    }
 }
