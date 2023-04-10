@@ -70,7 +70,7 @@ namespace {
         {
             for (const uint8_t figure: figures)
             {
-                const auto value = ColoredFigureTypes(figure);
+                const auto value = ColoredFigureType(figure);
                 benchmark::DoNotOptimize(value);
             }
         }
@@ -98,7 +98,7 @@ namespace {
         {
             for (const uint8_t figure : figures)
             {
-                const auto value = charToEnum(figure);
+                const auto value = charToFigureType(figure);
                 benchmark::DoNotOptimize(value);
             }
         }

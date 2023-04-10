@@ -12,12 +12,12 @@ namespace ModernChess
     public:
 
     //private:
-        BitBoard m_board{};
+        BitBoard board{};
         // See https://www.chessprogramming.org/Halfmove_Clock
-        uint32_t m_halfMoveClock = 0;
-        Color m_sideToMove = Color::White;
+        uint32_t halfMoveClock = 0;
+        Color sideToMove = Color::White;
         CastleRights castleRights{};
-        Square m_enPassantTarget = Square::undefined;
+        Square enPassantTarget = Square::undefined;
     };
 }
 

@@ -27,6 +27,8 @@ namespace ModernChess
 
         // Every figure-type and every color has its own board representation
         std::array<BitBoardState, 12> bitboards{};
+        // Occupancies for white, black and both colors
+        std::array<BitBoardState, 3> occupancies{};
     };
 }
 

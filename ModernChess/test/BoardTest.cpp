@@ -15,18 +15,18 @@ namespace
 
         BitBoardState getBitBoardConjunctions()
         {
-            return bitboards[ColoredFigureTypes::BlackRook]     &
-                   bitboards[ColoredFigureTypes::BlackKnight]   &
-                   bitboards[ColoredFigureTypes::BlackBishop]   &
-                   bitboards[ColoredFigureTypes::BlackQueen]    &
-                   bitboards[ColoredFigureTypes::BlackKing]     &
-                   bitboards[ColoredFigureTypes::BlackPawn]     &
-                   bitboards[ColoredFigureTypes::WhiteRook]     &
-                   bitboards[ColoredFigureTypes::WhiteKnight]   &
-                   bitboards[ColoredFigureTypes::WhiteBishop]   &
-                   bitboards[ColoredFigureTypes::WhiteQueen]    &
-                   bitboards[ColoredFigureTypes::WhiteKing]     &
-                   bitboards[ColoredFigureTypes::WhitePawn];
+            return bitboards[ColoredFigureType::BlackRook] &
+                   bitboards[ColoredFigureType::BlackKnight] &
+                   bitboards[ColoredFigureType::BlackBishop] &
+                   bitboards[ColoredFigureType::BlackQueen] &
+                   bitboards[ColoredFigureType::BlackKing] &
+                   bitboards[ColoredFigureType::BlackPawn] &
+                   bitboards[ColoredFigureType::WhiteRook] &
+                   bitboards[ColoredFigureType::WhiteKnight] &
+                   bitboards[ColoredFigureType::WhiteBishop] &
+                   bitboards[ColoredFigureType::WhiteQueen] &
+                   bitboards[ColoredFigureType::WhiteKing] &
+                   bitboards[ColoredFigureType::WhitePawn];
         }
     };
 

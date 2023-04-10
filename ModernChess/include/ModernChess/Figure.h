@@ -3,7 +3,7 @@
 #include <cinttypes>
 
 namespace ModernChess {
-    enum class FigureTypes
+    enum class FigureType
     {
         Pawn,
         Bishop,
@@ -13,7 +13,7 @@ namespace ModernChess {
         King
     };
 
-    enum ColoredFigureTypes : uint8_t
+    enum ColoredFigureType : uint8_t
     {
         WhitePawn,
         WhiteKnight,
@@ -30,16 +30,16 @@ namespace ModernChess {
         None
     };
 
-    // This makes it possible to use ColoredFigureTypes in for-loops
-    inline ColoredFigureTypes& operator++(ColoredFigureTypes& state)
+    // This makes it possible to use ColoredFigureType in for-loops
+    inline ColoredFigureType& operator++(ColoredFigureType& state)
     {
-        state = ColoredFigureTypes(uint8_t(state)+1);
+        state = ColoredFigureType(uint8_t(state) + 1);
         return state;
     }
 
-    inline ColoredFigureTypes& operator--(ColoredFigureTypes& state)
+    inline ColoredFigureType& operator--(ColoredFigureType& state)
     {
-        state = ColoredFigureTypes(uint8_t(state)-1);
+        state = ColoredFigureType(uint8_t(state) - 1);
         return state;
     }
 }
