@@ -42,8 +42,8 @@ namespace ModernChess::FenParsing {
     {
     public:
         GameState parse(std::string_view fen);
-    private:
 
+    private:
         std::string_view::iterator beginPos{};
         std::string_view::iterator currentPos{};
         std::string_view::iterator endPos{};
