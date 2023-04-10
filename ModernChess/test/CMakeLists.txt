@@ -6,12 +6,14 @@ add_executable(${target}
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp
         BoardTest.cpp
+        FenParsingTest.cpp
         GameStateTest.cpp
         MagicNumberCandidatesGeneration.cpp
         MoveGenerationsTest.cpp
         PawnQueriesTest.cpp
         RookAttackGenerationTest.cpp
         SquareTest.cpp
+
         )
 
 target_link_libraries(${target} PRIVATE

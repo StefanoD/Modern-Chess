@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Figure.h"
+#include "GameState.h"
 
 #include <array>
 #include <string_view>
@@ -15,23 +16,27 @@ namespace ModernChess::FenParsing {
     // unicode pieces
     constexpr std::array<std::string_view, 12> unicodeFigures {"♙", "♘", "♗", "♖", "♕", "♔", "♟︎", "♞", "♝", "♜", "♛", "♚"};
 
-    constexpr ColoredFigureTypes charToEnum(char fenChar)
+    constexpr ColoredFigureType charToFigureType(char fenChar)
     {
         switch (fenChar)
         {
-            case 'P': return ColoredFigureTypes::WhitePawn;
-            case 'N': return ColoredFigureTypes::WhiteKnight;
-            case 'B': return ColoredFigureTypes::WhiteBishop;
-            case 'R': return ColoredFigureTypes::WhiteRook;
-            case 'Q': return ColoredFigureTypes::WhiteQueen;
-            case 'K': return ColoredFigureTypes::WhiteKing;
-            case 'p': return ColoredFigureTypes::BlackPawn;
-            case 'n': return ColoredFigureTypes::BlackKnight;
-            case 'b': return ColoredFigureTypes::BlackBishop;
-            case 'r': return ColoredFigureTypes::BlackRook;
-            case 'q': return ColoredFigureTypes::BlackQueen;
-            case 'k': return ColoredFigureTypes::BlackKing;
+            case 'P': return ColoredFigureType::WhitePawn;
+            case 'N': return ColoredFigureType::WhiteKnight;
+            case 'B': return ColoredFigureType::WhiteBishop;
+            case 'R': return ColoredFigureType::WhiteRook;
+            case 'Q': return ColoredFigureType::WhiteQueen;
+            case 'K': return ColoredFigureType::WhiteKing;
+            case 'p': return ColoredFigureType::BlackPawn;
+            case 'n': return ColoredFigureType::BlackKnight;
+            case 'b': return ColoredFigureType::BlackBishop;
+            case 'r': return ColoredFigureType::BlackRook;
+            case 'q': return ColoredFigureType::BlackQueen;
+            case 'k': return ColoredFigureType::BlackKing;
             default: throw std::range_error("Could not parse FEN character '" + std::string(1, fenChar) + "' to Figure");
         }
     }
+
+    constexpr auto startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
+
+    GameState parse(std::string_view fen);
 }

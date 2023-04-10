@@ -28,6 +28,7 @@ add_library(${target}
 
         AttacksGeneration.cpp
         BitBoard.cpp
+        FenParsing.cpp
         Utilities.cpp
         Player.cpp
         GameState.cpp
@@ -36,7 +37,8 @@ add_library(${target}
         PawnAttackGeneration.cpp
         RookAttackGeneration.cpp
         BishopAttackGeneration.cpp
-        CastleRights.cpp)
+        CastleRights.cpp
+        )
 
 target_include_directories(${target} PUBLIC ../include)
 
