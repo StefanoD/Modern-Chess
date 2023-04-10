@@ -16,8 +16,9 @@ namespace ModernChess
        1001       black king => queen side
                   white king => king side
     */
-    enum CastleRights
+    enum CastleRights : uint8_t
     {
+        Undefined = 0,
         WhiteKingSide = 1,
         WhiteQueenSide = 2,
         WhiteAnySide = WhiteKingSide + WhiteQueenSide,
@@ -44,6 +45,26 @@ namespace ModernChess
     constexpr bool blackCanQueenSideCastle(CastleRights castleRights)
     {
         return (castleRights & CastleRights::BlackQueenSide) == CastleRights::BlackQueenSide;
+    }
+
+    constexpr CastleRights addWhiteKingSideCastleRights(CastleRights castleRights)
+    {
+        return CastleRights(castleRights | CastleRights::WhiteKingSide);
+    }
+
+    constexpr CastleRights addWhiteQueenSideCastleRights(CastleRights castleRights)
+    {
+        return CastleRights(castleRights | CastleRights::WhiteQueenSide);
+    }
+
+    constexpr CastleRights addBlackKingSideCastleRights(CastleRights castleRights)
+    {
+        return CastleRights(castleRights | CastleRights::BlackKingSide);
+    }
+
+    constexpr CastleRights addBlackQueenSideCastleRights(CastleRights castleRights)
+    {
+        return CastleRights(castleRights | CastleRights::BlackQueenSide);
     }
 }
 
