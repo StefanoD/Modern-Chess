@@ -81,6 +81,8 @@ namespace
 
         EXPECT_EQ(gameState.enPassantTarget, Square::undefined);
         EXPECT_EQ(gameState.sideToMove, Color::White);
+        EXPECT_EQ(gameState.halfMoveClock, 0);
+        EXPECT_EQ(gameState.nextMoveClock, 1);
 
         std::cout << gameState;
     }

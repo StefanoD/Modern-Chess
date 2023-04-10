@@ -15,6 +15,7 @@ namespace ModernChess
         BitBoard board{};
         // See https://www.chessprogramming.org/Halfmove_Clock
         uint32_t halfMoveClock = 0;
+        uint32_t nextMoveClock = 0;
         Color sideToMove = Color::White;
         CastleRights castleRights = CastleRights::Undefined;
         Square enPassantTarget = Square::undefined;
