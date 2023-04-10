@@ -9,9 +9,7 @@ namespace
 {
     TEST(FenParsingTest, Init)
     {
-        GameState gameState = FenParsing::parse(FenParsing::startPosition);
-
-        const BitBoardState bitBoardState = gameState.board.getOccupiedSquares();
+        const GameState gameState = FenParsing::parse(FenParsing::startPosition);
 
         // Test occupation of white pawns
         const BitBoardState whitePawnsBitboard = gameState.board.bitboards[ColoredFigureType::WhitePawn];
@@ -74,6 +72,15 @@ namespace
         // Test occupation of black king
         const BitBoardState blackKingBitboard = gameState.board.bitboards[ColoredFigureType::BlackKing];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackKingBitboard, Square::e8));
+
+        EXPECT_TRUE(whiteCanKingSideCastle(gameState.castleRights));
+        EXPECT_TRUE(whiteCanQueenSideCastle(gameState.castleRights));
+
+        EXPECT_TRUE(blackCanKingSideCastle(gameState.castleRights));
+        EXPECT_TRUE(blackCanQueenSideCastle(gameState.castleRights));
+
+        EXPECT_EQ(gameState.enPassantTarget, Square::undefined);
+        EXPECT_EQ(gameState.sideToMove, Color::White);
 
         std::cout << gameState;
     }
