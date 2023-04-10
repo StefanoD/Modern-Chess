@@ -66,7 +66,7 @@ namespace ModernChess::FenParsing {
 
         void parseCastlingRights(GameState &gameState);
 
-        void initOccupancyMaps(GameState &gameState);
+        static void initOccupancyMaps(GameState &gameState);
     };
 
 

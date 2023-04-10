@@ -186,7 +186,7 @@ namespace ModernChess::FenParsing {
         // FEN strings begin at the top left (a8) and continue to the right position
         for (int rank = 7; rank >= 0; --rank)
         {
-            for (int file = 0; file < 8; ++file)
+            for (int file = 0; file < 8; )
             {
                 const Square square = BitBoardOperations::getSquare(rank, file);
 
@@ -202,30 +202,13 @@ namespace ModernChess::FenParsing {
                     gameState.board.bitboards[figureType] = BitBoardOperations::occupySquare(gameState.board.bitboards[figureType], square);
 
                     character = getNextCharacter();
+                    ++file;
                 }
-
                 // match empty square numbers within FEN string
-                if (isRankNumber(character))
+                else if (isRankNumber(character))
                 {
                     // init offset (convert char 0 to int 0)
                     const int offset = character - '0';
-
-                    ColoredFigureType figureOnSquare = ColoredFigureType::None;
-
-                    // loop over all bitboards
-                    for (ColoredFigureType figureType = ColoredFigureType::WhitePawn; figureType <= ColoredFigureType::BlackKing; ++figureType)
-                    {
-                        if (BitBoardOperations::isOccupied(gameState.board.bitboards[figureType], square))
-                        {
-                            figureOnSquare = figureType;
-                            break;
-                        }
-                    }
-
-                    if (figureOnSquare == ColoredFigureType::None)
-                    {
-                        --file;
-                    }
 
                     // adjust file counter
                     file += offset;
