@@ -3,10 +3,20 @@
 #include <benchmark/benchmark.h>
 
 #include <string>
+#include <random>
 
 using namespace ModernChess;
 
 namespace {
+
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0,11);
+
+    int getRandomNumber()
+    {
+        return dist(rng);
+    }
 
     enum FenEnums : uint8_t
     {
@@ -80,12 +90,13 @@ namespace {
 
     void Enum(benchmark::State &state)
     {
-        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        std::array<uint8_t volatile, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _: state)
         {
-            for (const uint8_t figure: figures)
+            for (int i = 0; i < 20; ++i)
             {
+                auto figure = figures[getRandomNumber()];
                 const auto value = FenEnums(figure);
                 benchmark::DoNotOptimize(value);
             }
@@ -94,12 +105,13 @@ namespace {
     BENCHMARK(Enum);
 
     void flatMapToEnum(benchmark::State& state) {
-        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        std::array<uint8_t volatile, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _ : state)
         {
-            for (const uint8_t figure : figures)
+            for (int i = 0; i < 20; ++i)
             {
+                auto figure = figures[getRandomNumber()];
                 const auto value = fenToEnum.at(figure);
                 benchmark::DoNotOptimize(value);
             }
@@ -108,12 +120,13 @@ namespace {
     BENCHMARK(flatMapToEnum);
 
     void charToEnumSwitchCase(benchmark::State& state) {
-        constexpr std::array<char, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        std::array<char volatile, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _ : state)
         {
-            for (const char figure : figures)
+            for (int i = 0; i < 20; ++i)
             {
+                auto figure = figures[getRandomNumber()];
                 const auto value = charToEnum(figure);
                 benchmark::DoNotOptimize(value);
             }
@@ -122,12 +135,13 @@ namespace {
     BENCHMARK(charToEnumSwitchCase);
 
     void simulatedArrayDesignatorsBench(benchmark::State& state) {
-        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        std::array<uint8_t volatile, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _ : state)
         {
-            for (const uint8_t figure : figures)
+            for (int i = 0; i < 20; ++i)
             {
+                auto figure = figures[getRandomNumber()];
                 const auto value = simulatedArrayDesignators[figure];
                 benchmark::DoNotOptimize(value);
             }
