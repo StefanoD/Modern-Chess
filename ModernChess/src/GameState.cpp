@@ -22,7 +22,7 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameSta
         os << "black" << std::endl;
     }
 
-    os << "Enpassant: ";
+    os << "En passant: ";
     if (gameState.enPassantTarget != Square::undefined)
     {
         os << squareToCoordinates[gameState.enPassantTarget] << std::endl;
