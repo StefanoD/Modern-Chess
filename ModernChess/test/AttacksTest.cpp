@@ -1,5 +1,5 @@
 #include "ModernChess/AttacksGeneration.h"
-#include "ModernChess/PawnAttackGeneration.h"
+#include "ModernChess/PawnAttacks.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
@@ -7,7 +7,7 @@
 namespace
 {
     using namespace ModernChess;
-    using namespace AttackGeneration;
+    using namespace Attacks;
 
     TEST(AttacksGenerationTest, RookNorthAttacks)
     {

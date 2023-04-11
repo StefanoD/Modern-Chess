@@ -1,6 +1,6 @@
 #include "ModernChess/BitBoardOperations.h"
-#include "ModernChess/RookAttackGeneration.h"
-#include "ModernChess/BishopAttackGeneration.h"
+#include "ModernChess/RookAttacks.h"
+#include "ModernChess/BishopAttacks.h"
 #include "ModernChess/Figure.h"
 
 #include <gtest/gtest.h>

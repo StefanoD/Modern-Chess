@@ -1,7 +1,7 @@
 #pragma once
 
-#include "BishopAttackGeneration.h"
-#include "RookAttackGeneration.h"
+#include "BishopAttacks.h"
+#include "RookAttacks.h"
 
 namespace ModernChess {
 

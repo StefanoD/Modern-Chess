@@ -1,8 +1,8 @@
 set(target modern-chess-lib-test)
 
 add_executable(${target}
-        AttacksGenerationTest.cpp
-        BishopAttackGenerationTest.cpp
+        AttacksTest.cpp
+        BishopAttacksTest.cpp
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp
         BoardTest.cpp
@@ -11,7 +11,7 @@ add_executable(${target}
         MagicNumberCandidatesGeneration.cpp
         MoveGenerationsTest.cpp
         PawnQueriesTest.cpp
-        RookAttackGenerationTest.cpp
+        RookAttacksTest.cpp
         SquareTest.cpp
 
         )

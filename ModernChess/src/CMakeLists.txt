@@ -7,7 +7,7 @@ add_library(${target}
         ../include/ModernChess/BitBoard.h
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
-        ../include/ModernChess/BishopAttackGeneration.h
+        ../include/ModernChess/BishopAttacks.h
         ../include/ModernChess/CastleRights.h
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
@@ -15,15 +15,15 @@ add_library(${target}
         ../include/ModernChess/FenParsing.h
         ../include/ModernChess/Figure.h
         ../include/ModernChess/FlatMap.h
-        ../include/ModernChess/KingAttackGeneration.h
-        ../include/ModernChess/KnightAttackGeneration.h
+        ../include/ModernChess/KingAttacks.h
+        ../include/ModernChess/KnightAttacks.h
         ../include/ModernChess/Move.h
         ../include/ModernChess/MoveGenerations.h
-        ../include/ModernChess/PawnAttackGeneration.h
+        ../include/ModernChess/PawnAttacks.h
         ../include/ModernChess/PawnQueries.h
         ../include/ModernChess/Player.h
         ../include/ModernChess/QueenAttacks.h
-        ../include/ModernChess/RookAttackGeneration.h
+        ../include/ModernChess/RookAttacks.h
         ../include/ModernChess/Square.h
         ../include/ModernChess/Utilities.h
 
@@ -35,9 +35,9 @@ add_library(${target}
         GameState.cpp
         Game.cpp
         Move.cpp
-        PawnAttackGeneration.cpp
-        RookAttackGeneration.cpp
-        BishopAttackGeneration.cpp
+        PawnAttacks.cpp
+        RookAttacks.cpp
+        BishopAttacks.cpp
         CastleRights.cpp
         )
 

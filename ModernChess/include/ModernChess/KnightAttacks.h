@@ -1,8 +1,8 @@
-#pragma once
+ #pragma once
 
 #include "MoveGenerations.h"
 
-namespace ModernChess::AttackGeneration {
+namespace ModernChess::Attacks {
 
         namespace Knights
         {
@@ -49,16 +49,19 @@ namespace ModernChess::AttackGeneration {
             }
         }
 
+        /**
+         * @brief Pass the square as index for retrieving the attack map
+         * @return Attack map for every square
+         */
         constexpr std::array<BitBoardState, 64> generateKnightAttacks()
         {
-            // pawnAttackTable multipleAttacks table [square]
+            // multiple attacks table for every square
             std::array<BitBoardState, 64> attackTable{};
 
             // loop over 64 board squares
             for (Square square = Square::h8; square >= Square::a1; --square)
             {
                 const BitBoardState state = BitBoardOperations::occupySquare(BoardState::empty, square);
-                // init pawnAttackTable multipleAttacks
                 attackTable[square] = Knights::attacks(state);
             }
 

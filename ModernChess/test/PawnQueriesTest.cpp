@@ -1,5 +1,5 @@
 #include "ModernChess/AttacksGeneration.h"
-#include "ModernChess/PawnAttackGeneration.h"
+#include "ModernChess/PawnAttacks.h"
 #include "ModernChess/PawnQueries.h"
 #include "ModernChess/Utilities.h"
 
@@ -8,7 +8,7 @@
 namespace
 {
     using namespace ModernChess;
-    using namespace AttackGeneration;
+    using namespace Attacks;
 
 
     TEST(AttacksGenerationTest, WhitePawnsAbleToCaptureEast)

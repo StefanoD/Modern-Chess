@@ -1,4 +1,4 @@
-#include "ModernChess/RookAttackGeneration.h"
+#include "ModernChess/RookAttacks.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>

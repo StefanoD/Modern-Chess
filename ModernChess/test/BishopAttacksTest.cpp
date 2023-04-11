@@ -1,4 +1,4 @@
-#include "ModernChess/BishopAttackGeneration.h"
+#include "ModernChess/BishopAttacks.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
