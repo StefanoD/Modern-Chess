@@ -124,6 +124,11 @@ namespace
         const BitBoardState blackKingBitboard = gameState.board.bitboards[ColoredFigureType::BlackKing];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackKingBitboard, Square::e8));
 
+        // Test occupation of black knights
+        const BitBoardState blackKnightsBitboard = gameState.board.bitboards[ColoredFigureType::BlackKnight];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackKnightsBitboard, Square::b6));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(blackKnightsBitboard, Square::f6));
+
         // Test occupation of black pawns
         const BitBoardState blackPawnsBitboard = gameState.board.bitboards[ColoredFigureType::BlackPawn];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::a7));
@@ -139,6 +144,46 @@ namespace
         const BitBoardState blackBishopsBitboard = gameState.board.bitboards[ColoredFigureType::BlackBishop];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackBishopsBitboard, Square::g7));
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackBishopsBitboard, Square::a6));
+
+        // Test occupation of white pawns
+        const BitBoardState whitePawnsBitboard = gameState.board.bitboards[ColoredFigureType::WhitePawn];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::d5));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::e4));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::a2));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::b2));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::c2));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::f2));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::g2));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whitePawnsBitboard, Square::h2));
+
+        // Test occupation of white king
+        const BitBoardState whiteKingBitboard = gameState.board.bitboards[ColoredFigureType::WhiteKing];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whiteKingBitboard, Square::e1));
+
+        // Test occupation of white knights
+        const BitBoardState whiteKnightsBitboard = gameState.board.bitboards[ColoredFigureType::WhiteKnight];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whiteKnightsBitboard, Square::c3));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whiteKnightsBitboard, Square::e5));
+
+        // Test occupation of white rooks
+        const BitBoardState whiteRooksBitboard = gameState.board.bitboards[ColoredFigureType::WhiteRook];
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whiteRooksBitboard, Square::a1));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(whiteRooksBitboard, Square::h1));
+
+        std::stringstream streamPrintedBoard;
+        streamPrintedBoard << gameState;
+
+        const std::string printedBoard = streamPrintedBoard.str();
+
+        // Test printed output
+        EXPECT_TRUE(printedBoard.find("8 ♖ . . . ♔ . . ♖") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("7 ♙ . ♙ ♙ ♕ ♙ ♗ .") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("6 ♗ ♘ . . ♙ ♘ ♙ .") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("5 . . . ♟\uFE0E ♞ . . .") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("4 . ♙ . . ♟\uFE0E . . .") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("3 . . ♞ . . ♛ . ♙") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("2 ♟\uFE0E ♟\uFE0E ♟\uFE0E ♝ ♝ ♟\uFE0E ♟\uFE0E ♟\uFE0E") != std::string::npos);
+        EXPECT_TRUE(printedBoard.find("1 ♜ . . . ♚ . . ♜") != std::string::npos);
 
         std::cout << gameState;
     }
