@@ -10,10 +10,10 @@ add_executable(${target}
         GameStateTest.cpp
         MagicNumberCandidatesGeneration.cpp
         MoveGenerationsTest.cpp
+        QueenAttacksTest.cpp
         PawnQueriesTest.cpp
         RookAttacksTest.cpp
         SquareTest.cpp
-
         )
 
 target_link_libraries(${target} PRIVATE
