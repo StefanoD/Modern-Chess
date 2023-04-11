@@ -22,6 +22,7 @@ add_library(${target}
         ../include/ModernChess/PawnAttackGeneration.h
         ../include/ModernChess/PawnQueries.h
         ../include/ModernChess/Player.h
+        ../include/ModernChess/QueenAttacks.h
         ../include/ModernChess/RookAttackGeneration.h
         ../include/ModernChess/Square.h
         ../include/ModernChess/Utilities.h
