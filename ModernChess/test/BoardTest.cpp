@@ -63,6 +63,26 @@ namespace
         std::cout << board;
     }
 
+    TEST(Board, BlackPawnAtA8)
+    {
+        BitBoard board;
+        board.bitboards = {};
+        board.occupancies = {};
+
+        board.bitboards[ColoredFigureType::BlackPawn] = BitBoardOperations::occupySquare(BoardState::empty, Square::a8);
+
+        std::stringstream streamPrintedBoard;
+        streamPrintedBoard << board;
+
+        const std::string printedBoard = streamPrintedBoard.str();
+
+        // Make sure the black pawn is printed on the correct position,
+        // and it is really a black pawn and not a white pawn
+        EXPECT_TRUE(printedBoard.find("8 ♙ . . . . . . .") != std::string::npos);
+
+        std::cout << board;
+    }
+
     TEST(Board, BlackFiguresAreSet)
     {
         const BitBoard board;
