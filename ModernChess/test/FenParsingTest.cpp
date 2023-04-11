@@ -97,6 +97,15 @@ namespace
         const BitBoardState blackPawnsBitboard = gameState.board.bitboards[ColoredFigureType::BlackPawn];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::a8));
 
+        std::stringstream streamPrintedBoard;
+        streamPrintedBoard << gameState;
+
+        const std::string printedBoard = streamPrintedBoard.str();
+
+        // Make sure the black pawn is printed on the correct position,
+        // and it is really a black pawn and not a white pawn
+        EXPECT_TRUE(printedBoard.find("8 ♙ . . . . . . .") != std::string::npos);
+
         std::cout << gameState;
     }
 
