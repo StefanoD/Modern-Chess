@@ -78,7 +78,7 @@ namespace ModernChess {
             {
                 const BitBoardState state = BitBoardOperations::occupySquare(BoardState::empty, square);
                 pawnAttacks[White][square] = WhitePawnsAttacks::any(state);
-                pawnAttacks[Black][square] = WhitePawnsAttacks::any(state);
+                pawnAttacks[Black][square] = BlackPawnsAttacks::any(state);
             }
 
             return pawnAttacks;
