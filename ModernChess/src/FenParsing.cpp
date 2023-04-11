@@ -7,7 +7,7 @@ using namespace ModernChess;
 
 namespace ModernChess::FenParsing {
 
-    std::string FenParser::getCurrentPosition()
+    std::string FenParser::getCurrentPosition() const
     {
         return std::to_string(currentPos - beginPos + 1);
     }
@@ -22,7 +22,7 @@ namespace ModernChess::FenParsing {
         return character >= '0' && character <= '9';
     }
 
-    bool FenParser::isRankNumber(char character)
+    bool FenParser::isRankNumber(char character) const
     {
         if (character == '9')
         {
@@ -59,7 +59,7 @@ namespace ModernChess::FenParsing {
         return (currentPos+1) != endPos;
     }
 
-    Color FenParser::parseColor(char character)
+    Color FenParser::parseColor(char character) const
     {
         Color color;
 

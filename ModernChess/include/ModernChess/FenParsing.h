@@ -48,9 +48,9 @@ namespace ModernChess::FenParsing {
         std::string_view::iterator currentPos{};
         std::string_view::iterator endPos{};
 
-        std::string getCurrentPosition();
+        [[nodiscard]] std::string getCurrentPosition() const;
 
-        bool isRankNumber(char character);
+        bool isRankNumber(char character) const;
 
         void nextPosition();
 
@@ -58,7 +58,7 @@ namespace ModernChess::FenParsing {
 
         bool hasNextCharacter();
 
-        Color parseColor(char character);
+        Color parseColor(char character) const;
 
         Square parseSquare();
 
