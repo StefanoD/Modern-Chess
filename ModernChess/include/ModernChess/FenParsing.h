@@ -14,7 +14,7 @@ namespace ModernChess::FenParsing {
     constexpr auto asciiFigures = "PNBRQKpnbrqk";
 
     // unicode pieces
-    constexpr std::array<std::string_view, 12> unicodeFigures {"♙", "♘", "♗", "♖", "♕", "♔", "♟︎", "♞", "♝", "♜", "♛", "♚"};
+    constexpr std::array<std::string_view, 12> unicodeFigures {"♟︎", "♞", "♝", "♜", "♛", "♚", "♙", "♘", "♗", "♖", "♕", "♔"};
 
     constexpr ColoredFigureType charToFigureType(char fenChar)
     {
