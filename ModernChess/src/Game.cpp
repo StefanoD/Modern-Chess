@@ -5,9 +5,9 @@
 
 namespace ModernChess
 {
-    std::array<std::array<BitBoardState, 64>, 2> Game::pawnAttackTable = Attacks::generatePawnAttacks();
-    std::array<BitBoardState, 64> Game::knightAttackTable = Attacks::generateKnightAttacks();
-    std::array<BitBoardState, 64> Game::kingAttackTable = Attacks::generateKingAttacks();
+    const std::array<std::array<BitBoardState, 64>, 2> Game::pawnAttackTable = Attacks::generatePawnAttacks();
+    const std::array<BitBoardState, 64> Game::knightAttackTable = Attacks::generateKnightAttacks();
+    const std::array<BitBoardState, 64> Game::kingAttackTable = Attacks::generateKingAttacks();
 
     Game::Game() : queenAttacks(bishopAttacks, rookAttacks)
     {}
