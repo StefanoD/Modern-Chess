@@ -108,11 +108,11 @@ namespace {
     BENCHMARK(flatMapToEnum);
 
     void charToEnumSwitchCase(benchmark::State& state) {
-        constexpr std::array<uint8_t, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
+        constexpr std::array<char, 12> figures{'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q', 'K', 'k'};
 
         for (auto _ : state)
         {
-            for (const uint8_t figure : figures)
+            for (const char figure : figures)
             {
                 const auto value = charToEnum(figure);
                 benchmark::DoNotOptimize(value);
