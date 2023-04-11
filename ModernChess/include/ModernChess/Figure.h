@@ -4,7 +4,7 @@
 
 namespace ModernChess {
 
-    enum FigureType : uint8_t
+    enum Figure : uint8_t
     {
         WhitePawn,
         WhiteKnight,
@@ -21,16 +21,16 @@ namespace ModernChess {
         None
     };
 
-    // This makes it possible to use FigureType in for-loops
-    inline FigureType &operator++(FigureType &state)
+    // This makes it possible to use Figure in for-loops
+    inline Figure &operator++(Figure &state)
     {
-        state = FigureType(uint8_t(state) + 1);
+        state = Figure(uint8_t(state) + 1);
         return state;
     }
 
-    inline FigureType &operator--(FigureType &state)
+    inline Figure &operator--(Figure &state)
     {
-        state = FigureType(uint8_t(state) - 1);
+        state = Figure(uint8_t(state) - 1);
         return state;
     }
 }

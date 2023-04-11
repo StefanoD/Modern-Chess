@@ -196,7 +196,7 @@ namespace ModernChess::FenParsing {
                 if (isAlphabetic(character))
                 {
                     // init figureType type
-                    const FigureType figureType = charToFigureType(character);
+                    const Figure figureType = charToFigureType(character);
 
                     // set figureType on corresponding bitboard
                     gameState.board.bitboards[figureType] = BitBoardOperations::occupySquare(gameState.board.bitboards[figureType], square);
@@ -257,13 +257,13 @@ namespace ModernChess::FenParsing {
     void FenParser::initOccupancyMaps(GameState &gameState)
     {
         // Init white occupancy map
-        for (FigureType figureType = FigureType::WhitePawn; figureType <= FigureType::WhiteKing; ++figureType)
+        for (Figure figureType = Figure::WhitePawn; figureType <= Figure::WhiteKing; ++figureType)
         {
             gameState.board.occupancies[Color::White] |= gameState.board.bitboards[figureType];
         }
 
         // Init black occupancy map
-        for (FigureType figureType = FigureType::BlackPawn; figureType <= FigureType::BlackKing; ++figureType)
+        for (Figure figureType = Figure::BlackPawn; figureType <= Figure::BlackKing; ++figureType)
         {
             gameState.board.occupancies[Color::Black] |= gameState.board.bitboards[figureType];
         }

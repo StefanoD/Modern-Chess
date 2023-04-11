@@ -15,18 +15,18 @@ namespace
 
         BitBoardState getBitBoardConjunctions()
         {
-            return bitboards[FigureType::BlackRook] &
-                   bitboards[FigureType::BlackKnight] &
-                   bitboards[FigureType::BlackBishop] &
-                   bitboards[FigureType::BlackQueen] &
-                   bitboards[FigureType::BlackKing] &
-                   bitboards[FigureType::BlackPawn] &
-                   bitboards[FigureType::WhiteRook] &
-                   bitboards[FigureType::WhiteKnight] &
-                   bitboards[FigureType::WhiteBishop] &
-                   bitboards[FigureType::WhiteQueen] &
-                   bitboards[FigureType::WhiteKing] &
-                   bitboards[FigureType::WhitePawn];
+            return bitboards[Figure::BlackRook] &
+                   bitboards[Figure::BlackKnight] &
+                   bitboards[Figure::BlackBishop] &
+                   bitboards[Figure::BlackQueen] &
+                   bitboards[Figure::BlackKing] &
+                   bitboards[Figure::BlackPawn] &
+                   bitboards[Figure::WhiteRook] &
+                   bitboards[Figure::WhiteKnight] &
+                   bitboards[Figure::WhiteBishop] &
+                   bitboards[Figure::WhiteQueen] &
+                   bitboards[Figure::WhiteKing] &
+                   bitboards[Figure::WhitePawn];
         }
     };
 
@@ -69,7 +69,7 @@ namespace
         board.bitboards = {};
         board.occupancies = {};
 
-        board.bitboards[FigureType::BlackPawn] = BitBoardOperations::occupySquare(BoardState::empty, Square::a8);
+        board.bitboards[Figure::BlackPawn] = BitBoardOperations::occupySquare(BoardState::empty, Square::a8);
 
         std::stringstream streamPrintedBoard;
         streamPrintedBoard << board;

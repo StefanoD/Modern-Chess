@@ -16,22 +16,22 @@ namespace ModernChess::FenParsing {
     // unicode pieces
     constexpr std::array<std::string_view, 12> unicodeFigures {"♟︎", "♞", "♝", "♜", "♛", "♚", "♙", "♘", "♗", "♖", "♕", "♔"};
 
-    constexpr FigureType charToFigureType(char fenChar)
+    constexpr Figure charToFigureType(char fenChar)
     {
         switch (fenChar)
         {
-            case 'P': return FigureType::WhitePawn;
-            case 'N': return FigureType::WhiteKnight;
-            case 'B': return FigureType::WhiteBishop;
-            case 'R': return FigureType::WhiteRook;
-            case 'Q': return FigureType::WhiteQueen;
-            case 'K': return FigureType::WhiteKing;
-            case 'p': return FigureType::BlackPawn;
-            case 'n': return FigureType::BlackKnight;
-            case 'b': return FigureType::BlackBishop;
-            case 'r': return FigureType::BlackRook;
-            case 'q': return FigureType::BlackQueen;
-            case 'k': return FigureType::BlackKing;
+            case 'P': return Figure::WhitePawn;
+            case 'N': return Figure::WhiteKnight;
+            case 'B': return Figure::WhiteBishop;
+            case 'R': return Figure::WhiteRook;
+            case 'Q': return Figure::WhiteQueen;
+            case 'K': return Figure::WhiteKing;
+            case 'p': return Figure::BlackPawn;
+            case 'n': return Figure::BlackKnight;
+            case 'b': return Figure::BlackBishop;
+            case 'r': return Figure::BlackRook;
+            case 'q': return Figure::BlackQueen;
+            case 'k': return Figure::BlackKing;
             default: throw std::range_error("Could not parse FEN character '" + std::string(1, fenChar) + "' to Figure");
         }
     }
