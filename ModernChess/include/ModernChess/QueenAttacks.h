@@ -9,7 +9,7 @@ namespace ModernChess {
     {
     public:
         explicit QueenAttacks(const BishopAttacks &bishopAttacks,
-                                       const RookAttacks &rookAttacks) :
+                              const RookAttacks &rookAttacks) :
                 m_bishopAttacks(bishopAttacks),
                 m_rookAttacks(rookAttacks) {}
 
