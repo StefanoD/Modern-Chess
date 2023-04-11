@@ -10,7 +10,7 @@ namespace
 
 
 
-    TEST(AttacksGenerationTest, WhitePawnsAttackEast)
+    TEST(PawnAttacksTest, WhitePawnsAttackEast)
     {
         // Occupy White pawnAttackTable on d4
         const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
@@ -25,7 +25,7 @@ namespace
         print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
-    TEST(AttacksGenerationTest, WhitePawnsAttackWest)
+    TEST(PawnAttacksTest, WhitePawnsAttackWest)
     {
         // Occupy White pawnAttackTable on d4
         const BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
@@ -40,7 +40,7 @@ namespace
         print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
-    TEST(AttacksGenerationTest, WhitePawnsAttackTwo)
+    TEST(PawnAttacksTest, WhitePawnsAttackTwo)
     {
         // Occupy White pawnAttackTable on d4 & f4
         BitBoardState whitePawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
@@ -62,7 +62,7 @@ namespace
         print(std::cout, whitePawnAttackBoard) << std::endl;
     }
 
-    TEST(AttacksGenerationTest, BlackPawnsAttackEast)
+    TEST(PawnAttacksTest, BlackPawnsAttackEast)
     {
         // Occupy White pawnAttackTable on d4
         const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
@@ -77,7 +77,7 @@ namespace
         print(std::cout, blackPawnAttackBoard) << std::endl;
     }
 
-    TEST(AttacksGenerationTest, BlackPawnsAttackWest)
+    TEST(PawnAttacksTest, BlackPawnsAttackWest)
     {
         // Occupy White pawnAttackTable on d4
         const BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
@@ -92,7 +92,7 @@ namespace
         print(std::cout, blackPawnAttackBoard) << std::endl;
     }
 
-    TEST(AttacksGenerationTest, BlackPawnsAttackTwo)
+    TEST(PawnAttacksTest, BlackPawnsAttackTwo)
     {
         // Occupy White pawnAttackTable on d4 & f4
         BitBoardState blackPawnsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);

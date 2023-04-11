@@ -6,7 +6,7 @@
 namespace {
     using namespace ModernChess;
 
-    TEST(SlidingPieceAttackGeneration, maskBishopAttacksD4)
+    TEST(BishopAttacksTest, maskBishopAttacksD4)
     {
         const BitBoardState board = BishopAttackHelperFunctions::maskBishopAttacks(d4);
 
@@ -43,7 +43,7 @@ namespace {
         print(std::cout, board) << std::endl;
     }
 
-    TEST(BishopAttacks, getAttacksD4)
+    TEST(BishopAttacksTest, getAttacksD4)
     {
         const BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::e5);
         const BishopAttacks bishopAttacks;
@@ -77,7 +77,7 @@ namespace {
         print(std::cout, board) << std::endl;
     }
 
-    TEST(SlidingPieceAttackGeneration, bishopAttacksOnTheFly)
+    TEST(BishopAttacksTest, bishopAttacksOnTheFly)
     {
         const BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::e5);
         const BitBoardState board = BishopAttackHelperFunctions::bishopAttacksOnTheFly(playBoard, Square::d4);

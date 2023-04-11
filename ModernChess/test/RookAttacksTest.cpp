@@ -43,7 +43,7 @@ namespace {
         print(std::cout, board) << std::endl;
     }
 
-    TEST(RookAttacks, getAttacksD4)
+    TEST(RookAttacksTest, getAttacksD4)
     {
         const BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d6);
         const RookAttacks rookAttacks;
