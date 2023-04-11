@@ -1,7 +1,6 @@
 #include "ModernChess/BitBoardOperations.h"
 #include "ModernChess/RookAttacks.h"
 #include "ModernChess/BishopAttacks.h"
-#include "ModernChess/Figure.h"
 
 #include <gtest/gtest.h>
 
@@ -54,7 +53,7 @@ namespace {
     }
 
     // find appropriate magic number
-    uint64_t findMagicNumber(Square square, uint32_t relevantBits, FigureType figure)
+    uint64_t findMagicNumber(Square square, uint32_t relevantBits, bool isBishop)
     {
         // init occupancies
         std::array<uint64_t, 4096> occupancies{};
@@ -66,7 +65,7 @@ namespace {
         std::array<uint64_t, 4096> usedAttacks{};
 
         // init attack mask for a current piece
-        const uint64_t attackMask = FigureType::Bishop == figure ? BishopAttackHelperFunctions::maskBishopAttacks(square) :
+        const uint64_t attackMask = isBishop ? BishopAttackHelperFunctions::maskBishopAttacks(square) :
                                     RookAttackHelperFunctions::maskRookAttacks(square);
 
         // init occupancy indices
@@ -79,7 +78,7 @@ namespace {
             occupancies.at(index) = BitBoardOperations::setOccupancy(index, relevantBits, attackMask);
 
             // init attacks
-            if (FigureType::Bishop == figure)
+            if (isBishop)
             {
                 attacks.at(index) = BishopAttackHelperFunctions::bishopAttacksOnTheFly(occupancies.at(index),
                                                                                            square);
@@ -150,7 +149,7 @@ namespace {
             const Square square{i};
             std::cout << "0x" << std::hex << findMagicNumber(square,
                                                              RookAttackHelperFunctions::RookMetaData::relevantBits.at(square),
-                                                             FigureType::Rook) << "ULL, " << std::endl;
+                                                             false) << "ULL, " << std::endl;
         }
 
         std::cout << std::endl << std::endl;
@@ -162,7 +161,7 @@ namespace {
             const Square square{i};
             std::cout << "0x" << std::hex << findMagicNumber(square,
                                                              BishopAttackHelperFunctions::BishopMetaData::relevantBits.at(square),
-                                                             FigureType::Bishop) << "ULL, " << std::endl;
+                                                             true) << "ULL, " << std::endl;
         }
     }
 

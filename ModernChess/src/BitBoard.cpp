@@ -8,66 +8,66 @@ namespace ModernChess
     {
 
 
-        bitboards[ColoredFigureType::WhiteRook] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteRook], Square::a1);
-        bitboards[ColoredFigureType::WhiteRook] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteRook], Square::h1);
+        bitboards[FigureType::WhiteRook] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteRook], Square::a1);
+        bitboards[FigureType::WhiteRook] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteRook], Square::h1);
 
-        bitboards[ColoredFigureType::WhiteKnight] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteKnight], Square::b1);
-        bitboards[ColoredFigureType::WhiteKnight] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteKnight], Square::g1);
+        bitboards[FigureType::WhiteKnight] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteKnight], Square::b1);
+        bitboards[FigureType::WhiteKnight] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteKnight], Square::g1);
 
-        bitboards[ColoredFigureType::WhiteBishop] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteBishop], Square::c1);
-        bitboards[ColoredFigureType::WhiteBishop] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteBishop], Square::f1);
+        bitboards[FigureType::WhiteBishop] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteBishop], Square::c1);
+        bitboards[FigureType::WhiteBishop] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteBishop], Square::f1);
 
-        bitboards[ColoredFigureType::WhiteQueen] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteQueen], Square::d1);
-        bitboards[ColoredFigureType::WhiteKing] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhiteKing], Square::e1);
+        bitboards[FigureType::WhiteQueen] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteQueen], Square::d1);
+        bitboards[FigureType::WhiteKing] = BitBoardOperations::occupySquare(bitboards[FigureType::WhiteKing], Square::e1);
 
         for (Square square = Square::a2; square <= Square::h2; ++square)
         {
-            bitboards[ColoredFigureType::WhitePawn] = BitBoardOperations::occupySquare(bitboards[ColoredFigureType::WhitePawn], Square(square));
+            bitboards[FigureType::WhitePawn] = BitBoardOperations::occupySquare(bitboards[FigureType::WhitePawn], Square(square));
         }
 
         // Black figures have essentially the same position, just rotated by 180 degrees
-        bitboards[ColoredFigureType::BlackRook] = BitBoardOperations::rotate180(bitboards[ColoredFigureType::WhiteRook]);
-        bitboards[ColoredFigureType::BlackKnight] = BitBoardOperations::rotate180(bitboards[ColoredFigureType::WhiteKnight]);
-        bitboards[ColoredFigureType::BlackBishop] = BitBoardOperations::rotate180(bitboards[ColoredFigureType::WhiteBishop]);
-        bitboards[ColoredFigureType::BlackQueen] = BitBoardOperations::rotate180(bitboards[ColoredFigureType::WhiteQueen]);
-        bitboards[ColoredFigureType::BlackKing] = BitBoardOperations::rotate180(bitboards[ColoredFigureType::WhiteKing]);
-        bitboards[ColoredFigureType::BlackPawn] = BitBoardOperations::rotate180(bitboards[ColoredFigureType::WhitePawn]);
+        bitboards[FigureType::BlackRook] = BitBoardOperations::rotate180(bitboards[FigureType::WhiteRook]);
+        bitboards[FigureType::BlackKnight] = BitBoardOperations::rotate180(bitboards[FigureType::WhiteKnight]);
+        bitboards[FigureType::BlackBishop] = BitBoardOperations::rotate180(bitboards[FigureType::WhiteBishop]);
+        bitboards[FigureType::BlackQueen] = BitBoardOperations::rotate180(bitboards[FigureType::WhiteQueen]);
+        bitboards[FigureType::BlackKing] = BitBoardOperations::rotate180(bitboards[FigureType::WhiteKing]);
+        bitboards[FigureType::BlackPawn] = BitBoardOperations::rotate180(bitboards[FigureType::WhitePawn]);
     }
 
     BitBoardState BitBoard::getOccupiedSquares() const
     {
-        return bitboards[ColoredFigureType::BlackRook] |
-               bitboards[ColoredFigureType::BlackKnight] |
-               bitboards[ColoredFigureType::BlackBishop] |
-               bitboards[ColoredFigureType::BlackQueen] |
-               bitboards[ColoredFigureType::BlackKing] |
-               bitboards[ColoredFigureType::BlackPawn] |
-               bitboards[ColoredFigureType::WhiteRook] |
-               bitboards[ColoredFigureType::WhiteKnight] |
-               bitboards[ColoredFigureType::WhiteBishop] |
-               bitboards[ColoredFigureType::WhiteQueen] |
-               bitboards[ColoredFigureType::WhiteKing] |
-               bitboards[ColoredFigureType::WhitePawn];
+        return bitboards[FigureType::BlackRook] |
+               bitboards[FigureType::BlackKnight] |
+               bitboards[FigureType::BlackBishop] |
+               bitboards[FigureType::BlackQueen] |
+               bitboards[FigureType::BlackKing] |
+               bitboards[FigureType::BlackPawn] |
+               bitboards[FigureType::WhiteRook] |
+               bitboards[FigureType::WhiteKnight] |
+               bitboards[FigureType::WhiteBishop] |
+               bitboards[FigureType::WhiteQueen] |
+               bitboards[FigureType::WhiteKing] |
+               bitboards[FigureType::WhitePawn];
     }
 
     BitBoardState BitBoard::getWhiteFigures() const
     {
-        return bitboards[ColoredFigureType::WhiteRook] |
-               bitboards[ColoredFigureType::WhiteKnight] |
-               bitboards[ColoredFigureType::WhiteBishop] |
-               bitboards[ColoredFigureType::WhiteQueen] |
-               bitboards[ColoredFigureType::WhiteKing] |
-               bitboards[ColoredFigureType::WhitePawn];
+        return bitboards[FigureType::WhiteRook] |
+               bitboards[FigureType::WhiteKnight] |
+               bitboards[FigureType::WhiteBishop] |
+               bitboards[FigureType::WhiteQueen] |
+               bitboards[FigureType::WhiteKing] |
+               bitboards[FigureType::WhitePawn];
     }
 
     BitBoardState BitBoard::getBlackFigures() const
     {
-        return bitboards[ColoredFigureType::BlackRook] |
-               bitboards[ColoredFigureType::BlackKnight] |
-               bitboards[ColoredFigureType::BlackBishop] |
-               bitboards[ColoredFigureType::BlackQueen] |
-               bitboards[ColoredFigureType::BlackKing] |
-               bitboards[ColoredFigureType::BlackPawn];
+        return bitboards[FigureType::BlackRook] |
+               bitboards[FigureType::BlackKnight] |
+               bitboards[FigureType::BlackBishop] |
+               bitboards[FigureType::BlackQueen] |
+               bitboards[FigureType::BlackKing] |
+               bitboards[FigureType::BlackPawn];
     }
 
     BitBoardState BitBoard::getEmptySquares() const
@@ -94,10 +94,10 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard
                 os << "  " << (rank + 1);
             }
 
-            ColoredFigureType figureOnSquare = ColoredFigureType::None;
+            FigureType figureOnSquare = FigureType::None;
 
             // loop over all figures bitboards
-            for (ColoredFigureType figure = WhitePawn; figure <= BlackKing; ++figure)
+            for (FigureType figure = WhitePawn; figure <= BlackKing; ++figure)
             {
                 if (BitBoardOperations::isOccupied(bitBoard.bitboards[figure], square))
                 {
@@ -108,9 +108,9 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard
 
             // print different figureOnSquare set depending on OS
 #ifdef WIN64
-            os << " " << ((figureOnSquare == ColoredFigureType::None) ? "." : FenParsing::asciiFigures[figureOnSquare]);
+            os << " " << ((figureOnSquare == FigureType::None) ? "." : FenParsing::asciiFigures[figureOnSquare]);
 #else
-            os << " " << ((figureOnSquare == ColoredFigureType::None) ? "." : FenParsing::unicodeFigures[figureOnSquare]);
+            os << " " << ((figureOnSquare == FigureType::None) ? "." : FenParsing::unicodeFigures[figureOnSquare]);
 #endif
         }
 

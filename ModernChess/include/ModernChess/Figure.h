@@ -3,17 +3,8 @@
 #include <cinttypes>
 
 namespace ModernChess {
-    enum class FigureType
-    {
-        Pawn,
-        Bishop,
-        Knight,
-        Rook,
-        Queen,
-        King
-    };
 
-    enum ColoredFigureType : uint8_t
+    enum FigureType : uint8_t
     {
         WhitePawn,
         WhiteKnight,
@@ -30,16 +21,16 @@ namespace ModernChess {
         None
     };
 
-    // This makes it possible to use ColoredFigureType in for-loops
-    inline ColoredFigureType& operator++(ColoredFigureType& state)
+    // This makes it possible to use FigureType in for-loops
+    inline FigureType &operator++(FigureType &state)
     {
-        state = ColoredFigureType(uint8_t(state) + 1);
+        state = FigureType(uint8_t(state) + 1);
         return state;
     }
 
-    inline ColoredFigureType& operator--(ColoredFigureType& state)
+    inline FigureType &operator--(FigureType &state)
     {
-        state = ColoredFigureType(uint8_t(state) - 1);
+        state = FigureType(uint8_t(state) - 1);
         return state;
     }
 }
