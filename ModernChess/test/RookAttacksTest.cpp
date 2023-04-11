@@ -6,7 +6,7 @@
 namespace {
     using namespace ModernChess;
 
-    TEST(RookAttackGenerationTest, maskRookAttacksD4)
+    TEST(RookAttacksTest, maskRookAttacksD4)
     {
         const BitBoardState board = RookAttackHelperFunctions::maskRookAttacks(d4);
 
@@ -77,7 +77,7 @@ namespace {
         print(std::cout, board) << std::endl;
     }
 
-    TEST(RookAttackGenerationTest, rookAttacksOnTheFlyD4)
+    TEST(RookAttacksTest, rookAttacksOnTheFlyD4)
     {
         const BitBoardState playBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d6);
         const BitBoardState board = RookAttackHelperFunctions::rookAttacksOnTheFly(playBoard, d4);
