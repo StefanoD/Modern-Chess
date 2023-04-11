@@ -41,7 +41,7 @@ namespace ModernChess {
             }
 
             // attacked by king
-            if ((knightAttackTable[square] & board.bitboards[Figure::WhiteKing]) != BoardState::empty)
+            if ((kingAttackTable[square] & board.bitboards[Figure::WhiteKing]) != BoardState::empty)
             {
                 return true;
             }
@@ -80,7 +80,7 @@ namespace ModernChess {
             }
 
             // attacked by king
-            if ((knightAttackTable[square] & board.bitboards[Figure::BlackKing]) != BoardState::empty)
+            if ((kingAttackTable[square] & board.bitboards[Figure::BlackKing]) != BoardState::empty)
             {
                 return true;
             }
