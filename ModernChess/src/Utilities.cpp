@@ -1,5 +1,6 @@
 #include "ModernChess/Utilities.h"
 #include "ModernChess/BitBoardOperations.h"
+#include "ModernChess/AttackQueries.h"
 
 using namespace ModernChess;
 
@@ -12,7 +13,7 @@ std::ostream &print(std::ostream &os, const BitBoardState bitBoardState)
 
     for (Square square = Square::h8; square >= Square::a1; --square)
     {
-        os << BitBoardOperations::isOccupied(mirroredBoard, Square(square)) << " ";
+        os << BitBoardOperations::isOccupied(mirroredBoard, square) << " ";
 
         if (square % 8 == 0)
         {
@@ -27,6 +28,35 @@ std::ostream &print(std::ostream &os, const BitBoardState bitBoardState)
     }
     os << "-------------------" << std::endl;
     os << "    a b c d e f g h" << std::endl;
+
+    return os;
+}
+
+std::ostream& printAttackedSquares(std::ostream& os, const BitBoard &board, Color attacker)
+{
+    for (int rank = 7; rank >=0; --rank)
+    {
+        for (int file = 0; file < 8; ++file)
+        {
+            const Square square = BitBoardOperations::getSquare(rank, file);
+
+            // print ranks
+            if (file == 0)
+            {
+                os << "  " << (rank + 1);
+            }
+
+            const bool isAttacked = (Color::White == attacker) ? AttackQueries::squareIsAttackedByWhite(board, square) :
+                    AttackQueries::squareIsAttackedByBlack(board, square);
+
+            os << " " << isAttacked;
+        }
+
+        // print new line every rank
+        os << std::endl;
+    }
+
+    os << std::endl << "    a b c d e f g h" << std::endl << std::endl;
 
     return os;
 }
