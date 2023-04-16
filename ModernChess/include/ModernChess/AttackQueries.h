@@ -8,9 +8,7 @@
 namespace ModernChess {
     class AttackQueries {
     public:
-        AttackQueries();
-
-        inline bool squareIsAttackedByWhite(const BitBoard &board, Square square)
+        static inline bool squareIsAttackedByWhite(const BitBoard &board, Square square)
         {
             // attacked by pawns
             if ((pawnAttackTable[Color::Black][square] & board.bitboards[Figure::WhitePawn]) != BoardState::empty)
@@ -49,7 +47,7 @@ namespace ModernChess {
             return false;
         }
 
-        inline bool squareIsAttackedByBlack(const BitBoard &board, Square square)
+        static inline bool squareIsAttackedByBlack(const BitBoard &board, Square square)
         {
             // attacked by pawns
             if ((pawnAttackTable[Color::White][square] & board.bitboards[Figure::BlackPawn]) != BoardState::empty)
@@ -94,6 +92,6 @@ namespace ModernChess {
         static const std::array<BitBoardState, 64> kingAttackTable;
         static const BishopAttacks bishopAttacks;
         static const RookAttacks rookAttacks;
-        QueenAttacks queenAttacks;
+        static const QueenAttacks queenAttacks;
     };
 }
