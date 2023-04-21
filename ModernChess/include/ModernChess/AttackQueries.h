@@ -64,7 +64,7 @@ namespace ModernChess {
             }
 
             // attacked by bishops
-            if ((bishopAttacks.getAttacks(square, board.occupancies[Color::Both]) & board.bitboards[Figure::BlackBishop]) != BoardState::empty )
+            if ((bishopAttacks.getAttacks(square, board.occupancies[Color::Both]) & board.bitboards[Figure::BlackBishop]) != BoardState::empty)
             {
                 return true;
             }
