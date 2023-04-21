@@ -34,7 +34,8 @@ namespace ModernChess {
             }
 
             // attacked by queens
-            if ((queenAttacks.getAttacks(square, board.occupancies[Color::Both]) & board.bitboards[Figure::WhiteQueen]) != BoardState::empty) {
+            if ((queenAttacks.getAttacks(square, board.occupancies[Color::Both]) & board.bitboards[Figure::WhiteQueen]) != BoardState::empty)
+            {
                 return true;
             }
 
