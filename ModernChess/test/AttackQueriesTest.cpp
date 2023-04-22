@@ -10,6 +10,18 @@ namespace {
 
     TEST(AttackQueriesTest, whitePawnOnD4BlackPawnOnC5)
     {
+        /*
+           8 . . . . . . . ♔
+           7 . . . . . . . .
+           6 . . . . . . . .
+           5 . . ♙ . . . . .
+           4 . . . ♟︎ . . . .
+           3 . . . . . . . .
+           2 . . . . . . . .
+           1 . . . . . . . ♚
+
+             a b c d e f g h
+         */
         const auto fenString = "7k/8/8/2p5/3P4/8/8/7K w - - 0 1";
         FenParser fenParser;
         const GameState gameState = fenParser.parse(fenString);
@@ -18,8 +30,8 @@ namespace {
 
         EXPECT_TRUE(ableToCaptureEast);
 
-        printAttackedSquares(std::cout, gameState.board, Color::White) << std::endl;
-
         std::cout << gameState;
+
+        printAttackedSquares(std::cout, gameState.board, Color::White) << std::endl;
     }
 }
