@@ -1,5 +1,4 @@
 Checks:
-    abseil-*
     bugprone-*
         -bugprone-easily-swappable-parameters
     cppcoreguidelines-*
