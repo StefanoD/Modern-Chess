@@ -4,6 +4,7 @@
 #include "Square.h"
 
 #include <array>
+#include <cassert>
 
 namespace ModernChess::BitBoardOperations
 {
