@@ -2,8 +2,7 @@
 
 #include "ModernChess/Figure.h"
 
-#include <stdexcept>
-#include <string>
+#include <array>
 
 namespace ModernChess {
     /**
