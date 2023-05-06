@@ -25,6 +25,7 @@ add_library(${target}
         ../include/ModernChess/QueenAttacks.h
         ../include/ModernChess/RookAttacks.h
         ../include/ModernChess/Square.h
+        ../include/ModernChess/TUI.h
         ../include/ModernChess/Utilities.h
 
         AttackQueries.cpp
@@ -39,7 +40,7 @@ add_library(${target}
         RookAttacks.cpp
         BishopAttacks.cpp
         CastleRights.cpp
-
+        TUI.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)
