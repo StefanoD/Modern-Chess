@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <strstream>
+
 using namespace ModernChess;
 
 namespace {
@@ -77,5 +79,40 @@ namespace {
         }
     }
 
+    TEST(MoveTest, TestUCIEncodedNullMovePrint)
+    {
+        const Move nullMove;
+
+        std::stringstream stream;
+
+        stream << nullMove;
+
+        EXPECT_EQ(stream.str(), "0000");
+    }
+
+    TEST(MoveTest, TestUCIEncodedRookMovePrint)
+    {
+        const Move move(Square::a1, Square::h1, Figure::WhiteRook, Figure::None, true, false, false, false);
+
+        std::stringstream stream;
+
+        stream << move;
+
+        EXPECT_EQ(stream.str(), "a1h1");
+    }
+
+    TEST(MoveTest, TestMoveListPrint)
+    {
+        std::vector<Move> moveList {
+                Move{Square::a1, Square::h1, Figure::WhiteRook, Figure::None, true, false, false, false},
+        };
+
+        for (int i = 0; i < 200; ++i)
+        {
+            moveList.emplace_back(Square::a2, Square::b4, Figure::WhitePawn, Figure::WhiteQueen, true, true, true, true);
+        }
+
+        std::cout << moveList;
+    }
 
 }

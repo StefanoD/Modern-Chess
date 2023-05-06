@@ -4,6 +4,7 @@
 #include "Figure.h"
 
 #include <ostream>
+#include <vector>
 
 namespace ModernChess {
 
@@ -37,7 +38,7 @@ namespace ModernChess {
                       bool isCapture,
                       bool isDoublePawnPush,
                       bool isEnPassantCapture,
-                      bool isCastlingMove ) :
+                      bool isCastlingMove) :
                 m_move{from |
                        (to << 6) |
                        (movedFigure << 12) |
@@ -111,3 +112,8 @@ namespace ModernChess {
  * @return UCI compliant move encoding
  */
 std::ostream &operator<<(std::ostream &os, ModernChess::Move move);
+
+/**
+ * @brief Just a debug util
+ */
+std::ostream &operator<<(std::ostream &os, const std::vector<ModernChess::Move> &moves);
