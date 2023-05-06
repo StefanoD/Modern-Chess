@@ -1,6 +1,6 @@
  #pragma once
 
-#include "MoveGenerations.h"
+#include "OneStepMoves.h"
 
 namespace ModernChess::Attacks {
 

@@ -10,7 +10,7 @@ add_executable(${target}
         FenParsingTest.cpp
         GameStateTest.cpp
         MagicNumberCandidatesGeneration.cpp
-        MoveGenerationsTest.cpp
+        PawnPushesTest.cpp
         QueenAttacksTest.cpp
         PawnQueriesTest.cpp
         RookAttacksTest.cpp

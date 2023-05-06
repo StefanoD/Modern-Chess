@@ -3,6 +3,10 @@
 namespace ModernChess
 {
 
+    GameState::GameState()
+    {
+        moveList.reserve(256);
+    }
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState)

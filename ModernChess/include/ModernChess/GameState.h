@@ -4,12 +4,16 @@
 #include "Color.h"
 #include "Square.h"
 #include "CastleRights.h"
+#include "Move.h"
+
+#include <vector>
 
 namespace ModernChess
 {
     class GameState
     {
     public:
+        GameState();
 
     //private:
         BitBoard board{};
@@ -19,6 +23,8 @@ namespace ModernChess
         Color sideToMove = Color::White;
         CastleRights castleRights = CastleRights::Undefined;
         Square enPassantTarget = Square::undefined;
+
+        std::vector<Move> moveList;
     };
 }
 

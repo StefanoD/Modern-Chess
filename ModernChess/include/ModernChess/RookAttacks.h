@@ -2,7 +2,7 @@
 
 #include "BitBoardConstants.h"
 #include "ModernChess/BitBoardOperations.h"
-#include "MoveGenerations.h"
+#include "PawnPushes.h"
 #include "Square.h"
 #include "Figure.h"
 

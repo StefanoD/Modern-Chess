@@ -1,49 +1,10 @@
 #pragma once
 
 #include "BitBoardOperations.h"
+#include "OneStepMoves.h"
 
 namespace ModernChess::MoveGenerations
 {
-    constexpr BitBoardState oneStepNorth(BitBoardState state)
-    {
-        return state << 8;
-    }
-
-    constexpr BitBoardState oneStepSouth(BitBoardState state)
-    {
-        return state >> 8;
-    }
-
-    constexpr BitBoardState oneStepEast(BitBoardState state)
-    {
-        return (state << 1) & BitBoardConstants::notAFile;
-    }
-
-    constexpr BitBoardState oneStepNorthEast(BitBoardState state)
-    {
-        return (state << 9) & BitBoardConstants::notAFile;
-    }
-
-    constexpr BitBoardState oneStepSouthEast(BitBoardState state)
-    {
-        return (state >> 7) & BitBoardConstants::notAFile;
-    }
-
-    constexpr BitBoardState oneStepWest(BitBoardState state)
-    {
-        return (state >> 1) & BitBoardConstants::notHFile;
-    }
-
-    constexpr BitBoardState oneStepSouthWest(BitBoardState state)
-    {
-        return (state >> 9) & BitBoardConstants::notHFile;
-    }
-
-    constexpr BitBoardState oneStepNorthWest(BitBoardState state)
-    {
-        return (state << 7) & BitBoardConstants::notHFile;
-    }
-
     namespace WhitePawns
     {
         // See https://www.chessprogramming.org/Pawn_Pushes_(Bitboards)#GeneralizedPush
@@ -119,51 +80,6 @@ namespace ModernChess::MoveGenerations
         {
             const BitBoardState emptyRank6 = oneStepNorth(emptySquares & BitBoardConstants::rank5) & emptySquares;
             return singlePushPossible(blackPawns, emptyRank6);
-        }
-    }
-
-    namespace Knights
-    {
-        // See https://www.chessprogramming.org/Knight_Pattern
-        // and https://www.chessprogramming.org/Direction#Knight_Directions
-        constexpr BitBoardState northNorthEast(BitBoardState knights)
-        {
-            return (knights << 17) & BitBoardConstants::notAFile ;
-        }
-
-        constexpr BitBoardState northEastEast(BitBoardState knights)
-        {
-            return (knights << 10) & BitBoardConstants::notABFile;
-        }
-
-        constexpr BitBoardState southEastEast(BitBoardState knights)
-        {
-            return (knights >> 6) & BitBoardConstants::notABFile;
-        }
-
-        constexpr BitBoardState southSouthEast(BitBoardState knights)
-        {
-            return (knights >> 15) & BitBoardConstants::notAFile ;
-        }
-
-        constexpr BitBoardState northNorthWest(BitBoardState knights)
-        {
-            return (knights << 15) & BitBoardConstants::notHFile ;
-        }
-
-        constexpr BitBoardState northWestWest(BitBoardState knights)
-        {
-            return (knights << 6) & BitBoardConstants::notGHFile;
-        }
-
-        constexpr BitBoardState southWestWest(BitBoardState knights)
-        {
-            return (knights >> 10) & BitBoardConstants::notGHFile;
-        }
-
-        constexpr BitBoardState southSouthWest(BitBoardState knights)
-        {
-            return (knights >> 17) & BitBoardConstants::notHFile ;
         }
     }
 }

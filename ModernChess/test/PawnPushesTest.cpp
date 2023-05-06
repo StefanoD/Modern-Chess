@@ -1,6 +1,6 @@
 #include "ModernChess/BitBoard.h"
 #include "ModernChess/BitBoardOperations.h"
-#include "ModernChess/MoveGenerations.h"
+#include "ModernChess/PawnPushes.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
@@ -10,7 +10,7 @@ namespace
     using namespace ModernChess;
     using namespace ModernChess::MoveGenerations;
 
-    TEST(MoveGenerationsTest, OneStepNorth)
+    TEST(PawnPushesTest, OneStepNorth)
     {
         const BitBoard board; // Has initial board state with correct positions
 
@@ -44,7 +44,7 @@ namespace
         print(std::cout, bitBoardState) << std::endl;
     }
 
-    TEST(MoveGenerationsTest, OneStepSouth)
+    TEST(PawnPushesTest, OneStepSouth)
     {
         const BitBoard board; // Has initial board state with correct positions
 
@@ -78,7 +78,7 @@ namespace
         print(std::cout, bitBoardState) << std::endl;
     }
 
-    TEST(MoveGenerationsTest, OneStepEast)
+    TEST(PawnPushesTest, OneStepEast)
     {
         const BitBoard board; // Has initial board state with correct positions
 
@@ -116,7 +116,7 @@ namespace
         print(std::cout, bitBoardState) << std::endl;
     }
 
-    TEST(MoveGenerationsTest, OneStepWest)
+    TEST(PawnPushesTest, OneStepWest)
     {
         const BitBoard board; // Has initial board state with correct positions
 
@@ -154,7 +154,7 @@ namespace
         print(std::cout, bitBoardState) << std::endl;
     }
 
-    TEST(MoveGenerationsTest, OneStepSouthWest)
+    TEST(PawnPushesTest, OneStepSouthWest)
     {
         const BitBoard board; // Has initial board state with correct positions
 
@@ -196,47 +196,6 @@ namespace
         EXPECT_EQ(aFile, BoardState::empty);
 
         print(std::cout, bitBoardState) << std::endl;
-    }
-
-    TEST(MoveGenerationsTest, KnightsNorthNorthEast)
-    {
-        // Occupy White pawnAttackTable on d4
-        BitBoardState knightsBoard = BitBoardOperations::occupySquare(BoardState::empty, Square::d4);
-        knightsBoard = BitBoardOperations::occupySquare(knightsBoard, Square::c4);
-
-        // Illegal moves
-        knightsBoard = BitBoardOperations::occupySquare(knightsBoard, Square::a8);
-        knightsBoard = BitBoardOperations::occupySquare(knightsBoard, Square::h8);
-
-        // All figures have been moved one step north
-        const BitBoardState board = MoveGenerations::Knights::northNorthEast(knightsBoard);
-
-        const std::vector<Square> knightSquares {
-               d6, e6,
-        };
-
-        const std::vector<Square> notOccupied {
-                a1, b1, c1, d1, e1, f1, g1, h1,
-                a2, b2, c2, d2, e2, f2, g2, h2,
-                a3, b3, c3, d3, e3, f3, g3, h3,
-                a4, b4, c4, d4, e4, f4, g4, h4,
-                a5, b5, c5, d5, e5, f5, g5, h5,
-                a6, b6, c6,         f6, g6, h6,
-                a7, b7, c7, d7, e7, f7, g7, h7,
-                a8, b8, c8, d8, e8, f8, g8, h8
-        };
-
-        for (const Square square : knightSquares)
-        {
-            EXPECT_TRUE(BitBoardOperations::isOccupied(board, square));
-        }
-
-        for (const Square square : notOccupied)
-        {
-            EXPECT_FALSE(BitBoardOperations::isOccupied(board, square));
-        }
-
-        print(std::cout, board) << std::endl;
     }
 }
 

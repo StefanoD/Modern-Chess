@@ -18,7 +18,8 @@ add_library(${target}
         ../include/ModernChess/KingAttacks.h
         ../include/ModernChess/KnightAttacks.h
         ../include/ModernChess/Move.h
-        ../include/ModernChess/MoveGenerations.h
+        ../include/ModernChess/PawnPushes.h
+        ../include/ModernChess/OneStepMoves.h
         ../include/ModernChess/PawnAttacks.h
         ../include/ModernChess/PawnQueries.h
         ../include/ModernChess/Player.h

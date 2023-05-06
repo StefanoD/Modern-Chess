@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MoveGenerations.h"
+#include "PawnPushes.h"
 #include "Color.h"
 
 namespace ModernChess {
