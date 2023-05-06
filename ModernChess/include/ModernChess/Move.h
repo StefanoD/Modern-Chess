@@ -7,14 +7,6 @@
 
 namespace ModernChess {
 
-    enum SpecialMove : uint32_t
-    {
-        Capture = 0x100000,
-        DoublePawnPush = 0x200000,
-        EnPassantCapture = 0x400000,
-        Castling = 0x800000,
-    };
-
     /**
      * Binary Move Bits                                     Hexadecimal Constants
      *
@@ -104,6 +96,14 @@ namespace ModernChess {
 
     private:
         int32_t m_move = 0;
+
+        enum SpecialMove : uint32_t
+        {
+            Capture = 0x100000,
+            DoublePawnPush = 0x200000,
+            EnPassantCapture = 0x400000,
+            Castling = 0x800000,
+        };
     };
 }
 
