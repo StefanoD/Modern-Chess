@@ -1,48 +1,69 @@
 #pragma once
 
 #include "Square.h"
+#include "Figure.h"
+
+#include <ostream>
 
 namespace ModernChess {
 
-    enum SpecialMove : uint16_t {
-        QuietMove = 0,
-        DoublePawnPush = 1,
-        KingCastle = 2,
-        QueenCastle = 3,
-        Capture = 4,
-        EnPassantCapture = 5,
-        KnightPromotion = 8,
-        BishopPromotion = 9,
-        RookPromotion = 10,
-        QueenPromotion = 11,
-        KnightPromotionCapture = 12,
-        BishopPromotionCapture = 13,
-        RookPromotionCapture = 14,
-        QueenPromotionCapture = 15,
+    enum SpecialMove : uint32_t
+    {
+        Capture = 0x100000,
+        DoublePawnPush = 0x200000,
+        EnPassantCapture = 0x400000,
+        Castling = 0x800000,
     };
+
+    /**
+     * Binary Move Bits                                     Hexadecimal Constants
+     *
+     * 0000 0000 0000 0000 0011 1111    source square       0x3F
+     * 0000 0000 0000 1111 1100 0000    target square       0xFC0
+     * 0000 0000 1111 0000 0000 0000    piece               0xF000
+     * 0000 1111 0000 0000 0000 0000    promoted piece      0xF0000
+     * 0001 0000 0000 0000 0000 0000    capture flag        0x100000
+     * 0010 0000 0000 0000 0000 0000    double push flag    0x200000
+     * 0100 0000 0000 0000 0000 0000    en passant flag     0x400000
+     * 1000 0000 0000 0000 0000 0000    castling flag       0x800000
+    */
 
     /**
      * @see https://www.chessprogramming.org/Encoding_Moves
      */
     struct Move
     {
-        explicit Move(Square from, Square to, SpecialMove specialMove) :
-                m_move{((specialMove & 0xF) << 12) | ((from & 0x3F) << 6) | (to & 0x3F)}
-            {}
+        explicit Move(Square from,
+                      Square to,
+                      Figure movedFigure,
+                      Figure promotedPiece,
+                      bool isCapture,
+                      bool isDoublePawnPush,
+                      bool isEnPassantCapture,
+                      bool isCastlingMove ) :
+                m_move{from | (to << 6) |
+                       (movedFigure | 12) |
+                       (promotedPiece << 16) |
+                       (uint8_t(isCapture) << 20) |
+                       (uint8_t(isDoublePawnPush) << 21) |
+                       (uint8_t(isEnPassantCapture) << 22) |
+                       (uint8_t(isCastlingMove) << 23)
+                }
+        {}
 
-        [[nodiscard]] Square getTo() const
+        [[nodiscard]] Square getFrom() const
         {
             return Square(m_move & 0x3F);
         }
 
-        [[nodiscard]] Square getFrom() const
+        [[nodiscard]] Square getTo() const
         {
-            return Square((m_move >> 6) & 0x3F);
+            return Square((m_move & 0xFC0) >> 6);
         }
-        
-        [[nodiscard]] SpecialMove getSpecialMove() const
+
+        [[nodiscard]] Square getMovedFigure() const
         {
-            return SpecialMove((m_move >> 12) & 0x0F);
+            return Square((m_move & 0xF0000) >> 16);
         }
 
         [[nodiscard]] bool isCapture() const
@@ -50,21 +71,19 @@ namespace ModernChess {
             return (m_move & SpecialMove::Capture) != 0;
         }
 
-        [[nodiscard]] int32_t getButterflyIndex() const
+        [[nodiscard]] bool isDoublePawnPush() const
         {
-            return m_move & 0x0FFF;
+            return (m_move & SpecialMove::DoublePawnPush) != 0;
         }
 
-        void setTo(Square to)
+        [[nodiscard]] bool isEnPassantCapture() const
         {
-            m_move &= ~0x3F; 
-            m_move |= to & 0x3F;
+            return (m_move & SpecialMove::EnPassantCapture) != 0;
         }
-        
-        void setFrom(Square from)
+
+        [[nodiscard]] bool isCastlingMove() const
         {
-            m_move &= ~0xFC0;
-            m_move |= (from & 0x3F) << 6;
+            return (m_move & SpecialMove::Castling) != 0;
         }
 
     private:
@@ -72,3 +91,5 @@ namespace ModernChess {
     };
 
 }
+
+std::ostream &operator<<(std::ostream &os, ModernChess::Move move);

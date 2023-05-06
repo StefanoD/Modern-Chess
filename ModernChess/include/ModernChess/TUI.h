@@ -11,20 +11,18 @@ namespace ModernChess {
      */
     class TUI
     {
-        static constexpr char getPromotedPiece(Figure figure)
-        {
-            switch (figure)
-            {
-                case Figure::WhiteQueen: return 'Q';
-                case Figure::WhiteRook: return 'R';
-                case Figure::WhiteBishop: return 'B';
-                case Figure::WhiteKnight: return 'N';
-                case Figure::BlackQueen: return 'q';
-                case Figure::BlackRook: return 'r';
-                case Figure::BlackBishop: return 'b';
-                case Figure::BlackKnight: return 'n';
-                default: throw std::invalid_argument("Figure type '" + std::to_string(figure) + "' cannot promote!");
-            }
-        }
+    public:
+        static constexpr std::array<char, Figure::None> promotedPieceToCharacter = [] {
+            std::array<char, Figure::None> a{};
+            a[Figure::WhiteKnight] = 'N';
+            a[Figure::WhiteBishop] = 'B';
+            a[Figure::WhiteRook] = 'R';
+            a[Figure::WhiteQueen] = 'Q';
+            a[Figure::BlackKnight] = 'n';
+            a[Figure::BlackBishop] = 'b';
+            a[Figure::BlackRook] = 'r';
+            a[Figure::BlackQueen] = 'q';
+            return a;
+        } ();
     };
 }
