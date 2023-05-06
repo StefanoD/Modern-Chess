@@ -9,6 +9,13 @@ std::ostream& operator<<(std::ostream& os, ModernChess::Move move)
 {
     using namespace ModernChess;
 
+    if (move.isNullMove())
+    {
+        // UCI compliant NULL move
+        os << "0000";
+        return os;
+    }
+
     os << squareToCoordinates[move.getFrom()];
     os << squareToCoordinates[move.getTo()];
 

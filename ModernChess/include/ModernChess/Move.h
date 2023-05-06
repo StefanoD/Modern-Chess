@@ -92,6 +92,11 @@ namespace ModernChess {
             return (m_move & SpecialMove::Castling) != 0;
         }
 
+        [[nodiscard]] bool isNullMove() const
+        {
+            return m_move == 0;
+        }
+
     private:
         int32_t m_move;
     };
