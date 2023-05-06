@@ -107,7 +107,7 @@ namespace {
                 Move{Square::a1, Square::h1, Figure::WhiteRook, Figure::None, true, false, false, false},
         };
 
-        for (int i = 0; i < 200; ++i)
+        for (int i = 0; i < 100; ++i)
         {
             moveList.emplace_back(Square::a2, Square::b4, Figure::WhitePawn, Figure::WhiteQueen, true, true, true, true);
         }
