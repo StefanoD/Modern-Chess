@@ -1,9 +1,24 @@
 #include "ModernChess/Move.h"
-#include "ModernChess/TUI.h"
 #include "ModernChess/FenParsing.h"
 
-namespace ModernChess {
+#include <array>
 
+namespace ModernChess {
+    /**
+     * @brief UCI compliant promotion encoding
+     */
+    static constexpr std::array<char, 255> promotedPieceToCharacter = [] {
+        std::array<char, 255> a{};
+        a[Figure::WhiteKnight] = 'n';
+        a[Figure::WhiteBishop] = 'b';
+        a[Figure::WhiteRook] = 'r';
+        a[Figure::WhiteQueen] = 'q';
+        a[Figure::BlackKnight] = 'n';
+        a[Figure::BlackBishop] = 'b';
+        a[Figure::BlackRook] = 'r';
+        a[Figure::BlackQueen] = 'q';
+        return a;
+    } ();
 }
 
 std::ostream& operator<<(std::ostream& os, ModernChess::Move move)
@@ -20,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, ModernChess::Move move)
     os << squareToCoordinates[move.getFrom()];
     os << squareToCoordinates[move.getTo()];
 
-    const char promotedPiece = TUI::promotedPieceToCharacter[move.getPromotedPiece()];
+    const char promotedPiece = promotedPieceToCharacter[move.getPromotedPiece()];
 
     if ('\0' != promotedPiece)
     {
