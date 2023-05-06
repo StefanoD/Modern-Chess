@@ -11,7 +11,7 @@ std::ostream& operator<<(std::ostream& os, ModernChess::Move move)
 
     os << squareToCoordinates[move.getFrom()];
     os << squareToCoordinates[move.getTo()];
-    os << TUI::promotedPieceToCharacter[move.getMovedFigure()];
+    os << TUI::promotedPieceToCharacter[move.getPromotedPiece()];
 
     return os;
 }

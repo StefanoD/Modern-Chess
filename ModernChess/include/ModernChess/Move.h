@@ -41,8 +41,9 @@ namespace ModernChess {
                       bool isDoublePawnPush,
                       bool isEnPassantCapture,
                       bool isCastlingMove ) :
-                m_move{from | (to << 6) |
-                       (movedFigure | 12) |
+                m_move{from |
+                       (to << 6) |
+                       (movedFigure << 12) |
                        (promotedPiece << 16) |
                        (uint8_t(isCapture) << 20) |
                        (uint8_t(isDoublePawnPush) << 21) |
@@ -61,9 +62,14 @@ namespace ModernChess {
             return Square((m_move & 0xFC0) >> 6);
         }
 
-        [[nodiscard]] Square getMovedFigure() const
+        [[nodiscard]] Figure getMovedFigure() const
         {
-            return Square((m_move & 0xF0000) >> 16);
+            return Figure((m_move & 0xF000) >> 12);
+        }
+
+        [[nodiscard]] Figure getPromotedPiece() const
+        {
+            return Figure((m_move & 0xF0000) >> 16);
         }
 
         [[nodiscard]] bool isCapture() const

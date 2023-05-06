@@ -12,8 +12,8 @@ namespace ModernChess {
     class TUI
     {
     public:
-        static constexpr std::array<char, Figure::None> promotedPieceToCharacter = [] {
-            std::array<char, Figure::None> a{};
+        static constexpr std::array<char, 255> promotedPieceToCharacter = [] {
+            std::array<char, 255> a{};
             a[Figure::WhiteKnight] = 'N';
             a[Figure::WhiteBishop] = 'B';
             a[Figure::WhiteRook] = 'R';
@@ -22,6 +22,7 @@ namespace ModernChess {
             a[Figure::BlackBishop] = 'b';
             a[Figure::BlackRook] = 'r';
             a[Figure::BlackQueen] = 'q';
+            a[Figure::None] = '-';
             return a;
         } ();
     };

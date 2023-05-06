@@ -15,6 +15,7 @@ add_executable(${target}
         PawnQueriesTest.cpp
         RookAttacksTest.cpp
         SquareTest.cpp
+        MoveTest.cpp
         )
 
 target_link_libraries(${target} PRIVATE
