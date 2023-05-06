@@ -65,6 +65,8 @@ namespace {
                                         EXPECT_EQ(move.isDoublePawnPush(), bool(isDoublePawnPush));
                                         EXPECT_EQ(move.isEnPassantCapture(), bool(enPassant));
                                         EXPECT_EQ(move.isCastlingMove(), bool(isCastling));
+
+                                        //std::cout << move << std::endl;
                                     }
                                 }
                             }

@@ -12,17 +12,19 @@ namespace ModernChess {
     class TUI
     {
     public:
+        /**
+         * @brief UCI compliant promotion encoding
+         */
         static constexpr std::array<char, 255> promotedPieceToCharacter = [] {
-            std::array<char, 255> a{};
-            a[Figure::WhiteKnight] = 'N';
-            a[Figure::WhiteBishop] = 'B';
-            a[Figure::WhiteRook] = 'R';
-            a[Figure::WhiteQueen] = 'Q';
+            std::array<char, 255> a = {};
+            a[Figure::WhiteKnight] = 'n';
+            a[Figure::WhiteBishop] = 'b';
+            a[Figure::WhiteRook] = 'r';
+            a[Figure::WhiteQueen] = 'q';
             a[Figure::BlackKnight] = 'n';
             a[Figure::BlackBishop] = 'b';
             a[Figure::BlackRook] = 'r';
             a[Figure::BlackQueen] = 'q';
-            a[Figure::None] = '-';
             return a;
         } ();
     };

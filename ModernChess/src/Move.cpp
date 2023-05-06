@@ -11,7 +11,13 @@ std::ostream& operator<<(std::ostream& os, ModernChess::Move move)
 
     os << squareToCoordinates[move.getFrom()];
     os << squareToCoordinates[move.getTo()];
-    os << TUI::promotedPieceToCharacter[move.getPromotedPiece()];
+
+    const char promotedPiece = TUI::promotedPieceToCharacter[move.getPromotedPiece()];
+
+    if ('\0' != promotedPiece)
+    {
+        os << promotedPiece;
+    }
 
     return os;
 }

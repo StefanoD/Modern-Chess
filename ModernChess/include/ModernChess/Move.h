@@ -98,4 +98,7 @@ namespace ModernChess {
 
 }
 
+/**
+ * @return UCI compliant move encoding
+ */
 std::ostream &operator<<(std::ostream &os, ModernChess::Move move);
