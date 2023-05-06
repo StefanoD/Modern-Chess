@@ -33,6 +33,11 @@ namespace ModernChess {
      */
     struct Move
     {
+        /**
+         * @brief NULL move
+         */
+        Move() = default;
+
         explicit Move(Square from,
                       Square to,
                       Figure movedFigure,
@@ -98,9 +103,8 @@ namespace ModernChess {
         }
 
     private:
-        int32_t m_move;
+        int32_t m_move = 0;
     };
-
 }
 
 /**
