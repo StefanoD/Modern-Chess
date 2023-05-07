@@ -192,7 +192,7 @@ namespace ModernChess::MoveGenerations {
                     {
                         movesToBeGenerated.emplace_back(Square::e1, Square::g1, Figure::WhiteKing, Figure::None, false,
                                                         false, false, true);
-                        // The rook move to h1 is generated in the rook move generation
+                        // The rook move to f1 is generated in the rook move generation
                     }
                 }
             }
