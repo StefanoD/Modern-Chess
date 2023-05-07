@@ -14,7 +14,7 @@ namespace ModernChess {
         constexpr BitBoardState allSquaresOccupied = std::numeric_limits<BitBoardState>::max();
     }
 
-    enum RayDirections : int
+    enum RayDirections : int32_t
     {
         North = 8,
         NorthEast = 9,

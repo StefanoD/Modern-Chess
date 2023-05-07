@@ -90,7 +90,6 @@ namespace ModernChess {
             return false;
         }
 
-    private:
         static const std::array<std::array<BitBoardState, 64>, 2> pawnAttackTable;
         static const std::array<BitBoardState, 64> knightAttackTable;
         static const std::array<BitBoardState, 64> kingAttackTable;

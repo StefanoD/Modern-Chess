@@ -190,4 +190,14 @@ namespace ModernChess::BitBoardOperations
         // return occupancyMap map
         return occupancyMap;
     }
+
+    [[nodiscard]] constexpr Square getNorthSquareFromGivenSquare(Square square)
+    {
+        return Square(square + Square(RayDirections::North));
+    }
+
+    [[nodiscard]] constexpr Square getSouthSquareFromGivenSquare(Square square)
+    {
+        return Square(square + Square(RayDirections::South));
+    }
 }
