@@ -4,7 +4,6 @@
 #include "Figure.h"
 
 #include <ostream>
-#include <vector>
 
 namespace ModernChess {
 
@@ -112,8 +111,3 @@ namespace ModernChess {
  * @return UCI compliant move encoding
  */
 std::ostream &operator<<(std::ostream &os, ModernChess::Move move);
-
-/**
- * @brief Just a debug util
- */
-std::ostream &operator<<(std::ostream &os, const std::vector<ModernChess::Move> &moves);

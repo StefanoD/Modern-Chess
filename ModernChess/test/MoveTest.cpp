@@ -100,19 +100,4 @@ namespace {
 
         EXPECT_EQ(stream.str(), "a1h1");
     }
-
-    TEST(MoveTest, TestMoveListPrint)
-    {
-        std::vector<Move> moveList {
-                Move{Square::a1, Square::h1, Figure::WhiteRook, Figure::None, true, false, false, false},
-        };
-
-        for (int i = 0; i < 100; ++i)
-        {
-            moveList.emplace_back(Square::a2, Square::b4, Figure::WhitePawn, Figure::WhiteQueen, true, true, true, true);
-        }
-
-        std::cout << moveList;
-    }
-
 }

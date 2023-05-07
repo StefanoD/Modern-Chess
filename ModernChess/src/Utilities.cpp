@@ -1,6 +1,6 @@
 #include "ModernChess/Utilities.h"
-#include "ModernChess/BitBoardOperations.h"
 #include "ModernChess/AttackQueries.h"
+#include "ModernChess/FenParsing.h"
 
 using namespace ModernChess;
 
@@ -57,6 +57,36 @@ std::ostream& printAttackedSquares(std::ostream& os, const BitBoard &board, Colo
     }
 
     os << std::endl << "    a b c d e f g h" << std::endl << std::endl;
+
+    return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const std::vector<ModernChess::Move> &moves)
+{
+    using namespace ModernChess;
+
+    os << "#\t\tmove\tfigure\tcapture\tdouble-push\ten-passant\tcastling\n\n";
+
+    int32_t moveCounter = 0;
+
+    for (const Move move : moves)
+    {
+        os << moveCounter << "\t\t";
+        os << move << "\t";
+
+#ifdef WIN64
+        os << "  " << FenParsing::asciiFigures[move.getMovedFigure()] << "\t\t";
+#else
+        os << "  " << FenParsing::unicodeFigures[move.getMovedFigure()] << "\t\t";
+#endif
+
+        os << (move.isCapture() ? "true" : "false") << "\t";
+        os << (move.isDoublePawnPush() ? "true" : "false") << "\t\t";
+        os << (move.isEnPassantCapture() ? "true" : "false") << "\t\t";
+        os << (move.isCastlingMove() ? "true" : "false") << std::endl;
+
+        ++moveCounter;
+    }
 
     return os;
 }
