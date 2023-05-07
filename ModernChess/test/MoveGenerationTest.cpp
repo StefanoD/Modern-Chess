@@ -125,7 +125,6 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << gameState;
         std::cout << generatedMoves;
     }
 }
