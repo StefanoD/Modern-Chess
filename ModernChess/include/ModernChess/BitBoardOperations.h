@@ -35,8 +35,8 @@ namespace ModernChess::BitBoardOperations
 
     /**
      * @brief Deducts square from rank and file
-     * @param rank
-     * @param file
+     * @param rank within the range of [0 - 7]
+     * @param file within the range of [0 - 7]
      * @see https://www.chessprogramming.org/Square_Mapping_Considerations#Deduction_on_Files_and_Ranks
      */
     [[nodiscard]] constexpr Square getSquare(int rank, int file)
