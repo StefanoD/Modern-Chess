@@ -4,6 +4,8 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
+
 using namespace ModernChess;
 using namespace ModernChess::MoveGenerations;
 
@@ -30,10 +32,31 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        print(std::cout, BitBoardOperations::occupySquare(BoardState::empty, Square::f6));
-        print(std::cout, AttackQueries::pawnAttackTable[Color::White][Square::e5]);
+        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
-        printAttackedSquares(std::cout, gameState.board, Color::White);
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e5 &&
+                   move.getTo() == Square::f6 &&
+                   move.isCapture() &&
+                   move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        std::cout << generatedMoves;
+    }
+
+    TEST(MoveGenerationTest, WhiteKindSideCastleTest)
+    {
+        constexpr auto kingSideCastlingPosition = "rnbqkbnr/pppppppp/8/8/8/4PN2/PPPPBPPP/RNBQK2R w KQkq - 0 1";
+
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
 
         MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
