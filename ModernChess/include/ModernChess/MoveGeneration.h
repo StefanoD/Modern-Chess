@@ -8,7 +8,6 @@
 
 #include <vector>
 #include <functional>
-#include <array>
 
 namespace ModernChess::MoveGenerations {
     class MoveGeneration
