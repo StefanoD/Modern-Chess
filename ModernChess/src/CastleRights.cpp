@@ -8,17 +8,17 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::CastleRights castl
 
     os << "\tWhite:";
 
-    if (whiteCanKingSideCastle(castleRights))
+    if (whiteCanCastleKingSide(castleRights))
     {
         os << " king-side";
     }
-    if (whiteCanQueenSideCastle(castleRights))
+    if (whiteCanCastleQueenSide(castleRights))
     {
         os << " queen-side";
     }
 
-    if (not whiteCanKingSideCastle(castleRights) and
-        not whiteCanQueenSideCastle(castleRights))
+    if (not whiteCanCastleKingSide(castleRights) and
+        not whiteCanCastleQueenSide(castleRights))
     {
         os << " castling not possible";
     }
@@ -26,17 +26,17 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::CastleRights castl
     os << std::endl;
     os << "\tBlack:";
 
-    if (blackCanKingSideCastle(castleRights))
+    if (blackCanCastleKingSide(castleRights))
     {
         os << " king-side";
     }
-    if (blackCanQueenSideCastle(castleRights))
+    if (blackCanCastleQueenSide(castleRights))
     {
         os << " queen-side";
     }
 
-    if (not blackCanKingSideCastle(castleRights) and
-        not blackCanQueenSideCastle(castleRights))
+    if (not blackCanCastleKingSide(castleRights) and
+        not blackCanCastleQueenSide(castleRights))
     {
         os << " castling not possible";
     }

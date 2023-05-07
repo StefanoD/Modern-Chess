@@ -27,22 +27,22 @@ namespace ModernChess
         BlackAnySide = BlackKingSide + BlackQueenSide
     };
 
-    constexpr bool whiteCanKingSideCastle(CastleRights castleRights)
+    constexpr bool whiteCanCastleKingSide(CastleRights castleRights)
     {
         return (castleRights & CastleRights::WhiteKingSide) == CastleRights::WhiteKingSide;
     }
 
-    constexpr bool whiteCanQueenSideCastle(CastleRights castleRights)
+    constexpr bool whiteCanCastleQueenSide(CastleRights castleRights)
     {
         return (castleRights & CastleRights::WhiteQueenSide) == CastleRights::WhiteQueenSide;
     }
 
-    constexpr bool blackCanKingSideCastle(CastleRights castleRights)
+    constexpr bool blackCanCastleKingSide(CastleRights castleRights)
     {
         return (castleRights & CastleRights::BlackKingSide) == CastleRights::BlackKingSide;
     }
 
-    constexpr bool blackCanQueenSideCastle(CastleRights castleRights)
+    constexpr bool blackCanCastleQueenSide(CastleRights castleRights)
     {
         return (castleRights & CastleRights::BlackQueenSide) == CastleRights::BlackQueenSide;
     }

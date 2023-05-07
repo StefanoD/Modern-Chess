@@ -74,11 +74,11 @@ namespace
         const BitBoardState blackKingBitboard = gameState.board.bitboards[Figure::BlackKing];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackKingBitboard, Square::e8));
 
-        EXPECT_TRUE(whiteCanKingSideCastle(gameState.castleRights));
-        EXPECT_TRUE(whiteCanQueenSideCastle(gameState.castleRights));
+        EXPECT_TRUE(whiteCanCastleKingSide(gameState.castleRights));
+        EXPECT_TRUE(whiteCanCastleQueenSide(gameState.castleRights));
 
-        EXPECT_TRUE(blackCanKingSideCastle(gameState.castleRights));
-        EXPECT_TRUE(blackCanQueenSideCastle(gameState.castleRights));
+        EXPECT_TRUE(blackCanCastleKingSide(gameState.castleRights));
+        EXPECT_TRUE(blackCanCastleQueenSide(gameState.castleRights));
 
         EXPECT_EQ(gameState.enPassantTarget, Square::undefined);
         EXPECT_EQ(gameState.sideToMove, Color::White);
