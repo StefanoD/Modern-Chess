@@ -91,4 +91,9 @@ namespace
         print(std::cout, board) << std::endl;
     }
 
+    TEST(BitBoardOperationsTest, getSquare)
+    {
+        EXPECT_EQ(Square::a1,  BitBoardOperations::getSquare(0, 0));
+        EXPECT_EQ(Square::f5,  BitBoardOperations::getSquare(4, 5));
+    }
 }
