@@ -88,6 +88,27 @@ namespace
         std::cout << gameState;
     }
 
+    TEST(FenParsingTest, ParseEnPassantSquare)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . .
+         * 5 . . . . ♟︎ ♙ . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto enPassantPosition = "4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 1";
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(enPassantPosition);
+
+        EXPECT_EQ(gameState.enPassantTarget, Square::f6);
+    }
+
     TEST(FenParsingTest, BlackPawnAtA8)
     {
         constexpr auto fenString = "p7/8/8/8/8/8/8/8 w KQkq - 0 1";

@@ -87,6 +87,13 @@ namespace ModernChess::FenParsing {
 
         if (isAlphabetic(character))
         {
+            /**
+             *  squareIndex = 8*rankIndex + fileIndex
+                FileIndex   = squareIndex modulo 8  = squareIndex & 7
+                RankIndex   = squareIndex div    8  = squareIndex >> 3
+             */
+
+
             // parse en passant file & rank
             const int file = character - 'a';
 
@@ -99,7 +106,7 @@ namespace ModernChess::FenParsing {
                                        "! Expected a number!");
             }
 
-            const int rank = 8 - (character - '0');
+            const int rank = character - '1';
 
             // init en passant square
             square = BitBoardOperations::getSquare(rank, file);
