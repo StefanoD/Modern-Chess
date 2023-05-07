@@ -42,6 +42,7 @@ namespace
                    move.getMovedFigure() == Figure::WhitePawn &&
                    not move.isDoublePawnPush() &&
                    not move.isCastlingMove() &&
+                   not move.isNullMove() &&
                    move.getPromotedPiece() == Figure::None;
         }));
 
