@@ -16,7 +16,7 @@ add_executable(${target}
         RookAttacksTest.cpp
         SquareTest.cpp
         MoveTest.cpp
-        )
+        MoveGenerationTest.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
