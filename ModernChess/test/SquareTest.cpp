@@ -6,7 +6,7 @@ namespace
 {
     using namespace ModernChess;
 
-    TEST(BitBoardOperationsTest, occupyAndEraseSquare)
+    TEST(SquareTest, occupyAndEraseSquare)
     {
         EXPECT_EQ(squareToCoordinates[Square::a1],  "a1");
         EXPECT_EQ(squareToCoordinates[Square::a8],  "a8");
