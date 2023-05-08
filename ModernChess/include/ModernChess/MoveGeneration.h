@@ -97,8 +97,7 @@ namespace ModernChess::MoveGenerations {
                         {
                             // single pawn push
                             movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::WhitePawn, Figure::None,
-                                                            false,
-                                                            false, false, false);
+                                                            false, false, false, false);
 
                             // double pawn push
                             if ((sourceSquare >= a2 && sourceSquare <= h2) &&
@@ -109,8 +108,7 @@ namespace ModernChess::MoveGenerations {
                                 movesToBeGenerated.emplace_back(sourceSquare,
                                                                 BitBoardOperations::getNorthSquareFromGivenSquare(
                                                                         targetSquare), Figure::WhitePawn, Figure::None,
-                                                                false,
-                                                                true, false, false);
+                                                                false, true, false, false);
                             }
                         }
                     }
