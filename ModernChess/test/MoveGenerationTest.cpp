@@ -56,14 +56,14 @@ namespace
          * 7 . . . . . . . .
          * 6 . . . . . . . .
          * 5 . . . . . . . .
-         * 4 . . . . . . . .
-         * 3 . . . . . . . .
+         * 4 . . . . ♖ . . .
+         * 3 . . . . ♟︎ . . .
          * 2 . . . . . . . .
          * 1 ♜ . . . ♚ . . ♜
          *
-         *   a b c d e f g h
+         *  a b c d e f g h
          */
-        constexpr auto kingSideCastlingPosition = "4k3/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
+        constexpr auto kingSideCastlingPosition = "4k3/8/8/8/4r3/4P3/8/R3K2R w KQ - 0 1";
 
         FenParsing::FenParser fenParser;
         const GameState gameState = fenParser.parse(kingSideCastlingPosition);
