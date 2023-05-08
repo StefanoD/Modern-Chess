@@ -8,7 +8,8 @@
 #include <vector>
 #include <functional>
 
-namespace ModernChess::MoveGenerations {
+namespace ModernChess::MoveGenerations
+{
     class MoveGeneration
     {
     public:
@@ -19,7 +20,8 @@ namespace ModernChess::MoveGenerations {
 
             {
                 // White Knight Moves
-                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare) {
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
                     return AttackQueries::knightAttackTable[sourceSquare] &
                            (~gameState.board.occupancies[Color::White]);
                 };
@@ -28,7 +30,8 @@ namespace ModernChess::MoveGenerations {
             }
             {
                 // White Bishop Moves
-                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare) {
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
                     return AttackQueries::bishopAttacks.getAttacks(sourceSquare,
                                                                    gameState.board.occupancies[Color::Both]) &
                            (~gameState.board.occupancies[Color::White]);
@@ -38,7 +41,8 @@ namespace ModernChess::MoveGenerations {
             }
             {
                 // White Rook Moves
-                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare) {
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
                     return AttackQueries::rookAttacks.getAttacks(sourceSquare,
                                                                  gameState.board.occupancies[Color::Both]) &
                            (~gameState.board.occupancies[Color::White]);
@@ -48,9 +52,10 @@ namespace ModernChess::MoveGenerations {
             }
             {
                 // White Rook Moves
-                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare) {
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
                     return AttackQueries::queenAttacks.getAttacks(sourceSquare,
-                                                                 gameState.board.occupancies[Color::Both]) &
+                                                                  gameState.board.occupancies[Color::Both]) &
                            (~gameState.board.occupancies[Color::White]);
                 };
 
@@ -214,7 +219,8 @@ namespace ModernChess::MoveGenerations {
                 }
             }
 
-            std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare) {
+            std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+            {
                 return AttackQueries::kingAttackTable[sourceSquare] &
                        (~gameState.board.occupancies[Color::White]);
             };
