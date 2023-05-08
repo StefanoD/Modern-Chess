@@ -217,6 +217,189 @@ namespace
         std::cout << generatedMoves;
     }
 
+    TEST(MoveGenerationTest, PawnPromotionWithCaptureWithWhiteTest)
+    {
+        /*
+         *   8 ♖ . ♖ . ♔ . . .
+         *   7 . ♟︎ . . . . . .
+         *   6 . . . . . . . .
+         *   5 . . . . . . . .
+         *   4 . . . . . . . .
+         *   3 . . . . . . . .
+         *   2 . . . ♚ . . . .
+         *   1 . . . . . . . .
+         *
+         *     a b c d e f g h
+         */
+        constexpr auto kingSideCastlingPosition = "r1r1k3/1P6/8/8/8/8/3K4/8 w - - 0 1";
+
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
+
+        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+
+        // to b8 - White Queen promotion
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::b8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteQueen;
+        }));
+
+        // to b8 - White Rook promotion
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::b8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteRook;
+        }));
+
+        // to b8 - White Bishop promotion
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::b8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteBishop;
+        }));
+
+        // to b8 - White Knight promotion
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::b8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteKnight;
+        }));
+
+        // to a8 - White Queen promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::a8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteQueen;
+        }));
+
+        // to a8 - White Rook promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::a8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteRook;
+        }));
+
+        // to a8 - White Bishop promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::a8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteBishop;
+        }));
+
+        // to a8 - White Knight promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::a8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteKnight;
+        }));
+
+        // to c8 - White Queen promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::c8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteQueen;
+        }));
+
+        // to c8 - White Rook promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::c8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteRook;
+        }));
+
+        // to c8 - White Bishop promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::c8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteBishop;
+        }));
+
+        // to c8 - White Knight promotion with capture
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::b7 &&
+                   move.getTo() == Square::c8 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::WhiteKnight;
+        }));
+
+        std::cout << generatedMoves;
+    }
+
     TEST(MoveGenerationTest, BishopCapturesTest)
     {
         /*
