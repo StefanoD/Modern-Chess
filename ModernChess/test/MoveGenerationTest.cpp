@@ -216,4 +216,79 @@ namespace
 
         std::cout << generatedMoves;
     }
+
+    TEST(MoveGenerationTest, BishopCapturesTest)
+    {
+        /*
+         *   8 . . . . ♔ . . .
+         *   7 ♙ . . . . . ♙ .
+         *   6 . . . . . . . .
+         *   5 . . . . . . . .
+         *   4 . . . ♝ . . . .
+         *   3 . . . . . . . .
+         *   2 . . . ♚ . . . .
+         *   1 ♖ . . . . . ♖ .
+         *
+         *     a b c d e f g h
+         */
+        constexpr auto kingSideCastlingPosition = "4k3/p5p1/8/8/3B4/8/3K4/r5r1 w KQ - 0 1";
+
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
+
+        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d4 &&
+                   move.getTo() == Square::a7 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhiteBishop &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d4 &&
+                   move.getTo() == Square::a1 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhiteBishop &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d4 &&
+                   move.getTo() == Square::g1 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhiteBishop &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d4 &&
+                   move.getTo() == Square::g7 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhiteBishop &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        std::cout << generatedMoves;
+    }
 }
