@@ -154,8 +154,7 @@ namespace
 
         // King side castling - King Move
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
-            return
-                   not move.isCapture() &&
+            return not move.isCapture() &&
                    not move.isEnPassantCapture() &&
                    not move.isDoublePawnPush() &&
                    not move.isCastlingMove() &&
