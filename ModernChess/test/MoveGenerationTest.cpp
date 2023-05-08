@@ -152,11 +152,63 @@ namespace
 
         MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
-        // King side castling - King Move
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
             return not move.isCapture() &&
                    not move.isEnPassantCapture() &&
                    not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        std::cout << generatedMoves;
+    }
+
+    TEST(MoveGenerationTest, DoublePawnPushWithWhiteTest)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . .
+         * 5 . . . . . . . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . ♟︎ . . .
+         * 1 ♜ . . . ♚ . . ♜
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto kingSideCastlingPosition = "4k3/8/8/8/8/8/4P3/R3K2R w KQ - 0 1";
+
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
+
+        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+
+        // Single pawn push
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e2 &&
+                   move.getTo() == Square::e3 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        // Double pawn push
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e2 &&
+                   move.getTo() == Square::e4 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::WhitePawn &&
+                   move.isDoublePawnPush() &&
                    not move.isCastlingMove() &&
                    not move.isNullMove() &&
                    move.getPromotedPiece() == Figure::None;
