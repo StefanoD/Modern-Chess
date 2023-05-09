@@ -72,9 +72,9 @@ namespace ModernChess::MoveGenerations
             while (whitePawnBitboard != BoardState::empty)
             {
                 const Square sourceSquare = BitBoardOperations::bitScanForward(whitePawnBitboard);
-                // White pawns are moving towards north direction
 
                 {
+                    // White pawns are moving towards north direction
                     // generate quite pawn moves
                     const Square targetSquare = BitBoardOperations::getNorthSquareFromGivenSquare(sourceSquare);
 
@@ -268,6 +268,120 @@ namespace ModernChess::MoveGenerations
 
                 // pop ls1b of the current piece pieceBitboard copy
                 pieceBitboard = BitBoardOperations::eraseSquare(pieceBitboard, sourceSquare);
+            }
+        }
+
+        static void generateBlackPawnMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
+        {
+            BitBoardState blackPawnBitboard = gameState.board.bitboards[Figure::BlackPawn];
+
+            // loop over white pawns within white pawn blackPawnBitboard
+            while (blackPawnBitboard != BoardState::empty)
+            {
+                const Square sourceSquare = BitBoardOperations::bitScanForward(blackPawnBitboard);
+
+                {
+                    // Black pawns are moving towards south direction
+                    // generate quite pawn moves
+                    const Square targetSquare = BitBoardOperations::getSouthSquareFromGivenSquare(sourceSquare);
+
+                    if (const bool targetSquareIsOnBoard = (targetSquare >= Square::a1);
+                            targetSquareIsOnBoard &&
+                            !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], targetSquare))
+                    {
+                        // pawn promotion
+                        if (sourceSquare >= a2 && sourceSquare <= h2)
+                        {
+                            movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                            Figure::BlackQueen,
+                                                            false, false, false, false);
+                            movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                            Figure::BlackRook,
+                                                            false, false, false, false);
+                            movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                            Figure::BlackBishop,
+                                                            false, false, false, false);
+                            movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                            Figure::BlackKnight,
+                                                            false, false, false, false);
+                        }
+                        else
+                        {
+                            // single pawn push
+                            movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn, Figure::None,
+                                                            false, false, false, false);
+
+                            // double pawn push
+                            if ((sourceSquare >= a7 && sourceSquare <= h7) &&
+                                !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both],
+                                                                BitBoardOperations::getNorthSquareFromGivenSquare(
+                                                                        targetSquare)))
+                            {
+                                movesToBeGenerated.emplace_back(sourceSquare,
+                                                                BitBoardOperations::getSouthSquareFromGivenSquare(
+                                                                        targetSquare), Figure::BlackPawn, Figure::None,
+                                                                false, true, false, false);
+                            }
+                        }
+                    }
+                }
+
+                // init pawn attacks of blackPawnBitboard and generate pawn captures
+                for (BitBoardState attacks = AttackQueries::pawnAttackTable[Color::Black][sourceSquare] &
+                                             gameState.board.occupancies[Color::White];
+                     attacks != BoardState::empty;
+                        )
+                {
+                    // init target square
+                    const Square targetSquare = BitBoardOperations::bitScanForward(attacks);
+
+                    // pawn promotion
+                    if (sourceSquare >= a2 && sourceSquare <= h2)
+                    {
+                        movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                        Figure::BlackQueen,
+                                                        true, false, false, false);
+                        movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                        Figure::BlackRook,
+                                                        true, false, false, false);
+                        movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                        Figure::BlackBishop,
+                                                        true, false, false, false);
+                        movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn,
+                                                        Figure::BlackKnight,
+                                                        true, false, false, false);
+                    }
+                    else
+                    {
+                        // one square ahead pawn move
+                        movesToBeGenerated.emplace_back(sourceSquare, targetSquare, Figure::BlackPawn, Figure::None,
+                                                        true,
+                                                        false, false, false);
+                    }
+
+                    attacks = BitBoardOperations::eraseSquare(attacks, targetSquare);
+                }
+
+                // generate en passant captures
+                if (gameState.enPassantTarget != Square::undefined)
+                {
+                    // lookup pawn attacks and bitwise AND with en passant square (bit)
+                    const BitBoardState enPassantAttacks =
+                            AttackQueries::pawnAttackTable[Color::Black][sourceSquare] &
+                            BitBoardOperations::occupySquare(BoardState::empty, gameState.enPassantTarget);
+
+                    // make sure en passant capture possible
+                    if (enPassantAttacks != BoardState::empty)
+                    {
+                        // init en passant capture target square
+                        const Square targetEnPassant = BitBoardOperations::bitScanForward(enPassantAttacks);
+                        movesToBeGenerated.emplace_back(sourceSquare, targetEnPassant, Figure::BlackPawn, Figure::None,
+                                                        true, false, true, false);
+                    }
+                }
+
+                // pop ls1b from figure blackPawnBitboard copy
+                blackPawnBitboard = BitBoardOperations::eraseSquare(blackPawnBitboard, sourceSquare);
             }
         }
     };
