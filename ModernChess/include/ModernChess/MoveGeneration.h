@@ -16,6 +16,17 @@ namespace ModernChess::MoveGenerations
         static void generateBlackFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
         {
             generateBlackPawnMoves(gameState, movesToBeGenerated);
+
+            {
+                // Black Knight Moves
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
+                    return AttackQueries::knightAttackTable[sourceSquare] &
+                           (~gameState.board.occupancies[Color::Black]);
+                };
+
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKnight, std::move(getAttacks));
+            }
         }
 
         static void generateWhiteFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
@@ -31,7 +42,7 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generateWhitePieceMoves(gameState, movesToBeGenerated, Figure::WhiteKnight, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteKnight, std::move(getAttacks));
             }
             {
                 // White Bishop Moves
@@ -42,7 +53,7 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generateWhitePieceMoves(gameState, movesToBeGenerated, Figure::WhiteBishop, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteBishop, std::move(getAttacks));
             }
             {
                 // White Rook Moves
@@ -53,7 +64,7 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generateWhitePieceMoves(gameState, movesToBeGenerated, Figure::WhiteRook, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteRook, std::move(getAttacks));
             }
             {
                 // White Rook Moves
@@ -64,7 +75,7 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generateWhitePieceMoves(gameState, movesToBeGenerated, Figure::WhiteQueen, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteQueen, std::move(getAttacks));
             }
         }
 
@@ -230,13 +241,14 @@ namespace ModernChess::MoveGenerations
                        (~gameState.board.occupancies[Color::White]);
             };
 
-            generateWhitePieceMoves(gameState, movesToBeGenerated, Figure::WhiteKing, std::move(getAttacks));
+            generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::WhiteKing, std::move(getAttacks));
         }
 
-        static void generateWhitePieceMoves(const GameState &gameState,
-                                            std::vector<Move> &movesToBeGenerated,
-                                            Figure piece,
-                                            std::function<BitBoardState(Square)> getAttacks)
+        static void generatePieceMoves(const GameState &gameState,
+                                       std::vector<Move> &movesToBeGenerated,
+                                       Color opponentsColor,
+                                       Figure piece,
+                                       std::function<BitBoardState(Square)> getAttacks)
         {
             BitBoardState pieceBitboard = gameState.board.bitboards[piece];
 
@@ -254,7 +266,7 @@ namespace ModernChess::MoveGenerations
                     // init target square
                     const Square targetSquare = BitBoardOperations::bitScanForward(attacks);
 
-                    if (BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Black], targetSquare))
+                    if (BitBoardOperations::isOccupied(gameState.board.occupancies[opponentsColor], targetSquare))
                     {
                         // capture move
                         movesToBeGenerated.emplace_back(sourceSquare, targetSquare, piece, Figure::None, true, false,
