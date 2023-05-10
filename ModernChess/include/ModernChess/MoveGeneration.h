@@ -13,6 +13,11 @@ namespace ModernChess::MoveGenerations
     class MoveGeneration
     {
     public:
+        static void generateBlackFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
+        {
+            generateBlackPawnMoves(gameState, movesToBeGenerated);
+        }
+
         static void generateWhiteFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
         {
             generateWhitePawnMoves(gameState, movesToBeGenerated);
