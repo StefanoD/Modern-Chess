@@ -11,7 +11,7 @@ using namespace ModernChess::MoveGenerations;
 
 namespace
 {
-    TEST(MoveGenerationTest, EnPassantTest)
+    TEST(MoveGenerationTest, EnPassantCaptureWithWhiteTest)
     {
         /*
          * 8 . . . . ♔ . . .
