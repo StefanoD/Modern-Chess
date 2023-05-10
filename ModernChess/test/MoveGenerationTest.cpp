@@ -63,6 +63,128 @@ namespace
         std::cout << generatedMoves;
     }
 
+    TEST(MoveGenerationTest, BlackKnightCapturesTest)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . .
+         * 5 . . ♟︎ . ♟︎ . . .
+         * 4 . ♟︎ . . . ♟︎ . .
+         * 3 . . . ♘ . . . .
+         * 2 . ♟︎ . . . ♟︎ . .
+         * 1 . . ♜ . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto enPassantPosition = "4k3/8/8/2P1P3/1P3P2/3n4/1P3P2/2R1K3 b - - 0 1";
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(enPassantPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
+
+        MoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::c1 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::b2 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::b4 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::c5 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::e5 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::f4 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::f2 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::d3 &&
+                   move.getTo() == Square::e1 &&
+                   move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKnight &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        std::cout << generatedMoves;
+    }
+
     TEST(MoveGenerationTest, EnPassantCaptureWithWhiteTest)
     {
         /*
