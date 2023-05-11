@@ -28,7 +28,17 @@ namespace ModernChess::MoveGenerations
 
                 generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKnight, std::move(getAttacks));
             }
+            {
+                // Black Bishop Moves
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
+                    return AttackQueries::bishopAttacks.getAttacks(sourceSquare,
+                                                                   gameState.board.occupancies[Color::Both]) &
+                           (~gameState.board.occupancies[Color::Black]);
+                };
 
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackBishop, std::move(getAttacks));
+            }
             {
                 // Black Rook Moves
                 std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
@@ -39,6 +49,17 @@ namespace ModernChess::MoveGenerations
                 };
 
                 generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackRook, std::move(getAttacks));
+            }
+            {
+                // Black Queen Moves
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
+                    return AttackQueries::queenAttacks.getAttacks(sourceSquare,
+                                                                  gameState.board.occupancies[Color::Both]) &
+                           (~gameState.board.occupancies[Color::Black]);
+                };
+
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackQueen, std::move(getAttacks));
             }
         }
 
@@ -80,7 +101,7 @@ namespace ModernChess::MoveGenerations
                 generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteRook, std::move(getAttacks));
             }
             {
-                // White Rook Moves
+                // White Queen Moves
                 std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
                 {
                     return AttackQueries::queenAttacks.getAttacks(sourceSquare,
