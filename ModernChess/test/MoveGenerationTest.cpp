@@ -60,7 +60,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, BlackKnightCapturesTest)
@@ -182,7 +182,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, BlackKingAndQueenSideCastleTest)
@@ -261,7 +261,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, EnPassantCaptureWithWhiteTest)
@@ -313,7 +313,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, WhiteKingAndQueenSideCastleTest)
@@ -392,7 +392,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, WhiteCanNotCastleKingAndQueenSideTest)
@@ -428,7 +428,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, DoublePawnPushWithWhiteTest)
@@ -481,7 +481,7 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, PawnPromotionWithCaptureWithWhiteTest)
@@ -664,7 +664,7 @@ namespace
                    move.getPromotedPiece() == Figure::WhiteKnight;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 
     TEST(MoveGenerationTest, BishopCapturesTest)
@@ -739,6 +739,6 @@ namespace
                    move.getPromotedPiece() == Figure::None;
         }));
 
-        std::cout << generatedMoves;
+        std::cout << generatedMoves << std::endl;
     }
 }
