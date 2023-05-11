@@ -26,7 +26,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::Black]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKnight, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKnight,
+                                   std::move(getAttacks));
             }
             {
                 // Black Bishop Moves
@@ -37,7 +38,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::Black]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackBishop, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackBishop,
+                                   std::move(getAttacks));
             }
             {
                 // Black Rook Moves
@@ -48,7 +50,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::Black]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackRook, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackRook,
+                                   std::move(getAttacks));
             }
             {
                 // Black Queen Moves
@@ -59,7 +62,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::Black]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackQueen, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackQueen,
+                                   std::move(getAttacks));
             }
         }
 
@@ -76,7 +80,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteKnight, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteKnight,
+                                   std::move(getAttacks));
             }
             {
                 // White Bishop Moves
@@ -87,7 +92,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteBishop, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteBishop,
+                                   std::move(getAttacks));
             }
             {
                 // White Rook Moves
@@ -98,7 +104,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteRook, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteRook,
+                                   std::move(getAttacks));
             }
             {
                 // White Queen Moves
@@ -109,7 +116,8 @@ namespace ModernChess::MoveGenerations
                            (~gameState.board.occupancies[Color::White]);
                 };
 
-                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteQueen, std::move(getAttacks));
+                generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteQueen,
+                                   std::move(getAttacks));
             }
         }
 
@@ -271,8 +279,7 @@ namespace ModernChess::MoveGenerations
 
             std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
             {
-                return AttackQueries::kingAttackTable[sourceSquare] &
-                       (~gameState.board.occupancies[Color::White]);
+                return AttackQueries::kingAttackTable[sourceSquare] & (~gameState.board.occupancies[Color::White]);
             };
 
             generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteKing, std::move(getAttacks));
@@ -479,8 +486,7 @@ namespace ModernChess::MoveGenerations
 
             std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
             {
-                return AttackQueries::kingAttackTable[sourceSquare] &
-                       (~gameState.board.occupancies[Color::Black]);
+                return AttackQueries::kingAttackTable[sourceSquare] & (~gameState.board.occupancies[Color::Black]);
             };
 
             generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKing, std::move(getAttacks));
