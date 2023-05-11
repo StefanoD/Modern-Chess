@@ -118,7 +118,7 @@ namespace ModernChess::MoveGenerations
         {
             BitBoardState whitePawnBitboard = gameState.board.bitboards[Figure::WhitePawn];
 
-            // loop over white pawns within white pawn whitePawnBitboard
+            // loop over white pawns within white pawn bitboard
             while (whitePawnBitboard != BoardState::empty)
             {
                 const Square sourceSquare = BitBoardOperations::bitScanForward(whitePawnBitboard);
@@ -326,7 +326,7 @@ namespace ModernChess::MoveGenerations
         {
             BitBoardState blackPawnBitboard = gameState.board.bitboards[Figure::BlackPawn];
 
-            // loop over white pawns within white pawn blackPawnBitboard
+            // loop over white pawns within black pawn bitboard
             while (blackPawnBitboard != BoardState::empty)
             {
                 const Square sourceSquare = BitBoardOperations::bitScanForward(blackPawnBitboard);
