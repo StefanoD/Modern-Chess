@@ -7,13 +7,6 @@
 
 namespace ModernChess
 {
-
-
-    // TODO Square-centric representation
-    //  - function to map FEN notation to board state
-    //  - function to map from geometric to bitmap
-
-    // TODO function to bitwise and all bitmaps -> Piece captures (different colors), illegal moves (same colors) etc.
     class BitBoard
     {
     public:
