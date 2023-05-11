@@ -241,7 +241,7 @@ namespace ModernChess::MoveGenerations
                        (~gameState.board.occupancies[Color::White]);
             };
 
-            generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::WhiteKing, std::move(getAttacks));
+            generatePieceMoves(gameState, movesToBeGenerated, Color::Black, Figure::WhiteKing, std::move(getAttacks));
         }
 
         static void generatePieceMoves(const GameState &gameState,
@@ -400,6 +400,56 @@ namespace ModernChess::MoveGenerations
                 // pop ls1b from figure blackPawnBitboard copy
                 blackPawnBitboard = BitBoardOperations::eraseSquare(blackPawnBitboard, sourceSquare);
             }
+        }
+
+        static void generateBlackKingMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
+        {
+            // king side castling is available
+            if (blackCanCastleKingSide(gameState.castleRights))
+            {
+                // make sure square between king and king's rook are empty
+                if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], f8) &&
+                    !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], g8))
+                {
+                    // make sure king and the f8 squares are not under attacks.
+                    // The g1 square will be checked in the makeMove() function due to performance reasons
+                    if (!AttackQueries::squareIsAttackedByWhite(gameState.board, Square::e8) &&
+                        !AttackQueries::squareIsAttackedByWhite(gameState.board, Square::f8))
+                    {
+                        movesToBeGenerated.emplace_back(Square::e8, Square::g8, Figure::BlackKing, Figure::None, false,
+                                                        false, false, true);
+                        // The rook move to f1 is generated in the rook move generation
+                    }
+                }
+            }
+
+            // queen side castling is available
+            if (whiteCanCastleQueenSide(gameState.castleRights))
+            {
+                // make sure square between king and queen's rook are empty
+                if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], d8) &&
+                    !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], c8) &&
+                    !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], b8))
+                {
+                    // make sure king and the d1 squares are not under attacks
+                    // The c1 square will be checked in the makeMove() function due to performance reasons
+                    if (!AttackQueries::squareIsAttackedByWhite(gameState.board, e8) &&
+                        !AttackQueries::squareIsAttackedByWhite(gameState.board, d8))
+                    {
+                        movesToBeGenerated.emplace_back(Square::e8, Square::c8, Figure::BlackKing, Figure::None, false,
+                                                        false, false, true);
+                        // The rook move to d1 is generated in the rook move generation
+                    }
+                }
+            }
+
+            std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+            {
+                return AttackQueries::kingAttackTable[sourceSquare] &
+                       (~gameState.board.occupancies[Color::Black]);
+            };
+
+            generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKing, std::move(getAttacks));
         }
     };
 }
