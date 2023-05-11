@@ -16,6 +16,7 @@ namespace ModernChess::MoveGenerations
         static void generateBlackFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
         {
             generateBlackPawnMoves(gameState, movesToBeGenerated);
+            generateBlackKingMoves(gameState, movesToBeGenerated);
 
             {
                 // Black Knight Moves
@@ -26,6 +27,18 @@ namespace ModernChess::MoveGenerations
                 };
 
                 generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackKnight, std::move(getAttacks));
+            }
+
+            {
+                // Black Rook Moves
+                std::function<BitBoardState(Square)> getAttacks = [&gameState](Square sourceSquare)
+                {
+                    return AttackQueries::rookAttacks.getAttacks(sourceSquare,
+                                                                 gameState.board.occupancies[Color::Both]) &
+                           (~gameState.board.occupancies[Color::Black]);
+                };
+
+                generatePieceMoves(gameState, movesToBeGenerated, Color::White, Figure::BlackRook, std::move(getAttacks));
             }
         }
 
@@ -424,15 +437,15 @@ namespace ModernChess::MoveGenerations
             }
 
             // queen side castling is available
-            if (whiteCanCastleQueenSide(gameState.castleRights))
+            if (blackCanCastleQueenSide(gameState.castleRights))
             {
                 // make sure square between king and queen's rook are empty
                 if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], d8) &&
                     !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], c8) &&
                     !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], b8))
                 {
-                    // make sure king and the d1 squares are not under attacks
-                    // The c1 square will be checked in the makeMove() function due to performance reasons
+                    // make sure king and the d8 squares are not under attacks
+                    // The c8 square will be checked in the makeMove() function due to performance reasons
                     if (!AttackQueries::squareIsAttackedByWhite(gameState.board, e8) &&
                         !AttackQueries::squareIsAttackedByWhite(gameState.board, d8))
                     {

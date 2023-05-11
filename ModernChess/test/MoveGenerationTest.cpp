@@ -185,6 +185,85 @@ namespace
         std::cout << generatedMoves;
     }
 
+    TEST(MoveGenerationTest, BlackKingAndQueenSideCastleTest)
+    {
+        /*
+         * 8 ♖ . . . ♔ . . ♖
+         * 7 . . . . ♙ . . .
+         * 6 . . . . . . . .
+         * 5 . . . . ♜ . . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto kingSideCastlingPosition = "r3k2r/4p3/8/4R3/8/8/8/4K3 b kq - 0 1";
+
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
+
+        MoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+
+        // King side castling - King Move
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e8 &&
+                   move.getTo() == Square::g8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKing &&
+                   not move.isDoublePawnPush() &&
+                   move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        // King side castling - Rook Move
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::h8 &&
+                   move.getTo() == Square::f8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackRook &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() && // It's not added as castle move, but as natural move
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        // Queen side castling - King Move
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e8 &&
+                   move.getTo() == Square::c8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackKing &&
+                   not move.isDoublePawnPush() &&
+                   move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        // Queen side castling - Rook Move
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::a8 &&
+                   move.getTo() == Square::d8 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackRook &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() && // It's not added as castle move, but as natural move
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        std::cout << generatedMoves;
+    }
+
     TEST(MoveGenerationTest, EnPassantCaptureWithWhiteTest)
     {
         /*
