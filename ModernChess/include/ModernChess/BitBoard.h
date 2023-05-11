@@ -10,7 +10,6 @@ namespace ModernChess
     class BitBoard
     {
     public:
-
         BitBoard();
 
         [[nodiscard]] BitBoardState getOccupiedSquares() const;
