@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include <strstream>
-
 using namespace ModernChess;
 
 namespace {

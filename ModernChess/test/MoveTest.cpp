@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include <strstream>
+#include <sstream>
 
 using namespace ModernChess;
 
