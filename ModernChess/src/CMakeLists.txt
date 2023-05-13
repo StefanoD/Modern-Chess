@@ -43,7 +43,6 @@ add_library(${target}
         BishopAttacks.cpp
         CastleRights.cpp
         TUI.cpp
-        MoveGeneration.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)
