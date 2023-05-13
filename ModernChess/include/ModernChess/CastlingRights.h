@@ -18,7 +18,7 @@ namespace ModernChess
        1001       black king => queen side
                   white king => king side
     */
-    enum CastleRights : uint8_t
+    enum CastlingRights : uint8_t
     {
         Undefined = 0,
         WhiteKingSide = 1,
@@ -58,52 +58,52 @@ namespace ModernChess
         };
     }
 
-    constexpr bool whiteCanCastleKingSide(CastleRights castleRights)
+    constexpr bool whiteCanCastleKingSide(CastlingRights castleRights)
     {
-        return (castleRights & CastleRights::WhiteKingSide) == CastleRights::WhiteKingSide;
+        return (castleRights & CastlingRights::WhiteKingSide) == CastlingRights::WhiteKingSide;
     }
 
-    constexpr bool whiteCanCastleQueenSide(CastleRights castleRights)
+    constexpr bool whiteCanCastleQueenSide(CastlingRights castleRights)
     {
-        return (castleRights & CastleRights::WhiteQueenSide) == CastleRights::WhiteQueenSide;
+        return (castleRights & CastlingRights::WhiteQueenSide) == CastlingRights::WhiteQueenSide;
     }
 
-    constexpr bool blackCanCastleKingSide(CastleRights castleRights)
+    constexpr bool blackCanCastleKingSide(CastlingRights castleRights)
     {
-        return (castleRights & CastleRights::BlackKingSide) == CastleRights::BlackKingSide;
+        return (castleRights & CastlingRights::BlackKingSide) == CastlingRights::BlackKingSide;
     }
 
-    constexpr bool blackCanCastleQueenSide(CastleRights castleRights)
+    constexpr bool blackCanCastleQueenSide(CastlingRights castleRights)
     {
-        return (castleRights & CastleRights::BlackQueenSide) == CastleRights::BlackQueenSide;
+        return (castleRights & CastlingRights::BlackQueenSide) == CastlingRights::BlackQueenSide;
     }
 
-    constexpr CastleRights addWhiteKingSideCastleRights(CastleRights castleRights)
+    constexpr CastlingRights addWhiteKingSideCastleRights(CastlingRights castleRights)
     {
-        return CastleRights(castleRights | CastleRights::WhiteKingSide);
+        return CastlingRights(castleRights | CastlingRights::WhiteKingSide);
     }
 
-    constexpr CastleRights addWhiteQueenSideCastleRights(CastleRights castleRights)
+    constexpr CastlingRights addWhiteQueenSideCastleRights(CastlingRights castleRights)
     {
-        return CastleRights(castleRights | CastleRights::WhiteQueenSide);
+        return CastlingRights(castleRights | CastlingRights::WhiteQueenSide);
     }
 
-    constexpr CastleRights addBlackKingSideCastleRights(CastleRights castleRights)
+    constexpr CastlingRights addBlackKingSideCastleRights(CastlingRights castleRights)
     {
-        return CastleRights(castleRights | CastleRights::BlackKingSide);
+        return CastlingRights(castleRights | CastlingRights::BlackKingSide);
     }
 
-    constexpr CastleRights addBlackQueenSideCastleRights(CastleRights castleRights)
+    constexpr CastlingRights addBlackQueenSideCastleRights(CastlingRights castleRights)
     {
-        return CastleRights(castleRights | CastleRights::BlackQueenSide);
+        return CastlingRights(castleRights | CastlingRights::BlackQueenSide);
     }
 
-    constexpr CastleRights updateCastleRights(CastleRights castleRights, Square movedFrom, Square movedTo)
+    constexpr CastlingRights updateCastleRights(CastlingRights castleRights, Square movedFrom, Square movedTo)
     {
-        return CastleRights(castleRights &
-                            LookUpTable::castlingRights[movedFrom] &
-                            LookUpTable::castlingRights[movedTo]);
+        return CastlingRights(castleRights &
+                              LookUpTable::castlingRights[movedFrom] &
+                              LookUpTable::castlingRights[movedTo]);
     }
 }
 
-std::ostream& operator<<(std::ostream& os, ModernChess::CastleRights castleRights);
+std::ostream& operator<<(std::ostream& os, ModernChess::CastlingRights castleRights);

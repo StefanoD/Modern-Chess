@@ -1,6 +1,6 @@
-#include "ModernChess/CastleRights.h"
+#include "ModernChess/CastlingRights.h"
 
-std::ostream& operator<<(std::ostream& os, const ModernChess::CastleRights castleRights)
+std::ostream& operator<<(std::ostream& os, const ModernChess::CastlingRights castleRights)
 {
     using namespace ModernChess;
 

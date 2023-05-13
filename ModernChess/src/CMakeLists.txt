@@ -8,7 +8,7 @@ add_library(${target}
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
         ../include/ModernChess/BishopAttacks.h
-        ../include/ModernChess/CastleRights.h
+        ../include/ModernChess/CastlingRights.h
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
@@ -42,7 +42,7 @@ add_library(${target}
         PawnAttacks.cpp
         RookAttacks.cpp
         BishopAttacks.cpp
-        CastleRights.cpp
+        CastlingRights.cpp
         TUI.cpp
         )
 

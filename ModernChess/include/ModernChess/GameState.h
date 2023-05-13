@@ -3,7 +3,7 @@
 #include "BitBoard.h"
 #include "Color.h"
 #include "Square.h"
-#include "CastleRights.h"
+#include "CastlingRights.h"
 #include "Move.h"
 
 #include <vector>
@@ -21,7 +21,7 @@ namespace ModernChess
         uint32_t halfMoveClock = 0;
         uint32_t nextMoveClock = 0;
         Color sideToMove = Color::White;
-        CastleRights castleRights = CastleRights::Undefined;
+        CastlingRights castleRights = CastlingRights::Undefined;
         Square enPassantTarget = Square::undefined;
 
         std::vector<Move> moveList;
