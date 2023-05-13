@@ -29,7 +29,7 @@ namespace ModernChess
         BlackAnySide = BlackKingSide + BlackQueenSide
     };
 
-    namespace Details
+    namespace LookUpTable
     {
         /*
          * For updating castle right in an efficient way when a piece has moved
@@ -46,7 +46,7 @@ namespace ModernChess
         */
 
         // castling rights update constants
-        constexpr std::array<uint8_t, 64> castlingRightsLookUpTable {
+        constexpr std::array<uint8_t, 64> castlingRights {
                 13, 15, 15, 15, 12, 15, 15, 14,
                 15, 15, 15, 15, 15, 15, 15, 15,
                 15, 15, 15, 15, 15, 15, 15, 15,
@@ -101,8 +101,8 @@ namespace ModernChess
     constexpr CastleRights updateCastleRights(CastleRights castleRights, Square movedFrom, Square movedTo)
     {
         return CastleRights(castleRights &
-                            Details::castlingRightsLookUpTable[movedFrom] &
-                            Details::castlingRightsLookUpTable[movedTo]);
+                            LookUpTable::castlingRights[movedFrom] &
+                            LookUpTable::castlingRights[movedTo]);
     }
 }
 
