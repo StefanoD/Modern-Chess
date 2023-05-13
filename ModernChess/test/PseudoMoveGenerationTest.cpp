@@ -1,5 +1,5 @@
 #include "ModernChess/FenParsing.h"
-#include "ModernChess/MoveGeneration.h"
+#include "ModernChess/PseudoMoveGeneration.h"
 #include "ModernChess/Utilities.h"
 
 #include <gtest/gtest.h>
@@ -11,7 +11,7 @@ using namespace ModernChess::MoveGenerations;
 
 namespace
 {
-    TEST(MoveGenerationTest, EnPassantCaptureWithBlackTest)
+    TEST(PseudoMoveGenerationTest, EnPassantCaptureWithBlackTest)
     {
         /*
          * 8 . . . . ♔ . . .
@@ -32,7 +32,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
 
         // En passant capture
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -63,7 +63,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, BlackKnightCapturesTest)
+    TEST(PseudoMoveGenerationTest, BlackKnightCapturesTest)
     {
         /*
          * 8 . . . . ♔ . . .
@@ -84,7 +84,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
 
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
             return move.getFrom() == Square::d3 &&
@@ -185,7 +185,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, BlackKingAndQueenSideCastleTest)
+    TEST(PseudoMoveGenerationTest, BlackKingAndQueenSideCastleTest)
     {
         /*
          * 8 ♖ . . . ♔ . . ♖
@@ -207,7 +207,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
 
         // King side castling - King Move
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -264,7 +264,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, BlackKingCanCaptureTest)
+    TEST(PseudoMoveGenerationTest, BlackKingCanCaptureTest)
     {
         /*
          * 8 . . . . . . . .
@@ -286,7 +286,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
 
         // King side castling - King Move
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -388,7 +388,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, EnPassantCaptureWithWhiteTest)
+    TEST(PseudoMoveGenerationTest, EnPassantCaptureWithWhiteTest)
     {
         /*
          * 8 . . . . ♔ . . .
@@ -409,7 +409,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
         // En passant capture
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -440,7 +440,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, WhiteKingAndQueenSideCastleTest)
+    TEST(PseudoMoveGenerationTest, WhiteKingAndQueenSideCastleTest)
     {
         /*
          * 8 . . . . ♔ . . .
@@ -462,7 +462,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
         // King side castling - King Move
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -519,7 +519,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, WhiteCanNotCastleKingAndQueenSideTest)
+    TEST(PseudoMoveGenerationTest, WhiteCanNotCastleKingAndQueenSideTest)
     {
         /*
          * 8 . . . . ♔ . . .
@@ -541,7 +541,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
             return not move.isCapture() &&
@@ -555,7 +555,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, DoublePawnPushWithWhiteTest)
+    TEST(PseudoMoveGenerationTest, DoublePawnPushWithWhiteTest)
     {
         /*
          * 8 . . . . ♔ . . .
@@ -577,7 +577,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
         // Single pawn push
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -608,7 +608,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, PawnPromotionWithCaptureWithWhiteTest)
+    TEST(PseudoMoveGenerationTest, PawnPromotionWithCaptureWithWhiteTest)
     {
         /*
          *   8 ♖ . ♖ . ♔ . . .
@@ -630,7 +630,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
         // to b8 - White Queen promotion
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
@@ -791,7 +791,7 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
-    TEST(MoveGenerationTest, BishopCapturesTest)
+    TEST(PseudoMoveGenerationTest, BishopCapturesTest)
     {
         /*
          *   8 . . . . ♔ . . .
@@ -813,7 +813,7 @@ namespace
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
 
-        MoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
+        PseudoMoveGeneration::generateWhiteFigureMoves(gameState, generatedMoves);
 
         EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
             return move.getFrom() == Square::d4 &&

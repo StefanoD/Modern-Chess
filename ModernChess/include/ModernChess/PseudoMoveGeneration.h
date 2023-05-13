@@ -10,7 +10,10 @@
 
 namespace ModernChess::MoveGenerations
 {
-    class MoveGeneration
+    /**
+     * @brief Leaves king sometimes in check. There it's only a pseudo-move-generation
+     */
+    class PseudoMoveGeneration
     {
     public:
         static void generateBlackFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
