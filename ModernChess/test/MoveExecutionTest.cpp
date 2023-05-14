@@ -31,7 +31,8 @@ namespace
 
         const Move move(Square::e5, Square::f6, Figure::WhitePawn, Figure::None, true, false, true, false);
 
-        std::cout << gameState << std::endl;
+        std::cout << "Before Move:" << std::endl;
+        std::cout << gameState << std::endl << std::endl;
 
         const bool success = MoveExecution::executeMoveForWhite(gameState, move, MoveType::AllMoves);
 
@@ -42,6 +43,7 @@ namespace
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::f6));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::f5));
 
+        std::cout << "After Move:" << std::endl;
         std::cout << gameState << std::endl;
     }
 
