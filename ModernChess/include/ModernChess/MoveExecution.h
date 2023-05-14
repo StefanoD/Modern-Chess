@@ -41,15 +41,7 @@ namespace ModernChess::MoveGenerations
                     removeCapturedFigure(gameState, Figure::BlackPawn, Figure::BlackKing, Color::Black, targetSquare);
                 }
 
-                // handle pawn promotions
-                if (const Figure promotedPiece = move.getPromotedPiece();
-                        promotedPiece != Figure::None)
-                {
-                    // erase the pawn from the target square
-                    removeFromBitboards(gameState, Figure::WhitePawn, Color::White, targetSquare);
-                    // set up promoted movedFigure on chess board
-                    addToBitboards(gameState, promotedPiece, Color::White, targetSquare);
-                }
+                handlePawnPromotion(gameState, move, Figure::WhitePawn, Color::White, targetSquare);
 
                 // handle en passant captures
                 if (move.isEnPassantCapture())
@@ -126,6 +118,18 @@ namespace ModernChess::MoveGenerations
                     removeFromBitboards(gameState, figure, opponentsColor, targetSquare);
                     break;
                 }
+            }
+        }
+
+        static void handlePawnPromotion(GameState &gameState, Move move, Figure pawn, Color color, Square targetSquare)
+        {
+            if (const Figure promotedPiece = move.getPromotedPiece();
+                    promotedPiece != Figure::None)
+            {
+                // erase the pawn from the target square
+                removeFromBitboards(gameState, pawn, color, targetSquare);
+                // set up promoted movedFigure on chess board
+                addToBitboards(gameState, promotedPiece, color, targetSquare);
             }
         }
 
