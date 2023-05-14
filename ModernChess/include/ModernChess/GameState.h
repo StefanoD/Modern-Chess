@@ -18,7 +18,6 @@ namespace ModernChess
         uint32_t halfMoveClock = 0;
         uint32_t nextMoveClock = 0;
 
-
         std::vector<Move> moveList;
     };
 }
