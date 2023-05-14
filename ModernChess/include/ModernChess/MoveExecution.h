@@ -120,15 +120,14 @@ namespace ModernChess::MoveGenerations
                 return true;
             }
 
-            // capture moves
+            // capture only moves
             // make sure move is the capture
             if (move.isCapture())
             {
                 return executeMoveForWhite(gameState, move, MoveType::AllMoves);
             }
 
-            // otherwise the move is not a capture
-            // don't make it
+            // otherwise the move is not a capture --> don't make it
             return false;
         }
     private:
