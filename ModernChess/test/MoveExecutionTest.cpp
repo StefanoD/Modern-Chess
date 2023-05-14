@@ -212,6 +212,48 @@ namespace
         std::cout << gameState << std::endl;
     }
 
+    TEST(MoveExecutionTest, BlackQueenSideCastle)
+    {
+        /*
+         * 8 ♖ . . . ♔ . . ♖
+         * 7 . . . . ♙ . . .
+         * 6 . . . . . . . .
+         * 5 . . . . ♜ . . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto kingSideCastlingPosition = "r3k2r/4p3/8/4R3/8/8/8/4K3 b kq - 0 1";
+
+        FenParsing::FenParser fenParser;
+        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+
+        const Move move(Square::e8, Square::c8, Figure::BlackKing, Figure::None, false, false, false, true);
+
+        std::cout << "Before Move:" << std::endl;
+        std::cout << gameState << std::endl << std::endl;
+
+        const bool success = MoveExecution::executeMoveForBlack(gameState, move, MoveType::AllMoves);
+
+        EXPECT_TRUE(success);
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackKing], Square::c8));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackRook], Square::d8));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Black], Square::c8));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Black], Square::d8));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::c8));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::d8));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackKing], Square::e8));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackRook], Square::a8));
+        EXPECT_EQ(gameState.board.castlingRights, CastlingRights::Gone);
+        EXPECT_EQ(gameState.board.sideToMove, Color::White);
+
+        std::cout << "After Move:" << std::endl;
+        std::cout << gameState << std::endl;
+    }
+
     TEST(MoveExecutionTest, WhiteCanNotCastleQueenSide)
     {
         /*
