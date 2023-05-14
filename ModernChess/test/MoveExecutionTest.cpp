@@ -39,6 +39,7 @@ namespace
         EXPECT_TRUE(success);
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::f6));
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::f6));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::f6));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::e5));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::f6));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::f5));
@@ -78,6 +79,8 @@ namespace
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteRook], Square::f1));
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::g1));
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::f1));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::g1));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::f1));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteKing], Square::e1));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteRook], Square::h1));
         EXPECT_EQ(gameState.board.castlingRights, CastlingRights::Gone);
@@ -117,6 +120,8 @@ namespace
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteRook], Square::d1));
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::c1));
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::d1));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::c1));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::d1));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteKing], Square::e1));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteRook], Square::a1));
         EXPECT_EQ(gameState.board.castlingRights, CastlingRights::Gone);
@@ -160,6 +165,44 @@ namespace
         EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteRook], Square::a1));
         EXPECT_EQ(gameState.board.castlingRights, CastlingRights::WhiteAnySide); // White has still castling rights
         EXPECT_EQ(gameState.board.sideToMove, Color::White); // White has still to move
+
+        std::cout << "After Move:" << std::endl;
+        std::cout << gameState << std::endl;
+    }
+
+    TEST(MoveExecutionTest, DoublePawnPushWithWhite)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . .
+         * 5 . . . . . . . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . ♟︎ . . .
+         * 1 ♜ . . . ♚ . . ♜
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto fenPosition = "4k3/8/8/8/8/8/4P3/R3K2R w KQ - 0 1";
+
+        FenParsing::FenParser fenParser;
+        GameState gameState = fenParser.parse(fenPosition);
+
+        const Move move(Square::e2, Square::e4, Figure::WhitePawn, Figure::None, false, true, false, false);
+
+        std::cout << "Before Move:" << std::endl;
+        std::cout << gameState << std::endl << std::endl;
+
+        const bool success = MoveExecution::executeMoveForWhite(gameState, move, MoveType::AllMoves);
+
+        EXPECT_TRUE(success);
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::e4));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::e4));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::e4));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::e2));
+        EXPECT_EQ(gameState.board.enPassantTarget, Square::e3);
+        EXPECT_EQ(gameState.board.sideToMove, Color::Black);
 
         std::cout << "After Move:" << std::endl;
         std::cout << gameState << std::endl;
