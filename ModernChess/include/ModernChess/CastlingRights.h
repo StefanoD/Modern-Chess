@@ -20,7 +20,7 @@ namespace ModernChess
     */
     enum CastlingRights : uint8_t
     {
-        Undefined = 0,
+        NotPossible = 0,
         WhiteKingSide = 1,
         WhiteQueenSide = 2,
         WhiteAnySide = WhiteKingSide + WhiteQueenSide,
