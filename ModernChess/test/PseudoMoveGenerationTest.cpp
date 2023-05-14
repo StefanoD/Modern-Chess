@@ -622,10 +622,10 @@ namespace
          *
          *     a b c d e f g h
          */
-        constexpr auto kingSideCastlingPosition = "r1r1k3/1P6/8/8/8/8/3K4/8 w - - 0 1";
+        constexpr auto fenPosition = "r1r1k3/1P6/8/8/8/8/3K4/8 w - - 0 1";
 
         FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        const GameState gameState = fenParser.parse(fenPosition);
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
