@@ -19,7 +19,7 @@ namespace ModernChess::MoveGenerations
 
         static bool executeMoveForWhite(GameState &gameState, Move move, MoveType moveType)
         {
-            // make quiet and/or capture move
+            // make quiet or capture move
             if (moveType == MoveType::AllMoves or move.isCapture())
             {
                 // preserve board state
