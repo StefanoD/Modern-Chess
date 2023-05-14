@@ -217,12 +217,12 @@ namespace ModernChess::MoveGenerations
                 }
 
                 // generate en passant captures
-                if (gameState.enPassantTarget != Square::undefined)
+                if (gameState.board.enPassantTarget != Square::undefined)
                 {
                     // lookup pawn attacks and bitwise AND with en passant square (bit)
                     const BitBoardState enPassantAttacks =
                             AttackQueries::pawnAttackTable[Color::White][sourceSquare] &
-                            BitBoardOperations::occupySquare(BoardState::empty, gameState.enPassantTarget);
+                            BitBoardOperations::occupySquare(BoardState::empty, gameState.board.enPassantTarget);
 
                     // make sure en passant capture possible
                     if (enPassantAttacks != BoardState::empty)
@@ -242,7 +242,7 @@ namespace ModernChess::MoveGenerations
         static void generateWhiteKingMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
         {
             // king side castling is available
-            if (whiteCanCastleKingSide(gameState.castleRights))
+            if (whiteCanCastleKingSide(gameState.board.castlingRights))
             {
                 // make sure square between king and king's rook are empty
                 if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], f1) &&
@@ -261,7 +261,7 @@ namespace ModernChess::MoveGenerations
             }
 
             // queen side castling is available
-            if (whiteCanCastleQueenSide(gameState.castleRights))
+            if (whiteCanCastleQueenSide(gameState.board.castlingRights))
             {
                 // make sure square between king and queen's rook are empty
                 if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], d1) &&
@@ -424,12 +424,12 @@ namespace ModernChess::MoveGenerations
                 }
 
                 // generate en passant captures
-                if (gameState.enPassantTarget != Square::undefined)
+                if (gameState.board.enPassantTarget != Square::undefined)
                 {
                     // lookup pawn attacks and bitwise AND with en passant square (bit)
                     const BitBoardState enPassantAttacks =
                             AttackQueries::pawnAttackTable[Color::Black][sourceSquare] &
-                            BitBoardOperations::occupySquare(BoardState::empty, gameState.enPassantTarget);
+                            BitBoardOperations::occupySquare(BoardState::empty, gameState.board.enPassantTarget);
 
                     // make sure en passant capture possible
                     if (enPassantAttacks != BoardState::empty)
@@ -449,7 +449,7 @@ namespace ModernChess::MoveGenerations
         static void generateBlackKingMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
         {
             // king side castling is available
-            if (blackCanCastleKingSide(gameState.castleRights))
+            if (blackCanCastleKingSide(gameState.board.castlingRights))
             {
                 // make sure square between king and king's rook are empty
                 if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], f8) &&
@@ -468,7 +468,7 @@ namespace ModernChess::MoveGenerations
             }
 
             // queen side castling is available
-            if (blackCanCastleQueenSide(gameState.castleRights))
+            if (blackCanCastleQueenSide(gameState.board.castlingRights))
             {
                 // make sure square between king and queen's rook are empty
                 if (!BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], d8) &&

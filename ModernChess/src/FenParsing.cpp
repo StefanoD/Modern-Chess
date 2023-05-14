@@ -164,10 +164,10 @@ namespace ModernChess::FenParsing {
         {
             switch (character)
             {
-                case 'K': gameState.castleRights = addWhiteKingSideCastlingRights(gameState.castleRights); break;
-                case 'Q': gameState.castleRights = addWhiteQueenSideCastlingRights(gameState.castleRights); break;
-                case 'k': gameState.castleRights = addBlackKingSideCastlingRights(gameState.castleRights); break;
-                case 'q': gameState.castleRights = addBlackQueenSideCastlingRights(gameState.castleRights); break;
+                case 'K': gameState.board.castlingRights = addWhiteKingSideCastlingRights(gameState.board.castlingRights); break;
+                case 'Q': gameState.board.castlingRights = addWhiteQueenSideCastlingRights(gameState.board.castlingRights); break;
+                case 'k': gameState.board.castlingRights = addBlackKingSideCastlingRights(gameState.board.castlingRights); break;
+                case 'q': gameState.board.castlingRights = addBlackQueenSideCastlingRights(gameState.board.castlingRights); break;
                 case '-': break;
                 default: throw std::range_error("Could not parse castling rights character '" +
                                                 std::string(1, character) + "' at position " +
@@ -236,7 +236,7 @@ namespace ModernChess::FenParsing {
         character = getNextCharacter();
 
         // parse side to move
-        gameState.sideToMove = parseColor(character);
+        gameState.board.sideToMove = parseColor(character);
 
         // go to parsing castling rights
         nextPosition();
@@ -246,7 +246,7 @@ namespace ModernChess::FenParsing {
         nextPosition();
 
         // parse en passant square
-        gameState.enPassantTarget = parseSquare();
+        gameState.board.enPassantTarget = parseSquare();
 
         // Skip space and parse half moves
         nextPosition();

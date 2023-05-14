@@ -74,14 +74,14 @@ namespace
         const BitBoardState blackKingBitboard = gameState.board.bitboards[Figure::BlackKing];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackKingBitboard, Square::e8));
 
-        EXPECT_TRUE(whiteCanCastleKingSide(gameState.castleRights));
-        EXPECT_TRUE(whiteCanCastleQueenSide(gameState.castleRights));
+        EXPECT_TRUE(whiteCanCastleKingSide(gameState.board.castlingRights));
+        EXPECT_TRUE(whiteCanCastleQueenSide(gameState.board.castlingRights));
 
-        EXPECT_TRUE(blackCanCastleKingSide(gameState.castleRights));
-        EXPECT_TRUE(blackCanCastleQueenSide(gameState.castleRights));
+        EXPECT_TRUE(blackCanCastleKingSide(gameState.board.castlingRights));
+        EXPECT_TRUE(blackCanCastleQueenSide(gameState.board.castlingRights));
 
-        EXPECT_EQ(gameState.enPassantTarget, Square::undefined);
-        EXPECT_EQ(gameState.sideToMove, Color::White);
+        EXPECT_EQ(gameState.board.enPassantTarget, Square::undefined);
+        EXPECT_EQ(gameState.board.sideToMove, Color::White);
         EXPECT_EQ(gameState.halfMoveClock, 0);
         EXPECT_EQ(gameState.nextMoveClock, 1);
 
@@ -106,7 +106,7 @@ namespace
         FenParsing::FenParser fenParser;
         const GameState gameState = fenParser.parse(enPassantPosition);
 
-        EXPECT_EQ(gameState.enPassantTarget, Square::f6);
+        EXPECT_EQ(gameState.board.enPassantTarget, Square::f6);
     }
 
     TEST(FenParsingTest, BlackPawnAtA8)

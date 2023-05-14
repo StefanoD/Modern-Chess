@@ -1,6 +1,8 @@
 #pragma once
 
 #include "BitBoardConstants.h"
+#include "CastlingRights.h"
+#include "Color.h"
 
 #include <array>
 #include <ostream>
@@ -21,6 +23,10 @@ namespace ModernChess
         std::array<BitBoardState, 12> bitboards{};
         // Occupancies for white, black and both colors
         std::array<BitBoardState, 3> occupancies{};
+
+        Color sideToMove = Color::White;
+        CastlingRights castlingRights = CastlingRights::Undefined;
+        Square enPassantTarget = Square::undefined;
     };
 }
 

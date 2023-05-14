@@ -17,7 +17,7 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameSta
 
     os << "Side to move: ";
 
-    if (gameState.sideToMove == Color::White)
+    if (gameState.board.sideToMove == Color::White)
     {
         os << "white" << std::endl;
     }
@@ -27,16 +27,16 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameSta
     }
 
     os << "En passant: ";
-    if (gameState.enPassantTarget != Square::undefined)
+    if (gameState.board.enPassantTarget != Square::undefined)
     {
-        os << squareToCoordinates[gameState.enPassantTarget] << std::endl;
+        os << squareToCoordinates[gameState.board.enPassantTarget] << std::endl;
     }
     else
     {
         os << "no" << std::endl;
     }
 
-    os << gameState.castleRights;
+    os << gameState.board.castlingRights;
 
     return os;
 }
