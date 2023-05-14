@@ -24,9 +24,9 @@ namespace ModernChess
         // Occupancies for white, black and both colors
         std::array<BitBoardState, 3> occupancies{};
 
+        Square enPassantTarget = Square::undefined;
         Color sideToMove = Color::White;
         CastlingRights castlingRights = CastlingRights::Undefined;
-        Square enPassantTarget = Square::undefined;
     };
 }
 
