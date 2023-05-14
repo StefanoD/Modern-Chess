@@ -96,7 +96,96 @@ namespace ModernChess::MoveGenerations
                 // update castling rights
                 gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
                 // change side to move
-                gameState.board.sideToMove = Color(!bool(gameState.board.sideToMove));
+                gameState.board.sideToMove = Color::Black;
+
+                // return legal move
+                return true;
+            }
+
+            // Neither MoveType::AllMoves nor capture move --> won't be executed
+            return false;
+        }
+
+        static bool executeMoveForBlack(GameState &gameState, Move move, MoveType moveType)
+        {
+            // make quiet or capture move
+            if (moveType == MoveType::AllMoves or move.isCapture())
+            {
+                // preserve board state
+                const Board boardCopy = gameState.board;
+
+                // parse move
+                const Square sourceSquare = move.getFrom();
+                const Square targetSquare = move.getTo();
+                const Figure movedFigure = move.getMovedFigure();
+                const bool castling = move.isCastlingMove();
+
+                // move movedFigure
+                removeFromBitboards(gameState, movedFigure, Color::Black, sourceSquare);
+                addToBitboards(gameState, movedFigure, Color::Black, targetSquare);
+
+                // handling capture moves
+                if (move.isCapture())
+                {
+                    removeCapturedFigure(gameState, Figure::WhitePawn, Figure::WhiteKing, Color::White, targetSquare);
+                }
+
+                handlePawnPromotion(gameState, move, Figure::BlackPawn, Color::Black, targetSquare);
+
+                // handle en passant captures
+                if (move.isEnPassantCapture())
+                {
+                    // The en passant capture is always one behind a double pawn push from the opponent
+                    const Square actualPawnSquare = BitBoardOperations::getNorthSquareFromGivenSquare(targetSquare);
+                    removeFromBitboards(gameState, Figure::WhitePawn, Color::White, actualPawnSquare);
+                }
+
+                // reset en passant square
+                gameState.board.enPassantTarget = Square::undefined;
+
+                // handle double pawn push
+                if (move.isDoublePawnPush())
+                {
+                    gameState.board.enPassantTarget = BitBoardOperations::getNorthSquareFromGivenSquare(targetSquare);
+                }
+
+                // handle castling moves
+                if (castling)
+                {
+                    switch (targetSquare)
+                    {
+                        case (Square::g8):
+                            // white castles king side --> move H rook
+                            removeFromBitboards(gameState, Figure::BlackRook, Color::Black, Square::h8);
+                            addToBitboards(gameState, Figure::BlackRook, Color::Black, Square::f8);
+                            break;
+
+                        case (Square::c8):
+                            // white castles queen side --> move A rook
+                            removeFromBitboards(gameState, Figure::BlackRook, Color::Black, Square::a8);
+                            addToBitboards(gameState, Figure::BlackRook, Color::Black, Square::d8);
+                            break;
+                        default:
+                            // TODO throw exception
+                            break;
+                    }
+                }
+
+                // make sure that king has not been exposed into a check
+                if (const Square kingsSquare = BitBoardOperations::bitScanForward(gameState.board.bitboards[Figure::BlackKing]);
+                        AttackQueries::squareIsAttackedByBlack(gameState.board, kingsSquare))
+                {
+                    // take move back
+                    gameState.board = boardCopy;
+
+                    // return illegal move
+                    return false;
+                }
+
+                // update castling rights
+                gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
+                // change side to move
+                gameState.board.sideToMove = Color::White;
 
                 // return legal move
                 return true;
