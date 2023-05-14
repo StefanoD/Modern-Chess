@@ -38,17 +38,7 @@ namespace ModernChess::MoveGenerations
                 // handling capture moves
                 if (move.isCapture())
                 {
-                    // loop over bitboards opposite to the current side to move
-                    for (Figure figure = Figure::BlackPawn; figure <= Figure::BlackKing; ++figure)
-                    {
-                        // if there's a figure on the target square
-                        if (BitBoardOperations::isOccupied(gameState.board.bitboards[figure], targetSquare))
-                        {
-                            // remove it from corresponding bitboard
-                            removeFromBitboards(gameState, figure, Color::White, targetSquare);
-                            break;
-                        }
-                    }
+                    removeCapturedFigure(gameState, Figure::BlackPawn, Figure::BlackKing, Color::Black, targetSquare);
                 }
 
                 // handle pawn promotions
@@ -81,7 +71,6 @@ namespace ModernChess::MoveGenerations
                 // handle castling moves
                 if (castling)
                 {
-                    // switch target square
                     switch (targetSquare)
                     {
                         case (Square::g1):
@@ -101,11 +90,6 @@ namespace ModernChess::MoveGenerations
                     }
                 }
 
-                // update castling rights
-                gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
-                // change side to move
-                gameState.board.sideToMove = Color(!bool(gameState.board.sideToMove));
-
                 // make sure that king has not been exposed into a check
                 if (const Square kingsSquare = BitBoardOperations::bitScanForward(gameState.board.bitboards[Figure::WhiteKing]);
                         AttackQueries::squareIsAttackedByBlack(gameState.board, kingsSquare))
@@ -116,6 +100,12 @@ namespace ModernChess::MoveGenerations
                     // return illegal move
                     return false;
                 }
+
+                // update castling rights
+                gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
+                // change side to move
+                gameState.board.sideToMove = Color(!bool(gameState.board.sideToMove));
+
                 // return legal move
                 return true;
             }
@@ -131,6 +121,21 @@ namespace ModernChess::MoveGenerations
             return false;
         }
     private:
+        static void removeCapturedFigure(GameState &gameState, Figure bitBoardStart, Figure bitBoardEnd, Color opponentsColor, Square targetSquare)
+        {
+            // loop over bitboards opposite to the current side to move
+            for (Figure figure = bitBoardStart; figure <= bitBoardEnd; ++figure)
+            {
+                // if there's a figure on the target square
+                if (BitBoardOperations::isOccupied(gameState.board.bitboards[figure], targetSquare))
+                {
+                    // remove it from opponents bitboard
+                    removeFromBitboards(gameState, figure, opponentsColor, targetSquare);
+                    break;
+                }
+            }
+        }
+
         static void removeFromBitboards(GameState &gameState, Figure figure, Color color, Square square)
         {
             gameState.board.bitboards[figure] = BitBoardOperations::eraseSquare(gameState.board.bitboards[figure], square);
