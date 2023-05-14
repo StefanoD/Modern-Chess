@@ -19,8 +19,8 @@ namespace ModernChess::MoveGenerations
 
         static bool executeMoveForWhite(GameState &gameState, Move move, MoveType moveType)
         {
-            // quiet moves
-            if (moveType == MoveType::AllMoves)
+            // make quiet and/or capture move
+            if (moveType == MoveType::AllMoves or move.isCapture())
             {
                 // preserve board state
                 const Board boardCopy = gameState.board;
@@ -110,14 +110,7 @@ namespace ModernChess::MoveGenerations
                 return true;
             }
 
-            // capture only moves
-            // make sure move is the capture
-            if (move.isCapture())
-            {
-                return executeMoveForWhite(gameState, move, MoveType::AllMoves);
-            }
-
-            // otherwise the move is not a capture --> don't make it
+            // move type is not MoveType::AllMoves and the move is also not a capture --> don't make it
             return false;
         }
     private:
