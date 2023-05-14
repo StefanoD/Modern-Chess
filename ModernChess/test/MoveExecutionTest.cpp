@@ -49,6 +49,45 @@ namespace
         std::cout << gameState << std::endl;
     }
 
+    TEST(MoveExecutionTest, EnPassantCaptureWithBlack)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . .
+         * 5 . . . . . . . .
+         * 4 . . . . ♟︎ ♙ . .
+         * 3 . . . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto enPassantPosition = "4k3/8/8/8/4Pp2/8/8/4K3 b - e3 0 1";
+        FenParsing::FenParser fenParser;
+        GameState gameState = fenParser.parse(enPassantPosition);
+
+        const Move move(Square::f4, Square::e3, Figure::BlackPawn, Figure::None, true, false, true, false);
+
+        std::cout << "Before Move:" << std::endl;
+        std::cout << gameState << std::endl << std::endl;
+
+        const bool success = MoveExecution::executeMoveForBlack(gameState, move, MoveType::AllMoves);
+
+        EXPECT_TRUE(success);
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::e3));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Black], Square::e3));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::e3));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::f4));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::e4));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::e4));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::e3));
+        EXPECT_EQ(gameState.board.sideToMove, Color::White);
+
+        std::cout << "After Move:" << std::endl;
+        std::cout << gameState << std::endl;
+    }
+
     TEST(MoveExecutionTest, WhiteKingSideCastle)
     {
         /*
