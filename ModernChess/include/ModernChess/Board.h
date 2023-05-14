@@ -26,7 +26,7 @@ namespace ModernChess
 
         Square enPassantTarget = Square::undefined;
         Color sideToMove = Color::White;
-        CastlingRights castlingRights = CastlingRights::NotPossible;
+        CastlingRights castlingRights = CastlingRights::Gone;
     };
 }
 
