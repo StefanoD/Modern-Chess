@@ -164,10 +164,10 @@ namespace ModernChess::FenParsing {
         {
             switch (character)
             {
-                case 'K': gameState.castleRights = addWhiteKingSideCastleRights(gameState.castleRights); break;
-                case 'Q': gameState.castleRights = addWhiteQueenSideCastleRights(gameState.castleRights); break;
-                case 'k': gameState.castleRights = addBlackKingSideCastleRights(gameState.castleRights); break;
-                case 'q': gameState.castleRights = addBlackQueenSideCastleRights(gameState.castleRights); break;
+                case 'K': gameState.castleRights = addWhiteKingSideCastlingRights(gameState.castleRights); break;
+                case 'Q': gameState.castleRights = addWhiteQueenSideCastlingRights(gameState.castleRights); break;
+                case 'k': gameState.castleRights = addBlackKingSideCastlingRights(gameState.castleRights); break;
+                case 'q': gameState.castleRights = addBlackQueenSideCastlingRights(gameState.castleRights); break;
                 case '-': break;
                 default: throw std::range_error("Could not parse castling rights character '" +
                                                 std::string(1, character) + "' at position " +

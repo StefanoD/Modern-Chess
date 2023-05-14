@@ -12,7 +12,7 @@ namespace
         const Square from = Square::e1;
         const Square to = Square::f1;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         // White can't castle anymore
         EXPECT_EQ(castleRightsAfterMove, CastlingRights::BlackAnySide);
@@ -24,7 +24,7 @@ namespace
         const Square from = Square::h1;
         const Square to = Square::h2;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         EXPECT_EQ(castleRightsAfterMove, CastlingRights(CastlingRights::WhiteQueenSide | CastlingRights::BlackAnySide));
     }
@@ -35,7 +35,7 @@ namespace
         const Square from = Square::a1;
         const Square to = Square::a2;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         EXPECT_EQ(castleRightsAfterMove, CastlingRights(CastlingRights::WhiteKingSide | CastlingRights::BlackAnySide));
     }
@@ -46,7 +46,7 @@ namespace
         const Square from = Square::e8;
         const Square to = Square::f8;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         // Black can't castle anymore
         EXPECT_EQ(castleRightsAfterMove, CastlingRights::WhiteAnySide);
@@ -58,7 +58,7 @@ namespace
         const Square from = Square::h8;
         const Square to = Square::h7;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         EXPECT_EQ(castleRightsAfterMove, CastlingRights(CastlingRights::BlackQueenSide | CastlingRights::WhiteAnySide));
     }
@@ -69,7 +69,7 @@ namespace
         const Square from = Square::a8;
         const Square to = Square::a7;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         EXPECT_EQ(castleRightsAfterMove, CastlingRights(CastlingRights::BlackKingSide | CastlingRights::WhiteAnySide));
     }
@@ -80,7 +80,7 @@ namespace
         const Square from = Square::d2;
         const Square to = Square::d4;
 
-        const CastlingRights castleRightsAfterMove = updateCastleRights(castlingRightsBeforeMove, from, to);
+        const CastlingRights castleRightsAfterMove = updateCastlingRights(castlingRightsBeforeMove, from, to);
 
         // Black can't castle anymore
         EXPECT_EQ(castleRightsAfterMove, castlingRightsBeforeMove);

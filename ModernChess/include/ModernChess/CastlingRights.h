@@ -78,27 +78,27 @@ namespace ModernChess
         return (castleRights & CastlingRights::BlackQueenSide) == CastlingRights::BlackQueenSide;
     }
 
-    constexpr CastlingRights addWhiteKingSideCastleRights(CastlingRights castleRights)
+    constexpr CastlingRights addWhiteKingSideCastlingRights(CastlingRights castleRights)
     {
         return CastlingRights(castleRights | CastlingRights::WhiteKingSide);
     }
 
-    constexpr CastlingRights addWhiteQueenSideCastleRights(CastlingRights castleRights)
+    constexpr CastlingRights addWhiteQueenSideCastlingRights(CastlingRights castleRights)
     {
         return CastlingRights(castleRights | CastlingRights::WhiteQueenSide);
     }
 
-    constexpr CastlingRights addBlackKingSideCastleRights(CastlingRights castleRights)
+    constexpr CastlingRights addBlackKingSideCastlingRights(CastlingRights castleRights)
     {
         return CastlingRights(castleRights | CastlingRights::BlackKingSide);
     }
 
-    constexpr CastlingRights addBlackQueenSideCastleRights(CastlingRights castleRights)
+    constexpr CastlingRights addBlackQueenSideCastlingRights(CastlingRights castleRights)
     {
         return CastlingRights(castleRights | CastlingRights::BlackQueenSide);
     }
 
-    constexpr CastlingRights updateCastleRights(CastlingRights castleRights, Square movedFrom, Square movedTo)
+    constexpr CastlingRights updateCastlingRights(CastlingRights castleRights, Square movedFrom, Square movedTo)
     {
         return CastlingRights(castleRights &
                               LookUpTable::castlingRights[movedFrom] &
