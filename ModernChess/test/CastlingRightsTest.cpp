@@ -8,7 +8,7 @@ namespace
 
     TEST(CastlingRightsTest, WhiteKingMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::e1;
         const Square to = Square::f1;
 
@@ -20,7 +20,7 @@ namespace
 
     TEST(CastlingRightsTest, WhiteRookKingSideMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::h1;
         const Square to = Square::h2;
 
@@ -31,7 +31,7 @@ namespace
 
     TEST(CastlingRightsTest, WhiteRookQueenSideMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::a1;
         const Square to = Square::a2;
 
@@ -42,7 +42,7 @@ namespace
 
     TEST(CastlingRightsTest, BlackKingMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::e8;
         const Square to = Square::f8;
 
@@ -54,7 +54,7 @@ namespace
 
     TEST(CastlingRightsTest, BlackRookKingSideMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::h8;
         const Square to = Square::h7;
 
@@ -65,7 +65,7 @@ namespace
 
     TEST(CastlingRightsTest, BlackRookQueenSideMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::a8;
         const Square to = Square::a7;
 
@@ -76,7 +76,7 @@ namespace
 
     TEST(CastlingRightsTest, PawnMove)
     {
-        const auto castlingRightsBeforeMove = CastlingRights(CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide);
+        const CastlingRights castlingRightsBeforeMove{CastlingRights::WhiteAnySide | CastlingRights::BlackAnySide};
         const Square from = Square::d2;
         const Square to = Square::d4;
 
