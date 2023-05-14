@@ -173,7 +173,7 @@ namespace ModernChess::MoveGenerations
 
                 // make sure that king has not been exposed into a check
                 if (const Square kingsSquare = BitBoardOperations::bitScanForward(gameState.board.bitboards[Figure::BlackKing]);
-                        AttackQueries::squareIsAttackedByBlack(gameState.board, kingsSquare))
+                        AttackQueries::squareIsAttackedByWhite(gameState.board, kingsSquare))
                 {
                     // take move back
                     gameState.board = boardCopy;
