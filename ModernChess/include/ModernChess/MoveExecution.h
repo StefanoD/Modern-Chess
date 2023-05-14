@@ -102,7 +102,7 @@ namespace ModernChess::MoveGenerations
                 return true;
             }
 
-            // move type is not MoveType::AllMoves and the move is also not a capture --> don't make it
+            // Neither MoveType::AllMoves nor capture move --> won't be executed
             return false;
         }
     private:
