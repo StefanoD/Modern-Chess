@@ -1,4 +1,4 @@
-#include "ModernChess/BitBoard.h"
+#include "ModernChess/Board.h"
 #include "ModernChess/BitBoardOperations.h"
 #include "ModernChess/PawnPushes.h"
 #include "ModernChess/Utilities.h"
@@ -12,7 +12,7 @@ namespace
 
     TEST(PawnPushesTest, OneStepNorth)
     {
-        const BitBoard board; // Has initial board state with correct positions
+        const Board board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = MoveGenerations::oneStepNorth(board.getOccupiedSquares());
@@ -46,7 +46,7 @@ namespace
 
     TEST(PawnPushesTest, OneStepSouth)
     {
-        const BitBoard board; // Has initial board state with correct positions
+        const Board board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = MoveGenerations::oneStepSouth(board.getOccupiedSquares());
@@ -80,7 +80,7 @@ namespace
 
     TEST(PawnPushesTest, OneStepEast)
     {
-        const BitBoard board; // Has initial board state with correct positions
+        const Board board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = MoveGenerations::oneStepEast(board.getOccupiedSquares());
@@ -118,7 +118,7 @@ namespace
 
     TEST(PawnPushesTest, OneStepWest)
     {
-        const BitBoard board; // Has initial board state with correct positions
+        const Board board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = MoveGenerations::oneStepWest(board.getOccupiedSquares());
@@ -156,7 +156,7 @@ namespace
 
     TEST(PawnPushesTest, OneStepSouthWest)
     {
-        const BitBoard board; // Has initial board state with correct positions
+        const Board board; // Has initial board state with correct positions
 
         // All figures have been moved one step north
         const BitBoardState bitBoardState = MoveGenerations::oneStepSouthWest(board.getOccupiedSquares());

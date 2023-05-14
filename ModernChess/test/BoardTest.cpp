@@ -1,4 +1,4 @@
-#include "ModernChess/BitBoard.h"
+#include "ModernChess/Board.h"
 #include "ModernChess/BitBoardOperations.h"
 #include "ModernChess/Utilities.h"
 #include "ModernChess/Figure.h"
@@ -9,7 +9,7 @@ namespace
 {
     using namespace ModernChess;
 
-    class ExtendedBoard : public BitBoard
+    class ExtendedBoard : public Board
     {
     public:
 
@@ -65,7 +65,7 @@ namespace
 
     TEST(Board, BlackPawnAtA8)
     {
-        BitBoard board;
+        Board board;
         board.bitboards = {};
         board.occupancies = {};
 
@@ -85,7 +85,7 @@ namespace
 
     TEST(Board, BlackFiguresAreSet)
     {
-        const BitBoard board;
+        const Board board;
         const BitBoardState bitBoardState = board.getBlackFigures();
 
         // Test if squares are not occupied
@@ -105,7 +105,7 @@ namespace
 
     TEST(Board, WhiteFiguresAreSet)
     {
-        const BitBoard board;
+        const Board board;
         const BitBoardState bitBoardState = board.getWhiteFigures();
 
         // Test occupation of White figures
@@ -123,9 +123,9 @@ namespace
         print(std::cout, bitBoardState) << std::endl;
     }
 
-    TEST(BitBoard, GetEmptySquares)
+    TEST(Board, GetEmptySquares)
     {
-        const BitBoard board;
+        const Board board;
         const BitBoardState occupiedSquares = board.getOccupiedSquares();
         const BitBoardState emptySquares = board.getEmptySquares();
 

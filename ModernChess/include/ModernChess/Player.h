@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BitBoard.h"
+#include "Board.h"
 #include "Color.h"
 
 namespace ModernChess
@@ -9,7 +9,7 @@ namespace ModernChess
     {
     public:
 
-        BitBoard board{};
+        Board board{};
         bool onTurn{};
         Color color = Color::UndefinedColor;
     };

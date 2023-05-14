@@ -3,12 +3,12 @@
 #include "QueenAttacks.h"
 #include "Color.h"
 #include "Figure.h"
-#include "BitBoard.h"
+#include "Board.h"
 
 namespace ModernChess {
     class AttackQueries {
     public:
-        static inline bool squareIsAttackedByWhite(const BitBoard &board, Square square)
+        static inline bool squareIsAttackedByWhite(const Board &board, Square square)
         {
             // attacked by pawns
             if ((pawnAttackTable[Color::Black][square] & board.bitboards[Figure::WhitePawn]) != BoardState::empty)
@@ -49,7 +49,7 @@ namespace ModernChess {
             return false;
         }
 
-        static inline bool squareIsAttackedByBlack(const BitBoard &board, Square square)
+        static inline bool squareIsAttackedByBlack(const Board &board, Square square)
         {
             // attacked by pawns
             if ((pawnAttackTable[Color::White][square] & board.bitboards[Figure::BlackPawn]) != BoardState::empty)

@@ -4,7 +4,7 @@ set(target modern-chess-lib)
 
 add_library(${target}
         ../include/ModernChess/AttackQueries.h
-        ../include/ModernChess/BitBoard.h
+        ../include/ModernChess/Board.h
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
         ../include/ModernChess/BishopAttacks.h
@@ -32,7 +32,7 @@ add_library(${target}
         ../include/ModernChess/Utilities.h
 
         AttackQueries.cpp
-        BitBoard.cpp
+        Board.cpp
         FenParsing.cpp
         Utilities.cpp
         Player.cpp

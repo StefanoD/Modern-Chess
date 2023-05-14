@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BitBoard.h"
+#include "Board.h"
 #include "Move.h"
 
 #include <vector>
@@ -13,7 +13,7 @@ namespace ModernChess
         GameState();
 
     //private:
-        BitBoard board{};
+        Board board{};
         // See https://www.chessprogramming.org/Halfmove_Clock
         uint32_t halfMoveClock = 0;
         uint32_t nextMoveClock = 0;

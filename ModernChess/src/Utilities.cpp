@@ -32,7 +32,7 @@ std::ostream &print(std::ostream &os, const BitBoardState bitBoardState)
     return os;
 }
 
-std::ostream& printAttackedSquares(std::ostream& os, const BitBoard &board, Color attacker)
+std::ostream& printAttackedSquares(std::ostream& os, const Board &board, Color attacker)
 {
     for (int rank = 7; rank >=0; --rank)
     {

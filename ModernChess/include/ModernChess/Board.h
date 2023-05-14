@@ -9,10 +9,10 @@
 
 namespace ModernChess
 {
-    class BitBoard
+    class Board
     {
     public:
-        BitBoard();
+        Board();
 
         [[nodiscard]] BitBoardState getOccupiedSquares() const;
         [[nodiscard]] BitBoardState getEmptySquares() const;
@@ -30,4 +30,4 @@ namespace ModernChess
     };
 }
 
-std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard);
+std::ostream& operator<<(std::ostream& os, const ModernChess::Board &bitBoard);

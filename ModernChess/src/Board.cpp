@@ -1,10 +1,10 @@
-#include "ModernChess/BitBoard.h"
+#include "ModernChess/Board.h"
 #include "ModernChess/BitBoardOperations.h"
 #include "ModernChess/FenParsing.h"
 
 namespace ModernChess
 {
-    BitBoard::BitBoard()
+    Board::Board()
     {
 
 
@@ -34,7 +34,7 @@ namespace ModernChess
         bitboards[Figure::BlackPawn] = BitBoardOperations::rotate180(bitboards[Figure::WhitePawn]);
     }
 
-    BitBoardState BitBoard::getOccupiedSquares() const
+    BitBoardState Board::getOccupiedSquares() const
     {
         return bitboards[Figure::BlackRook] |
                bitboards[Figure::BlackKnight] |
@@ -50,7 +50,7 @@ namespace ModernChess
                bitboards[Figure::WhitePawn];
     }
 
-    BitBoardState BitBoard::getWhiteFigures() const
+    BitBoardState Board::getWhiteFigures() const
     {
         return bitboards[Figure::WhiteRook] |
                bitboards[Figure::WhiteKnight] |
@@ -60,7 +60,7 @@ namespace ModernChess
                bitboards[Figure::WhitePawn];
     }
 
-    BitBoardState BitBoard::getBlackFigures() const
+    BitBoardState Board::getBlackFigures() const
     {
         return bitboards[Figure::BlackRook] |
                bitboards[Figure::BlackKnight] |
@@ -70,13 +70,13 @@ namespace ModernChess
                bitboards[Figure::BlackPawn];
     }
 
-    BitBoardState BitBoard::getEmptySquares() const
+    BitBoardState Board::getEmptySquares() const
     {
         return ~getOccupiedSquares();
     }
 }
 
-std::ostream& operator<<(std::ostream& os, const ModernChess::BitBoard &bitBoard)
+std::ostream& operator<<(std::ostream& os, const ModernChess::Board &bitBoard)
 {
     using namespace ModernChess;
 
