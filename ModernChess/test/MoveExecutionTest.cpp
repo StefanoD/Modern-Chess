@@ -1,3 +1,5 @@
+#include "TestingPositions.h"
+
 #include "ModernChess/MoveExecution.h"
 #include "ModernChess/FenParsing.h"
 #include "ModernChess/Utilities.h"
@@ -123,6 +125,42 @@ namespace
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteKing], Square::e1));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhiteRook], Square::h1));
         EXPECT_EQ(gameState.board.castlingRights, CastlingRights::Gone);
+        EXPECT_EQ(gameState.board.sideToMove, Color::Black);
+
+        std::cout << "After Move:" << std::endl;
+        std::cout << gameState << std::endl;
+    }
+
+    TEST(MoveExecutionTest, WhitePosition2_d5e6_Capture)
+    {
+        /*
+         * 8 ♖ . . . ♔ . . ♖
+         * 7 ♙ . ♙ ♙ ♕ ♙ ♗ .
+         * 6 ♗ ♘ . . ♙ ♘ ♙ .
+         * 5 . . . ♟︎ ♞ . . .
+         * 4 . ♙ . . ♟︎ . . .
+         * 3 . . ♞ . . ♛ . ♙
+         * 2 ♟︎ ♟︎ ♟︎ ♝ ♝ ♟︎ ♟︎ ♟︎
+         * 1 ♜ . . . ♚ . . ♜
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser;
+        GameState gameState = fenParser.parse(TestingPositions::Position2);
+
+        const Move move(Square::d5, Square::e6, Figure::WhitePawn, Figure::None, true, false, false, false);
+
+        std::cout << "Before Move:" << std::endl;
+        std::cout << gameState << std::endl << std::endl;
+
+        const bool success = MoveExecution::executeMoveForWhite(gameState, move, MoveType::AllMoves);
+
+        EXPECT_TRUE(success);
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::e6));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::White], Square::e6));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::e6));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Black], Square::e6));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackPawn], Square::e6));
         EXPECT_EQ(gameState.board.sideToMove, Color::Black);
 
         std::cout << "After Move:" << std::endl;

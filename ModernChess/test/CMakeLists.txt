@@ -17,7 +17,11 @@ add_executable(${target}
         SquareTest.cpp
         MoveTest.cpp
         PseudoMoveGenerationTest.cpp
-        UtilitiesTest.cpp CastlingRightsTest.cpp MoveExecutionTest.cpp)
+        UtilitiesTest.cpp
+        CastlingRightsTest.cpp
+        MoveExecutionTest.cpp
+        TestingPositions.h
+        )
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main

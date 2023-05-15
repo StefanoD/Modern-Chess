@@ -31,15 +31,16 @@ namespace ModernChess::MoveGenerations
                 const Figure movedFigure = move.getMovedFigure();
                 const bool castling = move.isCastlingMove();
 
-                // move movedFigure
-                removeFromBitboards(gameState, movedFigure, Color::White, sourceSquare);
-                addToBitboards(gameState, movedFigure, Color::White, targetSquare);
-
                 // handling capture moves
                 if (move.isCapture())
                 {
                     removeCapturedFigure(gameState, Figure::BlackPawn, Figure::BlackKing, Color::Black, targetSquare);
                 }
+
+                // Add the moved figure into bitboards after the potential capture has been removed, otherwise we
+                // would potentially remove the moved figure again, if we go the other way around
+                removeFromBitboards(gameState, movedFigure, Color::White, sourceSquare);
+                addToBitboards(gameState, movedFigure, Color::White, targetSquare);
 
                 handlePawnPromotion(gameState, move, Figure::WhitePawn, Color::White, targetSquare);
 
@@ -120,15 +121,16 @@ namespace ModernChess::MoveGenerations
                 const Figure movedFigure = move.getMovedFigure();
                 const bool castling = move.isCastlingMove();
 
-                // move movedFigure
-                removeFromBitboards(gameState, movedFigure, Color::Black, sourceSquare);
-                addToBitboards(gameState, movedFigure, Color::Black, targetSquare);
-
                 // handling capture moves
                 if (move.isCapture())
                 {
                     removeCapturedFigure(gameState, Figure::WhitePawn, Figure::WhiteKing, Color::White, targetSquare);
                 }
+
+                // Add the moved figure into bitboards after the potential capture has been removed, otherwise we
+                // would potentially remove the moved figure again, if we go the other way around
+                removeFromBitboards(gameState, movedFigure, Color::Black, sourceSquare);
+                addToBitboards(gameState, movedFigure, Color::Black, targetSquare);
 
                 handlePawnPromotion(gameState, move, Figure::BlackPawn, Color::Black, targetSquare);
 
