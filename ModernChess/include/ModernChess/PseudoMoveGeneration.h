@@ -375,7 +375,7 @@ namespace ModernChess::MoveGenerations
                             // double pawn push
                             if ((sourceSquare >= a7 && sourceSquare <= h7) &&
                                 !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both],
-                                                                BitBoardOperations::getNorthSquareFromGivenSquare(
+                                                                BitBoardOperations::getSouthSquareFromGivenSquare(
                                                                         targetSquare)))
                             {
                                 movesToBeGenerated.emplace_back(sourceSquare,

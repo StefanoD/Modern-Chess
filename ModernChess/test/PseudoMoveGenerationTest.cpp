@@ -608,6 +608,59 @@ namespace
         std::cout << generatedMoves << std::endl;
     }
 
+    TEST(PseudoMoveGenerationTest, DoublePawnPushWithBlackTest)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . ♙ . . .
+         * 6 . . . . . . . .
+         * 5 . . . . . . . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto fenPosition = "4k3/4p3/8/8/8/8/8/4K3 b - - 0 1";
+
+        FenParsing::FenParser fenParser;
+        const GameState gameState = fenParser.parse(fenPosition);
+
+        std::vector<Move> generatedMoves;
+        generatedMoves.reserve(16);
+
+        PseudoMoveGeneration::generateBlackFigureMoves(gameState, generatedMoves);
+
+        // Single pawn push
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e7 &&
+                   move.getTo() == Square::e6 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackPawn &&
+                   not move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        // Double pawn push
+        EXPECT_TRUE(std::any_of(generatedMoves.begin(), generatedMoves.end(), [](const Move move) {
+            return move.getFrom() == Square::e7 &&
+                   move.getTo() == Square::e5 &&
+                   not move.isCapture() &&
+                   not move.isEnPassantCapture() &&
+                   move.getMovedFigure() == Figure::BlackPawn &&
+                   move.isDoublePawnPush() &&
+                   not move.isCastlingMove() &&
+                   not move.isNullMove() &&
+                   move.getPromotedPiece() == Figure::None;
+        }));
+
+        std::cout << generatedMoves << std::endl;
+    }
+
     TEST(PseudoMoveGenerationTest, PawnPromotionWithCaptureWithWhiteTest)
     {
         /*
