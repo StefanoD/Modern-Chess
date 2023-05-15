@@ -442,6 +442,7 @@ namespace
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::b7));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::c8));
         EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::BlackRook], Square::c8));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Black], Square::c8));
         EXPECT_EQ(gameState.board.sideToMove, Color::Black);
 
         std::cout << "After Move:" << std::endl;
