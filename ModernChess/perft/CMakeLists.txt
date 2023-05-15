@@ -1,4 +1,4 @@
-set(target modern-chess-lib-test_integration)
+set(target perft)
 
 add_executable(${target}
         main.cpp
