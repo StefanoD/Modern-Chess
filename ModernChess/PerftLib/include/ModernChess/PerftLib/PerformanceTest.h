@@ -23,7 +23,7 @@ namespace ModernChess::Perft {
             std::cout << m_gameState << std::endl;
         }
 
-        void executePerformanceTest(int depth)
+        uint64_t executePerformanceTest(int depth)
         {
             std::cout << "\n     Performance test\n\n";
 
@@ -67,6 +67,8 @@ namespace ModernChess::Perft {
             std::cout << "\n    Depth: " << depth << std::endl;
             std::cout << "    Nodes: " << accumulatedNodes << std::endl;
             std::cout << "Elapsed time: " << elapsed << " ms" << std::endl;
+
+            return accumulatedNodes;
         }
 
     private:
