@@ -1,0 +1,1 @@
+#include "ModernChess/PerftLib/PerformanceTest.h"

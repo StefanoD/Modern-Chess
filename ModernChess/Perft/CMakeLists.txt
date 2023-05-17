@@ -5,5 +5,6 @@ add_executable(${target}
         )
 
 target_link_libraries(${target} PRIVATE
+        perft-lib
         modern-chess-lib
         )

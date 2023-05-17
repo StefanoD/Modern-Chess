@@ -4,5 +4,6 @@ project(modern-chess-lib
 
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(perft)
+add_subdirectory(PerftLib)
+add_subdirectory(Perft)
 add_subdirectory(benchmarks)
