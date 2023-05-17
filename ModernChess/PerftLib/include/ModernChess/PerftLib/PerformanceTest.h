@@ -45,7 +45,8 @@ namespace ModernChess::Perft {
                 const Board boardCopy = m_gameState.board;
 
                 // make move
-                if (!makeMove(move, MoveType::AllMoves))
+                if (const bool kingIsNotInCheck = makeMove(move, MoveType::AllMoves);
+                        not kingIsNotInCheck)
                 {
                     // skip to the next move
                     continue;
