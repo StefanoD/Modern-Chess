@@ -21,11 +21,12 @@ add_executable(${target}
         CastlingRightsTest.cpp
         MoveExecutionTest.cpp
         TestingPositions.h
-        )
+        PerftTest.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
         modern-chess-lib
+        perft-lib
         )
 
 gtest_discover_tests(${target} WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
