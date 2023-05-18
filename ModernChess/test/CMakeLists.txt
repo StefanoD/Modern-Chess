@@ -3,6 +3,7 @@ set(target modern-chess-lib-test)
 add_executable(${target}
         AttackQueriesTest.cpp
         PawnAttacksTest.cpp
+        BasicParserTest.cpp
         BishopAttacksTest.cpp
         BitBoardConstantsTest.cpp
         BitBoardOperationsTest.cpp
@@ -21,7 +22,8 @@ add_executable(${target}
         CastlingRightsTest.cpp
         MoveExecutionTest.cpp
         TestingPositions.h
-        PerftTest.cpp BasicParserTest.cpp)
+        PerftTest.cpp
+        )
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
