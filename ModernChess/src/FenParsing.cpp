@@ -8,16 +8,6 @@ namespace ModernChess::FenParsing {
 
     FenParser::FenParser(std::string_view fen) : BasicParser(fen) {}
 
-    bool isAlphabetic(char character)
-    {
-        return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
-    }
-
-    bool isNumerical(char character)
-    {
-        return character >= '0' && character <= '9';
-    }
-
     Color FenParser::parseColor(char character) const
     {
         if (character == 'w')
