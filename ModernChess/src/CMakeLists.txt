@@ -4,6 +4,7 @@ set(target modern-chess-lib)
 
 add_library(${target}
         ../include/ModernChess/AttackQueries.h
+        ../include/ModernChess/BasicParser.h
         ../include/ModernChess/Board.h
         ../include/ModernChess/BitBoardConstants.h
         ../include/ModernChess/BitBoardOperations.h
@@ -29,9 +30,11 @@ add_library(${target}
         ../include/ModernChess/RookAttacks.h
         ../include/ModernChess/Square.h
         ../include/ModernChess/TUI.h
+        ../include/ModernChess/UCIParser.h
         ../include/ModernChess/Utilities.h
 
         AttackQueries.cpp
+        BasicParser.cpp
         Board.cpp
         FenParsing.cpp
         Utilities.cpp

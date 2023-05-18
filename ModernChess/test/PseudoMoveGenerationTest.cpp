@@ -26,8 +26,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto enPassantPosition = "4k3/8/8/8/4Pp2/8/8/4K3 b - e3 0 1";
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(enPassantPosition);
+        FenParsing::FenParser fenParser(enPassantPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -78,8 +78,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto enPassantPosition = "4k3/8/8/2P1P3/1P3P2/3n4/1P3P2/2R1K3 b - - 0 1";
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(enPassantPosition);
+        FenParsing::FenParser fenParser(enPassantPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -201,8 +201,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "r3k2r/4p3/8/4R3/8/8/8/4K3 b kq - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -280,8 +280,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "8/8/2PPP3/2PkP3/2PPP3/8/8/3K4 b - - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -403,8 +403,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto enPassantPosition = "4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 1";
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(enPassantPosition);
+        FenParsing::FenParser fenParser(enPassantPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -456,8 +456,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "4k3/8/8/8/4r3/4P3/8/R3K2R w KQ - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -535,8 +535,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "4k3/8/8/8/4r3/8/8/R3K2R w KQ - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -571,8 +571,8 @@ namespace
          */
         constexpr auto fenPosition = "4k3/8/8/8/8/8/4P3/R3K2R w KQ - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -624,8 +624,8 @@ namespace
          */
         constexpr auto fenPosition = "4k3/4p3/8/8/8/8/8/4K3 b - - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -677,8 +677,8 @@ namespace
          */
         constexpr auto fenPosition = "r1r1k3/1P6/8/8/8/8/3K4/8 w - - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);
@@ -860,8 +860,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "4k3/p5p1/8/8/3B4/8/3K4/r5r1 w KQ - 0 1";
 
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        const GameState gameState = fenParser.parse();
 
         std::vector<Move> generatedMoves;
         generatedMoves.reserve(16);

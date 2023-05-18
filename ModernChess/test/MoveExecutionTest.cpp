@@ -28,8 +28,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto enPassantPosition = "4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 1";
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(enPassantPosition);
+        FenParsing::FenParser fenParser(enPassantPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e5, Square::f6, Figure::WhitePawn, Figure::None, true, false, true, false);
 
@@ -66,8 +66,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto enPassantPosition = "4k3/8/8/8/4Pp2/8/8/4K3 b - e3 0 1";
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(enPassantPosition);
+        FenParsing::FenParser fenParser(enPassantPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::f4, Square::e3, Figure::BlackPawn, Figure::None, true, false, true, false);
 
@@ -105,8 +105,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto kingSideCastlingPosition = "4k3/8/8/8/4r3/4P3/8/R3K2R w KQ - 0 1";
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e1, Square::g1, Figure::WhiteKing, Figure::None, false, false, false, true);
 
@@ -145,8 +145,8 @@ namespace
          *
          *   a b c d e f g h
          */
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(TestingPositions::Position2);
+        FenParsing::FenParser fenParser(TestingPositions::Position2);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::d5, Square::e6, Figure::WhitePawn, Figure::None, true, false, false, false);
 
@@ -183,8 +183,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "r3k2r/4p3/8/4R3/8/8/8/4K3 b kq - 0 1";
 
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e8, Square::g8, Figure::BlackKing, Figure::None, false, false, false, true);
 
@@ -224,8 +224,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto kingSideCastlingPosition = "4k3/8/8/8/4r3/4P3/8/R3K2R w KQ - 0 1";
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e1, Square::c1, Figure::WhiteKing, Figure::None, false, false, false, true);
 
@@ -266,8 +266,8 @@ namespace
          */
         constexpr auto kingSideCastlingPosition = "r3k2r/4p3/8/4R3/8/8/8/4K3 b kq - 0 1";
 
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e8, Square::c8, Figure::BlackKing, Figure::None, false, false, false, true);
 
@@ -307,8 +307,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto kingSideCastlingPosition = "4k3/8/8/8/2r5/8/8/R3K2R w KQ - 0 1";
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e1, Square::c1, Figure::WhiteKing, Figure::None, false, false, false, true);
 
@@ -347,8 +347,8 @@ namespace
          *
          */
         constexpr auto kingSideCastlingPosition = "r3k2r/8/8/6R1/8/8/8/4K3 b kq - 0 1";
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(kingSideCastlingPosition);
+        FenParsing::FenParser fenParser(kingSideCastlingPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e8, Square::g8, Figure::BlackKing, Figure::None, false, false, false, true);
 
@@ -387,8 +387,8 @@ namespace
          */
         constexpr auto fenPosition = "4k3/8/8/8/8/8/4P3/R3K2R w KQ - 0 1";
 
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e2, Square::e4, Figure::WhitePawn, Figure::None, false, true, false, false);
 
@@ -425,8 +425,8 @@ namespace
          */
         constexpr auto fenPosition = "4k3/4p3/8/8/8/8/8/4K3 b - - 0 1";
 
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::e7, Square::e5, Figure::BlackPawn, Figure::None, false, true, false, false);
 
@@ -463,8 +463,8 @@ namespace
          */
         constexpr auto fenPosition = "r1r1k3/1P6/8/8/8/8/3K4/8 w - - 0 1";
 
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::b7, Square::c8, Figure::WhitePawn, Figure::WhiteQueen, true, false, false, false);
 
@@ -503,8 +503,8 @@ namespace
          */
         constexpr auto fenPosition = "4k3/8/8/8/8/8/1p6/2R1K3 b - - 0 1";
 
-        FenParsing::FenParser fenParser;
-        GameState gameState = fenParser.parse(fenPosition);
+        FenParsing::FenParser fenParser(fenPosition);
+        GameState gameState = fenParser.parse();
 
         const Move move(Square::b2, Square::c1, Figure::BlackPawn, Figure::BlackQueen, true, false, false, false);
 

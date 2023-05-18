@@ -17,8 +17,8 @@ namespace ModernChess::Perft {
     public:
         explicit PerformanceTest(std::string_view fenString)
         {
-            FenParsing::FenParser fenParser;
-            m_gameState = fenParser.parse(fenString);
+            FenParsing::FenParser fenParser(fenString);
+            m_gameState = fenParser.parse();
 
             std::cout << m_gameState << std::endl;
         }

@@ -1,5 +1,4 @@
 #include "ModernChess/FenParsing.h"
-#include "ModernChess/BitBoardOperations.h"
 
 #include <sstream>
 
@@ -7,10 +6,7 @@ using namespace ModernChess;
 
 namespace ModernChess::FenParsing {
 
-    std::string FenParser::getCurrentPosition() const
-    {
-        return std::to_string(currentPos - beginPos + 1);
-    }
+    FenParser::FenParser(std::string_view fen) : BasicParser(fen) {}
 
     bool isAlphabetic(char character)
     {
@@ -20,43 +16,6 @@ namespace ModernChess::FenParsing {
     bool isNumerical(char character)
     {
         return character >= '0' && character <= '9';
-    }
-
-    bool FenParser::isRankNumber(char character) const
-    {
-        if (character == '9')
-        {
-            throw std::range_error("Invalid rank number '9' at position " +
-                                   getCurrentPosition() + "!");
-        }
-
-        return isNumerical(character);
-    }
-
-    void FenParser::nextPosition()
-    {
-        ++currentPos;
-        if (currentPos == endPos)
-        {
-            const std::string position = getCurrentPosition();
-            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
-        }
-    }
-
-    char FenParser::getNextCharacter()
-    {
-        ++currentPos;
-        if (currentPos == endPos)
-        {
-            const std::string position = getCurrentPosition();
-            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
-        }
-        return *currentPos;
-    }
-
-    bool FenParser::hasNextCharacter()
-    {
-        return (currentPos+1) != endPos;
     }
 
     Color FenParser::parseColor(char character) const
@@ -78,50 +37,6 @@ namespace ModernChess::FenParsing {
         }
 
         return color;
-    }
-
-    Square FenParser::parseSquare()
-    {
-        char character = *currentPos;
-        Square square = Square::undefined;
-
-        if (isAlphabetic(character))
-        {
-            /**
-             *  squareIndex = 8*rankIndex + fileIndex
-                FileIndex   = squareIndex modulo 8  = squareIndex & 7
-                RankIndex   = squareIndex div    8  = squareIndex >> 3
-             */
-
-
-            // parse en passant file & rank
-            const int file = character - 'a';
-
-            character = getNextCharacter();
-
-            if (!isNumerical(character))
-            {
-                throw std::range_error("Could not parse square from character '" +
-                                       std::string(1, character) + "' at position " + getCurrentPosition() +
-                                       "! Expected a number!");
-            }
-
-            const int rank = character - '1';
-
-            // init en passant square
-            square = BitBoardOperations::getSquare(rank, file);
-        }
-        else if (character == '-')
-        {
-            // Do nothing
-        }
-        else
-        {
-            throw std::range_error("Could not parse square from character '" +
-                                   std::string(1, character) + "' at position " + getCurrentPosition() + "!");
-        }
-
-        return square;
     }
 
     uint32_t FenParser::parseNumber()
@@ -178,15 +93,11 @@ namespace ModernChess::FenParsing {
         }
     }
 
-    GameState FenParser::parse(std::string_view fen)
+    GameState FenParser::parse()
     {
         GameState gameState;
         gameState.board.bitboards = {};
         gameState.board.occupancies = {};
-
-        beginPos = fen.begin();
-        currentPos = fen.begin();
-        endPos = fen.end();
 
         char character;
 

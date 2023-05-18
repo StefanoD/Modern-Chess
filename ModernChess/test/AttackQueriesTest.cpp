@@ -23,8 +23,8 @@ namespace {
              a b c d e f g h
          */
         const auto fenString = "7k/8/8/2p5/3P4/8/8/7K w - - 0 1";
-        FenParser fenParser;
-        const GameState gameState = fenParser.parse(fenString);
+        FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
         // Occupy White pawnAttackTable on d4
         const bool ableToCaptureEast = AttackQueries::squareIsAttackedByWhite(gameState.board, Square::e5);
 
@@ -54,8 +54,8 @@ namespace {
              a b c d e f g h
          */
         const auto fenString = "7k/8/8/2p5/3P4/8/8/7K w - - 0 1";
-        FenParser fenParser;
-        const GameState gameState = fenParser.parse(fenString);
+        FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
         // Occupy Black pawnAttackTable on c5
         const bool ableToCaptureEast = AttackQueries::squareIsAttackedByBlack(gameState.board, Square::b4);
 

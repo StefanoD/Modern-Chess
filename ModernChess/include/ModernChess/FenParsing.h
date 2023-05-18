@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BasicParser.h"
 #include "Figure.h"
 #include "GameState.h"
 
@@ -38,29 +39,15 @@ namespace ModernChess::FenParsing {
 
     constexpr auto startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    class FenParser
+    class FenParser : BasicParser
     {
     public:
-        GameState parse(std::string_view fen);
+        explicit FenParser(std::string_view fen);
+
+        [[nodiscard]] GameState parse();
 
     private:
-        std::string_view::iterator beginPos{};
-        std::string_view::iterator currentPos{};
-        std::string_view::iterator endPos{};
-
-        [[nodiscard]] std::string getCurrentPosition() const;
-
-        [[nodiscard]] bool isRankNumber(char character) const;
-
-        void nextPosition();
-
-        char getNextCharacter();
-
-        bool hasNextCharacter();
-
         [[nodiscard]] Color parseColor(char character) const;
-
-        Square parseSquare();
 
         uint32_t parseNumber();
 

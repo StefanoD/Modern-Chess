@@ -9,8 +9,8 @@ namespace
 {
     TEST(FenParsingTest, Init)
     {
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(FenParsing::startPosition);
+        FenParsing::FenParser fenParser(FenParsing::startPosition);
+        const GameState gameState = fenParser.parse();
 
         // Test occupation of white pawns
         const BitBoardState whitePawnsBitboard = gameState.board.bitboards[Figure::WhitePawn];
@@ -103,8 +103,8 @@ namespace
          *   a b c d e f g h
          */
         constexpr auto enPassantPosition = "4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 1";
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(enPassantPosition);
+        FenParsing::FenParser fenParser(enPassantPosition);
+        const GameState gameState = fenParser.parse();
 
         EXPECT_EQ(gameState.board.enPassantTarget, Square::f6);
     }
@@ -112,8 +112,8 @@ namespace
     TEST(FenParsingTest, BlackPawnAtA8)
     {
         constexpr auto fenString = "p7/8/8/8/8/8/8/8 w KQkq - 0 1";
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(fenString);
+        FenParsing::FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
 
         const BitBoardState blackPawnsBitboard = gameState.board.bitboards[Figure::BlackPawn];
         EXPECT_TRUE(BitBoardOperations::isOccupied(blackPawnsBitboard, Square::a8));
@@ -133,8 +133,8 @@ namespace
     TEST(FenParsingTest, TrickyPosition)
     {
         constexpr auto trickyPosition = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
-        FenParsing::FenParser fenParser;
-        const GameState gameState = fenParser.parse(trickyPosition);
+        FenParsing::FenParser fenParser(trickyPosition);
+        const GameState gameState = fenParser.parse();
 
         // Test occupation of black rooks
         const BitBoardState blackRooksBitboard = gameState.board.bitboards[Figure::BlackRook];
