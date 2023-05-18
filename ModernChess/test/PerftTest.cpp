@@ -9,18 +9,24 @@ namespace
 
     // See Perf Results https://www.chessprogramming.org/Perft_Results
 
-    TEST(PerftTest, TestPosition2Depth5)
+    TEST(PerftTest, TestPosition2Depth1To5)
     {
         PerformanceTest test(TestingPositions::Position2);
-        const uint64_t numberNodes = test.executePerformanceTest(5);
 
-        EXPECT_EQ(numberNodes, 193690690);
+        EXPECT_EQ(test.executePerformanceTest(1), 48);
+        EXPECT_EQ(test.executePerformanceTest(2), 2039);
+        EXPECT_EQ(test.executePerformanceTest(3), 97862);
+        EXPECT_EQ(test.executePerformanceTest(4), 4085603);
+        EXPECT_EQ(test.executePerformanceTest(5), 193690690);
     }
 
     TEST(PerftTest, TestPosition3Depth1To7)
     {
         PerformanceTest test(TestingPositions::Position3);
 
+        EXPECT_EQ(test.executePerformanceTest(1), 14);
+        EXPECT_EQ(test.executePerformanceTest(2), 191);
+        EXPECT_EQ(test.executePerformanceTest(3), 2812);
         EXPECT_EQ(test.executePerformanceTest(4), 43238);
         EXPECT_EQ(test.executePerformanceTest(5), 674624);
         EXPECT_EQ(test.executePerformanceTest(6), 11030083);
