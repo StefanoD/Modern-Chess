@@ -1,5 +1,4 @@
 #include "ModernChess/FenParsing.h"
-#include "ModernChess/BitBoardOperations.h"
 
 #include <gtest/gtest.h>
 
