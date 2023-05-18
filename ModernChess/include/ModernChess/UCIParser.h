@@ -1,22 +1,38 @@
 #pragma once
 
+#include "BasicParser.h"
+#include "GameState.h"
 #include "Move.h"
 
 #include <string_view>
 
 namespace ModernChess
 {
-    class UCIParser
+    class UCIParser : BasicParser
     {
     public:
-        Move parseMove(std::string_view &string) const
-        {
-            Move move{};
+        explicit UCIParser(std::string_view fen);
 
+        [[nodiscard]] bool uiRequestsUCIMode() const;
 
+        [[nodiscard]] bool uiRequestsNewGame() const;
 
-            return move;
-        }
+        [[nodiscard]] bool uiIsReady() const;
+
+        [[nodiscard]] bool uiQuitsGame() const;
+
+        [[nodiscard]] bool uiHasSentPosition();
+
+        [[nodiscard]] bool uiHasSentMoves();
+
+        [[nodiscard]] bool uiHasSentFENPosition();
+
+        [[nodiscard]] bool uiHasSentStartingPosition();
+
+        [[nodiscard]] bool uiHasSentGoCommand();
+
+        [[nodiscard]] bool uiHasSentSearchDepth();
+
     private:
     };
 }

@@ -15,11 +15,6 @@ namespace ModernChess
 
         [[nodiscard]] Square parseSquare();
 
-    protected:
-        std::string_view::iterator beginPos{};
-        std::string_view::iterator currentPos{};
-        std::string_view::iterator endPos{};
-
         static bool isAlphabetic(char character)
         {
             return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
@@ -32,6 +27,8 @@ namespace ModernChess
 
         [[nodiscard]] std::string getCurrentPosition() const;
 
+        [[nodiscard]] std::string_view currentStringView() const;
+
         [[nodiscard]] bool isRankNumber(char character) const;
 
         void nextPosition();
@@ -39,5 +36,12 @@ namespace ModernChess
         char getNextCharacter();
 
         bool hasNextCharacter();
+
+        uint32_t parseNumber();
+
+    protected:
+        std::string_view::iterator m_beginPos{};
+        std::string_view::iterator m_currentPos{};
+        std::string_view::iterator m_endPos{};
     };
 }

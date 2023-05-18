@@ -47,7 +47,7 @@ add_library(${target}
         BishopAttacks.cpp
         CastlingRights.cpp
         TUI.cpp
-        )
+        UCIParser.cpp)
 
 target_include_directories(${target} PUBLIC ../include)
 

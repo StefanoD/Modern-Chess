@@ -1,16 +1,18 @@
 #include "ModernChess/BasicParser.h"
 
+#include <sstream>
+
 namespace ModernChess
 {
     BasicParser::BasicParser(std::string_view fen) :
-            beginPos(fen.begin()),
-            currentPos(fen.begin()),
-            endPos(fen.end())
+            m_beginPos(fen.begin()),
+            m_currentPos(fen.begin()),
+            m_endPos(fen.end())
     {}
 
     Square BasicParser::parseSquare()
     {
-        char character = *currentPos;
+        char character = *m_currentPos;
         Square square = Square::undefined;
 
         if (isAlphabetic(character))
@@ -54,7 +56,7 @@ namespace ModernChess
 
     std::string BasicParser::getCurrentPosition() const
     {
-        return std::to_string(currentPos - beginPos + 1);
+        return std::to_string(m_currentPos - m_beginPos + 1);
     }
 
     bool BasicParser::isRankNumber(char character) const
@@ -70,8 +72,8 @@ namespace ModernChess
 
     void BasicParser::nextPosition()
     {
-        ++currentPos;
-        if (currentPos == endPos)
+        ++m_currentPos;
+        if (m_currentPos == m_endPos)
         {
             const std::string position = getCurrentPosition();
             throw std::range_error("Error at position " + position + ": Unexpected end of line!");
@@ -80,19 +82,54 @@ namespace ModernChess
 
     char BasicParser::getNextCharacter()
     {
-        ++currentPos;
-        if (currentPos == endPos)
+        ++m_currentPos;
+        if (m_currentPos == m_endPos)
         {
             const std::string position = getCurrentPosition();
             throw std::range_error("Error at position " + position + ": Unexpected end of line!");
         }
-        return *currentPos;
+        return *m_currentPos;
     }
 
     bool BasicParser::hasNextCharacter()
     {
-        return (currentPos+1) != endPos;
+        return (m_currentPos+1) < m_endPos;
+    }
+
+    std::string_view BasicParser::currentStringView() const
+    {
+        const size_t length = (m_endPos - m_currentPos);
+        return {m_currentPos, length};
+    }
+
+    uint32_t BasicParser::parseNumber()
+    {
+        std::stringstream strNumber;
+
+        for (char character = getNextCharacter();
+             isNumerical(character);
+             character = getNextCharacter())
+        {
+            strNumber << character;
+
+            if (!hasNextCharacter())
+            {
+                break;
+            }
+        }
+
+        uint32_t number = 0;
+        strNumber >> number;
+
+        if (strNumber.fail())
+        {
+            throw std::range_error("Could not parse number \"" + strNumber.str() +
+                                   "\" at position " + getCurrentPosition() + "!");
+        }
+
+        // The last character was not a number. Therefore, decrement position again
+        --m_currentPos;
+
+        return number;
     }
 }
-
-

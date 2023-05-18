@@ -21,7 +21,7 @@ add_executable(${target}
         CastlingRightsTest.cpp
         MoveExecutionTest.cpp
         TestingPositions.h
-        PerftTest.cpp)
+        PerftTest.cpp BasicParserTest.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main

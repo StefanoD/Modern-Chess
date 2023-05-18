@@ -1,7 +1,5 @@
 #include "ModernChess/FenParsing.h"
 
-#include <sstream>
-
 using namespace ModernChess;
 
 namespace ModernChess::FenParsing {
@@ -21,37 +19,6 @@ namespace ModernChess::FenParsing {
 
         throw std::range_error("Expected 'w' or 'b' for color, but got '" + std::string(1, character) +
                                "' at position " + getCurrentPosition() + "!");
-    }
-
-    uint32_t FenParser::parseNumber()
-    {
-        std::stringstream strNumber;
-
-        for (char character = getNextCharacter();
-             isNumerical(character);
-             character = getNextCharacter())
-        {
-            strNumber << character;
-
-            if (!hasNextCharacter())
-            {
-                break;
-            }
-        }
-
-        uint32_t number = 0;
-        strNumber >> number;
-
-        if (strNumber.fail())
-        {
-            throw std::range_error("Could not parse number \"" + strNumber.str() +
-                                   "\" at position " + getCurrentPosition() + "!");
-        }
-
-        // The last character was not a number. Therefore, decrement position again
-        --currentPos;
-
-        return number;
     }
 
     void FenParser::parseCastlingRights(GameState &gameState)
@@ -83,8 +50,6 @@ namespace ModernChess::FenParsing {
         gameState.board.bitboards = {};
         gameState.board.occupancies = {};
 
-        char character;
-
         // FEN strings begin at the top left (a8) and continue to the right position
         for (int rank = 7; rank >= 0; --rank)
         {
@@ -92,7 +57,7 @@ namespace ModernChess::FenParsing {
             {
                 const Square square = BitBoardOperations::getSquare(rank, file);
 
-                character = *currentPos;
+                char character = *m_currentPos;
 
                 // match ascii pieces within FEN string
                 if (isAlphabetic(character))
@@ -127,11 +92,8 @@ namespace ModernChess::FenParsing {
             }
         }
 
-        // got to parsing side to move (increment pointer to FEN string)
-        character = getNextCharacter();
-
         // parse side to move
-        gameState.board.sideToMove = parseColor(character);
+        gameState.board.sideToMove = parseColor(getNextCharacter());
 
         // go to parsing castling rights
         nextPosition();

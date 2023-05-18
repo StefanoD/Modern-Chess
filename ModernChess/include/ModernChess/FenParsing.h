@@ -49,8 +49,6 @@ namespace ModernChess::FenParsing {
     private:
         [[nodiscard]] Color parseColor(char character) const;
 
-        uint32_t parseNumber();
-
         void parseCastlingRights(GameState &gameState);
 
         static void initOccupancyMaps(GameState &gameState);
