@@ -20,23 +20,17 @@ namespace ModernChess::FenParsing {
 
     Color FenParser::parseColor(char character) const
     {
-        Color color;
-
         if (character == 'w')
         {
-            color = Color::White;
+            return Color::White;
         }
-        else if (character == 'b')
+        if (character == 'b')
         {
-            color = Color::Black;
-        }
-        else
-        {
-            throw std::range_error("Expected 'w' or 'b' for color, but got '" + std::string(1, character) +
-                                   "' at position " + getCurrentPosition() + "!");
+            return Color::Black;
         }
 
-        return color;
+        throw std::range_error("Expected 'w' or 'b' for color, but got '" + std::string(1, character) +
+                               "' at position " + getCurrentPosition() + "!");
     }
 
     uint32_t FenParser::parseNumber()
