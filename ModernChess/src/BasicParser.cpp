@@ -17,13 +17,6 @@ namespace ModernChess
 
         if (isAlphabetic(character))
         {
-            /**
-             *  squareIndex = 8*rankIndex + fileIndex
-                FileIndex   = squareIndex modulo 8  = squareIndex & 7
-                RankIndex   = squareIndex div    8  = squareIndex >> 3
-             */
-
-
             // parse en passant file & rank
             const int file = character - 'a';
 
