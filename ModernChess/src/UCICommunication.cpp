@@ -101,8 +101,8 @@ namespace ModernChess
         }
         else
         {
-            // probably some weird UI bug. Setup therefore new game
-            createNewGame();
+            throw std::runtime_error("Missing position after position command: " +
+                                      std::string(parser.currentStringView()));
         }
     }
 
