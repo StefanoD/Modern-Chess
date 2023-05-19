@@ -1,10 +1,13 @@
 #include "ModernChess/UCICommunication.h"
 #include "ModernChess/UCIParser.h"
+#include "ModernChess/FenParsing.h"
 
-#include <cstdio>
+//#include <cstdio>
 #include <iostream>
 #include <string>
 #include <limits>
+
+using ModernChess::FenParsing::FenParser;
 
 namespace ModernChess
 {
@@ -41,14 +44,13 @@ namespace ModernChess
 
             if (parser.uiHasSentFENPosition())
             {
-                // parse position
+                parsePosition(parser);
                 continue;
             }
             
             if (parser.uiRequestsNewGame())
             {
-                // call parse position function
-                //parse_position("position startpos");
+                createNewGame();
             }
             else if (parser.uiHasSentGoCommand())
             {
@@ -84,5 +86,19 @@ namespace ModernChess
         // Flush the input stream
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    void UCICommunication::parsePosition(UCIParser &parser)
+    {
+        if (parser.uiHasSentFENPosition())
+        {
+            const std::string_view fenString = parser.getNextString();
+            m_game.gameState = FenParser(fenString).parse();
+        }
+    }
+
+    void UCICommunication::createNewGame()
+    {
+        m_game.gameState = FenParser(FenParsing::startPosition).parse();
     }
 }

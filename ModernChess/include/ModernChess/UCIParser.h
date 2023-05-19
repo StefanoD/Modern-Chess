@@ -6,7 +6,7 @@
 
 namespace ModernChess
 {
-    class UCIParser : BasicParser
+    class UCIParser : public BasicParser
     {
     public:
         explicit UCIParser(std::string_view uiCommand);
