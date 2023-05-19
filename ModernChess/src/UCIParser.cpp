@@ -1,9 +1,26 @@
 #include "ModernChess/UCIParser.h"
 
 #include <cstring>
+#include <algorithm>
 
 namespace ModernChess
 {
+    static constexpr std::array<Figure, 255> promotionCharacterToPiece = [] {
+        std::array<Figure, 255> a{};
+
+        std::fill(a.begin(), a.end(), Figure::None);
+
+        a['n'] = Figure::WhiteKnight;
+        a['b'] = Figure::WhiteBishop;
+        a['r'] = Figure::WhiteRook;
+        a['q'] = Figure::WhiteQueen;
+        a['n'] = Figure::BlackKnight;
+        a['b'] = Figure::BlackBishop;
+        a['r'] = Figure::BlackRook;
+        a['q'] = Figure::BlackQueen;
+        return a;
+    } ();
+
     UCIParser::UCIParser(std::string_view uiCommand) : BasicParser(uiCommand)
     {}
 
@@ -127,5 +144,24 @@ namespace ModernChess
             return true;
         }
         return false;
+    }
+
+    Move UCIParser::parseMove()
+    {
+        // Uses long algebraic notation, i.e.
+        // - "e2e3"
+        // - "e7e8q" (promoting to queen)
+        const Square sourceSquare = parseSquare();
+        const Square targetSquare = parseSquare();
+        const Figure promotedPiece = promotionCharacterToPiece[currentCharacter()];
+
+        return Move(sourceSquare,
+                    targetSquare,
+                    Figure::None, // Dummy data
+                    promotedPiece,
+                    false, // Dummy data
+                    false, // Dummy data
+                    false, // Dummy data
+                    false); // Dummy data
     }
 }
