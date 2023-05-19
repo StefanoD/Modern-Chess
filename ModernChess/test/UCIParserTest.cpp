@@ -48,4 +48,15 @@ namespace {
         EXPECT_EQ(move.targetSquare, Square::e3);
         EXPECT_TRUE(move.legalPromotionCharacter);
     }
+
+    TEST(UCIParserTest, parseMoveIllegalPromotionCharacter)
+    {
+        UCIParser parser("e2e3f");
+
+        const UCIParser::UCIMove move = parser.parseMove();
+
+        EXPECT_EQ(move.sourceSquare, Square::undefined);
+        EXPECT_EQ(move.targetSquare, Square::undefined);
+        EXPECT_FALSE(move.legalPromotionCharacter);
+    }
 }
