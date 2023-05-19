@@ -102,6 +102,25 @@ namespace ModernChess
         return {m_currentPos, length};
     }
 
+    std::string_view BasicParser::getNextString()
+    {
+        skipWhiteSpaces();
+
+        std::string_view::iterator endPos = m_currentPos;
+
+        while (((endPos+1) < m_endPos) && *(endPos+1) != ' ')
+        {
+            ++endPos;
+        }
+
+        const std::string_view string {m_currentPos, endPos+1};
+
+        // skip either whitespace or set to end position
+        m_currentPos = endPos + 1;
+
+        return string;
+    }
+
     uint32_t BasicParser::parseNumber()
     {
         std::stringstream strNumber;
@@ -131,5 +150,13 @@ namespace ModernChess
         --m_currentPos;
 
         return number;
+    }
+
+    void BasicParser::skipWhiteSpaces()
+    {
+        while (hasNextCharacter() && *m_currentPos == ' ')
+        {
+            nextPosition();
+        }
     }
 }

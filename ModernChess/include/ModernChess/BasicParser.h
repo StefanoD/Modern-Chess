@@ -37,7 +37,11 @@ namespace ModernChess
 
         bool hasNextCharacter();
 
+        [[nodiscard]] std::string_view getNextString();
+
         uint32_t parseNumber();
+
+        void skipWhiteSpaces();
 
     protected:
         std::string_view::iterator m_beginPos{};
