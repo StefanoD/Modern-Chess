@@ -1,5 +1,7 @@
 #include "ModernChess/UCIParser.h"
 
+#include <cstring>
+
 namespace ModernChess
 {
     UCIParser::UCIParser(std::string_view fen) : BasicParser(fen)
