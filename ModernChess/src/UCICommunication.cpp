@@ -104,10 +104,45 @@ namespace ModernChess
             throw std::runtime_error("Missing position after position command: " +
                                       std::string(parser.currentStringView()));
         }
+
+        if (parser.uiHasSentMoves())
+        {
+            parseMove(parser);
+        }
     }
 
     void UCICommunication::createNewGame()
     {
         m_game.gameState = FenParser(FenParsing::startPosition).parse();
     }
+
+    Move UCICommunication::parseMove(UCIParser &parser)
+    {
+        const UCIParser::UCIMove uciMove = parser.parseMove();
+        const std::vector<Move> possibleMovesFromCurrentSate = m_game.generateMoves();
+
+        for (const Move move : possibleMovesFromCurrentSate)
+        {
+            if (move.getFrom() == uciMove.sourceSquare and
+                move.getTo() == uciMove.targetSquare)
+            {
+                if (const Figure promotedPiece = move.getPromotedPiece();
+                        promotedPiece != Figure::None)
+                {
+                    if (uciMove.legalPromotionCharacter)
+                    {
+                        return move;
+                    }
+                    // Illegal Move --> Return Null Move
+                    return {};
+                }
+                return move;
+            }
+        }
+
+        // Illegal Move --> Return Null Move
+        return {};
+    }
+
+
 }

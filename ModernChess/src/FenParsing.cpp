@@ -6,14 +6,16 @@ namespace ModernChess::FenParsing {
 
     FenParser::FenParser(std::string_view fen) : BasicParser(fen) {}
 
-    Color FenParser::parseColor(char character) const
+    Color FenParser::parseColor(char character)
     {
         if (character == 'w')
         {
+            ++m_currentPos;
             return Color::White;
         }
         if (character == 'b')
         {
+            ++m_currentPos;
             return Color::Black;
         }
 
@@ -42,6 +44,8 @@ namespace ModernChess::FenParsing {
 
             character = getNextCharacter();
         }
+
+        ++m_currentPos;
     }
 
     GameState FenParser::parse()
@@ -96,21 +100,15 @@ namespace ModernChess::FenParsing {
         gameState.board.sideToMove = parseColor(getNextCharacter());
 
         // go to parsing castling rights
-        nextPosition();
         parseCastlingRights(gameState);
-
-        // got to parsing en passant square
-        nextPosition();
 
         // parse en passant square
         gameState.board.enPassantTarget = parseSquare();
 
         // Skip space and parse half moves
-        nextPosition();
         gameState.halfMoveClock = parseNumber();
 
         // Skip space and parse number of next move
-        nextPosition();
         gameState.nextMoveClock = parseNumber();
 
         initOccupancyMaps(gameState);

@@ -10,6 +10,19 @@ namespace ModernChess
     class UCIParser : public BasicParser
     {
     public:
+        struct UCIMove {
+            explicit UCIMove(Square sourceSquare,
+                             Square targetSquare,
+                             bool legalPromotionCharacter) :
+                             sourceSquare(sourceSquare),
+                             targetSquare(targetSquare),
+                             legalPromotionCharacter(legalPromotionCharacter)
+            {};
+            Square sourceSquare{};
+            Square targetSquare{};
+            bool legalPromotionCharacter{};
+        };
+
         explicit UCIParser(std::string_view uiCommand);
 
         [[nodiscard]] bool uiRequestsUCIMode() const;
@@ -32,14 +45,7 @@ namespace ModernChess
 
         [[nodiscard]] bool uiHasSentSearchDepth();
 
-        /**
-         * @note Because the UCI input has only the information about the move
-         *       from a certain square, to a certain square and a possible promotion,
-         *       only these listed information can be retrieved. All other information
-         *       must not be queried from the returned Move object, because they are filled
-         *       with dummy information.
-         */
-        [[nodiscard]] Move parseMove();
+        [[nodiscard]] UCIMove parseMove();
 
     private:
     };

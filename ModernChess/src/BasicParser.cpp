@@ -44,6 +44,8 @@ namespace ModernChess
                                    std::string(1, character) + "' at position " + getCurrentPosition() + "!");
         }
 
+        ++m_currentPos;
+
         return square;
     }
 
@@ -66,11 +68,11 @@ namespace ModernChess
     void BasicParser::nextPosition()
     {
         ++m_currentPos;
-        if (m_currentPos == m_endPos)
+        /*if (m_currentPos == m_endPos)
         {
             const std::string position = getCurrentPosition();
             throw std::range_error("Error at position " + position + ": Unexpected end of line!");
-        }
+        }*/
     }
 
     char BasicParser::getNextCharacter()
@@ -86,7 +88,7 @@ namespace ModernChess
 
     char BasicParser::currentCharacter()
     {
-        if (m_currentPos == m_endPos)
+        if (m_currentPos >= m_endPos)
         {
             const std::string position = getCurrentPosition();
             throw std::range_error("Error at position " + position + ": Unexpected end of line!");
@@ -94,13 +96,24 @@ namespace ModernChess
         return *m_currentPos;
     }
 
-    bool BasicParser::hasNextCharacter()
+    bool BasicParser::hasNextCharacter() const
     {
         return (m_currentPos+1) < m_endPos;
     }
 
+    bool BasicParser::isAtEndOfString() const
+    {
+        return m_currentPos >= m_endPos;
+    }
+
     std::string_view BasicParser::currentStringView() const
     {
+        if (m_currentPos >= m_endPos)
+        {
+            const std::string position = getCurrentPosition();
+            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
+        }
+
         const size_t length = (m_endPos - m_currentPos);
         return {m_currentPos, length};
     }
@@ -148,9 +161,6 @@ namespace ModernChess
             throw std::range_error("Could not parse number \"" + strNumber.str() +
                                    "\" at position " + getCurrentPosition() + "!");
         }
-
-        // The last character was not a number. Therefore, decrement position again
-        --m_currentPos;
 
         return number;
     }
