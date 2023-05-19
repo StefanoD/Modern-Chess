@@ -42,7 +42,7 @@ namespace ModernChess
                 continue;
             }
 
-            if (parser.uiHasSentFENPosition())
+            if (parser.uiHasSentPosition())
             {
                 parsePosition(parser);
                 continue;
@@ -90,10 +90,19 @@ namespace ModernChess
 
     void UCICommunication::parsePosition(UCIParser &parser)
     {
-        if (parser.uiHasSentFENPosition())
+        if (parser.uiHasSentStartingPosition())
+        {
+            createNewGame();
+        }
+        else if (parser.uiHasSentFENPosition())
         {
             const std::string_view fenString = parser.getNextString();
             m_game.gameState = FenParser(fenString).parse();
+        }
+        else
+        {
+            // probably some weird UI bug. Setup therefore new game
+            createNewGame();
         }
     }
 
