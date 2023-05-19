@@ -31,6 +31,7 @@ add_library(${target}
         ../include/ModernChess/Square.h
         ../include/ModernChess/TUI.h
         ../include/ModernChess/UCIParser.h
+        ../include/ModernChess/UCICommunication.h
         ../include/ModernChess/Utilities.h
 
         AttackQueries.cpp
@@ -47,7 +48,9 @@ add_library(${target}
         BishopAttacks.cpp
         CastlingRights.cpp
         TUI.cpp
-        UCIParser.cpp)
+        UCIParser.cpp
+        UCICommunication.cpp
+        )
 
 target_include_directories(${target} PUBLIC ../include)
 

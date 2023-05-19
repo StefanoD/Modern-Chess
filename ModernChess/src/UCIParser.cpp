@@ -2,7 +2,7 @@
 
 namespace ModernChess
 {
-    UCIParser::UCIParser(std::string_view fen) : BasicParser(fen)
+    UCIParser::UCIParser(std::string_view uiCommand) : BasicParser(uiCommand)
     {}
 
     bool UCIParser::uiRequestsUCIMode() const
@@ -20,7 +20,7 @@ namespace ModernChess
         return currentStringView().starts_with("isready");
     }
 
-    bool UCIParser::uiQuitsGame() const
+    bool UCIParser::uiQuitGame() const
     {
         return currentStringView().starts_with("quit");
     }
