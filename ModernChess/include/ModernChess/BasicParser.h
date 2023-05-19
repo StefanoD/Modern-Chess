@@ -35,6 +35,8 @@ namespace ModernChess
 
         char getNextCharacter();
 
+        char currentCharacter();
+
         bool hasNextCharacter();
 
         [[nodiscard]] std::string_view getNextString();

@@ -84,6 +84,16 @@ namespace ModernChess
         return *m_currentPos;
     }
 
+    char BasicParser::currentCharacter()
+    {
+        if (m_currentPos == m_endPos)
+        {
+            const std::string position = getCurrentPosition();
+            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
+        }
+        return *m_currentPos;
+    }
+
     bool BasicParser::hasNextCharacter()
     {
         return (m_currentPos+1) < m_endPos;
