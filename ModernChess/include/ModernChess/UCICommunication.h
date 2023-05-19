@@ -14,5 +14,8 @@ namespace ModernChess
         static void sendAcknowledgeToUI();
 
         static void getInput(std::string &uiCommand);
+
+        static void parsePosition();
+        void createNewGame();
     };
 }
