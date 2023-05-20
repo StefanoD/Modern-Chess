@@ -18,7 +18,7 @@ namespace
 
     TEST(BasicParserTest, Init)
     {
-        BasicParser parser("1");
+        const BasicParser parser("1");
 
         EXPECT_FALSE(parser.hasNextCharacter());
     }
