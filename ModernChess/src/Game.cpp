@@ -31,6 +31,11 @@ namespace ModernChess
 
         return movesToBeGenerated;
     }
+
+    void Game::searchPosition(uint32_t depth)
+    {
+        std::ignore = depth;
+    }
 }
 
 
