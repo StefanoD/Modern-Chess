@@ -12,6 +12,7 @@ add_library(${target}
         ../include/ModernChess/FenParsing.h
         ../include/ModernChess/Figure.h
         ../include/ModernChess/FlatMap.h
+        ../include/ModernChess/Evaluation.h
         ../include/ModernChess/KingAttacks.h
         ../include/ModernChess/KnightAttacks.h
         ../include/ModernChess/Move.h
@@ -46,6 +47,7 @@ add_library(${target}
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
+        Evaluation.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)
