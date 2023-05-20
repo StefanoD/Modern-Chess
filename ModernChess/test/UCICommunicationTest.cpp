@@ -128,4 +128,42 @@ namespace
 
         std::cout << engineOutput << std::endl;
     }
+
+    TEST(UCICommunicationTest, sendGoCommand)
+    {
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position startpos\n";
+        inputStream << "go\n";
+        inputStream << "quit\n";
+
+        communicationThread.join();
+    }
+
+    TEST(UCICommunicationTest, sendGoWithDepthCommand)
+    {
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position startpos\n";
+        inputStream << "go depth 8\n";
+        inputStream << "quit\n";
+
+        communicationThread.join();
+    }
 }
