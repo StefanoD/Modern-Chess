@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cinttypes>
+
 namespace ModernChess
 {
     enum Color : uint8_t
