@@ -154,10 +154,10 @@ namespace ModernChess
                 // Illegal Move --> Return Null Move
                 return UCIMove{Square::undefined, Square::undefined, false};
             }
-
-            // move iterator to next position
-            nextPosition();
         }
+
+        // move iterator to next position
+        nextPosition();
 
         return UCIMove{sourceSquare, targetSquare, uiSentLegalPromotion};
     }
