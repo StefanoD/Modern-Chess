@@ -141,8 +141,7 @@ namespace ModernChess
         bool uiSentLegalPromotion = false;
 
         if (not isAtEndOfString() and
-            currentCharacter() != ' ' and
-            currentCharacter() != '\n')
+            currentCharacter() != ' ')
         {
             const char promotionCharacter = currentCharacter();
 
