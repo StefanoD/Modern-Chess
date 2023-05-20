@@ -64,8 +64,8 @@ namespace ModernChess
     void UCICommunication::registerToUI()
     {
         m_outputStream << "id name Modern Chess\n"
-                  << "id author Stefano Di Martino\n"
-                  << "uciok\n" << std::flush;
+                       << "id author Stefano Di Martino\n"
+                       << "uciok\n" << std::flush;
     }
 
     void UCICommunication::sendAcknowledgeToUI()
