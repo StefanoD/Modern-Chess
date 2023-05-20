@@ -1,7 +1,3 @@
-set(target modern-chess-lib)
-
-
-
 add_library(${target}
         ../include/ModernChess/AttackQueries.h
         ../include/ModernChess/BasicParser.h

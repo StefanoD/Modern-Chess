@@ -3,7 +3,7 @@ project(modern-chess-lib
         )
 
 add_subdirectory(benchmarks)
-add_subdirectory(src)
+add_subdirectory(ModernChessLib)
 add_subdirectory(test)
 add_subdirectory(PerftLib)
 add_subdirectory(Perft)
