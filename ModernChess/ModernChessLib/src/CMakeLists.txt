@@ -47,7 +47,6 @@ add_library(${target}
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
-        Evaluation.cpp
         )
 
 target_include_directories(${target} PUBLIC ../include)
