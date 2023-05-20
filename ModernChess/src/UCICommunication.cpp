@@ -3,7 +3,6 @@
 #include "ModernChess/FenParsing.h"
 
 #include <string>
-#include <limits>
 
 using ModernChess::FenParsing::FenParser;
 
@@ -76,11 +75,11 @@ namespace ModernChess
 
     void UCICommunication::getInput(std::string &uiCommand)
     {
-        m_inputStream >> uiCommand;
+        std::getline(m_inputStream, uiCommand);
 
         // Flush the input stream
-        m_inputStream.clear();
-        m_inputStream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        //m_inputStream.clear();
+        //m_inputStream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     void UCICommunication::parsePosition(UCIParser &parser)
