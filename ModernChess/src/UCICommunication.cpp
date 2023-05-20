@@ -21,7 +21,7 @@ namespace ModernChess
 
         std::string uiCommand;
 
-        for (getInput(uiCommand); ; getInput(uiCommand))
+        for (getInput(uiCommand); ;getInput(uiCommand))
         {
             // make sure uiCommand is available
             if (uiCommand == "\n")

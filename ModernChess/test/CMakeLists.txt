@@ -23,7 +23,8 @@ add_executable(${target}
         MoveExecutionTest.cpp
         TestingPositions.h
         PerftTest.cpp
-        UCIParserTest.cpp)
+        UCIParserTest.cpp
+        UCICommunicationTest.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main
