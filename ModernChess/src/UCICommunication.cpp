@@ -96,7 +96,7 @@ namespace ModernChess
         else
         {
             throw std::runtime_error("Missing position after position command: " +
-                                      std::string(parser.currentStringView()));
+                                      std::string(parser.completeStringView()));
         }
 
         if (parser.uiHasSentMoves())
