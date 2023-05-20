@@ -24,11 +24,6 @@ namespace ModernChess
         for (getInput(uiCommand); ;getInput(uiCommand))
         {
             // make sure uiCommand is available
-            if (uiCommand == "\n")
-            {
-                continue;
-            }
-
             UCIParser parser(uiCommand);
 
             if (parser.uiQuitGame())
