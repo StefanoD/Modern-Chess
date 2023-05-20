@@ -2,8 +2,6 @@
 #include "ModernChess/UCIParser.h"
 #include "ModernChess/FenParsing.h"
 
-//#include <cstdio>
-#include <iostream>
 #include <string>
 #include <limits>
 
@@ -11,12 +9,14 @@ using ModernChess::FenParsing::FenParser;
 
 namespace ModernChess
 {
+    UCICommunication::UCICommunication(std::istream &inputStream, std::ostream &outputStream, std::ostream &errorStream) :
+            m_inputStream(inputStream),
+            m_outputStream(outputStream),
+            m_errorStream(errorStream)
+    {}
+
     void UCICommunication::startCommunication()
     {
-        // Disable buffered uiCommand and output for immediately feedback
-        //std::setvbuf(stdin, nullptr, _IONBF, 0);
-        //std::setvbuf(stdout, nullptr, _IONBF, 0);
-
         registerToUI();
 
         std::string uiCommand;
@@ -65,23 +65,23 @@ namespace ModernChess
 
     void UCICommunication::registerToUI()
     {
-        std::cout << "id name Modern Chess\n"
+        m_outputStream << "id name Modern Chess\n"
                   << "id author Stefano Di Martino\n"
                   << "uciok\n" << std::flush;
     }
 
     void UCICommunication::sendAcknowledgeToUI()
     {
-        std::cout << "readyok\n" << std::flush;
+        m_outputStream << "readyok\n" << std::flush;
     }
 
     void UCICommunication::getInput(std::string &uiCommand)
     {
-        std::cin >> uiCommand;
+        m_inputStream >> uiCommand;
 
         // Flush the input stream
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        m_inputStream.clear();
+        m_inputStream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     void UCICommunication::parsePosition(UCIParser &parser)
@@ -115,13 +115,13 @@ namespace ModernChess
                 }
                 else
                 {
-                    std::cerr << "Illegal move detected: " << moveCommand << std::endl;
+                    m_errorStream << "Illegal move detected: " << moveCommand << std::endl;
                     break;
                 }
             }
         }
 
-        std::cout << m_game.gameState << std::endl;
+        m_outputStream << m_game.gameState << std::endl;
     }
 
     void UCICommunication::createNewGame()

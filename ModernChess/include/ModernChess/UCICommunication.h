@@ -3,6 +3,8 @@
 #include "Game.h"
 
 #include <string>
+#include <istream>
+#include <ostream>
 
 namespace ModernChess
 {
@@ -11,16 +13,21 @@ namespace ModernChess
     class UCICommunication
     {
     public:
+        explicit UCICommunication(std::istream &inputStream, std::ostream &outputStream, std::ostream &errorStream);
+
         void startCommunication();
 
     private:
         Game m_game;
+        std::istream &m_inputStream;
+        std::ostream &m_outputStream;
+        std::ostream &m_errorStream;
 
-        static void registerToUI();
+        void registerToUI();
 
-        static void sendAcknowledgeToUI();
+        void sendAcknowledgeToUI();
 
-        static void getInput(std::string &uiCommand);
+        void getInput(std::string &uiCommand);
 
         void parsePosition(UCIParser &parser);
 
