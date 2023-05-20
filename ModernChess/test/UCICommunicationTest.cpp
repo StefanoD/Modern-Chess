@@ -93,4 +93,39 @@ namespace
 
         std::cout << engineOutput << std::endl;
     }
+
+    TEST(UCICommunicationTest, sendStartingPositionAndMakeMoves)
+    {
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position startpos moves a2a3 a7a6\n";
+        inputStream << "quit\n";
+
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        const std::string expectedDebugOutput = """8 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖\n"
+                                                "  7 . ♙ ♙ ♙ ♙ ♙ ♙ ♙\n"
+                                                "  6 ♙ . . . . . . .\n"
+                                                "  5 . . . . . . . .\n"
+                                                "  4 . . . . . . . .\n"
+                                                "  3 ♟\uFE0E . . . . . . .\n"
+                                                "  2 . ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E\n"
+                                                "  1 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜\n"
+                                                "\n"
+                                                "    a b c d e f g h""";
+
+        EXPECT_TRUE(engineOutput.find(expectedDebugOutput) != std::string::npos);
+
+        std::cout << engineOutput << std::endl;
+    }
 }
