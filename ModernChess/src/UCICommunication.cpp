@@ -107,8 +107,25 @@ namespace ModernChess
 
         if (parser.uiHasSentMoves())
         {
-            parseMove(parser);
+            const std::string_view moveCommand = parser.currentStringView();
+
+            while (parser.hasNextCharacter())
+            {
+                const Move move = parseMove(parser);
+
+                if (not move.isNullMove())
+                {
+                    m_game.makeMove(move, MoveGenerations::MoveType::AllMoves);
+                }
+                else
+                {
+                    std::cerr << "Illegal move detected: " << moveCommand << std::endl;
+                    break;
+                }
+            }
         }
+
+        std::cout << m_game.gameState << std::endl;
     }
 
     void UCICommunication::createNewGame()
