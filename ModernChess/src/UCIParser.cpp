@@ -1,7 +1,6 @@
 #include "ModernChess/UCIParser.h"
 
 #include <cstring>
-#include <algorithm>
 
 namespace ModernChess
 {
