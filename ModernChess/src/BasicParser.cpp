@@ -110,8 +110,7 @@ namespace ModernChess
     {
         if (m_currentPos >= m_endPos)
         {
-            const std::string position = getCurrentPosition();
-            throw std::range_error("Error at position " + position + ": Unexpected end of line!");
+            return {};
         }
 
         const size_t length = (m_endPos - m_currentPos);
