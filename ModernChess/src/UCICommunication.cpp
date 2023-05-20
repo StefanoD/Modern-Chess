@@ -55,6 +55,10 @@ namespace ModernChess
             {
                 registerToUI();
             }
+            else
+            {
+                m_errorStream << "Unknown command: " << parser.currentStringView() << std::endl << std::flush;
+            }
         }
     }
 
