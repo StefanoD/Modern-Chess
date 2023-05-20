@@ -54,16 +54,12 @@ namespace ModernChess
             }
             else if (parser.uiHasSentGoCommand())
             {
-                // call parse position function
-                // parse_go(input);
+                executeGoCommand(parser);
             }
             else if (parser.uiRequestsUCIMode())
             {
                 registerToUI();
             }
-
-            // Flush answer to UI
-            std::cout << std::flush;
         }
     }
 
@@ -111,7 +107,7 @@ namespace ModernChess
 
             while (parser.hasNextCharacter())
             {
-                const Move move = parseMove(parser);
+                const Move move = executeMoves(parser);
 
                 if (not move.isNullMove())
                 {
@@ -133,7 +129,7 @@ namespace ModernChess
         m_game.gameState = FenParser(FenParsing::startPosition).parse();
     }
 
-    Move UCICommunication::parseMove(UCIParser &parser)
+    Move UCICommunication::executeMoves(UCIParser &parser)
     {
         const UCIParser::UCIMove uciMove = parser.parseMove();
         const std::vector<Move> possibleMovesFromCurrentSate = m_game.generateMoves();
@@ -161,5 +157,19 @@ namespace ModernChess
         return {};
     }
 
+    void UCICommunication::executeGoCommand(UCIParser &parser)
+    {
+        uint32_t searchDepth;
 
+        if (parser.uiHasSentSearchDepth())
+        {
+            searchDepth = parser.parseNumber();
+        }
+        else
+        {
+            searchDepth = 6;
+        }
+
+        m_game.searchPosition(searchDepth);
+    }
 }

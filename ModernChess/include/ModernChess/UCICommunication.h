@@ -24,7 +24,9 @@ namespace ModernChess
 
         void parsePosition(UCIParser &parser);
 
-        Move parseMove(UCIParser &parser);
+        Move executeMoves(UCIParser &parser);
+
+        void executeGoCommand(UCIParser &parser);
 
         void createNewGame();
     };
