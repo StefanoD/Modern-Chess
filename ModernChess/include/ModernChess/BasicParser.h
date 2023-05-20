@@ -27,6 +27,8 @@ namespace ModernChess
 
         [[nodiscard]] std::string getCurrentPosition() const;
 
+        [[nodiscard]] std::string_view completeStringView() const;
+
         [[nodiscard]] std::string_view currentStringView() const;
 
         [[nodiscard]] bool isRankNumber(char character) const;

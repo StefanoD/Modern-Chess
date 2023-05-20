@@ -106,6 +106,11 @@ namespace ModernChess
         return m_currentPos >= m_endPos;
     }
 
+    std::string_view BasicParser::completeStringView() const
+    {
+        return {m_beginPos, m_endPos};
+    }
+
     std::string_view BasicParser::currentStringView() const
     {
         if (m_currentPos >= m_endPos)
