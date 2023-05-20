@@ -145,7 +145,9 @@ namespace ModernChess
     {
         std::stringstream strNumber;
 
-        for (char character = getNextCharacter();
+        skipWhiteSpaces();
+
+        for (char character = currentCharacter();
              isNumerical(character);
              character = getNextCharacter())
         {

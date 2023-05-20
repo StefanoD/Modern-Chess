@@ -36,4 +36,17 @@ namespace
         EXPECT_EQ("12", parser.getNextString());
         EXPECT_EQ("3", parser.getNextString());
     }
+
+    TEST(BasicParserTest, parseNumber)
+    {
+        BasicParser parser("12");
+        EXPECT_EQ(12, parser.parseNumber());
+    }
+
+    TEST(BasicParserTest, parseNumberWithWhitespaces)
+    {
+        BasicParser parser("      12   3");
+        EXPECT_EQ(12, parser.parseNumber());
+        EXPECT_EQ(3, parser.parseNumber());
+    }
 }
