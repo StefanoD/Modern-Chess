@@ -8,7 +8,7 @@
 #include <vector>
 #include <functional>
 
-namespace ModernChess::MoveGenerations
+namespace ModernChess
 {
     /**
      * @brief Leaves king sometimes in check. There it's only a pseudo-move-generation
@@ -16,6 +16,25 @@ namespace ModernChess::MoveGenerations
     class PseudoMoveGeneration
     {
     public:
+        PseudoMoveGeneration() = delete;
+
+        [[nodiscard]] static std::vector<Move> generateMoves(const GameState &gameState)
+        {
+            std::vector<Move> movesToBeGenerated;
+            movesToBeGenerated.reserve(256);
+
+            if (gameState.board.sideToMove == Color::White)
+            {
+                PseudoMoveGeneration::generateWhiteFigureMoves(gameState, movesToBeGenerated);
+            }
+            else
+            {
+                PseudoMoveGeneration::generateBlackFigureMoves(gameState, movesToBeGenerated);
+            }
+
+            return movesToBeGenerated;
+        }
+
         static void generateBlackFigureMoves(const GameState &gameState, std::vector<Move> &movesToBeGenerated)
         {
             generateBlackPawnMoves(gameState, movesToBeGenerated);
@@ -249,7 +268,7 @@ namespace ModernChess::MoveGenerations
                     !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], g1))
                 {
                     // make sure king and the f1 squares are not under attacks.
-                    // The g1 square will be checked in the makeMove() function due to performance reasons
+                    // The g1 square will be checked in the executeMove() function due to performance reasons
                     if (!AttackQueries::squareIsAttackedByBlack(gameState.board, Square::e1) &&
                         !AttackQueries::squareIsAttackedByBlack(gameState.board, Square::f1))
                     {
@@ -269,7 +288,7 @@ namespace ModernChess::MoveGenerations
                     !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], b1))
                 {
                     // make sure king and the d1 squares are not under attacks
-                    // The c1 square will be checked in the makeMove() function due to performance reasons
+                    // The c1 square will be checked in the executeMove() function due to performance reasons
                     if (!AttackQueries::squareIsAttackedByBlack(gameState.board, e1) &&
                         !AttackQueries::squareIsAttackedByBlack(gameState.board, d1))
                     {
@@ -456,7 +475,7 @@ namespace ModernChess::MoveGenerations
                     !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], g8))
                 {
                     // make sure king and the f8 squares are not under attacks.
-                    // The g1 square will be checked in the makeMove() function due to performance reasons
+                    // The g1 square will be checked in the executeMove() function due to performance reasons
                     if (!AttackQueries::squareIsAttackedByWhite(gameState.board, Square::e8) &&
                         !AttackQueries::squareIsAttackedByWhite(gameState.board, Square::f8))
                     {
@@ -476,7 +495,7 @@ namespace ModernChess::MoveGenerations
                     !BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], b8))
                 {
                     // make sure king and the d8 squares are not under attacks
-                    // The c8 square will be checked in the makeMove() function due to performance reasons
+                    // The c8 square will be checked in the executeMove() function due to performance reasons
                     if (!AttackQueries::squareIsAttackedByWhite(gameState.board, e8) &&
                         !AttackQueries::squareIsAttackedByWhite(gameState.board, d8))
                     {

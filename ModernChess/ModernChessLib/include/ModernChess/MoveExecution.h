@@ -4,7 +4,7 @@
 #include "BitBoardOperations.h"
 #include "AttackQueries.h"
 
-namespace ModernChess::MoveGenerations
+namespace ModernChess
 {
     enum class MoveType
     {
@@ -16,6 +16,16 @@ namespace ModernChess::MoveGenerations
     {
     public:
         MoveExecution() = delete;
+
+        static bool executeMove(GameState &gameState, Move move, MoveType moveType)
+        {
+            if (gameState.board.sideToMove == Color::White)
+            {
+                return MoveExecution::executeMoveForWhite(gameState, move, moveType);
+            }
+
+            return MoveExecution::executeMoveForBlack(gameState, move, moveType);
+        }
 
         static bool executeMoveForWhite(GameState &gameState, Move move, MoveType moveType)
         {
