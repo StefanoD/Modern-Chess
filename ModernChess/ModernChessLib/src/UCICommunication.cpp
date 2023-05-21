@@ -109,7 +109,7 @@ namespace ModernChess
 
                 if (not move.isNullMove())
                 {
-                    m_game.makeMove(move, MoveGenerations::MoveType::AllMoves);
+                    m_game.makeMove(move, MoveType::AllMoves);
                 }
                 else
                 {

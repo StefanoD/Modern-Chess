@@ -11,7 +11,7 @@ namespace ModernChess {
     public:
         GameState gameState;
 
-        bool makeMove(Move move, MoveGenerations::MoveType moveType);
+        bool makeMove(Move move, MoveType moveType);
 
         std::vector<Move> generateMoves() const;
 
