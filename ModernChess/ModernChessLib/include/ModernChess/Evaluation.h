@@ -21,7 +21,7 @@ namespace ModernChess
         }
 
         // negamax alpha beta search
-        int negamax(int alpha, int beta, int depth)
+        int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
         {
             // recursion escape condition
             if (depth == 0)
@@ -34,10 +34,10 @@ namespace ModernChess
             ++m_numberOfNodes;
 
             // best move so far
-            Move best_sofar;
+            Move bestSoFar;
 
             // old value of alpha
-            const int old_alpha = alpha;
+            const int32_t oldAlpha = alpha;
 
             // create move list instance
             const std::vector<Move> moves = PseudoMoveGeneration::generateMoves(m_gameState);
@@ -48,7 +48,6 @@ namespace ModernChess
                 // preserve board state
                 const Board boardCopy = m_gameState.board;
 
-                // increment ply
                 ++m_gameState.halfMoveClock;
 
                 // make sure to make only legal moves
@@ -62,7 +61,7 @@ namespace ModernChess
                 }
 
                 // score current move
-                const int score = -negamax(-beta, -alpha, depth - 1);
+                const int32_t score = -negamax(-beta, -alpha, depth - 1);
 
                 // decrement ply
                 --m_gameState.halfMoveClock;
@@ -87,16 +86,16 @@ namespace ModernChess
                     if (m_gameState.halfMoveClock == 0)
                     {
                         // associate best move with the best score
-                        best_sofar = move;
+                        bestSoFar = move;
                     }
                 }
             }
 
             // found better move
-            if (old_alpha != alpha)
+            if (oldAlpha != alpha)
             {
                 // init best move
-                m_bestMove = best_sofar;
+                m_bestMove = bestSoFar;
             }
 
             // node (move) fails low
@@ -151,7 +150,7 @@ namespace ModernChess
         }
 
     private:
-        int m_numberOfNodes{};
+        uint32_t m_numberOfNodes{};
         Move m_bestMove{};
         GameState &m_gameState;
 
