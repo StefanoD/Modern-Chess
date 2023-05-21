@@ -23,24 +23,26 @@ namespace ModernChess
         // negamax alpha beta search
         int negamax(int alpha, int beta, int depth)
         {
-            // recursion escapre condition
+            // recursion escape condition
             if (depth == 0)
+            {
                 // return evaluation
                 return evaluatePosition(m_gameState.board.sideToMove, m_gameState.board.bitboards);
+            }
 
             // increment nodes count
-            m_numberOfNodes++;
+            ++m_numberOfNodes;
 
             // best move so far
             Move best_sofar;
 
             // old value of alpha
-            int old_alpha = alpha;
+            const int old_alpha = alpha;
 
             // create move list instance
             const std::vector<Move> moves = PseudoMoveGeneration::generateMoves(m_gameState);
 
-            // loop over moves within a movelist
+            // loop over moves within a move list
             for (const Move move : moves)
             {
                 // preserve board state
@@ -60,10 +62,10 @@ namespace ModernChess
                 }
 
                 // score current move
-                int score = -negamax(-beta, -alpha, depth - 1);
+                const int score = -negamax(-beta, -alpha, depth - 1);
 
                 // decrement ply
-                m_gameState.halfMoveClock--;
+                --m_gameState.halfMoveClock;
 
                 // take move back
                 m_gameState.board = boardCopy;
@@ -83,15 +85,19 @@ namespace ModernChess
 
                     // if root move
                     if (m_gameState.halfMoveClock == 0)
+                    {
                         // associate best move with the best score
                         best_sofar = move;
+                    }
                 }
             }
 
             // found better move
             if (old_alpha != alpha)
+            {
                 // init best move
                 m_bestMove = best_sofar;
+            }
 
             // node (move) fails low
             return alpha;
