@@ -34,7 +34,7 @@ namespace ModernChess
             ++m_numberOfNodes;
 
             // best move so far
-            Move bestSoFar;
+            Move bestMoveSoFar;
 
             // old value of alpha
             const int32_t oldAlpha = alpha;
@@ -86,7 +86,7 @@ namespace ModernChess
                     if (m_gameState.halfMoveClock == 0)
                     {
                         // associate best move with the best score
-                        bestSoFar = move;
+                        bestMoveSoFar = move;
                     }
                 }
             }
@@ -95,7 +95,7 @@ namespace ModernChess
             if (oldAlpha != alpha)
             {
                 // init best move
-                m_bestMove = bestSoFar;
+                m_bestMove = bestMoveSoFar;
             }
 
             // node (move) fails low
