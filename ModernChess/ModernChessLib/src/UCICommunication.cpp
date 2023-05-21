@@ -168,6 +168,7 @@ namespace ModernChess
             searchDepth = 6;
         }
 
-        m_game.searchPosition(searchDepth);
+        const Move bestMove = m_game.getBestMove(searchDepth);
+        m_outputStream << "bestmove " << bestMove << "\n" << std::flush;
     }
 }
