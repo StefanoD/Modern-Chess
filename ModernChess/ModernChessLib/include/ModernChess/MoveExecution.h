@@ -108,6 +108,7 @@ namespace ModernChess
                 gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
                 // change side to move
                 gameState.board.sideToMove = Color::Black;
+                ++gameState.halfMoveClock;
 
                 // return legal move
                 return true;
@@ -198,6 +199,7 @@ namespace ModernChess
                 gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
                 // change side to move
                 gameState.board.sideToMove = Color::White;
+                ++gameState.halfMoveClock;
 
                 // return legal move
                 return true;

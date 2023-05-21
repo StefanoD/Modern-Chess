@@ -7,18 +7,30 @@
 #include "Color.h"
 
 #include <array>
+#include <limits>
 
 namespace ModernChess
 {
     class Evaluation
     {
     public:
-        explicit Evaluation(GameState &gameState) : m_gameState(gameState) {}
+        explicit Evaluation(GameState gameState) : m_gameState(gameState) {}
 
-        void searchPosition(uint32_t depth)
+        Move getBestMove(uint32_t depth)
         {
-            std::ignore = depth;
+            // find best move within a given position
+            negamax(minusInfinity, plusInfinity, depth);
+            return m_bestMove;
         }
+
+    private:
+        uint32_t m_numberOfNodes{};
+        Move m_bestMove{};
+        GameState m_gameState;
+        // Use here min + 1, otherwise negation of this number won't work
+        static constexpr int32_t minusInfinity = std::numeric_limits<int32_t>::min() + 1;
+        // Use here min - 1, otherwise negation of this number won't work
+        static constexpr int32_t plusInfinity = std::numeric_limits<int32_t>::max() - 1;
 
         // negamax alpha beta search
         int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
@@ -27,7 +39,7 @@ namespace ModernChess
             if (depth == 0)
             {
                 // return evaluation
-                return evaluatePosition(m_gameState.board.sideToMove, m_gameState.board.bitboards);
+                return evaluatePosition();
             }
 
             // increment nodes count
@@ -46,16 +58,11 @@ namespace ModernChess
             for (const Move move : moves)
             {
                 // preserve board state
-                const Board boardCopy = m_gameState.board;
-
-                ++m_gameState.halfMoveClock;
+                const GameState gameStateCopy = m_gameState;
 
                 // make sure to make only legal moves
                 if (not MoveExecution::executeMove(m_gameState, move, MoveType::AllMoves))
                 {
-                    // decrement ply
-                    --m_gameState.halfMoveClock;
-
                     // skip to next move
                     continue;
                 }
@@ -63,11 +70,8 @@ namespace ModernChess
                 // score current move
                 const int32_t score = -negamax(-beta, -alpha, depth - 1);
 
-                // decrement ply
-                --m_gameState.halfMoveClock;
-
                 // take move back
-                m_gameState.board = boardCopy;
+                m_gameState = gameStateCopy;
 
                 // fail-hard beta cutoff
                 if (score >= beta)
@@ -102,7 +106,7 @@ namespace ModernChess
             return alpha;
         }
 
-        static inline int32_t evaluatePosition(Color sideToPlay, const std::array<BitBoardState, 12> &bitboards)
+        int32_t evaluatePosition()
         {
             // static evaluation score
             int32_t score = 0;
@@ -112,7 +116,7 @@ namespace ModernChess
             {
                 // loop over figure within a bitboard
 
-                for (BitBoardState bitboard = bitboards[figure]; bitboard != BoardState::empty; )
+                for (BitBoardState bitboard = m_gameState.board.bitboards[figure]; bitboard != BoardState::empty; )
                 {
                     const Square square = BitBoardOperations::bitScanForward(bitboard);
 
@@ -146,13 +150,8 @@ namespace ModernChess
             }
 
             // return final evaluation based on side
-            return (sideToPlay == Color::White) ? score : -score;
+            return (m_gameState.board.sideToMove == Color::White) ? score : -score;
         }
-
-    private:
-        uint32_t m_numberOfNodes{};
-        Move m_bestMove{};
-        GameState &m_gameState;
 
         /*
          *   Material Score

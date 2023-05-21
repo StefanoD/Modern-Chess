@@ -525,4 +525,28 @@ namespace
         std::cout << "After Move:" << std::endl;
         std::cout << gameState << std::endl;
     }
+
+    TEST(MoveExecutionTest, PawnPushWithBlack)
+    {
+        /*
+         * 8 ♖ ♘ ♗ ♕ ♔ ♗ . ♖
+         * 7 ♙ ♙ ♙ ♙ . ♙ ♙ ♙
+         * 6 . . . . . ♘ . .
+         * 5 . . . . ♙ . . .  // Black & White are position equalizing to 0
+         * 4 . . . . ♟︎ . . .
+         * 3 . . . . . ♞ . . // New knight position counts 20
+         * 2 ♟︎ ♟︎ ♟︎ ♟︎ . ♟︎ ♟︎ ♟︎
+         * 1 ♜ ♞ ♝ ♛ ♚ ♝ . ♜ // This empty square counts -10
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser("rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 1");
+        GameState gameState = fenParser.parse();
+
+        const Move move(Square::a7, Square::a6, Figure::BlackPawn, Figure::None, false, false, false, false);
+
+        const bool success = MoveExecution::executeMoveForBlack(gameState, move, MoveType::AllMoves);
+        EXPECT_TRUE(success);
+        std::cout << gameState;
+    }
 }

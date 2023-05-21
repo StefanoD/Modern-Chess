@@ -5,7 +5,7 @@ namespace ModernChess
 
     GameState::GameState()
     {
-        moveList.reserve(256);
+        //moveList.reserve(256);
     }
 }
 

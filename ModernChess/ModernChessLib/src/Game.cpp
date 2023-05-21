@@ -16,9 +16,9 @@ namespace ModernChess
         return PseudoMoveGeneration::generateMoves(gameState);
     }
 
-    void Game::searchPosition(uint32_t depth)
+    Move Game::getBestMove(uint32_t depth)
     {
-        Evaluation(gameState).searchPosition(depth);
+        return Evaluation(gameState).getBestMove(depth);
     }
 }
 
