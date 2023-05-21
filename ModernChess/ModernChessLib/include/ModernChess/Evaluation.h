@@ -14,7 +14,10 @@ namespace ModernChess
     class Evaluation
     {
     public:
-        explicit Evaluation(GameState gameState) : m_gameState(gameState) {}
+        explicit Evaluation(GameState gameState) :
+            m_gameState(gameState),
+            m_halfMoveClockRootSearch(m_gameState.halfMoveClock)
+            {}
 
         Move getBestMove(uint32_t depth)
         {
@@ -27,6 +30,7 @@ namespace ModernChess
         uint32_t m_numberOfNodes{};
         Move m_bestMove{};
         GameState m_gameState;
+        uint32_t m_halfMoveClockRootSearch{};
         // Use here min + 1, otherwise negation of this number won't work
         static constexpr int32_t minusInfinity = std::numeric_limits<int32_t>::min() + 1;
         // Use here min - 1, otherwise negation of this number won't work
@@ -87,7 +91,7 @@ namespace ModernChess
                     alpha = score;
 
                     // if root move
-                    if (m_gameState.halfMoveClock == 0)
+                    if (m_gameState.halfMoveClock == m_halfMoveClockRootSearch)
                     {
                         // associate best move with the best score
                         bestMoveSoFar = move;
