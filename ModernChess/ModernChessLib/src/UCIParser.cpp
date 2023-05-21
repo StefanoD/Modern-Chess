@@ -129,6 +129,18 @@ namespace ModernChess
         return false;
     }
 
+    bool UCIParser::uiHasSentStopCommand()
+    {
+        constexpr auto stopCommand = "stop";
+
+        if (currentStringView().starts_with(stopCommand))
+        {
+            m_currentPos += strlen(stopCommand);
+            return true;
+        }
+        return false;
+    }
+
     UCIParser::UCIMove UCIParser::parseMove()
     {
         // Uses long algebraic notation, i.e.

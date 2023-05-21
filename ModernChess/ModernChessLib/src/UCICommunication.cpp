@@ -50,6 +50,11 @@ namespace ModernChess
             {
                 executeGoCommand(parser);
             }
+            else if (parser.uiHasSentStopCommand())
+            {
+                // Workaround for stop command
+                sendBestMove(6);
+            }
             else if (parser.uiRequestsUCIMode())
             {
                 registerToUI();
@@ -168,6 +173,11 @@ namespace ModernChess
             searchDepth = 6;
         }
 
+        sendBestMove(searchDepth);
+    }
+
+    void UCICommunication::sendBestMove(uint32_t searchDepth)
+    {
         const Move bestMove = m_game.getBestMove(searchDepth);
         m_outputStream << "bestmove " << bestMove << "\n" << std::flush;
     }

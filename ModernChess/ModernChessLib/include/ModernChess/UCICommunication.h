@@ -36,5 +36,7 @@ namespace ModernChess
         void executeGoCommand(UCIParser &parser);
 
         void createNewGame();
+
+        void sendBestMove(uint32_t searchDepth);
     };
 }

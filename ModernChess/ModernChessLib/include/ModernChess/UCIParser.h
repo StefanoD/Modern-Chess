@@ -45,6 +45,8 @@ namespace ModernChess
 
         [[nodiscard]] bool uiHasSentSearchDepth();
 
+        [[nodiscard]] bool uiHasSentStopCommand();
+
         [[nodiscard]] UCIMove parseMove();
 
     private:
