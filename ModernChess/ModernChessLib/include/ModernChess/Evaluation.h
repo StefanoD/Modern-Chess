@@ -1,6 +1,8 @@
 #pragma once
 
 #include "BitBoardOperations.h"
+#include "PseudoMoveGeneration.h"
+#include "MoveExecution.h"
 #include "Figure.h"
 #include "Color.h"
 
@@ -11,7 +13,89 @@ namespace ModernChess
     class Evaluation
     {
     public:
-        Evaluation() = delete;
+        explicit Evaluation(GameState &gameState) : m_gameState(gameState) {}
+
+        void searchPosition(uint32_t depth)
+        {
+            std::ignore = depth;
+        }
+
+        // negamax alpha beta search
+        int negamax(int alpha, int beta, int depth)
+        {
+            // recursion escapre condition
+            if (depth == 0)
+                // return evaluation
+                return evaluatePosition(m_gameState.board.sideToMove, m_gameState.board.bitboards);
+
+            // increment nodes count
+            m_numberOfNodes++;
+
+            // best move so far
+            Move best_sofar;
+
+            // old value of alpha
+            int old_alpha = alpha;
+
+            // create move list instance
+            const std::vector<Move> moves = PseudoMoveGeneration::generateMoves(m_gameState);
+
+            // loop over moves within a movelist
+            for (const Move move : moves)
+            {
+                // preserve board state
+                const Board boardCopy = m_gameState.board;
+
+                // increment ply
+                ++m_gameState.halfMoveClock;
+
+                // make sure to make only legal moves
+                if (not MoveExecution::executeMove(m_gameState, move, MoveType::AllMoves))
+                {
+                    // decrement ply
+                    --m_gameState.halfMoveClock;
+
+                    // skip to next move
+                    continue;
+                }
+
+                // score current move
+                int score = -negamax(-beta, -alpha, depth - 1);
+
+                // decrement ply
+                m_gameState.halfMoveClock--;
+
+                // take move back
+                m_gameState.board = boardCopy;
+
+                // fail-hard beta cutoff
+                if (score >= beta)
+                {
+                    // node (move) fails high
+                    return beta;
+                }
+
+                // found a better move
+                if (score > alpha)
+                {
+                    // PV node (move)
+                    alpha = score;
+
+                    // if root move
+                    if (m_gameState.halfMoveClock == 0)
+                        // associate best move with the best score
+                        best_sofar = move;
+                }
+            }
+
+            // found better move
+            if (old_alpha != alpha)
+                // init best move
+                m_bestMove = best_sofar;
+
+            // node (move) fails low
+            return alpha;
+        }
 
         static inline int32_t evaluatePosition(Color sideToPlay, const std::array<BitBoardState, 12> &bitboards)
         {
@@ -61,6 +145,10 @@ namespace ModernChess
         }
 
     private:
+        int m_numberOfNodes{};
+        Move m_bestMove{};
+        GameState &m_gameState;
+
         /*
          *   Material Score
          *
