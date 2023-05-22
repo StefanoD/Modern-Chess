@@ -7,18 +7,6 @@ namespace ModernChess
     {
         //moveList.reserve(256);
     }
-
-    bool operator==(const GameState &lhs, const GameState &rhs)
-    {
-        return lhs.board == rhs.board &&
-               lhs.halfMoveClock == rhs.halfMoveClock &&
-               lhs.nextMoveClock == rhs.nextMoveClock;
-    }
-
-    bool operator!=(const GameState &lhs, const GameState &rhs)
-    {
-        return !(lhs == rhs);
-    }
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState)

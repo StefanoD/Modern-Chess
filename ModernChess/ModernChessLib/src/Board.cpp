@@ -74,20 +74,6 @@ namespace ModernChess
     {
         return ~getOccupiedSquares();
     }
-
-    bool operator==(const Board &lhs, const Board &rhs)
-    {
-        return lhs.bitboards == rhs.bitboards &&
-               lhs.occupancies == rhs.occupancies &&
-               lhs.castlingRights == rhs.castlingRights &&
-               lhs.enPassantTarget == rhs.enPassantTarget &&
-               lhs.sideToMove == rhs.sideToMove;
-    }
-
-    bool operator!=(const Board &lhs, const Board &rhs)
-    {
-        return !(lhs == rhs);
-    }
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::Board &bitBoard)
