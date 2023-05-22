@@ -127,7 +127,7 @@ namespace ModernChess
             }
         }
 
-        m_outputStream << m_game.gameState << std::endl;
+        //m_outputStream << m_game.gameState << std::endl;
     }
 
     void UCICommunication::createNewGame()
