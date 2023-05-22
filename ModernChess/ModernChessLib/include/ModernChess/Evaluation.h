@@ -3,6 +3,7 @@
 #include "BitBoardOperations.h"
 #include "PseudoMoveGeneration.h"
 #include "MoveExecution.h"
+#include "AttackQueries.h"
 #include "Figure.h"
 #include "Color.h"
 
@@ -30,11 +31,14 @@ namespace ModernChess
         uint32_t m_numberOfNodes{};
         Move m_bestMove{};
         GameState m_gameState;
-        uint32_t m_halfMoveClockRootSearch{};
+        int32_t m_halfMoveClockRootSearch{};
         // Use here min + 1, otherwise negation of this number won't work
         static constexpr int32_t minusInfinity = std::numeric_limits<int32_t>::min() + 1;
         // Use here min - 1, otherwise negation of this number won't work
         static constexpr int32_t plusInfinity = std::numeric_limits<int32_t>::max() - 1;
+
+        static constexpr int32_t checkMateScore = minusInfinity + 1;
+        static constexpr int32_t staleMateScore = 0;
 
         // negamax alpha beta search
         int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
@@ -48,6 +52,22 @@ namespace ModernChess
 
             // increment nodes count
             ++m_numberOfNodes;
+
+            bool inCheck;
+
+            if (m_gameState.board.sideToMove == Color::White)
+            {
+                const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::WhiteKing]);
+                inCheck = AttackQueries::squareIsAttackedByBlack(m_gameState.board, kingsSquare);
+            }
+            else
+            {
+                const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::BlackKing]);
+                inCheck = AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
+            }
+
+            // legal moves counter
+            uint32_t legalMoves = 0;
 
             // best move so far
             Move bestMoveSoFar;
@@ -70,6 +90,8 @@ namespace ModernChess
                     // skip to next move
                     continue;
                 }
+
+                ++legalMoves;
 
                 // score current move
                 const int32_t score = -negamax(-beta, -alpha, depth - 1);
@@ -97,6 +119,19 @@ namespace ModernChess
                         bestMoveSoFar = move;
                     }
                 }
+            }
+
+            // we don't have any legal moves to make in the current position
+            if (legalMoves == 0)
+            {
+                // king is in check
+                if (inCheck)
+                {    // return mating score (assuming closest distance to mating position)
+                    return checkMateScore + m_gameState.halfMoveClock;
+                }
+                // king is not in check
+                // return stalemate score
+                return staleMateScore;
             }
 
             // found better move

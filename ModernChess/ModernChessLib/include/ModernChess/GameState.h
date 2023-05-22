@@ -15,8 +15,8 @@ namespace ModernChess
     //private:
         Board board{};
         // See https://www.chessprogramming.org/Halfmove_Clock
-        uint32_t halfMoveClock = 0;
-        uint32_t nextMoveClock = 0;
+        int32_t halfMoveClock = 0;
+        int32_t nextMoveClock = 0;
 
 
         //std::vector<Move> moveList;

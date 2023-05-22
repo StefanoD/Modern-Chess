@@ -185,8 +185,20 @@ namespace
         communicationThread.join();
     }
 
-    TEST(UCICommunicationTest, TrickyPosition)
+    TEST(UCICommunicationTest, FindCheckMateInOne)
     {
+        /*
+         * 8 ♔ . . . . . . .
+         * 7 . . ♙ ♗ ♘ . . .
+         * 6 ♖ . ♘ ♞ ♙ . . .
+         * 5 . . . ♙ . . . .
+         * 4 ♞ . . ♟︎ . . ♟︎ .
+         * 3 ♟︎ ♛ . . ♟︎ . . .
+         * 2 . ♝ . . . ♟︎ . ♟︎
+         * 1 . . . . ♚ . . ♜
+         *
+         *   a b c d e f g h
+         */
         std::stringstream inputStream;
         std::stringstream outputStream;
         std::stringstream errorStream;
@@ -206,6 +218,7 @@ namespace
 
         const std::string engineOutput{outputStream.str()};
 
+        EXPECT_TRUE(engineOutput.find("bestmove b3b7") != std::string::npos);
         std::cout << engineOutput << std::endl;
     }
 }
