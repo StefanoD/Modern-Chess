@@ -27,9 +27,10 @@ namespace ModernChess
         Square enPassantTarget = Square::undefined;
         Color sideToMove = Color::White;
         CastlingRights castlingRights = CastlingRights::Gone;
-
-        friend bool operator<=>(const Board&, const Board&) = default;
     };
+
+    bool operator==(const Board &lhs, const Board &rhs);
+    bool operator!=(const Board &lhs, const Board &rhs);
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::Board &bitBoard);

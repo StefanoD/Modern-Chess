@@ -18,10 +18,12 @@ namespace ModernChess
         uint32_t halfMoveClock = 0;
         uint32_t nextMoveClock = 0;
 
-        friend bool operator<=>(const GameState&, const GameState&) = default;
 
         //std::vector<Move> moveList;
     };
+
+    bool operator==(const GameState&, const GameState&);
+    bool operator!=(const GameState&, const GameState&);
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState);
