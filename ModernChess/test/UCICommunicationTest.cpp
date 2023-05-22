@@ -184,4 +184,28 @@ namespace
 
         communicationThread.join();
     }
+
+    TEST(UCICommunicationTest, TrickyPosition)
+    {
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&]{
+            uciCom.startCommunication();
+        });
+
+        constexpr auto fenString = "k7/2pbn3/r1nNp3/3p4/N2P2P1/PQ2P3/1B3P1P/4K2R w K - 7 26";
+
+        inputStream << "position fen " << fenString << "\n";
+        inputStream << "go depth 6\n";
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        std::cout << engineOutput << std::endl;
+    }
 }
