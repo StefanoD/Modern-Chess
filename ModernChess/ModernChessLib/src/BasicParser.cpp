@@ -168,6 +168,8 @@ namespace ModernChess
                                    "\" at position " + getCurrentPosition() + "!");
         }
 
+        nextPosition();
+
         return number;
     }
 

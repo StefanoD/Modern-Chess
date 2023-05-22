@@ -17,6 +17,8 @@ namespace ModernChess
 
         void startCommunication();
 
+        [[nodiscard]] GameState getGameState() const { return m_game.gameState; }
+
     private:
         Game m_game;
         std::istream &m_inputStream;

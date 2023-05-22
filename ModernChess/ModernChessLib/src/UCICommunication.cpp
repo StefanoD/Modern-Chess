@@ -95,8 +95,11 @@ namespace ModernChess
         }
         else if (parser.uiHasSentFENPosition())
         {
-            const std::string_view fenString = parser.getNextString();
-            m_game.gameState = FenParser(fenString).parse();
+            FenParser fenParser(parser.currentStringView());
+            m_game.gameState = fenParser.parse();
+
+            // There might be consecutive move commands. So continue with parsing...
+            parser = UCIParser(fenParser.currentStringView());
         }
         else
         {

@@ -39,7 +39,7 @@ namespace ModernChess::FenParsing {
 
     constexpr auto startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    class FenParser : BasicParser
+    class FenParser : public BasicParser
     {
     public:
         explicit FenParser(std::string_view fen);

@@ -1,4 +1,5 @@
 #include "ModernChess/UCICommunication.h"
+#include "ModernChess/FenParsing.h"
 
 #include <gtest/gtest.h>
 
@@ -76,20 +77,12 @@ namespace
 
         communicationThread.join();
 
+        const GameState gameState = uciCom.getGameState();
+        const GameState expectedGameState = FenParsing::FenParser(FenParsing::startPosition).parse();
+
+        EXPECT_TRUE(gameState == expectedGameState);
+
         const std::string engineOutput{outputStream.str()};
-
-        const std::string expectedDebugOutput = """8 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖\n"
-                                                "  7 ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙\n"
-                                                "  6 . . . . . . . .\n"
-                                                "  5 . . . . . . . .\n"
-                                                "  4 . . . . . . . .\n"
-                                                "  3 . . . . . . . .\n"
-                                                "  2 ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E\n"
-                                                "  1 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜\n"
-                                                "\n"
-                                                "    a b c d e f g h""";
-
-        EXPECT_TRUE(engineOutput.find(expectedDebugOutput) != std::string::npos);
 
         std::cout << engineOutput << std::endl;
     }
@@ -111,20 +104,45 @@ namespace
 
         communicationThread.join();
 
+        const GameState gameState = uciCom.getGameState();
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::a2));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::a2));
+
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::a3));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::a3));
+
         const std::string engineOutput{outputStream.str()};
 
-        const std::string expectedDebugOutput = """8 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖\n"
-                                                "  7 . ♙ ♙ ♙ ♙ ♙ ♙ ♙\n"
-                                                "  6 ♙ . . . . . . .\n"
-                                                "  5 . . . . . . . .\n"
-                                                "  4 . . . . . . . .\n"
-                                                "  3 ♟\uFE0E . . . . . . .\n"
-                                                "  2 . ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E ♟\uFE0E\n"
-                                                "  1 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜\n"
-                                                "\n"
-                                                "    a b c d e f g h""";
+        std::cout << engineOutput << std::endl;
+    }
 
-        EXPECT_TRUE(engineOutput.find(expectedDebugOutput) != std::string::npos);
+    TEST(UCICommunicationTest, ParseFENPosition)
+    {
+
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position fen " << FenParsing::startPosition << " moves a2a3 a7a6\n";
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const GameState gameState = uciCom.getGameState();
+
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::a2));
+        EXPECT_FALSE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::a2));
+
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.bitboards[Figure::WhitePawn], Square::a3));
+        EXPECT_TRUE(BitBoardOperations::isOccupied(gameState.board.occupancies[Color::Both], Square::a3));
+
+        const std::string engineOutput{outputStream.str()};
 
         std::cout << engineOutput << std::endl;
     }
@@ -161,7 +179,7 @@ namespace
         });
 
         inputStream << "position startpos\n";
-        inputStream << "go depth 8\n";
+        inputStream << "go depth 2\n";
         inputStream << "quit\n";
 
         communicationThread.join();

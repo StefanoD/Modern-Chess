@@ -28,6 +28,9 @@ namespace ModernChess
         Color sideToMove = Color::White;
         CastlingRights castlingRights = CastlingRights::Gone;
     };
+
+    bool operator==(const Board &lhs, const Board &rhs);
+    bool operator!=(const Board &lhs, const Board &rhs);
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::Board &bitBoard);
