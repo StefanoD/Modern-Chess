@@ -53,17 +53,17 @@ namespace ModernChess
             // increment nodes count
             ++m_numberOfNodes;
 
-            bool inCheck;
+            bool kingInCheck;
 
             if (m_gameState.board.sideToMove == Color::White)
             {
                 const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::WhiteKing]);
-                inCheck = AttackQueries::squareIsAttackedByBlack(m_gameState.board, kingsSquare);
+                kingInCheck = AttackQueries::squareIsAttackedByBlack(m_gameState.board, kingsSquare);
             }
             else
             {
                 const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::BlackKing]);
-                inCheck = AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
+                kingInCheck = AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
             }
 
             // legal moves counter
@@ -125,7 +125,7 @@ namespace ModernChess
             if (legalMoves == 0)
             {
                 // king is in check
-                if (inCheck)
+                if (kingInCheck)
                 {    // return mating score (assuming closest distance to mating position)
                     return checkMateScore + m_gameState.halfMoveClock;
                 }
