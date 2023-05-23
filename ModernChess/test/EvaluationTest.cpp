@@ -7,26 +7,28 @@ using namespace ModernChess;
 
 namespace
 {
-    TEST(EvaluationTest, SimpleTestPosition)
+    TEST(EvaluationTest, FindCheckInOne)
     {
         /*
-         * 8 ♖ ♘ ♗ ♕ ♔ ♗ . ♖
-         * 7 ♙ ♙ ♙ ♙ . ♙ ♙ ♙
-         * 6 . . . . . ♘ . .
-         * 5 . . . . ♙ . . .  // Black & White are position equalizing to 0
-         * 4 . . . . ♟︎ . . .
-         * 3 . . . . . ♞ . . // New knight position counts 20
-         * 2 ♟︎ ♟︎ ♟︎ ♟︎ . ♟︎ ♟︎ ♟︎
-         * 1 ♜ ♞ ♝ ♛ ♚ ♝ . ♜ // This empty square counts -10
+         * 8 ♔ . . . . . . .
+         * 7 . . ♙ ♗ ♘ . . .
+         * 6 ♖ . ♘ ♞ ♙ . . .
+         * 5 . . . ♙ . . . .
+         * 4 ♞ . . ♟︎ . . ♟︎ .
+         * 3 ♟︎ ♛ . . ♟︎ . . .
+         * 2 . ♝ . . . ♟︎ . ♟︎
+         * 1 . . . . ♚ . . ♜
          *
          *   a b c d e f g h
          */
-        FenParsing::FenParser fenParser("rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 1");
-        GameState gameState = fenParser.parse();
+        constexpr auto fenString = "k7/2pbn3/r1nNp3/3p4/N2P2P1/PQ2P3/1B3P1P/4K2R w K - 7 26";
+        FenParsing::FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
 
-        const Move move = Evaluation(gameState).getBestMove(5);
+        const Move move = Evaluation(gameState).getBestMove(5).bestMove;
 
-        std::cout << "best move: " << move << std::endl;
-        std::cout << gameState;
+        EXPECT_EQ(move.getFrom(), Square::b3);
+        EXPECT_EQ(move.getTo(), Square::b7);
+        EXPECT_EQ(move.getMovedFigure(), Figure::WhiteQueen);
     }
 }

@@ -12,6 +12,18 @@
 
 namespace ModernChess
 {
+    struct EvaluationResult
+    {
+        explicit EvaluationResult(Move bestMove, int32_t score, uint32_t numberOfNodes) :
+                bestMove(bestMove),
+                score(score),
+                numberOfNodes(numberOfNodes) {}
+
+        Move bestMove{};
+        int32_t score{};
+        uint32_t numberOfNodes{};
+    };
+
     class Evaluation
     {
     public:
@@ -20,11 +32,12 @@ namespace ModernChess
             m_halfMoveClockRootSearch(m_gameState.halfMoveClock)
             {}
 
-        Move getBestMove(uint32_t depth)
+        [[nodiscard]] EvaluationResult getBestMove(uint32_t depth)
         {
             // find best move within a given position
-            negamax(minusInfinity, plusInfinity, depth);
-            return m_bestMove;
+            const int32_t score = negamax(minusInfinity, plusInfinity, depth);
+
+            return EvaluationResult{m_bestMove, score, m_numberOfNodes};
         }
 
     private:

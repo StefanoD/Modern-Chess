@@ -15,8 +15,6 @@ namespace ModernChess {
 
         std::vector<Move> generateMoves() const;
 
-        Move getBestMove(uint32_t depth);
-
     private:
         std::vector<GameState> m_gameHistory;
     };

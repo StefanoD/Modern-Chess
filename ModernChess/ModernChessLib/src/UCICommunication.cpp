@@ -1,6 +1,7 @@
 #include "ModernChess/UCICommunication.h"
 #include "ModernChess/UCIParser.h"
 #include "ModernChess/FenParsing.h"
+#include "ModernChess/Evaluation.h"
 
 #include <string>
 
@@ -181,7 +182,10 @@ namespace ModernChess
 
     void UCICommunication::sendBestMove(uint32_t searchDepth)
     {
-        const Move bestMove = m_game.getBestMove(searchDepth);
-        m_outputStream << "bestmove " << bestMove << "\n" << std::flush;
+        Evaluation evaluation(m_game.gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(searchDepth);
+
+        m_outputStream << "info score cp " << evalResult.score << " depth " << searchDepth << " nodes " << evalResult.numberOfNodes << "\n" << std::flush;
+        m_outputStream << "bestmove " << evalResult.bestMove << "\n" << std::flush;
     }
 }
