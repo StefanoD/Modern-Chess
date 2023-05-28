@@ -60,7 +60,7 @@ namespace ModernChess
             if (depth == 0)
             {
                 // return evaluation
-                return evaluatePosition();
+                return quiescence(alpha, beta);
             }
 
             // increment nodes count
@@ -152,6 +152,66 @@ namespace ModernChess
             {
                 // init best move
                 m_bestMove = bestMoveSoFar;
+            }
+
+            // node (move) fails low
+            return alpha;
+        }
+
+        // quiescence search
+        int32_t quiescence(int32_t alpha, int32_t beta)
+        {
+            // evaluate position
+            const int32_t evaluation = evaluatePosition();
+
+            // fail-hard beta cutoff
+            if (evaluation >= beta)
+            {
+                // node (move) fails high
+                return beta;
+            }
+
+            // found a better move
+            if (evaluation > alpha)
+            {
+                // PV node (move)
+                alpha = evaluation;
+            }
+
+            const std::vector<Move> moves = PseudoMoveGeneration::generateMoves(m_gameState);
+
+            // loop over moves within a move list
+            for (const Move move : moves)
+            {
+                // preserve board state
+                const GameState gameStateCopy = m_gameState;
+
+                // make sure to make only legal moves
+                if (not MoveExecution::executeMove(m_gameState, move, MoveType::CapturesOnly))
+                {
+                    // skip to next move
+                    continue;
+                }
+
+                // score current move
+                const int32_t score = -quiescence(-beta, -alpha);
+
+                // take move back
+                m_gameState = gameStateCopy;
+
+                // fail-hard beta cutoff
+                if (score >= beta)
+                {
+                    // node (move) fails high
+                    return beta;
+                }
+
+                // found a better move
+                if (score > alpha)
+                {
+                    // PV node (move)
+                    alpha = score;
+                }
             }
 
             // node (move) fails low
