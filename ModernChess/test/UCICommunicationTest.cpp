@@ -190,11 +190,11 @@ namespace
         /*
          * 8 ♔ . . . . . . .
          * 7 . . ♙ ♗ ♘ . . .
-         * 6 ♖ . ♘ ♞ ♙ . . .
+         * 6 . . ♘ ♞ ♙ . . .
          * 5 . . . ♙ . . . .
-         * 4 ♞ . . ♟︎ . . ♟︎ .
-         * 3 ♟︎ ♛ . . ♟︎ . . .
-         * 2 . ♝ . . . ♟︎ . ♟︎
+         * 4 ♞ . ♖ ♟︎ . . ♟︎ .
+         * 3 ♟︎ ♛ ♖ . ♟︎ . . .
+         * 2 . ♝ ♕ . . ♟︎ . ♟︎
          * 1 . . . . ♚ . . ♜
          *
          *   a b c d e f g h
@@ -209,7 +209,7 @@ namespace
             uciCom.startCommunication();
         });
 
-        constexpr auto fenString = "k7/2pbn3/r1nNp3/3p4/N2P2P1/PQ2P3/1B3P1P/4K2R w K - 7 26";
+        constexpr auto fenString = "k7/2pbn3/2nNp3/3p4/N1rP2P1/PQr1P3/1Bq2P1P/4K2R w K - 0 26";
 
         inputStream << "position fen " << fenString << "\n";
         inputStream << "go depth 6\n";
