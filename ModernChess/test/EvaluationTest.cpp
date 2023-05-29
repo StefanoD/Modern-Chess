@@ -124,4 +124,58 @@ namespace
             lastScore = newScore;
         }
     }
+
+    TEST(EvaluationTest, PotentialMateIn5ForWhite)
+    {
+        /*
+         * 8 ♖ . . . ♖ . ♔ .
+         * 7 . . ♙ . ♕ ♙ ♟︎ ♙
+         * 6 ♙ . ♘ . . ♘ . ♛
+         * 5 . . . . ♙ . ♞ .
+         * 4 . . . ♙ ♟︎ . ♗ .
+         * 3 ♙ ♟︎ . ♟︎ . . . .
+         * 2 ♟︎ . ♟︎ . . ♟︎ ♟︎ .
+         * 1 . . ♚ ♜ . ♝ . ♜
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto fenString = "r3r1k1/2p1qpPp/p1n1bn1Q/4p3/3pP3/pP1P1N2/P1P2PP1/2KR1B1R b - - 2 16";
+        FenParsing::FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(8);
+        std::cout << gameState << std::endl;
+        std::cout << evalResult.bestMove << std::endl;
+
+    }
+
+    TEST(EvaluationTest, MateIn5ForWhite)
+    {
+        /*
+         * 8 ♖ . . . ♖ . ♔ .
+         * 7 . . ♙ . ♕ ♙ ♟︎ ♙
+         * 6 ♙ . ♘ . . ♘ . ♛
+         * 5 . . . . ♙ . ♞ .
+         * 4 . . . ♙ ♟︎ . ♗ .
+         * 3 ♙ ♟︎ . ♟︎ . . . .
+         * 2 ♟︎ . ♟︎ . . ♟︎ ♟︎ .
+         * 1 . . ♚ ♜ . ♝ . ♜
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto fenString = "r3r1k1/2p1qpPp/p4n1Q/4p1N1/1n1pP1b1/pP1P4/P1P2PP1/2KR1B1R w - - 5 18";
+        FenParsing::FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(7);
+
+        EXPECT_EQ(evalResult.bestMove.getFrom(), Square::g5);
+        EXPECT_EQ(evalResult.bestMove.getTo(), Square::h7);
+        EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::WhiteKnight);
+        EXPECT_TRUE(evalResult.bestMove.isCapture());
+
+        std::cout << "Best Move: " << evalResult.bestMove << std::endl;
+    }
 }
