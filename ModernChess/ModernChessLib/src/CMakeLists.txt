@@ -34,6 +34,7 @@ add_library(${target}
         AttackQueries.cpp
         BasicParser.cpp
         Board.cpp
+        Evaluation.cpp
         FenParsing.cpp
         Utilities.cpp
         Player.cpp
