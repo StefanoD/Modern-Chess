@@ -45,10 +45,10 @@ namespace ModernChess
         Move m_bestMove{};
         GameState m_gameState;
         int32_t m_halfMoveClockRootSearch{};
-        // Use half of minimum number in case a score is added to this, and we don't get an underflow
-        static constexpr int32_t minusInfinity = std::numeric_limits<int32_t>::min() / 2;
-        // Use half of maximum number in case a score is added to this, and we don't get an overflow
-        static constexpr int32_t plusInfinity = std::numeric_limits<int32_t>::max() / 2;
+        // Use here min + 1, otherwise negation of this number won't work
+        static constexpr int32_t minusInfinity = std::numeric_limits<int32_t>::min() + 1;
+        // Use here min - 1, otherwise negation of this number won't work
+        static constexpr int32_t plusInfinity = std::numeric_limits<int32_t>::max() - 1;
 
         static constexpr int32_t checkMateScore = minusInfinity + 1;
         static constexpr int32_t staleMateScore = 0;
