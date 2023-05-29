@@ -219,7 +219,7 @@ namespace ModernChess
             return alpha;
         }
 
-        int32_t evaluatePosition()
+        [[nodiscard]] int32_t evaluatePosition() const
         {
             // static evaluation score
             int32_t score = 0;
@@ -266,12 +266,13 @@ namespace ModernChess
             return (m_gameState.board.sideToMove == Color::White) ? score : -score;
         }
 
-        inline int32_t scoreMove(Move move)
+        [[nodiscard]] inline int32_t scoreMove(Move move) const
         {
             // score capture move
             if (move.isCapture())
             {
-                // init target figure with white pawn or black pawn, in case of en-passant captures
+                // init target figure with white pawn or black pawn (doesn't matter which one,
+                // because scoring with the same color yields the same valid score), in case of en-passant captures
                 Figure targetFigure = Figure::WhitePawn;
 
                 // pick up bitboard figure index ranges depending on side

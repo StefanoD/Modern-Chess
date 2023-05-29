@@ -10,6 +10,9 @@ namespace
     class ExtendedEvaluation : public Evaluation
     {
     public:
+        explicit ExtendedEvaluation(GameState gameState) : Evaluation(gameState) {}
+
+        using ModernChess::Evaluation::scoreMove;
         using ModernChess::Evaluation::mvvLva;
     };
 
@@ -61,5 +64,29 @@ namespace
     TEST(EvaluationTest, mvvLvaWhitePawnTakesBlackKing)
     {
         EXPECT_EQ(ExtendedEvaluation::mvvLva[Figure::WhitePawn][Figure::BlackKing], 605);
+    }
+
+    TEST(EvaluationTest, scoreEnpassantMoveWithWhitePawnTakesBlackPawn)
+    {
+        /*
+         * 8 . . . . ♔ . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . .
+         * 5 . . . . ♟︎ ♙ . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . ♚ . . .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto enPassantPosition = "4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 1";
+        FenParsing::FenParser fenParser(enPassantPosition);
+        const GameState gameState = fenParser.parse();
+
+        const Move move(Square::e5, Square::f6, Figure::WhitePawn, Figure::None, true, false, true, false);
+        const ExtendedEvaluation evaluation(gameState);
+
+        EXPECT_EQ(evaluation.scoreMove(move), 105);
     }
 }
