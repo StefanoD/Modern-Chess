@@ -267,6 +267,8 @@ namespace ModernChess
         }
 
         /*
+         * @see https://www.chessprogramming.org/MVV-LVA
+         *
          *   (Victims) Pawn Knight Bishop   Rook  Queen   King
          *
          * (Attackers)
