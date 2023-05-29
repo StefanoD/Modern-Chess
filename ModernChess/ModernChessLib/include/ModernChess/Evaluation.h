@@ -40,7 +40,7 @@ namespace ModernChess
             return EvaluationResult{m_bestMove, score, m_numberOfNodes};
         }
 
-    private:
+    protected:
         uint32_t m_numberOfNodes{};
         Move m_bestMove{};
         GameState m_gameState;
@@ -265,6 +265,37 @@ namespace ModernChess
             // return final evaluation based on side
             return (m_gameState.board.sideToMove == Color::White) ? score : -score;
         }
+
+        /*
+         *   (Victims) Pawn Knight Bishop   Rook  Queen   King
+         *
+         * (Attackers)
+         *       Pawn   105    205    305    405    505    605
+         *     Knight   104    204    304    404    504    604
+         *     Bishop   103    203    303    403    503    603
+         *       Rook   102    202    302    402    502    602
+         *      Queen   101    201    301    401    501    601
+         *       King   100    200    300    400    500    600
+         */
+
+        // most valuable victim & less valuable attacker [attacker][victim]
+        static constexpr std::array<std::array<int32_t, 12>, 12> mvvLva {
+            {
+                {105, 205, 305, 405, 505, 605,  105, 205, 305, 405, 505, 605},
+                {104, 204, 304, 404, 504, 604,  104, 204, 304, 404, 504, 604},
+                {103, 203, 303, 403, 503, 603,  103, 203, 303, 403, 503, 603},
+                {102, 202, 302, 402, 502, 602,  102, 202, 302, 402, 502, 602},
+                {101, 201, 301, 401, 501, 601,  101, 201, 301, 401, 501, 601},
+                {100, 200, 300, 400, 500, 600,  100, 200, 300, 400, 500, 600},
+
+                {105, 205, 305, 405, 505, 605,  105, 205, 305, 405, 505, 605},
+                {104, 204, 304, 404, 504, 604,  104, 204, 304, 404, 504, 604},
+                {103, 203, 303, 403, 503, 603,  103, 203, 303, 403, 503, 603},
+                {102, 202, 302, 402, 502, 602,  102, 202, 302, 402, 502, 602},
+                {101, 201, 301, 401, 501, 601,  101, 201, 301, 401, 501, 601},
+                {100, 200, 300, 400, 500, 600,  100, 200, 300, 400, 500, 600}
+            }
+        };
 
         /*
          *   Material Score

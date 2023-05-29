@@ -7,6 +7,12 @@ using namespace ModernChess;
 
 namespace
 {
+    class ExtendedEvaluation : public Evaluation
+    {
+    public:
+        using ModernChess::Evaluation::mvvLva;
+    };
+
     TEST(EvaluationTest, FindCheckInOne)
     {
         /*
@@ -30,5 +36,30 @@ namespace
         EXPECT_EQ(move.getFrom(), Square::b3);
         EXPECT_EQ(move.getTo(), Square::b7);
         EXPECT_EQ(move.getMovedFigure(), Figure::WhiteQueen);
+    }
+
+    TEST(EvaluationTest, mvvLvaWhiteQueenTakesBlackPawn)
+    {
+        EXPECT_EQ(ExtendedEvaluation::mvvLva[Figure::WhiteQueen][Figure::BlackPawn], 101);
+    }
+
+    TEST(EvaluationTest, mvvLvaWhitePawnTakesBlackQueen)
+    {
+        EXPECT_EQ(ExtendedEvaluation::mvvLva[Figure::WhitePawn][Figure::BlackQueen], 505);
+    }
+
+    TEST(EvaluationTest, mvvLvaBlackPawnTakesWhiteQueen)
+    {
+        EXPECT_EQ(ExtendedEvaluation::mvvLva[Figure::BlackPawn][Figure::WhiteQueen], 505);
+    }
+
+    TEST(EvaluationTest, mvvLvaBlackPawnTakesWhiteKing)
+    {
+        EXPECT_EQ(ExtendedEvaluation::mvvLva[Figure::BlackPawn][Figure::WhiteKing], 605);
+    }
+
+    TEST(EvaluationTest, mvvLvaWhitePawnTakesBlackKing)
+    {
+        EXPECT_EQ(ExtendedEvaluation::mvvLva[Figure::WhitePawn][Figure::BlackKing], 605);
     }
 }
