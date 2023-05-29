@@ -13,6 +13,7 @@ namespace
         explicit ExtendedEvaluation(GameState gameState) : Evaluation(gameState) {}
 
         using ModernChess::Evaluation::scoreMove;
+        using ModernChess::Evaluation::generateSortedMoves;
         using ModernChess::Evaluation::mvvLva;
     };
 
@@ -21,16 +22,16 @@ namespace
         /*
          * 8 ♔ . . . . . . .
          * 7 . . ♙ ♗ ♘ . . .
-         * 6 ♖ . ♘ ♞ ♙ . . .
+         * 6 . . ♘ ♞ ♙ . . .
          * 5 . . . ♙ . . . .
-         * 4 ♞ . . ♟︎ . . ♟︎ .
-         * 3 ♟︎ ♛ . . ♟︎ . . .
-         * 2 . ♝ . . . ♟︎ . ♟︎
+         * 4 ♞ . ♖ ♟︎ . . ♟︎ .
+         * 3 ♟︎ ♛ ♖ . ♟︎ . . .
+         * 2 . ♝ ♕ . . ♟︎ . ♟︎
          * 1 . . . . ♚ . . ♜
          *
          *   a b c d e f g h
          */
-        constexpr auto fenString = "k7/2pbn3/r1nNp3/3p4/N2P2P1/PQ2P3/1B3P1P/4K2R w K - 7 26";
+        constexpr auto fenString = "k7/2pbn3/2nNp3/3p4/N1rP2P1/PQr1P3/1Bq2P1P/4K2R w K - 0 26";
         FenParsing::FenParser fenParser(fenString);
         const GameState gameState = fenParser.parse();
 
@@ -39,6 +40,8 @@ namespace
         EXPECT_EQ(move.getFrom(), Square::b3);
         EXPECT_EQ(move.getTo(), Square::b7);
         EXPECT_EQ(move.getMovedFigure(), Figure::WhiteQueen);
+
+        std::cout << gameState;
     }
 
     TEST(EvaluationTest, mvvLvaWhiteQueenTakesBlackPawn)
@@ -88,5 +91,37 @@ namespace
         const ExtendedEvaluation evaluation(gameState);
 
         EXPECT_EQ(evaluation.scoreMove(move), 105);
+    }
+
+    TEST(EvaluationTest, SortMoves)
+    {
+        /*
+         * 8 ♔ . . . . . . .
+         * 7 . . ♙ ♗ ♘ . . .
+         * 6 . . ♘ ♞ ♙ . . .
+         * 5 . . . ♙ . . . .
+         * 4 ♞ . ♖ ♟︎ . . ♟︎ .
+         * 3 ♟︎ ♛ ♖ . ♟︎ . . .
+         * 2 . ♝ ♕ . . ♟︎ . ♟︎
+         * 1 . . . . ♚ . . ♜
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto fenString = "k7/2pbn3/2nNp3/3p4/N1rP2P1/PQr1P3/1Bq2P1P/4K2R w K - 0 26";
+        FenParsing::FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
+
+        ExtendedEvaluation evaluation(gameState);
+        const std::vector<Move> moves = evaluation.generateSortedMoves();
+
+        int32_t lastScore = std::numeric_limits<int32_t>::max();
+
+        for (const Move move : moves)
+        {
+            const int32_t newScore = evaluation.scoreMove(move);
+            std::cout << move << " scores "  << newScore << ", ";
+            EXPECT_TRUE(lastScore >= newScore);
+            lastScore = newScore;
+        }
     }
 }

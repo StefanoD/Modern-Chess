@@ -66,6 +66,18 @@ namespace ModernChess
             return AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
         }
 
+        [[nodiscard]] inline std::vector<Move> generateSortedMoves() const
+        {
+            std::vector<Move> moves =  PseudoMoveGeneration::generateMoves(m_gameState);
+
+            // Sort moves, such that captures with higher scores are evaluated first and makes an early pruning more probable
+            std::sort(moves.begin(), moves.end(), [this](const Move leftOrderedMove, const Move rightOrderedMove){
+                return scoreMove(leftOrderedMove) > scoreMove(rightOrderedMove);
+            });
+
+            return moves;
+        }
+
         // negamax alpha beta search
         int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
         {
@@ -97,7 +109,7 @@ namespace ModernChess
             const int32_t oldAlpha = alpha;
 
             // create move list instance
-            const std::vector<Move> moves = PseudoMoveGeneration::generateMoves(m_gameState);
+            const std::vector<Move> moves = generateSortedMoves();
 
             // loop over moves within a move list
             for (const Move move : moves)
@@ -187,7 +199,7 @@ namespace ModernChess
                 alpha = evaluation;
             }
 
-            const std::vector<Move> moves = PseudoMoveGeneration::generateMoves(m_gameState);
+            const std::vector<Move> moves = generateSortedMoves();
 
             // loop over moves within a move list
             for (const Move move : moves)
@@ -313,11 +325,6 @@ namespace ModernChess
 
             // score quiet move
             return 0;
-        }
-
-        [[nodiscard]] bool moveSortFunction(const Move leftMove, const Move rightMove) const
-        {
-            return scoreMove(leftMove) > scoreMove(rightMove);
         }
 
         /*
