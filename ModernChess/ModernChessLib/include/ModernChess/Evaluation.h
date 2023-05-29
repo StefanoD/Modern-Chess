@@ -9,6 +9,7 @@
 
 #include <array>
 #include <limits>
+#include <algorithm>
 
 namespace ModernChess
 {
@@ -53,6 +54,18 @@ namespace ModernChess
         static constexpr int32_t checkMateScore = minusInfinity + 1;
         static constexpr int32_t staleMateScore = 0;
 
+        [[nodiscard]] inline bool kingIsInCheck() const
+        {
+            if (m_gameState.board.sideToMove == Color::White)
+            {
+                const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::WhiteKing]);
+                return AttackQueries::squareIsAttackedByBlack(m_gameState.board, kingsSquare);
+            }
+
+            const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::BlackKing]);
+            return AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
+        }
+
         // negamax alpha beta search
         int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
         {
@@ -66,18 +79,7 @@ namespace ModernChess
             // increment nodes count
             ++m_numberOfNodes;
 
-            bool kingInCheck;
-
-            if (m_gameState.board.sideToMove == Color::White)
-            {
-                const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::WhiteKing]);
-                kingInCheck = AttackQueries::squareIsAttackedByBlack(m_gameState.board, kingsSquare);
-            }
-            else
-            {
-                const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::BlackKing]);
-                kingInCheck = AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
-            }
+            const bool kingInCheck = kingIsInCheck();
 
             // increase search depth if the king has been exposed into a check
             if (kingInCheck)
