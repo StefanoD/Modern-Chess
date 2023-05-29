@@ -60,7 +60,7 @@ namespace ModernChess
             if (depth == 0)
             {
                 // return evaluation
-                return quiescence(alpha, beta);
+                return quiescenceSearch(alpha, beta);
             }
 
             // increment nodes count
@@ -158,9 +158,11 @@ namespace ModernChess
             return alpha;
         }
 
-        // quiescence search
-        int32_t quiescence(int32_t alpha, int32_t beta)
+        // quiescenceSearch search
+        int32_t quiescenceSearch(int32_t alpha, int32_t beta)
         {
+            ++m_numberOfNodes;
+
             // evaluate position
             const int32_t evaluation = evaluatePosition();
 
@@ -194,7 +196,7 @@ namespace ModernChess
                 }
 
                 // score current move
-                const int32_t score = -quiescence(-beta, -alpha);
+                const int32_t score = -quiescenceSearch(-beta, -alpha);
 
                 // take move back
                 m_gameState = gameStateCopy;
