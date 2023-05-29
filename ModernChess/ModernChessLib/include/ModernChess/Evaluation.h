@@ -158,7 +158,6 @@ namespace ModernChess
             return alpha;
         }
 
-        // quiescenceSearch search
         int32_t quiescenceSearch(int32_t alpha, int32_t beta)
         {
             ++m_numberOfNodes;
