@@ -17,7 +17,7 @@ namespace
         using ModernChess::Evaluation::mvvLva;
     };
 
-    TEST(EvaluationTest, FindCheckInOne)
+    TEST(EvaluationTest, FindMateInOne)
     {
         /*
          * 8 ♔ . . . . . . .
@@ -125,7 +125,7 @@ namespace
         }
     }
 
-    TEST(EvaluationTest, PotentialMateIn5ForWhite)
+    TEST(EvaluationTest, PreventPotentialMateIn5ForWhitePart1)
     {
         /*
          * 8 ♖ . . . ♖ . ♔ .
@@ -139,16 +139,22 @@ namespace
          *
          *   a b c d e f g h
          */
-        constexpr auto fenString = "r3r1k1/2p1qpPp/p1n1bn1Q/4p3/3pP3/pP1P1N2/P1P2PP1/2KR1B1R b - - 2 16";
+        constexpr auto fenString = "r3r1k1/2p1qpPp/p3bn1Q/4p1N1/1n1pP3/pP1P4/P1P2PP1/2KR1B1R b - - 4 17";
         FenParsing::FenParser fenParser(fenString);
         const GameState gameState = fenParser.parse();
 
         Evaluation evaluation(gameState);
         const EvaluationResult evalResult = evaluation.getBestMove(8);
+
+        EXPECT_EQ(evalResult.bestMove.getFrom(), Square::e7);
+        EXPECT_EQ(evalResult.bestMove.getTo(), Square::c5);
+        EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::BlackQueen);
+        EXPECT_FALSE(evalResult.bestMove.isCapture());
+
         std::cout << gameState << std::endl;
         std::cout << evalResult.bestMove << std::endl;
-
     }
+
 
     TEST(EvaluationTest, MateIn5ForWhite)
     {
@@ -169,7 +175,7 @@ namespace
         const GameState gameState = fenParser.parse();
 
         Evaluation evaluation(gameState);
-        const EvaluationResult evalResult = evaluation.getBestMove(7);
+        const EvaluationResult evalResult = evaluation.getBestMove(6);
 
         EXPECT_EQ(evalResult.bestMove.getFrom(), Square::g5);
         EXPECT_EQ(evalResult.bestMove.getTo(), Square::h7);
