@@ -185,7 +185,6 @@ namespace ModernChess
         Evaluation evaluation(m_game.gameState);
         const EvaluationResult evalResult = evaluation.getBestMove(searchDepth);
 
-        m_outputStream << "info score cp " << evalResult.score << " depth " << searchDepth << " nodes " << evalResult.numberOfNodes << "\n" << std::flush;
-        m_outputStream << "bestmove " << evalResult.bestMove << "\n" << std::flush;
+        m_outputStream << evalResult << std::flush;
     }
 }

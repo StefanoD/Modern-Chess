@@ -15,14 +15,16 @@ namespace ModernChess
 {
     struct EvaluationResult
     {
-        explicit EvaluationResult(Move bestMove, int32_t score, uint32_t numberOfNodes) :
+        explicit EvaluationResult(Move bestMove, int32_t score, uint32_t numberOfNodes, uint32_t depth) :
                 bestMove(bestMove),
                 score(score),
-                numberOfNodes(numberOfNodes) {}
+                numberOfNodes(numberOfNodes),
+                depth(depth) {}
 
         Move bestMove{};
         int32_t score{};
         uint32_t numberOfNodes{};
+        uint32_t depth{};
     };
 
     class Evaluation
@@ -38,7 +40,7 @@ namespace ModernChess
             // find best move within a given position
             const int32_t score = negamax(minusInfinity, plusInfinity, depth);
 
-            return EvaluationResult{m_bestMove, score, m_numberOfNodes};
+            return EvaluationResult{m_bestMove, score, m_numberOfNodes, depth};
         }
 
     protected:
@@ -466,3 +468,5 @@ namespace ModernChess
         };
     };
 }
+
+std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &evalResult);
