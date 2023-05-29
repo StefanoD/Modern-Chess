@@ -79,6 +79,12 @@ namespace ModernChess
                 kingInCheck = AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
             }
 
+            // increase search depth if the king has been exposed into a check
+            if (kingInCheck)
+            {
+                ++depth;
+            }
+
             // legal moves counter
             uint32_t legalMoves = 0;
 
@@ -305,6 +311,11 @@ namespace ModernChess
 
             // score quiet move
             return 0;
+        }
+
+        [[nodiscard]] bool moveSortFunction(const Move leftMove, const Move rightMove) const
+        {
+            return scoreMove(leftMove) > scoreMove(rightMove);
         }
 
         /*
