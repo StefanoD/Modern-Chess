@@ -81,6 +81,14 @@ namespace ModernChess
         // negamax alpha beta search
         int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
         {
+            const bool kingInCheck = kingIsInCheck();
+
+            // increase search depth if the king has been exposed into a check
+            if (kingInCheck)
+            {
+                ++depth;
+            }
+
             // recursion escape condition
             if (depth == 0)
             {
@@ -90,14 +98,6 @@ namespace ModernChess
 
             // increment nodes count
             ++m_numberOfNodes;
-
-            const bool kingInCheck = kingIsInCheck();
-
-            // increase search depth if the king has been exposed into a check
-            if (kingInCheck)
-            {
-                ++depth;
-            }
 
             // legal moves counter
             uint32_t legalMoves = 0;
