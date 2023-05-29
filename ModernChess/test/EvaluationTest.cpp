@@ -111,7 +111,7 @@ namespace
         FenParsing::FenParser fenParser(fenString);
         const GameState gameState = fenParser.parse();
 
-        ExtendedEvaluation evaluation(gameState);
+        const ExtendedEvaluation evaluation(gameState);
         const std::vector<Move> moves = evaluation.generateSortedMoves();
 
         int32_t lastScore = std::numeric_limits<int32_t>::max();
