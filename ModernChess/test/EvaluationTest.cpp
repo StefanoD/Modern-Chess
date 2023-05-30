@@ -151,8 +151,7 @@ namespace
         EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::BlackQueen);
         EXPECT_FALSE(evalResult.bestMove.isCapture());
 
-        std::cout << gameState << std::endl;
-        std::cout << evalResult.bestMove << std::endl;
+        std::cout << evalResult << std::endl;
     }
 
 
@@ -182,6 +181,6 @@ namespace
         EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::WhiteKnight);
         EXPECT_TRUE(evalResult.bestMove.isCapture());
 
-        std::cout << "Best Move: " << evalResult.bestMove << std::endl;
+        std::cout << evalResult << std::endl;
     }
 }
