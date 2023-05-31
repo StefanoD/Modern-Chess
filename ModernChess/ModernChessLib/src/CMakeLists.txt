@@ -9,6 +9,7 @@ add_library(${target}
         ../include/ModernChess/Color.h
         ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
+        ../include/ModernChess/GlobalConstants.h
         ../include/ModernChess/FenParsing.h
         ../include/ModernChess/Figure.h
         ../include/ModernChess/FlatMap.h

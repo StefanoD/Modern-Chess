@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GlobalConstants.h"
 #include "BitBoardOperations.h"
 #include "PseudoMoveGeneration.h"
 #include "MoveExecution.h"
@@ -10,12 +11,13 @@
 #include <array>
 #include <limits>
 #include <algorithm>
+#include <iostream>
 
 namespace ModernChess
 {
     struct EvaluationResult
     {
-        explicit EvaluationResult(Move bestMove, int32_t score, uint32_t numberOfNodes, uint32_t depth) :
+        explicit EvaluationResult(Move bestMove, int32_t score, uint32_t numberOfNodes, int32_t depth) :
                 bestMove(bestMove),
                 score(score),
                 numberOfNodes(numberOfNodes),
@@ -35,10 +37,10 @@ namespace ModernChess
             m_halfMoveClockRootSearch(m_gameState.halfMoveClock)
             {}
 
-        [[nodiscard]] EvaluationResult getBestMove(uint32_t depth)
+        [[nodiscard]] EvaluationResult getBestMove(int32_t depth)
         {
             // find best move within a given position
-            const int32_t score = negamax(minusInfinity, plusInfinity, depth);
+            const int32_t score = negamax(-infinity, infinity, depth);
 
             return EvaluationResult{m_bestMove, score, m_numberOfNodes, depth};
         }
@@ -48,13 +50,20 @@ namespace ModernChess
         Move m_bestMove{};
         GameState m_gameState;
         int32_t m_halfMoveClockRootSearch{};
-        // Use here min + 1, otherwise negation of this number won't work
-        static constexpr int32_t minusInfinity = std::numeric_limits<int32_t>::min() + 1;
-        // Use here min - 1, otherwise negation of this number won't work
-        static constexpr int32_t plusInfinity = std::numeric_limits<int32_t>::max() - 1;
+        // Use half of max number in order to avoid overflows
+        static constexpr int32_t infinity = std::numeric_limits<int32_t>::max() / 2;
 
-        static constexpr int32_t checkMateScore = minusInfinity + 1;
+        static constexpr int32_t checkMateScore = -infinity + 1;
         static constexpr int32_t staleMateScore = 0;
+        static constexpr int32_t bestKillerMoveScore = 90000;
+        static constexpr int32_t secondBestKillerMoveScore = 80000;
+        static constexpr size_t maxNumberOfKillerMoves = 2;
+
+        // killer moves [id][ply]
+        std::array<std::array<Move, maxNumberOfKillerMoves>, MaxHalfMoves> killerMoves{};
+
+        // history moves [figure][square]
+        std::array<std::array<int32_t, NumberOfFigureTypes>, NumberOfSquares> historyMoves{};
 
         [[nodiscard]] inline bool kingIsInCheck() const
         {
@@ -81,7 +90,7 @@ namespace ModernChess
         }
 
         // negamax alpha beta search
-        int32_t negamax(int32_t alpha, int32_t beta, uint32_t depth)
+        int32_t negamax(int32_t alpha, int32_t beta, int32_t depth)
         {
             const bool kingInCheck = kingIsInCheck();
 
@@ -137,6 +146,10 @@ namespace ModernChess
                 // fail-hard beta cutoff
                 if (score >= beta)
                 {
+                    // store killer moves for later reuse
+                    killerMoves[1][m_gameState.halfMoveClock] = killerMoves[0][m_gameState.halfMoveClock]; // old killer move
+                    killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
+
                     // node (move) fails high
                     return beta;
                 }
@@ -144,6 +157,13 @@ namespace ModernChess
                 // found a better move
                 if (score > alpha)
                 {
+                    // store history moves
+                    if (not move.isCapture())
+                    {
+                        //historyMoves[move.getMovedFigure()][move.getTo()] += depth;
+                        //historyMoves[move.getMovedFigure()][move.getTo()] += (depth*depth);
+                    }
+
                     // PV node (move)
                     alpha = score;
 
@@ -325,9 +345,22 @@ namespace ModernChess
                 return mvvLva[move.getMovedFigure()][targetFigure];
             }
 
-            // score quiet move
-            return 0;
+            // score 1st killer move
+            if (killerMoves[0][m_gameState.halfMoveClock] == move)
+            {
+                return bestKillerMoveScore;
+            }
+
+            // score 2nd killer move
+            if (killerMoves[1][m_gameState.halfMoveClock] == move)
+            {
+                return secondBestKillerMoveScore;
+            }
+
+            return historyMoves[move.getMovedFigure()][move.getTo()];
         }
+
+
 
         /*
          * @see https://www.chessprogramming.org/MVV-LVA
@@ -344,7 +377,7 @@ namespace ModernChess
          */
 
         // most valuable victim & less valuable attacker [attacker][victim]
-        static constexpr std::array<std::array<int32_t, 12>, 12> mvvLva {
+        static constexpr std::array<std::array<int32_t, NumberOfFigureTypes>, NumberOfFigureTypes> mvvLva {
             {
                 {105, 205, 305, 405, 505, 605,  105, 205, 305, 405, 505, 605},
                 {104, 204, 304, 404, 504, 604,  104, 204, 304, 404, 504, 604},
@@ -373,7 +406,7 @@ namespace ModernChess
          *   ♔ =   10000 = ♙ * 100
          */
 
-        static constexpr std::array<int32_t, 12> materialScore {
+        static constexpr std::array<int32_t, NumberOfFigureTypes> materialScore {
             100,      // white pawn score
             300,      // white knight score
             350,      // white bishop score
@@ -389,7 +422,7 @@ namespace ModernChess
         };
 
         // pawn positional score
-        static constexpr std::array<int32_t, 64> pawnScore =
+        static constexpr std::array<int32_t, NumberOfSquares> pawnScore =
         {
             0,   0,   0,   0,   0,   0,   0,   0,
             0,   0,   0, -10, -10,   0,   0,   0,
@@ -402,7 +435,7 @@ namespace ModernChess
         };
 
         // knight positional score
-        static constexpr std::array<int32_t, 64> knightScore =
+        static constexpr std::array<int32_t, NumberOfSquares> knightScore =
         {
             -5, -10,   0,   0,   0,   0, -10,  -5,
             -5,   0,   0,   0,   0,   0,   0,  -5,
@@ -415,7 +448,7 @@ namespace ModernChess
         };
 
         // bishop positional score
-        static constexpr std::array<int32_t, 64> bishopScore =
+        static constexpr std::array<int32_t, NumberOfSquares> bishopScore =
         {
             0,   0, -10,   0,   0, -10,   0,   0,
             0,  30,   0,   0,   0,   0,  30,   0,
@@ -429,7 +462,7 @@ namespace ModernChess
         };
 
         // rook positional score
-        static constexpr std::array<int32_t, 64> rookScore =
+        static constexpr std::array<int32_t, NumberOfSquares> rookScore =
         {
              0,   0,   0,  20,  20,   0,   0,   0,
              0,   0,  10,  20,  20,  10,   0,   0,
@@ -442,7 +475,7 @@ namespace ModernChess
         };
 
         // king positional score
-        static constexpr std::array<int32_t, 64> kingScore =
+        static constexpr std::array<int32_t, NumberOfSquares> kingScore =
         {
             0,   0,   5,   0, -15,   0,  10,   0,
             0,   5,   5,  -5,  -5,   0,   5,   0,
@@ -455,7 +488,7 @@ namespace ModernChess
         };
 
         // mirror positional score tables for opposite side
-        static constexpr std::array<Square, 64> mirrorScore =
+        static constexpr std::array<Square, NumberOfSquares> mirrorScore =
         {
             a8, b8, c8, d8, e8, f8, g8, h8,
             a7, b7, c7, d7, e7, f7, g7, h7,
