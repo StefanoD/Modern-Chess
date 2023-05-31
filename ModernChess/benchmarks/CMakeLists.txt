@@ -5,7 +5,7 @@ add_executable(${target}
         VectorReservationTest.cpp
         )
 
-set(BENCHMARK_ENABLE_TESTING NO)
+set(BENCHMARK_ENABLE_TESTING ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 find_package(benchmark REQUIRED)
