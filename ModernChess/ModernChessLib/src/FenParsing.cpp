@@ -106,10 +106,10 @@ namespace ModernChess::FenParsing {
         gameState.board.enPassantTarget = parseSquare();
 
         // Skip space and parse half moves
-        gameState.halfMoveClock = parseNumber();
+        gameState.halfMoveClock = parseNumber<int32_t>();
 
         // Skip space and parse number of next move
-        gameState.nextMoveClock = parseNumber();
+        gameState.nextMoveClock = parseNumber<int32_t>();
 
         initOccupancyMaps(gameState);
 

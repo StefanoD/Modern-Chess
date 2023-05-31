@@ -5,6 +5,7 @@
 
 #include <string_view>
 #include <string>
+#include <sstream>
 
 namespace ModernChess
 {
@@ -45,7 +46,24 @@ namespace ModernChess
 
         [[nodiscard]] std::string_view getNextString();
 
-        uint32_t parseNumber();
+        template<typename Number>
+        Number parseNumber()
+        {
+            std::stringstream strNumber = extractNumber();
+
+            Number number = 0;
+            strNumber >> number;
+
+            if (strNumber.fail())
+            {
+                throw std::range_error("Could not parse number \"" + strNumber.str() +
+                                       "\" at position " + getCurrentPosition() + "!");
+            }
+
+            nextPosition();
+
+            return number;
+        }
 
         void skipWhiteSpaces();
 
@@ -53,5 +71,7 @@ namespace ModernChess
         std::string_view::iterator m_beginPos{};
         std::string_view::iterator m_currentPos{};
         std::string_view::iterator m_endPos{};
+
+        [[nodiscard]] std::stringstream extractNumber();
     };
 }

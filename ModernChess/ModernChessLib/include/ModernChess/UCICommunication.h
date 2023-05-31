@@ -39,6 +39,6 @@ namespace ModernChess
 
         void createNewGame();
 
-        void sendBestMove(uint32_t searchDepth);
+        void sendBestMove(int32_t searchDepth);
     };
 }

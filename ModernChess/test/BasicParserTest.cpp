@@ -40,13 +40,13 @@ namespace
     TEST(BasicParserTest, parseNumber)
     {
         BasicParser parser("12");
-        EXPECT_EQ(12, parser.parseNumber());
+        EXPECT_EQ(12, parser.parseNumber<int32_t>());
     }
 
     TEST(BasicParserTest, parseNumberWithWhitespaces)
     {
         BasicParser parser("      12   3");
-        EXPECT_EQ(12, parser.parseNumber());
-        EXPECT_EQ(3, parser.parseNumber());
+        EXPECT_EQ(12, parser.parseNumber<int32_t>());
+        EXPECT_EQ(3, parser.parseNumber<int32_t>());
     }
 }

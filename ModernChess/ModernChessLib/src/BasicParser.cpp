@@ -1,7 +1,5 @@
 #include "ModernChess/BasicParser.h"
 
-#include <sstream>
-
 namespace ModernChess
 {
     BasicParser::BasicParser(std::string_view fen) :
@@ -141,7 +139,7 @@ namespace ModernChess
         return string;
     }
 
-    uint32_t BasicParser::parseNumber()
+    std::stringstream BasicParser::extractNumber()
     {
         std::stringstream strNumber;
 
@@ -159,18 +157,7 @@ namespace ModernChess
             }
         }
 
-        uint32_t number = 0;
-        strNumber >> number;
-
-        if (strNumber.fail())
-        {
-            throw std::range_error("Could not parse number \"" + strNumber.str() +
-                                   "\" at position " + getCurrentPosition() + "!");
-        }
-
-        nextPosition();
-
-        return number;
+        return strNumber;
     }
 
     void BasicParser::skipWhiteSpaces()

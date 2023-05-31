@@ -166,11 +166,11 @@ namespace ModernChess
 
     void UCICommunication::executeGoCommand(UCIParser &parser)
     {
-        uint32_t searchDepth;
+        int32_t searchDepth;
 
         if (parser.uiHasSentSearchDepth())
         {
-            searchDepth = parser.parseNumber();
+            searchDepth = parser.parseNumber<int32_t>();
         }
         else
         {
@@ -180,7 +180,7 @@ namespace ModernChess
         sendBestMove(searchDepth);
     }
 
-    void UCICommunication::sendBestMove(uint32_t searchDepth)
+    void UCICommunication::sendBestMove(int32_t searchDepth)
     {
         Evaluation evaluation(m_game.gameState);
         const EvaluationResult evalResult = evaluation.getBestMove(searchDepth);
