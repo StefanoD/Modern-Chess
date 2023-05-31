@@ -16,12 +16,12 @@ namespace ModernChess
 
         [[nodiscard]] Square parseSquare();
 
-        static bool isAlphabetic(char character)
+        [[nodiscard]] static bool isAlphabetic(char character)
         {
             return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
         }
 
-        static bool isNumerical(char character)
+        [[nodiscard]] static bool isNumerical(char character)
         {
             return character >= '0' && character <= '9';
         }
@@ -36,18 +36,18 @@ namespace ModernChess
 
         void nextPosition();
 
-        char getNextCharacter();
+        [[nodiscard]] char getNextCharacter();
 
-        char currentCharacter();
+        [[nodiscard]] char currentCharacter();
 
-        bool hasNextCharacter() const;
+        [[nodiscard]] bool hasNextCharacter() const;
 
-        bool isAtEndOfString() const;
+        [[nodiscard]] bool isAtEndOfString() const;
 
         [[nodiscard]] std::string_view getNextString();
 
         template<typename Number>
-        Number parseNumber()
+        [[nodiscard]] Number parseNumber()
         {
             std::stringstream strNumber = extractNumber();
 
