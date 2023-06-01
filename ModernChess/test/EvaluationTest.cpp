@@ -111,7 +111,8 @@ namespace
         FenParsing::FenParser fenParser(fenString);
         const GameState gameState = fenParser.parse();
 
-        const ExtendedEvaluation evaluation(gameState);
+        ExtendedEvaluation evaluation(gameState);
+        //evaluation.historyMoves[Color::White][Figure::WhiteQueen][Square::b8] = 1000;
         const std::vector<Move> moves = evaluation.generateSortedMoves();
 
         int32_t lastScore = std::numeric_limits<int32_t>::max();
@@ -174,12 +175,38 @@ namespace
         const GameState gameState = fenParser.parse();
 
         Evaluation evaluation(gameState);
-        const EvaluationResult evalResult = evaluation.getBestMove(6);
+        const EvaluationResult evalResult = evaluation.getBestMove(7);
 
         EXPECT_EQ(evalResult.bestMove.getFrom(), Square::g5);
         EXPECT_EQ(evalResult.bestMove.getTo(), Square::h7);
         EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::WhiteKnight);
         EXPECT_TRUE(evalResult.bestMove.isCapture());
+
+        std::cout << evalResult << std::endl;
+    }
+
+    TEST(EvaluationTest, HistorySearchExample)
+    {
+        /*
+         * 8 . . . . . . ♔ .
+         * 7 . . . ♕ . ♙ ♙ .
+         * 6 ♙ ♙ . . . . . ♙
+         * 5 . ♖ . . . . . ♘
+         * 4 . . . . . . . .
+         * 3 . ♟︎ . . . ♟︎ ♟︎ .
+         * 2 ♟︎ ♛ . . . . ♝ ♟︎
+         * 1 . . ♜ . . . ♚ .
+         *
+         *   a b c d e f g h
+         */
+        constexpr auto fenString = "6k1/3q1pp1/pp5p/1r5n/8/1P3PP1/PQ4BP/2R3K1 w - - 0 1";
+        FenParsing::FenParser fenParser(fenString);
+        const GameState gameState = fenParser.parse();
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(5);
+
+        std::cout << gameState << std::endl;
 
         std::cout << evalResult << std::endl;
     }

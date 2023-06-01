@@ -62,9 +62,6 @@ namespace ModernChess
         // killer moves [id][ply]
         std::array<std::array<Move, maxNumberOfKillerMoves>, MaxHalfMoves> killerMoves{};
 
-        // history moves [figure][square]
-        std::array<std::array<int32_t, NumberOfFigureTypes>, NumberOfSquares> historyMoves{};
-
         [[nodiscard]] inline bool kingIsInCheck() const
         {
             if (m_gameState.board.sideToMove == Color::White)
@@ -157,13 +154,6 @@ namespace ModernChess
                 // found a better move
                 if (score > alpha)
                 {
-                    // store history moves
-                    if (not move.isCapture())
-                    {
-                        //historyMoves[move.getMovedFigure()][move.getTo()] += depth;
-                        //historyMoves[move.getMovedFigure()][move.getTo()] += (depth*depth);
-                    }
-
                     // PV node (move)
                     alpha = score;
 
@@ -357,7 +347,7 @@ namespace ModernChess
                 return secondBestKillerMoveScore;
             }
 
-            return historyMoves[move.getMovedFigure()][move.getTo()];
+            return 0;
         }
 
 
