@@ -126,7 +126,7 @@ namespace
         }
     }
 
-    TEST(EvaluationTest, PreventPotentialMateIn5ForWhitePart1)
+    TEST(EvaluationTest, PreventPotentialMateIn5ForWhite)
     {
         /*
          * 8 ♖ . . . ♖ . ♔ .
@@ -204,7 +204,7 @@ namespace
         const GameState gameState = fenParser.parse();
 
         Evaluation evaluation(gameState);
-        const EvaluationResult evalResult = evaluation.getBestMove(5);
+        const EvaluationResult evalResult = evaluation.getBestMove(6);
 
         std::cout << gameState << std::endl;
 
