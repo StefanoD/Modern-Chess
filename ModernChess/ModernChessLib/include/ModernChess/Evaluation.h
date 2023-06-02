@@ -55,8 +55,9 @@ namespace ModernChess
 
         static constexpr int32_t checkMateScore = -infinity + 1;
         static constexpr int32_t staleMateScore = 0;
-        static constexpr int32_t bestKillerMoveScore = 90000;
-        static constexpr int32_t secondBestKillerMoveScore = 80000;
+        static constexpr int32_t bestKillerMoveScore = 90'000;
+        static constexpr int32_t secondBestKillerMoveScore = 80'000;
+        static constexpr int32_t captureScoreOffset = 100'000;
         static constexpr size_t maxNumberOfKillerMoves = 2;
 
         // killer moves [id][ply]
@@ -79,7 +80,8 @@ namespace ModernChess
             std::vector<Move> moves =  PseudoMoveGeneration::generateMoves(m_gameState);
 
             // Sort moves, such that captures with higher scores are evaluated first and makes an early pruning more probable
-            std::sort(moves.begin(), moves.end(), [this](const Move leftOrderedMove, const Move rightOrderedMove){
+            // Use also stable_sort, because on capture moves, we insert first the most valuable pieces!
+            std::stable_sort(moves.begin(), moves.end(), [this](const Move leftOrderedMove, const Move rightOrderedMove){
                 return scoreMove(leftOrderedMove) > scoreMove(rightOrderedMove);
             });
 
@@ -143,9 +145,13 @@ namespace ModernChess
                 // fail-hard beta cutoff
                 if (score >= beta)
                 {
-                    // store killer moves for later reuse
-                    killerMoves[1][m_gameState.halfMoveClock] = killerMoves[0][m_gameState.halfMoveClock]; // old killer move
-                    killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
+                    if (not move.isCapture())
+                    {
+                        // store killer moves for later reuse
+                        killerMoves[1][m_gameState.halfMoveClock] = killerMoves[0][m_gameState.halfMoveClock]; // old killer move
+                        killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
+                    }
+
 
                     // node (move) fails high
                     return beta;
@@ -332,7 +338,7 @@ namespace ModernChess
                 }
 
                 // score move by MVV LVA lookup [source piece][target piece]
-                return mvvLva[move.getMovedFigure()][targetFigure];
+                return mvvLva[move.getMovedFigure()][targetFigure] + captureScoreOffset;
             }
 
             // score 1st killer move
