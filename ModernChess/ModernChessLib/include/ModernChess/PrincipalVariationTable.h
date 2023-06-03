@@ -38,6 +38,21 @@ namespace ModernChess
         std::array<std::array<Move, MaxHalfMoves>, MaxHalfMoves> pvTable{};
         std::array<int32_t, MaxHalfMoves> pvLength{};
 
+        void addPrincipalVariation(const Move move, int32_t ply)
+        {
+            pvTable[ply][ply] = move;
+
+            // loop over the next ply
+            for (int nextPly = ply + 1; nextPly < pvLength[ply + 1]; ++nextPly)
+            {
+                // copy move from deeper ply into a current ply's line
+                pvTable[ply][nextPly] = pvTable[ply + 1][nextPly];
+            }
+
+            // adjust PV length
+            pvLength[ply] = pvLength[ply + 1];
+        }
+
         using ConstIterator = const Move*;
 
         [[nodiscard]] ConstIterator begin() const

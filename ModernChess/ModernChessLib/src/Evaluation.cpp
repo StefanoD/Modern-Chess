@@ -136,19 +136,7 @@ namespace ModernChess
                 // PV node (move)
                 alpha = score;
 
-                // write PV move
-                pvTable->pvTable[m_gameState.halfMoveClock][m_gameState.halfMoveClock] = move;
-
-                // loop over the next ply
-                for (int nextPly = m_gameState.halfMoveClock + 1; nextPly < pvTable->pvLength[m_gameState.halfMoveClock + 1]; ++nextPly)
-                {
-                    // copy move from deeper ply into a current ply's line
-                    pvTable->pvTable[m_gameState.halfMoveClock][nextPly] =
-                            pvTable->pvTable[m_gameState.halfMoveClock + 1][nextPly];
-                }
-
-                // adjust PV length
-                pvTable->pvLength[m_gameState.halfMoveClock] = pvTable->pvLength[m_gameState.halfMoveClock + 1];
+                pvTable->addPrincipalVariation(move, m_gameState.halfMoveClock);
             }
         }
 
