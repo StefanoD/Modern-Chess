@@ -6,6 +6,7 @@
 #include <array>
 #include <limits>
 #include <iostream>
+#include <memory>
 
 namespace ModernChess
 {
@@ -15,18 +16,18 @@ namespace ModernChess
                                   int32_t score,
                                   uint32_t numberOfNodes,
                                   int32_t depth,
-                                  PrincipalVariationTable pvTable) :
+                                  std::unique_ptr<PrincipalVariationTable> pvTable) :
                 bestMove(bestMove),
                 score(score),
                 numberOfNodes(numberOfNodes),
                 depth(depth),
-                pvTable(pvTable){}
+                pvTable(std::move(pvTable)){}
 
         Move bestMove{};
         int32_t score{};
         uint32_t numberOfNodes{};
         uint32_t depth{};
-        PrincipalVariationTable pvTable{};
+        std::unique_ptr<PrincipalVariationTable> pvTable{};
     };
 
     class Evaluation
@@ -34,9 +35,9 @@ namespace ModernChess
     public:
         explicit Evaluation(GameState gameState) :
             m_gameState{gameState},
-            m_halfMoveClockRootSearch{m_gameState.halfMoveClock}
+            m_halfMoveClockRootSearch{m_gameState.halfMoveClock},
+            pvTable{std::make_unique<PrincipalVariationTable>(m_halfMoveClockRootSearch)}
             {
-                pvTable.halfMoveClock = m_halfMoveClockRootSearch;
             }
 
         [[nodiscard]] EvaluationResult getBestMove(int32_t depth);
@@ -46,7 +47,7 @@ namespace ModernChess
         Move m_bestMove{};
         GameState m_gameState;
         int32_t m_halfMoveClockRootSearch{};
-        PrincipalVariationTable pvTable{};
+        std::unique_ptr<PrincipalVariationTable> pvTable{};
 
         // Use half of max number in order to avoid overflows
         static constexpr int32_t infinity = std::numeric_limits<int32_t>::max() / 2;

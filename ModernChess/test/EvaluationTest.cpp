@@ -35,13 +35,15 @@ namespace
         FenParsing::FenParser fenParser(fenString);
         const GameState gameState = fenParser.parse();
 
-        const Move move = Evaluation(gameState).getBestMove(5).bestMove;
+        const EvaluationResult evaluationResult = Evaluation(gameState).getBestMove(5);
+        const Move move = evaluationResult.bestMove;
 
         EXPECT_EQ(move.getFrom(), Square::b3);
         EXPECT_EQ(move.getTo(), Square::b7);
         EXPECT_EQ(move.getMovedFigure(), Figure::WhiteQueen);
 
         std::cout << gameState;
+        std::cout << evaluationResult;
     }
 
     TEST(EvaluationTest, mvvLvaWhiteQueenTakesBlackPawn)

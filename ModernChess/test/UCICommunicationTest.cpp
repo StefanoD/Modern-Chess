@@ -205,7 +205,7 @@ namespace
 
         UCICommunication uciCom(inputStream, outputStream, errorStream);
 
-        std::thread communicationThread([&]{
+        std::thread communicationThread([&uciCom]{
             uciCom.startCommunication();
         });
 
