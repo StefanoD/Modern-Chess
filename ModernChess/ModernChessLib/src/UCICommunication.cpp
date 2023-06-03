@@ -193,6 +193,6 @@ namespace ModernChess
             m_outputStream << evalResult << std::flush;
         }
 
-        m_outputStream << "bestmove " << evalResult.bestMove() << "\n";
+        m_outputStream << "bestmove " << evalResult.bestMove() << "\n" << std::flush;
     }
 }
