@@ -60,7 +60,7 @@ namespace ModernChess
     int32_t Evaluation::negamax(int32_t alpha, int32_t beta, int32_t depth)
     {
         // Init PV length
-        //pvTable.pvLength[m_gameState.halfMoveClock] = m_gameState.halfMoveClock;
+        pvTable.pvLength[m_gameState.halfMoveClock] = m_gameState.halfMoveClock;
 
         const bool kingInCheck = kingIsInCheck();
 
@@ -144,7 +144,7 @@ namespace ModernChess
                 alpha = score;
 
                 // write PV move
-                /*pvTable.pvTable[m_gameState.halfMoveClock][m_gameState.halfMoveClock] = move;
+                pvTable.pvTable[m_gameState.halfMoveClock][m_gameState.halfMoveClock] = move;
 
                 // loop over the next ply
                 for (int nextPly = m_gameState.halfMoveClock + 1; nextPly < pvTable.pvLength[m_gameState.halfMoveClock + 1]; ++nextPly)
@@ -155,7 +155,7 @@ namespace ModernChess
                 }
 
                 // adjust PV length
-                pvTable.pvLength[m_gameState.halfMoveClock] = pvTable.pvLength[m_gameState.halfMoveClock + 1];*/
+                pvTable.pvLength[m_gameState.halfMoveClock] = pvTable.pvLength[m_gameState.halfMoveClock + 1];
 
                 // if root move
                 if (m_gameState.halfMoveClock == m_halfMoveClockRootSearch)
