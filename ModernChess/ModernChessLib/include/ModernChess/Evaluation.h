@@ -21,7 +21,7 @@ namespace ModernChess
                 depth(depth),
                 pvTable(std::move(pvTable)){}
 
-        [[nodiscard]] Move bestMove() const { return pvTable->pvTable[pvTable->halfMoveClock][pvTable->halfMoveClock]; }
+        [[nodiscard]] Move bestMove() const { return *pvTable->begin(); }
         int32_t score{};
         uint32_t numberOfNodes{};
         uint32_t depth{};

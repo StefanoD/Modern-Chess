@@ -38,5 +38,18 @@ namespace ModernChess
         int32_t halfMoveClock{};
         std::array<std::array<Move, MaxHalfMoves>, MaxHalfMoves> pvTable{};
         std::array<int32_t, MaxHalfMoves> pvLength{};
+
+        using ConstIterator = const Move*;
+
+        [[nodiscard]] ConstIterator begin() const
+        {
+            return &pvTable[halfMoveClock][halfMoveClock];
+        }
+
+        [[nodiscard]] ConstIterator end() const
+        {
+            const size_t end = pvLength[halfMoveClock];
+            return &pvTable[halfMoveClock][end];
+        }
     };
 }

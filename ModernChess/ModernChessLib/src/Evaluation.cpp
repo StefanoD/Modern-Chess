@@ -10,9 +10,9 @@ std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &
     os << "info score cp " << evalResult.score << " depth " << evalResult.depth << " nodes " <<
     evalResult.numberOfNodes << " pv ";
 
-    for (int i = evalResult.pvTable->halfMoveClock; i < evalResult.pvTable->pvLength[evalResult.pvTable->halfMoveClock]; ++i)
+    for (const ModernChess::Move move : *evalResult.pvTable)
     {
-        os << evalResult.pvTable->pvTable[evalResult.pvTable->halfMoveClock][i] << " ";
+        os << move << " ";
     }
 
     os << "\n";
