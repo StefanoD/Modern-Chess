@@ -29,7 +29,7 @@ namespace ModernChess
         // find best move within a given position
         const int32_t score = negamax(-infinity, infinity, depth);
 
-        return EvaluationResult{score, m_numberOfNodes, depth, std::move(pvTable)};
+        return EvaluationResult{score, m_numberOfNodes, depth, pvTable};
     }
 
     bool Evaluation::kingIsInCheck() const

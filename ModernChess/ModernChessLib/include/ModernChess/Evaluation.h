@@ -15,7 +15,7 @@ namespace ModernChess
         explicit EvaluationResult(int32_t score,
                                   uint32_t numberOfNodes,
                                   int32_t depth,
-                                  std::unique_ptr<PrincipalVariationTable> pvTable) :
+                                  std::shared_ptr<PrincipalVariationTable> pvTable) :
                 score(score),
                 numberOfNodes(numberOfNodes),
                 depth(depth),
@@ -25,7 +25,7 @@ namespace ModernChess
         int32_t score{};
         uint32_t numberOfNodes{};
         uint32_t depth{};
-        std::unique_ptr<PrincipalVariationTable> pvTable{};
+        std::shared_ptr<PrincipalVariationTable> pvTable{};
     };
 
     class Evaluation
@@ -34,7 +34,7 @@ namespace ModernChess
         explicit Evaluation(GameState gameState) :
             m_gameState{gameState},
             m_halfMoveClockRootSearch{m_gameState.halfMoveClock},
-            pvTable{std::make_unique<PrincipalVariationTable>(m_halfMoveClockRootSearch)}
+            pvTable{std::make_shared<PrincipalVariationTable>(m_halfMoveClockRootSearch)}
             {
             }
 
@@ -44,7 +44,7 @@ namespace ModernChess
         uint32_t m_numberOfNodes{};
         GameState m_gameState;
         int32_t m_halfMoveClockRootSearch{};
-        std::unique_ptr<PrincipalVariationTable> pvTable{};
+        std::shared_ptr<PrincipalVariationTable> pvTable{};
 
         // Use half of max number in order to avoid overflows
         static constexpr int32_t infinity = std::numeric_limits<int32_t>::max() / 2;
