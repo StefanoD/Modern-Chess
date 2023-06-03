@@ -90,7 +90,7 @@ namespace
         const Move move(Square::e5, Square::f6, Figure::WhitePawn, Figure::None, true, false, true, false);
         const ExtendedEvaluation evaluation(gameState);
 
-        EXPECT_EQ(evaluation.scoreMove(move), 105);
+        EXPECT_EQ(evaluation.scoreMove(move), 100105);
     }
 
     TEST(EvaluationTest, SortMoves)
