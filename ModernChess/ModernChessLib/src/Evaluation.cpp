@@ -117,7 +117,6 @@ namespace ModernChess
                     killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
                 }
 
-
                 // node (move) fails high
                 return beta;
             }
