@@ -12,18 +12,16 @@ namespace ModernChess
 {
     struct EvaluationResult
     {
-        explicit EvaluationResult(Move bestMove,
-                                  int32_t score,
+        explicit EvaluationResult(int32_t score,
                                   uint32_t numberOfNodes,
                                   int32_t depth,
                                   std::unique_ptr<PrincipalVariationTable> pvTable) :
-                bestMove(bestMove),
                 score(score),
                 numberOfNodes(numberOfNodes),
                 depth(depth),
                 pvTable(std::move(pvTable)){}
 
-        Move bestMove{};
+        [[nodiscard]] Move bestMove() const { return pvTable->pvTable[pvTable->halfMoveClock][pvTable->halfMoveClock]; }
         int32_t score{};
         uint32_t numberOfNodes{};
         uint32_t depth{};
@@ -44,7 +42,6 @@ namespace ModernChess
 
     protected:
         uint32_t m_numberOfNodes{};
-        Move m_bestMove{};
         GameState m_gameState;
         int32_t m_halfMoveClockRootSearch{};
         std::unique_ptr<PrincipalVariationTable> pvTable{};

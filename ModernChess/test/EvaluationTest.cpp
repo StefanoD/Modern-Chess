@@ -36,7 +36,7 @@ namespace
         const GameState gameState = fenParser.parse();
 
         const EvaluationResult evaluationResult = Evaluation(gameState).getBestMove(5);
-        const Move move = evaluationResult.bestMove;
+        const Move move = evaluationResult.bestMove();
 
         EXPECT_EQ(move.getFrom(), Square::b3);
         EXPECT_EQ(move.getTo(), Square::b7);
@@ -149,10 +149,10 @@ namespace
         Evaluation evaluation(gameState);
         const EvaluationResult evalResult = evaluation.getBestMove(8);
 
-        EXPECT_EQ(evalResult.bestMove.getFrom(), Square::e7);
-        EXPECT_EQ(evalResult.bestMove.getTo(), Square::c5);
-        EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::BlackQueen);
-        EXPECT_FALSE(evalResult.bestMove.isCapture());
+        EXPECT_EQ(evalResult.bestMove().getFrom(), Square::e7);
+        EXPECT_EQ(evalResult.bestMove().getTo(), Square::c5);
+        EXPECT_EQ(evalResult.bestMove().getMovedFigure(), Figure::BlackQueen);
+        EXPECT_FALSE(evalResult.bestMove().isCapture());
 
         std::cout << evalResult << std::endl;
     }
@@ -179,10 +179,10 @@ namespace
         Evaluation evaluation(gameState);
         const EvaluationResult evalResult = evaluation.getBestMove(7);
 
-        EXPECT_EQ(evalResult.bestMove.getFrom(), Square::g5);
-        EXPECT_EQ(evalResult.bestMove.getTo(), Square::h7);
-        EXPECT_EQ(evalResult.bestMove.getMovedFigure(), Figure::WhiteKnight);
-        EXPECT_TRUE(evalResult.bestMove.isCapture());
+        EXPECT_EQ(evalResult.bestMove().getFrom(), Square::g5);
+        EXPECT_EQ(evalResult.bestMove().getTo(), Square::h7);
+        EXPECT_EQ(evalResult.bestMove().getMovedFigure(), Figure::WhiteKnight);
+        EXPECT_TRUE(evalResult.bestMove().isCapture());
 
         std::cout << evalResult << std::endl;
     }

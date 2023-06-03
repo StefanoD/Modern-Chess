@@ -10,14 +10,14 @@ std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &
     os << "info score cp " << evalResult.score << " depth " << evalResult.depth << " nodes " <<
     evalResult.numberOfNodes << " pv ";
 
-    for (int i = 0; i < evalResult.pvTable->pvLength[evalResult.pvTable->halfMoveClock]; ++i)
+    for (int i = evalResult.pvTable->halfMoveClock; i < evalResult.pvTable->pvLength[evalResult.pvTable->halfMoveClock]; ++i)
     {
         os << evalResult.pvTable->pvTable[evalResult.pvTable->halfMoveClock][i] << " ";
     }
 
     os << "\n";
 
-    os << "bestmove " << evalResult.bestMove << "\n";
+    os << "bestmove " << evalResult.bestMove() << "\n";
 
     return os;
 }
@@ -29,7 +29,7 @@ namespace ModernChess
         // find best move within a given position
         const int32_t score = negamax(-infinity, infinity, depth);
 
-        return EvaluationResult{m_bestMove, score, m_numberOfNodes, depth, std::move(pvTable)};
+        return EvaluationResult{score, m_numberOfNodes, depth, std::move(pvTable)};
     }
 
     bool Evaluation::kingIsInCheck() const
@@ -82,12 +82,6 @@ namespace ModernChess
 
         // legal moves counter
         uint32_t legalMoves = 0;
-
-        // best move so far
-        Move bestMoveSoFar;
-
-        // old value of alpha
-        const int32_t oldAlpha = alpha;
 
         // create move list instance
         const std::vector<Move> moves = generateSortedMoves();
@@ -156,13 +150,6 @@ namespace ModernChess
 
                 // adjust PV length
                 pvTable->pvLength[m_gameState.halfMoveClock] = pvTable->pvLength[m_gameState.halfMoveClock + 1];
-
-                // if root move
-                if (m_gameState.halfMoveClock == m_halfMoveClockRootSearch)
-                {
-                    // associate best move with the best score
-                    bestMoveSoFar = move;
-                }
             }
         }
 
@@ -177,13 +164,6 @@ namespace ModernChess
             // king is not in check
             // return stalemate score
             return staleMateScore;
-        }
-
-        // found better move
-        if (oldAlpha != alpha)
-        {
-            // init best move
-            m_bestMove = bestMoveSoFar;
         }
 
         // node (move) fails low
