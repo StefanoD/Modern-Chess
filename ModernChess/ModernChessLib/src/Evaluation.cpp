@@ -259,7 +259,7 @@ namespace ModernChess
                     case Figure::BlackRook: score -= rookScore[mirrorScore[square]]; break;
                     case Figure::BlackKing: score -= kingScore[mirrorScore[square]]; break;
                     default:
-                        // TODO queen
+                        // Ignore queen
                         break;
                 }
 
