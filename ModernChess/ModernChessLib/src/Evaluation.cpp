@@ -7,7 +7,16 @@
 
 std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &evalResult)
 {
-    os << "info score cp " << evalResult.score << " depth " << evalResult.depth << " nodes " << evalResult.numberOfNodes << "\n";
+    os << "info score cp " << evalResult.score << " depth " << evalResult.depth << " nodes " <<
+    evalResult.numberOfNodes << " pv ";
+
+    for (int i = 0; i < evalResult.pvTable.pvLength[evalResult.pvTable.halfMoveClock]; ++i)
+    {
+        os << evalResult.pvTable.pvTable[evalResult.pvTable.halfMoveClock][i] << " ";
+    }
+
+    os << "\n";
+
     os << "bestmove " << evalResult.bestMove << "\n";
 
     return os;
@@ -20,7 +29,7 @@ namespace ModernChess
         // find best move within a given position
         const int32_t score = negamax(-infinity, infinity, depth);
 
-        return EvaluationResult{m_bestMove, score, m_numberOfNodes, depth};
+        return EvaluationResult{m_bestMove, score, m_numberOfNodes, depth, pvTable};
     }
 
     bool Evaluation::kingIsInCheck() const
@@ -50,6 +59,9 @@ namespace ModernChess
 
     int32_t Evaluation::negamax(int32_t alpha, int32_t beta, int32_t depth)
     {
+        // Init PV length
+        //pvTable.pvLength[m_gameState.halfMoveClock] = m_gameState.halfMoveClock;
+
         const bool kingInCheck = kingIsInCheck();
 
         // increase search depth if the king has been exposed into a check
@@ -130,6 +142,20 @@ namespace ModernChess
 
                 // PV node (move)
                 alpha = score;
+
+                // write PV move
+                /*pvTable.pvTable[m_gameState.halfMoveClock][m_gameState.halfMoveClock] = move;
+
+                // loop over the next ply
+                for (int nextPly = m_gameState.halfMoveClock + 1; nextPly < pvTable.pvLength[m_gameState.halfMoveClock + 1]; ++nextPly)
+                {
+                    // copy move from deeper ply into a current ply's line
+                    pvTable.pvTable[m_gameState.halfMoveClock][nextPly] =
+                            pvTable.pvTable[m_gameState.halfMoveClock + 1][nextPly];
+                }
+
+                // adjust PV length
+                pvTable.pvLength[m_gameState.halfMoveClock] = pvTable.pvLength[m_gameState.halfMoveClock + 1];*/
 
                 // if root move
                 if (m_gameState.halfMoveClock == m_halfMoveClockRootSearch)
