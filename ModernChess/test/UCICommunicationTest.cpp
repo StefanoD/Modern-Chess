@@ -221,4 +221,43 @@ namespace
         EXPECT_TRUE(engineOutput.find("bestmove b3b7") != std::string::npos);
         std::cout << engineOutput << std::endl;
     }
+
+    TEST(UCICommunicationTest, ManyMoves)
+    {
+        /*
+         * 8 ♖ . . . . . . .
+         * 7 ♙ . . ♜ . ♙ . ♙
+         * 6 . ♙ ♗ . . . ♙ ♔
+         * 5 . . . . ♝ . . .
+         * 4 ♟︎ . . . . ♟︎ . .
+         * 3 . ♟︎ . . . . . .
+         * 2 . . ♟︎ ♚ . ♘ ♟︎ ♟︎
+         * 1 . . . . . ♝ . .
+         *
+         *   a b c d e f g h
+         */
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&uciCom]{
+            uciCom.startCommunication();
+        });
+
+        constexpr auto fenString = "position startpos moves a2a4 g7g6 d2d4 f8g7 e2e4 e7e5 d4e5 g7e5 g1f3 d8f6 f3e5 f6e5 b1c3 g8f6 f2f4 e5a5 d1d4 a5b6 d4e5 b6e6 e5c7 b8c6 e4e5 e8g8 c7d6 e6d6 e5d6 c6d4 e1d1 d4f5 b2b3 f5d6 c1a3 f6e4 c3e4 d6e4 a3f8 e4f2 d1d2 f2h1 f8d6 h1f2 a1e1 b7b6 e1e8 g8g7 e8e7 c8b7 d6e5 g7h6 e7d7 b7c6";
+
+        inputStream << fenString << "\n";
+        inputStream << "go depth 6\n";
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        EXPECT_TRUE(engineOutput.find("bestmove d7f7") != std::string::npos);
+        std::cout << engineOutput << std::endl;
+
+        std::cout << uciCom.getGameState() << std::endl;
+    }
 }
