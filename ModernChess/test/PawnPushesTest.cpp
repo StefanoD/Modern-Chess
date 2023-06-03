@@ -1,5 +1,4 @@
-#include "ModernChess/Board.h"
-#include "ModernChess/BitBoardOperations.h"
+#include "BoardHelperUtility.h"
 #include "ModernChess/PawnPushes.h"
 #include "ModernChess/Utilities.h"
 
@@ -12,10 +11,10 @@ namespace
 
     TEST(PawnPushesTest, OneStepNorth)
     {
-        const Board board; // Has initial board state with correct positions
+        const Board board = Testing::initBoard(); // Has initial board state with correct positions
 
         // All figures have been moved one step north
-        const BitBoardState bitBoardState = MoveGenerations::oneStepNorth(board.getOccupiedSquares());
+        const BitBoardState bitBoardState = MoveGenerations::oneStepNorth(board.occupancies[Color::Both]);
 
         // Test if squares are not occupied
         for (Square square = Square::a1; square <= Square::h1; ++square)
@@ -46,10 +45,10 @@ namespace
 
     TEST(PawnPushesTest, OneStepSouth)
     {
-        const Board board; // Has initial board state with correct positions
+        const Board board = Testing::initBoard(); // Has initial board state with correct positions
 
         // All figures have been moved one step north
-        const BitBoardState bitBoardState = MoveGenerations::oneStepSouth(board.getOccupiedSquares());
+        const BitBoardState bitBoardState = MoveGenerations::oneStepSouth(board.occupancies[Color::Both]);
 
         // Test if squares are occupied
         for (Square square = Square::a1; square <= Square::h1; ++square)
@@ -80,10 +79,10 @@ namespace
 
     TEST(PawnPushesTest, OneStepEast)
     {
-        const Board board; // Has initial board state with correct positions
+        const Board board = Testing::initBoard(); // Has initial board state with correct positions
 
         // All figures have been moved one step north
-        const BitBoardState bitBoardState = MoveGenerations::oneStepEast(board.getOccupiedSquares());
+        const BitBoardState bitBoardState = MoveGenerations::oneStepEast(board.occupancies[Color::Both]);
 
         // Test if squares are occupied
         for (Square square = Square::b1; square <= Square::h1; ++square)
@@ -118,10 +117,10 @@ namespace
 
     TEST(PawnPushesTest, OneStepWest)
     {
-        const Board board; // Has initial board state with correct positions
+        const Board board = Testing::initBoard(); // Has initial board state with correct positions
 
         // All figures have been moved one step north
-        const BitBoardState bitBoardState = MoveGenerations::oneStepWest(board.getOccupiedSquares());
+        const BitBoardState bitBoardState = MoveGenerations::oneStepWest(board.occupancies[Color::Both]);
 
         // Test if squares are occupied
         for (Square square = Square::b1; square <= Square::g1; ++square)
@@ -156,10 +155,10 @@ namespace
 
     TEST(PawnPushesTest, OneStepSouthWest)
     {
-        const Board board; // Has initial board state with correct positions
+        const Board board = Testing::initBoard(); // Has initial board state with correct positions
 
         // All figures have been moved one step north
-        const BitBoardState bitBoardState = MoveGenerations::oneStepSouthWest(board.getOccupiedSquares());
+        const BitBoardState bitBoardState = MoveGenerations::oneStepSouthWest(board.occupancies[Color::Both]);
 
         // Test if squares are occupied
         for (Square square = Square::a1; square <= Square::g1; ++square)
