@@ -177,7 +177,7 @@ namespace
         const GameState gameState = fenParser.parse();
 
         Evaluation evaluation(gameState);
-        const EvaluationResult evalResult = evaluation.getBestMove(7);
+        const EvaluationResult evalResult = evaluation.getBestMove(6);
 
         EXPECT_EQ(evalResult.bestMove().getFrom(), Square::g5);
         EXPECT_EQ(evalResult.bestMove().getTo(), Square::h7);

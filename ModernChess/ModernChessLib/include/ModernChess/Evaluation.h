@@ -12,6 +12,8 @@ namespace ModernChess
 {
     struct EvaluationResult
     {
+        EvaluationResult() = default;
+
         explicit EvaluationResult(int32_t score,
                                   uint32_t numberOfNodes,
                                   int32_t depth,
@@ -214,4 +216,7 @@ namespace ModernChess
     };
 }
 
+/**
+ * @note Does not directly print the best moves. It is printed via the PV table.
+ */
 std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &evalResult);

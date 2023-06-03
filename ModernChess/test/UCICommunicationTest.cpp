@@ -222,6 +222,43 @@ namespace
         std::cout << engineOutput << std::endl;
     }
 
+    TEST(UCICommunicationTest, MateIn5ForWhite)
+    {
+        /*
+         * 8 ♖ . . . ♖ . ♔ .
+         * 7 . . ♙ . ♕ ♙ ♟︎ ♙
+         * 6 ♙ . ♘ . . ♘ . ♛
+         * 5 . . . . ♙ . ♞ .
+         * 4 . . . ♙ ♟︎ . ♗ .
+         * 3 ♙ ♟︎ . ♟︎ . . . .
+         * 2 ♟︎ . ♟︎ . . ♟︎ ♟︎ .
+         * 1 . . ♚ ♜ . ♝ . ♜
+         *
+         *   a b c d e f g h
+         */
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&uciCom]{
+            uciCom.startCommunication();
+        });
+
+        constexpr auto fenString = "r3r1k1/2p1qpPp/p4n1Q/4p1N1/1n1pP1b1/pP1P4/P1P2PP1/2KR1B1R w - - 5 18";
+
+        inputStream << "position fen " << fenString << "\n";
+        inputStream << "go depth 6\n";
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        EXPECT_TRUE(engineOutput.find("bestmove g5h7") != std::string::npos);
+        std::cout << engineOutput << std::endl;
+    }
+
     TEST(UCICommunicationTest, ManyMoves)
     {
         /*

@@ -17,8 +17,6 @@ std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &
 
     os << "\n";
 
-    os << "bestmove " << evalResult.bestMove() << "\n";
-
     return os;
 }
 

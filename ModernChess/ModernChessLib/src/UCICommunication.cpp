@@ -183,8 +183,16 @@ namespace ModernChess
     void UCICommunication::sendBestMove(int32_t searchDepth)
     {
         Evaluation evaluation(m_game.gameState);
-        const EvaluationResult evalResult = evaluation.getBestMove(searchDepth);
 
-        m_outputStream << evalResult << std::flush;
+        EvaluationResult evalResult;
+
+        for (int currentDepth = 1; currentDepth <= searchDepth; ++currentDepth)
+        {
+            evalResult = evaluation.getBestMove(currentDepth);
+
+            m_outputStream << evalResult << std::flush;
+        }
+
+        m_outputStream << "bestmove " << evalResult.bestMove() << "\n";
     }
 }
