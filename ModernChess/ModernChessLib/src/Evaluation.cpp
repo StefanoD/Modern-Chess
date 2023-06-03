@@ -77,6 +77,12 @@ namespace ModernChess
             return quiescenceSearch(alpha, beta);
         }
 
+        // we are too deep, hence there's an overflow of arrays relying on max half-moves constant
+        if (m_gameState.halfMoveClock >= MaxHalfMoves)
+        {
+            return evaluatePosition();
+        }
+
         // increment nodes count
         ++m_numberOfNodes;
 
