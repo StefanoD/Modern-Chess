@@ -174,7 +174,7 @@ namespace ModernChess
         }
         else
         {
-            searchDepth = 6;
+            searchDepth = 7;
         }
 
         sendBestMove(searchDepth);
