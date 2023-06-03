@@ -164,7 +164,10 @@ namespace ModernChess
                 {
                     if (not move.isCapture())
                     {
-                        // store history moves
+                        // store history moves.
+                        // The added value is typically depth * depth or 2 ^ depth,
+                        // based on the assumption that otherwise moves from the plies near the leaves would have too
+                        // much impact on the result.
                         historyMoves[move.getMovedFigure()][move.getTo()] += (depth * depth);
                     }
 
