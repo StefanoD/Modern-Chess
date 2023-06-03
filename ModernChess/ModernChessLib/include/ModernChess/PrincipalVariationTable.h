@@ -32,10 +32,9 @@ namespace ModernChess
          * 5    0    0    0    0    0    m6
          */
 
-        explicit PrincipalVariationTable(int32_t halfMoveClock) :
-            halfMoveClock(halfMoveClock) {}
+        explicit PrincipalVariationTable(int32_t rootHalfMoveClock) :
+                rootHalfMoveClock(rootHalfMoveClock) {}
 
-        int32_t halfMoveClock{};
         std::array<std::array<Move, MaxHalfMoves>, MaxHalfMoves> pvTable{};
         std::array<int32_t, MaxHalfMoves> pvLength{};
 
@@ -43,13 +42,16 @@ namespace ModernChess
 
         [[nodiscard]] ConstIterator begin() const
         {
-            return &pvTable[halfMoveClock][halfMoveClock];
+            return &pvTable[rootHalfMoveClock][rootHalfMoveClock];
         }
 
         [[nodiscard]] ConstIterator end() const
         {
-            const size_t end = pvLength[halfMoveClock];
-            return &pvTable[halfMoveClock][end];
+            const size_t end = pvLength[rootHalfMoveClock];
+            return &pvTable[rootHalfMoveClock][end];
         }
+
+    private:
+        int32_t rootHalfMoveClock{};
     };
 }
