@@ -49,6 +49,7 @@ namespace ModernChess
 
         if (m_followPv)
         {
+            // Has current ply a PV?
             m_scorePv = std::any_of(moves.begin(), moves.end(), [this](const Move move){
                 return pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move;
             });
