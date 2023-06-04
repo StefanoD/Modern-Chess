@@ -43,30 +43,28 @@ namespace ModernChess
         [[nodiscard]] EvaluationResult getBestMove(int32_t depth);
 
     protected:
+        // Use half of max number in order to avoid overflows
+        static constexpr int32_t Infinity = std::numeric_limits<int32_t>::max() / 2;
+        static constexpr int32_t CheckMateScore = -Infinity + 1;
+        static constexpr int32_t StaleMateScore = 0;
+        static constexpr int32_t BestKillerMoveScore = 90'000;
+        static constexpr int32_t SecondBestKillerMoveScore = 80'000;
+        static constexpr int32_t CaptureScoreOffset = 100'000;
+        static constexpr int32_t PvScore = 200'000;
+        static constexpr size_t MaxNumberOfKillerMoves = 2;
+
         uint32_t m_numberOfNodes{};
         GameState m_gameState;
         int32_t m_halfMoveClockRootSearch{};
         std::shared_ptr<PrincipalVariationTable> pvTable{};
-
-        // Use half of max number in order to avoid overflows
-        static constexpr int32_t infinity = std::numeric_limits<int32_t>::max() / 2;
-
-        static constexpr int32_t checkMateScore = -infinity + 1;
-        static constexpr int32_t staleMateScore = 0;
-        static constexpr int32_t bestKillerMoveScore = 90'000;
-        static constexpr int32_t secondBestKillerMoveScore = 80'000;
-        static constexpr int32_t captureScoreOffset = 100'000;
-        static constexpr int32_t pvScore = 200'000;
-        static constexpr size_t maxNumberOfKillerMoves = 2;
+        // killer moves [id][ply]
+        std::array<std::array<Move, MaxNumberOfKillerMoves>, MaxHalfMoves> m_killerMoves{};
+        // history moves [figure][square]
+        std::array<std::array<int32_t, NumberOfFigureTypes>, NumberOfSquares> m_historyMoves{};
 
         // follow PV & score PV move
-        bool followPv{};
-        bool scorePv{};
-
-        // killer moves [id][ply]
-        std::array<std::array<Move, maxNumberOfKillerMoves>, MaxHalfMoves> killerMoves{};
-        // history moves [figure][square]
-        std::array<std::array<int32_t, NumberOfFigureTypes>, NumberOfSquares> historyMoves{};
+        bool m_followPv{};
+        bool m_scorePv{};
 
         [[nodiscard]] bool kingIsInCheck() const;
 

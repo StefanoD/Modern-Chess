@@ -24,9 +24,9 @@ namespace ModernChess
 {
     EvaluationResult Evaluation::getBestMove(int32_t depth)
     {
-        followPv = true;
+        m_followPv = true;
         // find best move within a given position
-        const int32_t score = negamax(-infinity, infinity, depth);
+        const int32_t score = negamax(-Infinity, Infinity, depth);
 
         return EvaluationResult{score, m_numberOfNodes, depth, pvTable};
     }
@@ -47,10 +47,10 @@ namespace ModernChess
     {
         std::vector<Move> moves =  PseudoMoveGeneration::generateMoves(m_gameState);
 
-        if (followPv)
+        if (m_followPv)
         {
-            scorePv = plyHasPVs(moves);
-            followPv = scorePv;
+            m_scorePv = plyHasPVs(moves);
+            m_followPv = m_scorePv;
         }
 
         // Sort moves, such that captures with higher scores are evaluated first and makes an early pruning more probable
@@ -59,7 +59,7 @@ namespace ModernChess
             return scoreMove(leftOrderedMove) > scoreMove(rightOrderedMove);
         });
 
-        scorePv = false;
+        m_scorePv = false;
 
         return moves;
     }
@@ -126,8 +126,8 @@ namespace ModernChess
                 if (not move.isCapture())
                 {
                     // store killer moves for later reuse
-                    killerMoves[1][m_gameState.halfMoveClock] = killerMoves[0][m_gameState.halfMoveClock]; // old killer move
-                    killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
+                    m_killerMoves[1][m_gameState.halfMoveClock] = m_killerMoves[0][m_gameState.halfMoveClock]; // old killer move
+                    m_killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
                 }
 
                 // node (move) fails high
@@ -143,7 +143,7 @@ namespace ModernChess
                     // The added value is typically depth * depth or 2 ^ depth,
                     // based on the assumption that otherwise moves from the plies near the leaves would have too
                     // much impact on the result.
-                    historyMoves[move.getMovedFigure()][move.getTo()] += (depth * depth);
+                    m_historyMoves[move.getMovedFigure()][move.getTo()] += (depth * depth);
                 }
 
                 // PV node (move)
@@ -159,11 +159,11 @@ namespace ModernChess
             // king is in check
             if (kingInCheck)
             {    // return mating score (assuming closest distance to mating position)
-                return checkMateScore + m_gameState.halfMoveClock;
+                return CheckMateScore + m_gameState.halfMoveClock;
             }
             // king is not in check
             // return stalemate score
-            return staleMateScore;
+            return StaleMateScore;
         }
 
         // node (move) fails low
@@ -281,10 +281,10 @@ namespace ModernChess
     int32_t Evaluation::scoreMove(Move move)
     {
         // make sure we are dealing with PV move
-        if (scorePv && pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move)
+        if (m_scorePv && pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move)
         {
             // give PV move the highest score to search it first
-            return pvScore;
+            return PvScore;
         }
 
         // score capture move
@@ -319,22 +319,22 @@ namespace ModernChess
             }
 
             // score move by MVV LVA lookup [source piece][target piece]
-            return mvvLva[move.getMovedFigure()][targetFigure] + captureScoreOffset;
+            return mvvLva[move.getMovedFigure()][targetFigure] + CaptureScoreOffset;
         }
 
         // score 1st killer move
-        if (killerMoves[0][m_gameState.halfMoveClock] == move)
+        if (m_killerMoves[0][m_gameState.halfMoveClock] == move)
         {
-            return bestKillerMoveScore;
+            return BestKillerMoveScore;
         }
 
         // score 2nd killer move
-        if (killerMoves[1][m_gameState.halfMoveClock] == move)
+        if (m_killerMoves[1][m_gameState.halfMoveClock] == move)
         {
-            return secondBestKillerMoveScore;
+            return SecondBestKillerMoveScore;
         }
 
-        return historyMoves[move.getMovedFigure()][move.getTo()];
+        return m_historyMoves[move.getMovedFigure()][move.getTo()];
     }
 
     bool Evaluation::plyHasPVs(const std::vector<Move> &moves) const

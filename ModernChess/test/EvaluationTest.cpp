@@ -114,7 +114,7 @@ namespace
         const GameState gameState = fenParser.parse();
 
         ExtendedEvaluation evaluation(gameState);
-        //evaluation.historyMoves[Color::White][Figure::WhiteQueen][Square::b8] = 1000;
+        //evaluation.m_historyMoves[Color::White][Figure::WhiteQueen][Square::b8] = 1000;
         const std::vector<Move> moves = evaluation.generateSortedMoves();
 
         int32_t lastScore = std::numeric_limits<int32_t>::max();
