@@ -53,8 +53,10 @@ namespace ModernChess
             }
             else if (parser.uiHasSentStopCommand())
             {
-                // Workaround for stop command
-                sendBestMove(6);
+                if (m_searchFinished)
+                {
+                    sendBestMove();
+                }
             }
             else if (parser.uiRequestsUCIMode())
             {
@@ -166,19 +168,24 @@ namespace ModernChess
     {
         int32_t searchDepth;
 
+        {
+            const std::lock_guard lock(m_mutex);
+            m_searchFinished = false;
+        }
+
         if (parser.uiHasSentSearchDepth())
         {
             searchDepth = parser.parseNumber<int32_t>();
         }
         else
         {
-            searchDepth = 8;
+            searchDepth = 7;
         }
 
-        sendBestMove(searchDepth);
+        searchBestMove(searchDepth);
     }
 
-    void UCICommunication::sendBestMove(int32_t searchDepth)
+    void UCICommunication::searchBestMove(int32_t searchDepth)
     {
         Evaluation evaluation(m_game.gameState);
 
@@ -191,6 +198,26 @@ namespace ModernChess
             m_outputStream << evalResult << std::flush;
         }
 
-        m_outputStream << "bestmove " << evalResult.bestMove() << "\n" << std::flush;
+        setBestMove(evalResult.bestMove());
+        sendBestMove();
+    }
+
+    void UCICommunication::setBestMove(Move move)
+    {
+        const std::lock_guard lock(m_mutex);
+        m_searchFinished = true;
+        m_bestMove = move;
+    }
+
+    void UCICommunication::sendBestMove()
+    {
+        const Move bestMove = getBestMove();
+        m_outputStream << "bestmove " << bestMove << "\n" << std::flush;
+    }
+
+    Move UCICommunication::getBestMove() const
+    {
+        const std::unique_lock lock(m_mutex);
+        return m_bestMove;
     }
 }

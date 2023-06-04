@@ -5,6 +5,8 @@
 #include <string>
 #include <istream>
 #include <ostream>
+#include <mutex>
+#include <condition_variable>
 
 namespace ModernChess
 {
@@ -25,6 +27,10 @@ namespace ModernChess
         std::ostream &m_outputStream;
         std::ostream &m_errorStream;
 
+        mutable std::mutex m_mutex;
+        Move m_bestMove{};
+        bool m_searchFinished{};
+
         void registerToUI();
 
         void sendAcknowledgeToUI();
@@ -39,6 +45,12 @@ namespace ModernChess
 
         void createNewGame();
 
-        void sendBestMove(int32_t searchDepth);
+        void searchBestMove(int32_t searchDepth);
+
+        void sendBestMove();
+
+        void setBestMove(Move move);
+
+        [[nodiscard]] Move getBestMove() const;
     };
 }
