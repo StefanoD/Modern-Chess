@@ -170,7 +170,7 @@ namespace ModernChess
             // found a better move
             if (score > alpha)
             {
-                // PV is found when alpha < score <= beta
+                // PV is found when alpha < score < beta
                 foundPv = true;
 
                 if (not move.isCapture())
