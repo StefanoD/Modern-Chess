@@ -172,7 +172,7 @@ namespace ModernChess
         }
         else
         {
-            searchDepth = 7;
+            searchDepth = 8;
         }
 
         sendBestMove(searchDepth);
