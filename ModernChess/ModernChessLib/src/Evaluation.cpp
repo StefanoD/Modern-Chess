@@ -49,7 +49,9 @@ namespace ModernChess
 
         if (m_followPv)
         {
-            m_scorePv = plyHasPVs(moves);
+            m_scorePv = std::any_of(moves.begin(), moves.end(), [this](const Move move){
+                return pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move;
+            });
             m_followPv = m_scorePv;
         }
 
@@ -369,12 +371,5 @@ namespace ModernChess
         }
 
         return m_historyMoves[move.getMovedFigure()][move.getTo()];
-    }
-
-    bool Evaluation::plyHasPVs(const std::vector<Move> &moves) const
-    {
-        return std::any_of(moves.begin(), moves.end(), [this](const Move move){
-            return pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move;
-        });
     }
 }

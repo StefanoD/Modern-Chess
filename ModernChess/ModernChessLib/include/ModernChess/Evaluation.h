@@ -68,8 +68,6 @@ namespace ModernChess
 
         [[nodiscard]] bool kingIsInCheck() const;
 
-        [[nodiscard]] bool plyHasPVs(const std::vector<Move> &moves) const;
-
         [[nodiscard]] std::vector<Move> generateSortedMoves();
 
         // negamax alpha beta search
