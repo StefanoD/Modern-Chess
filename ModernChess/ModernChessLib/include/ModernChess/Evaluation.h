@@ -56,7 +56,12 @@ namespace ModernChess
         static constexpr int32_t bestKillerMoveScore = 90'000;
         static constexpr int32_t secondBestKillerMoveScore = 80'000;
         static constexpr int32_t captureScoreOffset = 100'000;
+        static constexpr int32_t pvScore = 200'000;
         static constexpr size_t maxNumberOfKillerMoves = 2;
+
+        // follow PV & score PV move
+        bool followPv{};
+        bool scorePv{};
 
         // killer moves [id][ply]
         std::array<std::array<Move, maxNumberOfKillerMoves>, MaxHalfMoves> killerMoves{};
@@ -65,7 +70,9 @@ namespace ModernChess
 
         [[nodiscard]] bool kingIsInCheck() const;
 
-        [[nodiscard]] std::vector<Move> generateSortedMoves() const;
+        bool plyHasPVs(const std::vector<Move> &moves) const;
+
+        [[nodiscard]] std::vector<Move> generateSortedMoves();
 
         // negamax alpha beta search
         int32_t negamax(int32_t alpha, int32_t beta, int32_t depth);
@@ -74,7 +81,7 @@ namespace ModernChess
 
         [[nodiscard]] int32_t evaluatePosition() const;
 
-        [[nodiscard]] int32_t scoreMove(Move move) const;
+        [[nodiscard]] int32_t scoreMove(Move move);
 
         /*
          * @see https://www.chessprogramming.org/MVV-LVA

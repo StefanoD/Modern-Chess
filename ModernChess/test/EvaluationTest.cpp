@@ -90,7 +90,7 @@ namespace
         const GameState gameState = fenParser.parse();
 
         const Move move(Square::e5, Square::f6, Figure::WhitePawn, Figure::None, true, false, true, false);
-        const ExtendedEvaluation evaluation(gameState);
+        ExtendedEvaluation evaluation(gameState);
 
         EXPECT_EQ(evaluation.scoreMove(move), 100105);
     }

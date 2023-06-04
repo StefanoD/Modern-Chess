@@ -24,6 +24,7 @@ namespace ModernChess
 {
     EvaluationResult Evaluation::getBestMove(int32_t depth)
     {
+        followPv = true;
         // find best move within a given position
         const int32_t score = negamax(-infinity, infinity, depth);
 
@@ -42,15 +43,24 @@ namespace ModernChess
         return AttackQueries::squareIsAttackedByWhite(m_gameState.board, kingsSquare);
     }
 
-    std::vector<Move> Evaluation::generateSortedMoves() const
+    std::vector<Move> Evaluation::generateSortedMoves()
     {
         std::vector<Move> moves =  PseudoMoveGeneration::generateMoves(m_gameState);
+
+        // if we are now following PV line
+        if (followPv)
+        {    // enable PV move scoring
+            scorePv = plyHasPVs(moves);
+            followPv = scorePv;
+        }
 
         // Sort moves, such that captures with higher scores are evaluated first and makes an early pruning more probable
         // Use also stable_sort, because on capture moves, we insert first the most valuable pieces!
         std::stable_sort(moves.begin(), moves.end(), [this](const Move leftOrderedMove, const Move rightOrderedMove){
             return scoreMove(leftOrderedMove) > scoreMove(rightOrderedMove);
         });
+
+        scorePv = false;
 
         return moves;
     }
@@ -269,8 +279,15 @@ namespace ModernChess
         return (m_gameState.board.sideToMove == Color::White) ? score : -score;
     }
 
-    int32_t Evaluation::scoreMove(Move move) const
+    int32_t Evaluation::scoreMove(Move move)
     {
+        // make sure we are dealing with PV move
+        if (scorePv && pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move)
+        {
+            // give PV move the highest score to search it first
+            return pvScore;
+        }
+
         // score capture move
         if (move.isCapture())
         {
@@ -319,5 +336,12 @@ namespace ModernChess
         }
 
         return historyMoves[move.getMovedFigure()][move.getTo()];
+    }
+
+    bool Evaluation::plyHasPVs(const std::vector<Move> &moves) const
+    {
+        return std::any_of(moves.begin(), moves.end(), [this](const Move move){
+            return pvTable->pvTable[m_halfMoveClockRootSearch][m_gameState.halfMoveClock] == move;
+        });
     }
 }
