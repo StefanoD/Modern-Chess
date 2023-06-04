@@ -47,9 +47,8 @@ namespace ModernChess
     {
         std::vector<Move> moves =  PseudoMoveGeneration::generateMoves(m_gameState);
 
-        // if we are now following PV line
         if (followPv)
-        {    // enable PV move scoring
+        {
             scorePv = plyHasPVs(moves);
             followPv = scorePv;
         }
