@@ -73,9 +73,9 @@ namespace ModernChess
         [[nodiscard]] std::vector<Move> generateSortedMoves();
 
         // negamax alpha beta search
-        int32_t negamax(int32_t alpha, int32_t beta, int32_t depth);
+        [[nodiscard]] int32_t negamax(int32_t alpha, int32_t beta, int32_t depth);
 
-        int32_t quiescenceSearch(int32_t alpha, int32_t beta);
+        [[nodiscard]] int32_t quiescenceSearch(int32_t alpha, int32_t beta);
 
         [[nodiscard]] int32_t evaluatePosition() const;
 
