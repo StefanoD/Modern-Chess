@@ -3,14 +3,12 @@
 #include "Board.h"
 #include "Move.h"
 
-#include <vector>
-
 namespace ModernChess
 {
     class GameState
     {
     public:
-        GameState();
+        GameState() = default;
 
     //private:
         Board board{};
@@ -20,10 +18,9 @@ namespace ModernChess
 
 
         //std::vector<Move> moveList;
+        bool operator==(const GameState &other) const = default;
     };
 
-    bool operator==(const GameState&, const GameState&);
-    bool operator!=(const GameState&, const GameState&);
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState);

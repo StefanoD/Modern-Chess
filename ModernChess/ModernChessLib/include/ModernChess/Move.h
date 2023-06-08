@@ -94,10 +94,7 @@ namespace ModernChess {
             return m_move == 0;
         }
 
-        bool operator==(const Move move) const
-        {
-            return m_move == move.m_move;
-        }
+        bool operator==(const Move &other) const = default;
 
     private:
         int32_t m_move = 0;
