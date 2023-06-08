@@ -69,8 +69,6 @@ namespace ModernChess
 
     int32_t Evaluation::negamax(int32_t alpha, int32_t beta, int32_t depth)
     {
-        bool foundPv = false;
-
         // Init PV length
         pvTable->pvLength[m_gameState.halfMoveClock] = m_gameState.halfMoveClock;
 
@@ -98,11 +96,12 @@ namespace ModernChess
         // increment nodes count
         ++m_numberOfNodes;
 
-        // legal moves counter
-        uint32_t legalMoves = 0;
-
         // create move list instance
         const std::vector<Move> moves = generateSortedMoves();
+
+        // legal moves counter
+        uint32_t legalMoves = 0;
+        bool foundPv = false;
 
         // loop over moves within a move list
         for (const Move move : moves)
@@ -171,7 +170,7 @@ namespace ModernChess
             // found a better move
             if (score > alpha)
             {
-                // PV is found when alpha < score <= beta
+                // PV is found when alpha < score < beta
                 foundPv = true;
 
                 if (not move.isCapture())
