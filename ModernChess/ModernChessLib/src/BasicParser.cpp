@@ -10,6 +10,8 @@ namespace ModernChess
 
     Square BasicParser::parseSquare()
     {
+        skipWhiteSpaces();
+
         char character = *m_currentPos;
         Square square = Square::undefined;
 
