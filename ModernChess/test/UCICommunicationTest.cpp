@@ -1,3 +1,4 @@
+#include "TestingPositions.h"
 #include "ModernChess/UCICommunication.h"
 #include "ModernChess/FenParsing.h"
 
@@ -293,6 +294,43 @@ namespace
         const std::string engineOutput{outputStream.str()};
 
         EXPECT_TRUE(engineOutput.find("bestmove d7f7") != std::string::npos);
+        std::cout << engineOutput << std::endl;
+
+        std::cout << uciCom.getGameState() << std::endl;
+    }
+
+    TEST(UCICommunicationTest, Zugzwang3)
+    {
+        /*
+         * 8 . . . . . . . ♔
+         * 7 . . . . . ♚ . .
+         * 6 . . . . . ♟︎ . ♙
+         * 5 . . . ♙ . . . .
+         * 4 . . . . . . ♟︎ .
+         * 3 . . . ♙ . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . . . . .
+         *
+         *   a b c d e f g h
+         */
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&uciCom]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position fen " << TestingPositions::Zugzwang3 << "\n";
+        inputStream << "go depth 8\n";
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        EXPECT_TRUE(engineOutput.find("bestmove f7e7") != std::string::npos);
         std::cout << engineOutput << std::endl;
 
         std::cout << uciCom.getGameState() << std::endl;
