@@ -1,3 +1,4 @@
+#include "TestingPositions.h"
 #include "ModernChess/FenParsing.h"
 #include "ModernChess/Evaluation.h"
 
@@ -209,6 +210,36 @@ namespace
         const EvaluationResult evalResult = evaluation.getBestMove(6);
 
         std::cout << gameState << std::endl;
+
+        std::cout << evalResult << std::endl;
+    }
+
+    TEST(EvaluationTest, Zugzwang1)
+    {
+        /*
+         * 8 . . . . . . . .
+         * 7 . . . . . . . .
+         * 6 ♙ . ♙ . . . . .
+         * 5 . ♙ . . . . . ♙
+         * 4 . ♟︎ . . . . . ♙
+         * 3 . . . . . . . .
+         * 2 ♟︎ ♟︎ ♟︎ . . ♚ . ♙
+         * 1 . . . . ♜ . ♖ ♔
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser(TestingPositions::Zugzwang1);
+        const GameState gameState = fenParser.parse();
+
+        std::cout << gameState << std::endl;
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(6);
+
+        EXPECT_EQ(evalResult.bestMove().getFrom(), Square::e1);
+        EXPECT_EQ(evalResult.bestMove().getTo(), Square::f1);
+        EXPECT_EQ(evalResult.bestMove().getMovedFigure(), Figure::WhiteRook);
+        EXPECT_FALSE(evalResult.bestMove().isCapture());
 
         std::cout << evalResult << std::endl;
     }
