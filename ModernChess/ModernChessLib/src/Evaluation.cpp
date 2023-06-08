@@ -99,9 +99,10 @@ namespace ModernChess
         // create move list instance
         const std::vector<Move> moves = generateSortedMoves();
 
+        uint32_t movesSearched = 0;
+
         // legal moves counter
         uint32_t legalMoves = 0;
-        bool foundPv = false;
 
         // loop over moves within a move list
         for (const Move move : moves)
@@ -120,38 +121,64 @@ namespace ModernChess
 
             int32_t score;
 
-            if (foundPv)
+            // full depth search in order to get a PV node
+            if (movesSearched == 0)
             {
-                // Algorithm is from here:
-                // https://web.archive.org/web/20071030220825/http://www.brucemo.com/compchess/programming/pvs.htm
-
-                // Once you've found a move with a score that is between alpha and beta,
-                // the rest of the moves are searched with the goal of proving that they are all bad.
-                // It's possible to do this a bit faster than a search that worries that one
-                // of the remaining moves might be good.
-                score = -negamax(-(alpha + 1), -alpha , depth - 1);
-
-                // If the algorithm finds out that it was wrong, and that one of the
-                // subsequent moves was better than the first PV move, it has to search again,
-                // in the normal alpha-beta manner. This happens sometimes, and it's a waste of time,
-                // but generally not often enough to counteract the savings gained from doing the
-                // "bad move proof" search referred to earlier.
-                const bool foundBetterPV = (score > alpha) && (score < beta);
-                if (foundBetterPV) // Check for failure.
-                {
-                    // re-search the move that has failed to be proved to be bad
-                    // with normal alpha beta score bounds
-                    score = -negamax(-beta, -alpha, depth - 1);
-                }
+                // do normal alpha beta search
+                score = -negamax(-beta, -alpha, depth - 1);
             }
             else
             {
-                // for all other types of nodes (moves) do normal alpha beta search
-                score = -negamax(-beta, -alpha, depth - 1);
+                // late move reduction (LMR) & Principal Variation Search
+                // @see https://www.chessprogramming.org/Late_Move_Reductions
+                // @see https://web.archive.org/web/20150212051846/http://www.glaurungchess.com/lmr.html
+                // condition to consider LMR
+                if (movesSearched > numberOfMovesForFullDepthSearch &&
+                    depth > minimumDepthForFullDepthSearch &&
+                    not kingInCheck &&
+                    not move.isCapture() &&
+                    move.getPromotedPiece() == Figure::None)
+                {
+                    // search current move with reduced depth:
+                    score = -negamax(-(alpha + 1), -alpha, depth - 2);
+                }
+                else
+                {
+                    // hack to ensure that full-depth search is done
+                    score = alpha + 1;
+                }
+
+                // principle variation search (PVS)
+                if (score > alpha)
+                {
+                    // Algorithm is from here:
+                    // https://web.archive.org/web/20071030220825/http://www.brucemo.com/compchess/programming/pvs.htm
+
+                    // Once you've found a move with a score that is between alpha and beta,
+                    // the rest of the moves are searched with the goal of proving that they are all bad.
+                    // It's possible to do this a bit faster than a search that worries that one
+                    // of the remaining moves might be good.
+                    score = -negamax(-(alpha + 1), -alpha , depth - 1);
+
+                    // If the algorithm finds out that it was wrong, and that one of the
+                    // subsequent moves was better than the first PV move, it has to search again,
+                    // in the normal alpha-beta manner. This happens sometimes, and it's a waste of time,
+                    // but generally not often enough to counteract the savings gained from doing the
+                    // "bad move proof" search referred to earlier.
+                    const bool foundBetterPV = (score > alpha) && (score < beta);
+                    if (foundBetterPV) // Check for failure.
+                    {
+                        // re-search the move that has failed to be proved to be bad
+                        // with normal alpha beta score bounds
+                        score = -negamax(-beta, -alpha, depth - 1);
+                    }
+                }
             }
 
             // take move back
             m_gameState = gameStateCopy;
+
+            ++movesSearched;
 
             // fail-hard beta cutoff
             if (score >= beta)
@@ -170,9 +197,6 @@ namespace ModernChess
             // found a better move
             if (score > alpha)
             {
-                // PV is found when alpha < score < beta
-                foundPv = true;
-
                 if (not move.isCapture())
                 {
                     // store history moves.

@@ -42,7 +42,7 @@ namespace
         EXPECT_EQ(move.getTo(), Square::b7);
         EXPECT_EQ(move.getMovedFigure(), Figure::WhiteQueen);
 
-        std::cout << gameState;
+        std::cout << gameState << std::endl;
         std::cout << evaluationResult;
     }
 
