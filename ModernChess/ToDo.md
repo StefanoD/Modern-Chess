@@ -7,3 +7,5 @@ To Do
   Here the `Move` struct needs an additional property `score`. 
 - Use KI (maybe evolutionary algorithms?) to find best MVV-LVA matrix
 - Look more into move ordering: https://www.chessprogramming.org/Move_Ordering
+- Do not use Late Move Reduction for more conditions like Passed 
+  Pawn Moves: https://www.chessprogramming.org/Late_Move_Reductions
