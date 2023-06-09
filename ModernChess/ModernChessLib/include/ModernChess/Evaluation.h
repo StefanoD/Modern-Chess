@@ -69,6 +69,7 @@ namespace ModernChess
         bool m_scorePv{};
 
         [[nodiscard]] bool kingIsInCheck() const;
+        [[nodiscard]] bool kingIsInCheck(Color sideToMove) const;
 
         [[nodiscard]] std::vector<Move> generateSortedMoves();
 

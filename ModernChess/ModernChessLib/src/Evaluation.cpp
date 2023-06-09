@@ -33,7 +33,12 @@ namespace ModernChess
 
     bool Evaluation::kingIsInCheck() const
     {
-        if (m_gameState.board.sideToMove == Color::White)
+        return kingIsInCheck(m_gameState.board.sideToMove);
+    }
+
+    bool Evaluation::kingIsInCheck(Color sideToMove) const
+    {
+        if (sideToMove == Color::White)
         {
             const Square kingsSquare = BitBoardOperations::bitScanForward(m_gameState.board.bitboards[Figure::WhiteKing]);
             return AttackQueries::squareIsAttackedByBlack(m_gameState.board, kingsSquare);
@@ -137,7 +142,8 @@ namespace ModernChess
                     depth > minimumDepthForFullDepthSearch &&
                     not kingInCheck &&
                     not move.isCapture() &&
-                    move.getPromotedPiece() == Figure::None)
+                    move.getPromotedPiece() == Figure::None &&
+                    kingIsInCheck(Color(!bool(m_gameState.board.sideToMove)))) // Also opponent must not be in check
                 {
                     // search current move with reduced depth:
                     score = -negamax(-(alpha + 1), -alpha, depth - 2);
