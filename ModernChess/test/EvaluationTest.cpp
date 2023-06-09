@@ -364,4 +364,43 @@ namespace
 
         std::cout << evalResult << std::endl;
     }
+
+    TEST(EvaluationTest, Zugzwang6)
+    {
+        /*
+         * 8 . . . . . . ♔ .
+         * 7 ♙ ♙ . . . . . .
+         * 6 . . ♙ . . . . .
+         * 5 . . . ♙ . . . .
+         * 4 . . . ♟︎ ♙ . ♙ .
+         * 3 . . ♟︎ . ♟︎ ♙ ♟︎ ♕
+         * 2 ♟︎ ♟︎ ♛ . . ♟︎ . .
+         * 1 . . . ♜ . . ♚ .
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser(TestingPositions::Zugzwang6);
+        const GameState gameState = fenParser.parse();
+
+        std::cout << gameState << std::endl;
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(2);
+
+        const std::shared_ptr<PrincipalVariationTable> pvTable = evalResult.pvTable;
+
+        // White can do any move and cannot stop mate when black moves next
+
+        ASSERT_TRUE(pvTable->size() >= 2);
+        auto pvNodesIterator = pvTable->begin(); // Whites move
+        ++pvNodesIterator;
+        const Move blacksMove = *pvNodesIterator;
+
+        EXPECT_EQ(blacksMove.getFrom(), Square::h3);
+        EXPECT_EQ(blacksMove.getTo(), Square::g2);
+        EXPECT_EQ(blacksMove.getMovedFigure(), Figure::BlackQueen);
+        EXPECT_FALSE(blacksMove.isCapture());
+
+        std::cout << evalResult << std::endl;
+    }
 }

@@ -66,6 +66,11 @@ namespace ModernChess
             return &pvTable[rootHalfMoveClock][end];
         }
 
+        [[nodiscard]] size_t size() const
+        {
+            return pvLength[rootHalfMoveClock];
+        }
+
     private:
         int32_t rootHalfMoveClock{};
     };

@@ -16,4 +16,6 @@ namespace ModernChess::TestingPositions {
     constexpr auto Zugzwang3 = "7k/5K2/5P1p/3p4/6P1/3p4/8/8 w - - 0 1"; // best move g5
     constexpr auto Zugzwang4 = "8/6B1/p5p1/Pp4kp/1P5r/5P1Q/4q1PK/8 w - - 0 32"; // best move Qxh4
     constexpr auto Zugzwang5 = "8/8/1p1r1k2/p1pPN1p1/P3KnP1/1P6/8/3R4 b - - 0 1"; // best move Nxd5
+    // From https://web.archive.org/web/20071031095933/http://www.brucemo.com/compchess/programming/nullmove.htm
+    constexpr auto Zugzwang6 = "6k1/pp6/2p5/3p4/3Pp1p1/2P1PpPq/PPQ2P2/3R2K1 w - - 0 1"; // White can do any move. Black moves Qg2
 }
