@@ -102,9 +102,13 @@ namespace ModernChess
         ++m_numberOfNodes;
 
         // null move pruning
-        if (m_allowNullMove && depth >= 3 && not kingInCheck && m_gameState.halfMoveClock > m_halfMoveClockRootSearch)
+        if (m_allowNullMove && depth >= 3 &&
+            not kingInCheck &&
+            m_gameState.halfMoveClock > m_halfMoveClockRootSearch &&
+            not isEndGame() // Does not work for end games
+            )
         {
-            m_allowNullMove = false;
+            m_allowNullMove = false; // Don't allow consecutive null moves
             // preserve board state
             const GameState gameStateCopy = m_gameState;
 
@@ -210,6 +214,7 @@ namespace ModernChess
                 }
             }
 
+            m_allowNullMove = true;
             // take move back
             m_gameState = gameStateCopy;
 
@@ -430,5 +435,11 @@ namespace ModernChess
         }
 
         return m_historyMoves[move.getMovedFigure()][move.getTo()];
+    }
+
+    bool Evaluation::isEndGame() const
+    {
+        return BitBoardOperations::countBits(m_gameState.board.occupancies[Color::White]) <= numberOfFiguresForEndGameDefinition or
+               BitBoardOperations::countBits(m_gameState.board.occupancies[Color::Black]) <= numberOfFiguresForEndGameDefinition;
     }
 }

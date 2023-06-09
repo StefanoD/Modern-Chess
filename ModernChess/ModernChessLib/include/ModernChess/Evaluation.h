@@ -54,6 +54,7 @@ namespace ModernChess
         static constexpr size_t MaxNumberOfKillerMoves = 2;
         static constexpr int32_t numberOfMovesForFullDepthSearch = 3;
         static constexpr int32_t minimumDepthForFullDepthSearch = 2;
+        static constexpr uint32_t numberOfFiguresForEndGameDefinition = 6;
 
         uint32_t m_numberOfNodes{};
         GameState m_gameState;
@@ -83,6 +84,8 @@ namespace ModernChess
         [[nodiscard]] int32_t evaluatePosition() const;
 
         [[nodiscard]] int32_t scoreMove(Move move);
+
+        [[nodiscard]] bool isEndGame() const;
 
         /*
          * @see https://www.chessprogramming.org/MVV-LVA
