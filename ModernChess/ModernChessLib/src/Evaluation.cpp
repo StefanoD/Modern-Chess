@@ -102,6 +102,7 @@ namespace ModernChess
         ++m_numberOfNodes;
 
         // null move pruning
+        // see also https://web.archive.org/web/20071031095933/http://www.brucemo.com/compchess/programming/nullmove.htm
         if (m_allowNullMove && depth >= 3 &&
             not kingInCheck &&
             m_gameState.halfMoveClock > m_halfMoveClockRootSearch &&
@@ -120,7 +121,7 @@ namespace ModernChess
 
             /* search moves with reduced depth to find beta cutoffs
                depth - 1 - R where R is a reduction limit */
-            const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - 2);
+            const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - NullMovePruningReductionLimit);
 
             // restore board state
             m_gameState = gameStateCopy;
