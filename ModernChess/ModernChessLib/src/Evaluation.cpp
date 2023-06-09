@@ -101,12 +101,12 @@ namespace ModernChess
         // increment nodes count
         ++m_numberOfNodes;
 
-        // null move pruning
+        // Null Move Pruning
         // see also https://web.archive.org/web/20071031095933/http://www.brucemo.com/compchess/programming/nullmove.htm
         if (m_allowNullMove && depth >= 3 &&
             not kingInCheck &&
             m_gameState.halfMoveClock > m_halfMoveClockRootSearch &&
-            not isEndGame() // Does not work for end games
+            not isEndGame() // Null Move Pruning does not work for end games
             )
         {
             m_allowNullMove = false; // Don't allow consecutive null moves
@@ -119,8 +119,7 @@ namespace ModernChess
             // reset en-passant capture square, because opponent missed the chance in the last move
             m_gameState.board.enPassantTarget = Square::undefined;
 
-            /* search moves with reduced depth to find beta cutoffs
-               depth - 1 - R where R is a reduction limit */
+            // search moves with reduced depth to find beta cutoffs (depth - 1 - R) where R is a depth reduction
             const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - NullMovePruningDepthReduction);
 
             // restore board state
