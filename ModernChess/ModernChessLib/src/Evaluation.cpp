@@ -101,6 +101,33 @@ namespace ModernChess
         // increment nodes count
         ++m_numberOfNodes;
 
+        // null move pruning
+        if (m_allowNullMove && depth >= 3 && not kingInCheck && m_gameState.halfMoveClock > m_halfMoveClockRootSearch)
+        {
+            m_allowNullMove = false;
+            // preserve board state
+            const GameState gameStateCopy = m_gameState;
+
+            // switch the side, literally giving opponent an extra move to make
+            m_gameState.board.sideToMove = Color(!bool(m_gameState.board.sideToMove));
+
+            // reset en-passant capture square, because opponent had
+            m_gameState.board.enPassantTarget = Square::undefined;
+
+            /* search moves with reduced depth to find beta cutoffs
+               depth - 1 - R where R is a reduction limit */
+            const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - 2);
+
+            // restore board state
+            m_gameState = gameStateCopy;
+
+            // fail-hard beta cutoff
+            if (score >= beta)
+            {    // node (move) fails high
+                return beta;
+            }
+        }
+
         // create move list instance
         const std::vector<Move> moves = generateSortedMoves();
 
@@ -112,6 +139,8 @@ namespace ModernChess
         // loop over moves within a move list
         for (const Move move : moves)
         {
+            m_allowNullMove = true;
+
             // preserve board state
             const GameState gameStateCopy = m_gameState;
 

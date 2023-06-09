@@ -68,6 +68,8 @@ namespace ModernChess
         bool m_followPv{};
         bool m_scorePv{};
 
+        bool m_allowNullMove = true;
+
         [[nodiscard]] bool kingIsInCheck() const;
         [[nodiscard]] bool kingIsInCheck(Color sideToMove) const;
 
