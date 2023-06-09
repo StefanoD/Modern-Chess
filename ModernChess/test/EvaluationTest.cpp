@@ -403,4 +403,33 @@ namespace
 
         std::cout << evalResult << std::endl;
     }
+
+    TEST(EvaluationTest, ImpossibleChessPuzzle)
+    {
+        // Source: https://www.youtube.com/watch?v=nEMx8L10DWE
+        /*
+         * 8 . . . ♔ . . . .
+         * 7 . . . . . . . .
+         * 6 . . . . . . . ♙
+         * 5 . . ♙ . ♙ . ♙ ♟︎
+         * 4 . ♙ ♟︎ ♙ ♟︎ ♙ ♟︎ .
+         * 3 . ♟︎ . ♟︎ . ♟︎ . .
+         * 2 ♞ . . . . . . .
+         * 1 . . ♚ . . . . .
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser("3k4/8/7p/2p1p1pP/1pPpPpP1/1P1P1P2/N7/2K5 w - - 0 1");
+        const GameState gameState = fenParser.parse();
+
+        std::cout << gameState << std::endl;
+
+        // Can't be actually solve by any engine to my knowledge.
+        /*
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(9);
+
+
+        std::cout << evalResult << std::endl;*/
+    }
 }
