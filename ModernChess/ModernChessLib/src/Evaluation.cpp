@@ -172,8 +172,8 @@ namespace ModernChess
                 // @see https://www.chessprogramming.org/Late_Move_Reductions
                 // @see https://web.archive.org/web/20150212051846/http://www.glaurungchess.com/lmr.html
                 // condition to consider LMR
-                if (movesSearched > numberOfMovesForFullDepthSearch &&
-                    depth > minimumDepthForFullDepthSearch &&
+                if (movesSearched > NumberOfMovesForFullDepthSearch &&
+                    depth > MinimumDepthForFullDepthSearch &&
                     not kingInCheck &&
                     not move.isCapture() &&
                     move.getPromotedPiece() == Figure::None &&
@@ -440,7 +440,7 @@ namespace ModernChess
 
     bool Evaluation::isEndGame() const
     {
-        return BitBoardOperations::countBits(m_gameState.board.occupancies[Color::White]) <= numberOfFiguresForEndGameDefinition or
-               BitBoardOperations::countBits(m_gameState.board.occupancies[Color::Black]) <= numberOfFiguresForEndGameDefinition;
+        return BitBoardOperations::countBits(m_gameState.board.occupancies[Color::White]) <= NumberOfFiguresForEndGameDefinition or
+               BitBoardOperations::countBits(m_gameState.board.occupancies[Color::Black]) <= NumberOfFiguresForEndGameDefinition;
     }
 }
