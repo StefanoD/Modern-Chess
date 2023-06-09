@@ -334,4 +334,34 @@ namespace
 
         std::cout << evalResult << std::endl;
     }
+
+    TEST(EvaluationTest, Zugzwang5)
+    {
+        /*
+         * 8 . . . . . . . .
+         * 7 . . . . . . . .
+         * 6 . ♙ . ♖ . ♔ . .
+         * 5 ♙ . ♙ ♟︎ ♞ . ♙ .
+         * 4 ♟︎ . . . ♚ ♘ ♟︎ .
+         * 3 . ♟︎ . . . . . .
+         * 2 . . . . . . . .
+         * 1 . . . ♜ . . . .
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser(TestingPositions::Zugzwang5);
+        const GameState gameState = fenParser.parse();
+
+        std::cout << gameState << std::endl;
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(13);
+
+        EXPECT_EQ(evalResult.bestMove().getFrom(), Square::f4);
+        EXPECT_EQ(evalResult.bestMove().getTo(), Square::d5);
+        EXPECT_EQ(evalResult.bestMove().getMovedFigure(), Figure::BlackKnight);
+        EXPECT_TRUE(evalResult.bestMove().isCapture());
+
+        std::cout << evalResult << std::endl;
+    }
 }
