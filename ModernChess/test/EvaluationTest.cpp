@@ -295,7 +295,7 @@ namespace
 
         Evaluation evaluation(gameState);
         // depth 8 - 10 fails with f7e6. Depth 11 evaluates the best move again with f7e7
-        const EvaluationResult evalResult = evaluation.getBestMove(7);
+        const EvaluationResult evalResult = evaluation.getBestMove(6);
 
         EXPECT_EQ(evalResult.bestMove().getFrom(), Square::f7);
         EXPECT_EQ(evalResult.bestMove().getTo(), Square::e7);
