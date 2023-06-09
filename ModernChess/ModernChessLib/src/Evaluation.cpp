@@ -143,7 +143,7 @@ namespace ModernChess
                     not kingInCheck &&
                     not move.isCapture() &&
                     move.getPromotedPiece() == Figure::None &&
-                    kingIsInCheck(Color(!bool(m_gameState.board.sideToMove)))) // Also opponent must not be in check
+                    not kingIsInCheck(Color(!bool(m_gameState.board.sideToMove)))) // Also opponent must not be in check
                 {
                     // search current move with reduced depth:
                     score = -negamax(-(alpha + 1), -alpha, depth - 2);
