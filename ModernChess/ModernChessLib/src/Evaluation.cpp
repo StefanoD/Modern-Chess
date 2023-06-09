@@ -121,7 +121,7 @@ namespace ModernChess
 
             /* search moves with reduced depth to find beta cutoffs
                depth - 1 - R where R is a reduction limit */
-            const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - NullMovePruningReductionLimit);
+            const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - NullMovePruningDepthReduction);
 
             // restore board state
             m_gameState = gameStateCopy;

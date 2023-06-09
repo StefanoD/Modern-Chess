@@ -54,7 +54,7 @@ namespace ModernChess
         static constexpr size_t MaxNumberOfKillerMoves = 2;
         static constexpr int32_t NumberOfMovesForFullDepthSearch = 3;
         static constexpr int32_t MinimumDepthForFullDepthSearch = 2;
-        static constexpr int32_t NullMovePruningReductionLimit = 2;
+        static constexpr int32_t NullMovePruningDepthReduction = 2;
         static constexpr uint32_t NumberOfFiguresForEndGameDefinition = 6;
 
         uint32_t m_numberOfNodes{};
