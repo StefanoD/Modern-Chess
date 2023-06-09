@@ -115,7 +115,7 @@ namespace ModernChess
             // switch the side, literally giving opponent an extra move to make
             m_gameState.board.sideToMove = Color(!bool(m_gameState.board.sideToMove));
 
-            // reset en-passant capture square, because opponent had
+            // reset en-passant capture square, because opponent missed the chance in the last move
             m_gameState.board.enPassantTarget = Square::undefined;
 
             /* search moves with reduced depth to find beta cutoffs
