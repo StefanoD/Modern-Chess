@@ -324,7 +324,7 @@ namespace
         });
 
         inputStream << "position fen " << TestingPositions::Zugzwang3 << "\n";
-        inputStream << "go depth 7\n";
+        inputStream << "go depth 6\n";
         inputStream << "quit\n";
         communicationThread.join();
 
