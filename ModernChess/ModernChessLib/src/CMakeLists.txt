@@ -28,6 +28,7 @@ add_library(${target}
         ../include/ModernChess/QueenAttacks.h
         ../include/ModernChess/RookAttacks.h
         ../include/ModernChess/Square.h
+        ../include/ModernChess/Timer.h
         ../include/ModernChess/TUI.h
         ../include/ModernChess/UCIParser.h
         ../include/ModernChess/UCICommunication.h
@@ -50,7 +51,7 @@ add_library(${target}
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
-        )
+        ../include/ModernChess/Timer.h)
 
 target_include_directories(${target} PUBLIC ../include)
 
