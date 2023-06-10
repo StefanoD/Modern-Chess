@@ -19,6 +19,7 @@ add_library(${target}
         ../include/ModernChess/Move.h
         ../include/ModernChess/MoveExecution.h
         ../include/ModernChess/PseudoMoveGeneration.h
+        ../include/ModernChess/PseudoRandomGenerator.h
         ../include/ModernChess/PawnPushes.h
         ../include/ModernChess/OneStepMoves.h
         ../include/ModernChess/PawnAttacks.h
