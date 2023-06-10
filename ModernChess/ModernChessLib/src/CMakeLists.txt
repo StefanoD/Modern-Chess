@@ -23,6 +23,7 @@ add_library(${target}
         ../include/ModernChess/OneStepMoves.h
         ../include/ModernChess/PawnAttacks.h
         ../include/ModernChess/PawnQueries.h
+        ../include/ModernChess/PeriodicTask.h
         ../include/ModernChess/Player.h
         ../include/ModernChess/PrincipalVariationTable.h
         ../include/ModernChess/QueenAttacks.h
@@ -52,7 +53,7 @@ add_library(${target}
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
-        ../include/ModernChess/Timer.h ../include/ModernChess/PeriodicTask.h ../include/ModernChess/WaitCondition.h)
+        )
 
 target_include_directories(${target} PUBLIC ../include)
 
