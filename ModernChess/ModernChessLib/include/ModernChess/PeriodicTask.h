@@ -41,36 +41,33 @@ namespace ModernChess
         void stop()
         {
             const std::unique_lock lock(m_mutex);
-            m_stopped = true;
+            m_isStopped = true;
             m_triggered.notifyOne();
-        }
-
-        [[nodiscard]] bool stopped() const
-        {
-            const std::unique_lock lock(m_mutex);
-            return m_stopped;
         }
 
     private:
         std::chrono::milliseconds m_period;
         std::function<void()> m_function;
-        bool m_stopped = false;
+        bool m_isStopped = false;
         mutable std::mutex m_mutex;
         std::thread m_thread;
         WaitCondition m_triggered;
 
         void run()
         {
-            while (not m_stopped)
+            bool continueTask = true;
+
+            while (continueTask)
             {
                 std::unique_lock lock(m_mutex);
-                m_triggered.waitFor(lock, m_period, [this]
+                m_triggered.waitFor(lock, m_period, [this, &continueTask]
                 {
-                    return stopped();
+                    continueTask = not m_isStopped;
+                    return continueTask;
                 });
                 lock.unlock();
 
-                if (not m_stopped)
+                if (continueTask)
                 {
                     // execute function without locking
                     m_function();
