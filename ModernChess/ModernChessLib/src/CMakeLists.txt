@@ -33,6 +33,7 @@ add_library(${target}
         ../include/ModernChess/UCIParser.h
         ../include/ModernChess/UCICommunication.h
         ../include/ModernChess/Utilities.h
+        ../include/ModernChess/WaitCondition.h
 
         AttackQueries.cpp
         BasicParser.cpp
@@ -51,7 +52,7 @@ add_library(${target}
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
-        ../include/ModernChess/Timer.h)
+        ../include/ModernChess/Timer.h ../include/ModernChess/PeriodicTask.h ../include/ModernChess/WaitCondition.h)
 
 target_include_directories(${target} PUBLIC ../include)
 
