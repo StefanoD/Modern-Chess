@@ -1,12 +1,15 @@
 #pragma once
 
 #include "Game.h"
+#include "Timer.h"
+#include "PeriodicTask.h"
 
 #include <string>
 #include <istream>
 #include <ostream>
 #include <mutex>
 #include <condition_variable>
+#include <chrono>
 
 namespace ModernChess
 {
@@ -30,6 +33,13 @@ namespace ModernChess
         mutable std::mutex m_mutex;
         Move m_bestMove{};
         bool m_searchFinished{};
+        bool m_stopped{};
+        bool m_quit{};
+        std::unique_ptr<PeriodicTask> m_uciCommunicationTask{};
+        std::chrono::milliseconds m_timeToSearch;
+        Timer<> m_timeSinceSearchStarted{};
+
+        void readUCIInput();
 
         void registerToUI();
 
@@ -52,5 +62,7 @@ namespace ModernChess
         void setBestMove(Move move);
 
         [[nodiscard]] Move getBestMove() const;
+
+        bool continueWithSearch();
     };
 }
