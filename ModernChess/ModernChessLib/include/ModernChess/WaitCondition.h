@@ -26,6 +26,12 @@ namespace ModernChess
             m_condVariable.notify_all();
         }
 
+        template<class Predicate>
+        void wait(std::unique_lock<std::mutex>& lock, Predicate stopWaiting)
+        {
+            m_condVariable.wait(lock, stopWaiting);
+        }
+
         template<class Rep, class Period, class Predicate>
         bool waitFor(std::unique_lock<std::mutex>& lock,
                      const std::chrono::duration<Rep, Period>& relTimeout,
