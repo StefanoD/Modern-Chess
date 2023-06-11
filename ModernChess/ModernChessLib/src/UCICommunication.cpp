@@ -14,7 +14,6 @@ namespace ModernChess
             m_inputStream(inputStream),
             m_outputStream(outputStream),
             m_errorStream(errorStream),
-            m_timeToSearch(std::numeric_limits<int64_t>::max()),
             m_searchThread(&UCICommunication::searchBestMove, this)
     {}
 
@@ -214,6 +213,7 @@ namespace ModernChess
 
             Evaluation evaluation(getGameState());
             EvaluationResult evalResult;
+            searchRequest.timer.start();
 
             for (int currentDepth = 1; currentDepth <= searchRequest.depth && (not searchHasBeenStopped()); ++currentDepth)
             {
@@ -250,7 +250,7 @@ namespace ModernChess
     bool UCICommunication::searchHasBeenStopped() const
     {
         const std::lock_guard lock(m_mutex);
-        return m_stopped;
+        return m_stopped or (searchRequest.timeToSearch >= searchRequest.timer.duration());
     }
 
     bool UCICommunication::gameHasBeenQuit() const

@@ -16,14 +16,20 @@ namespace ModernChess
 {
     class UCIParser;
 
-    class UCICommunication
+    class UCICommunication final
     {
         struct SearchRequest {
             std::atomic_int32_t depth{};
             std::chrono::milliseconds timeToSearch{};
+            Timer<> timer{};
         };
     public:
         explicit UCICommunication(std::istream &inputStream, std::ostream &outputStream, std::ostream &errorStream);
+
+        UCICommunication(const UCICommunication&) = delete;
+        UCICommunication(UCICommunication&&) = delete;
+        UCICommunication&operator=(const UCICommunication&) = delete;
+        UCICommunication&operator=(UCICommunication&&) = delete;
 
         ~UCICommunication();
 
@@ -42,16 +48,12 @@ namespace ModernChess
         std::ostream &m_errorStream;
 
         mutable std::mutex m_mutex;
-        Move m_bestMove{};
         bool m_stopped = true;
         bool m_quit = false;
-        std::unique_ptr<PeriodicTask> m_uciCommunicationTask{};
-        std::chrono::milliseconds m_timeToSearch;
         Timer<> m_timeSinceSearchStarted{};
         WaitCondition m_waitForSearchRequest;
         SearchRequest searchRequest{};
         std::thread m_searchThread;
-
 
         void registerToUI();
 
@@ -72,9 +74,11 @@ namespace ModernChess
         void setGameState(GameState getGameState);
 
         void stopSearch();
+
         void quitGame();
 
         [[nodiscard]] bool searchHasBeenStopped() const;
+
         [[nodiscard]] bool gameHasBeenQuit() const;
     };
 }
