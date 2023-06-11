@@ -36,6 +36,7 @@ add_library(${target}
         ../include/ModernChess/UCICommunication.h
         ../include/ModernChess/Utilities.h
         ../include/ModernChess/WaitCondition.h
+        ../include/ModernChess/ZobristHasher.h
 
         AttackQueries.cpp
         BasicParser.cpp
