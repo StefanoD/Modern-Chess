@@ -10,6 +10,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <chrono>
+#include <atomic>
 
 namespace ModernChess
 {
@@ -17,12 +18,22 @@ namespace ModernChess
 
     class UCICommunication
     {
+        struct SearchRequest {
+            std::atomic_int32_t depth{};
+            std::chrono::milliseconds timeToSearch{};
+        };
     public:
         explicit UCICommunication(std::istream &inputStream, std::ostream &outputStream, std::ostream &errorStream);
 
+        ~UCICommunication();
+
         void startCommunication();
 
-        [[nodiscard]] GameState getGameState() const { return m_game.gameState; }
+        [[nodiscard]] GameState getGameState() const
+        {
+            const std::lock_guard lock(m_mutex);
+            return m_game.gameState;
+        }
 
     private:
         Game m_game;
@@ -32,14 +43,15 @@ namespace ModernChess
 
         mutable std::mutex m_mutex;
         Move m_bestMove{};
-        bool m_searchFinished{};
-        bool m_stopped{};
-        bool m_quit{};
+        bool m_stopped = true;
+        bool m_quit = false;
         std::unique_ptr<PeriodicTask> m_uciCommunicationTask{};
         std::chrono::milliseconds m_timeToSearch;
         Timer<> m_timeSinceSearchStarted{};
+        WaitCondition m_waitForSearchRequest;
+        SearchRequest searchRequest{};
+        std::thread m_searchThread;
 
-        void readUCIInput();
 
         void registerToUI();
 
@@ -55,14 +67,14 @@ namespace ModernChess
 
         void createNewGame();
 
-        void searchBestMove(int32_t searchDepth);
+        void searchBestMove();
 
-        void sendBestMove();
+        void setGameState(GameState getGameState);
 
-        void setBestMove(Move move);
+        void stopSearch();
+        void quitGame();
 
-        [[nodiscard]] Move getBestMove() const;
-
-        bool continueWithSearch();
+        [[nodiscard]] bool searchHasBeenStopped() const;
+        [[nodiscard]] bool gameHasBeenQuit() const;
     };
 }

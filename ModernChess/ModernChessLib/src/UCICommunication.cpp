@@ -6,14 +6,27 @@
 #include <string>
 
 using ModernChess::FenParsing::FenParser;
+using namespace std::chrono_literals;
 
 namespace ModernChess
 {
     UCICommunication::UCICommunication(std::istream &inputStream, std::ostream &outputStream, std::ostream &errorStream) :
             m_inputStream(inputStream),
             m_outputStream(outputStream),
-            m_errorStream(errorStream)
+            m_errorStream(errorStream),
+            m_timeToSearch(std::numeric_limits<int64_t>::max()),
+            m_searchThread(&UCICommunication::searchBestMove, this)
     {}
+
+    UCICommunication::~UCICommunication()
+    {
+        quitGame();
+
+        if (m_searchThread.joinable())
+        {
+            m_searchThread.join();
+        }
+    }
 
     void UCICommunication::startCommunication()
     {
@@ -23,11 +36,16 @@ namespace ModernChess
 
         for (getInput(uiCommand); ;getInput(uiCommand))
         {
+            if (uiCommand.empty())
+            {
+                continue;
+            }
             // make sure uiCommand is available
             UCIParser parser(uiCommand);
 
             if (parser.uiQuitGame())
             {
+                quitGame();
                 break;
             }
 
@@ -42,7 +60,7 @@ namespace ModernChess
                 parsePosition(parser);
                 continue;
             }
-            
+
             if (parser.uiRequestsNewGame())
             {
                 createNewGame();
@@ -53,10 +71,8 @@ namespace ModernChess
             }
             else if (parser.uiHasSentStopCommand())
             {
-                if (m_searchFinished)
-                {
-                    sendBestMove();
-                }
+                stopSearch();
+                m_waitForSearchRequest.notifyOne();
             }
             else if (parser.uiRequestsUCIMode())
             {
@@ -83,11 +99,8 @@ namespace ModernChess
 
     void UCICommunication::getInput(std::string &uiCommand)
     {
+        m_inputStream.clear(); // Clear errors
         std::getline(m_inputStream, uiCommand);
-
-        // Flush the input stream
-        //m_inputStream.clear();
-        //m_inputStream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
     void UCICommunication::parsePosition(UCIParser &parser)
@@ -99,7 +112,7 @@ namespace ModernChess
         else if (parser.uiHasSentFENPosition())
         {
             FenParser fenParser(parser.currentStringView());
-            m_game.gameState = fenParser.parse();
+            setGameState(fenParser.parse());
 
             // There might be consecutive move commands. So continue with parsing...
             parser = UCIParser(fenParser.currentStringView());
@@ -113,6 +126,7 @@ namespace ModernChess
         if (parser.uiHasSentMoves())
         {
             const std::string_view moveCommand = parser.currentStringView();
+            const std::lock_guard lock(m_mutex); // Add mutex for game state change
 
             while (parser.hasNextCharacter())
             {
@@ -133,7 +147,7 @@ namespace ModernChess
 
     void UCICommunication::createNewGame()
     {
-        m_game.gameState = FenParser(FenParsing::startPosition).parse();
+        setGameState(FenParser(FenParsing::startPosition).parse());
     }
 
     Move UCICommunication::executeMoves(UCIParser &parser)
@@ -166,58 +180,88 @@ namespace ModernChess
 
     void UCICommunication::executeGoCommand(UCIParser &parser)
     {
-        int32_t searchDepth;
-
-        {
-            const std::lock_guard lock(m_mutex);
-            m_searchFinished = false;
-        }
+        int32_t depth;
 
         if (parser.uiHasSentSearchDepth())
         {
-            searchDepth = parser.parseNumber<int32_t>();
+            depth = parser.parseNumber<int32_t>();
         }
         else
         {
-            searchDepth = 9;
+            depth = 13;
         }
 
-        searchBestMove(searchDepth);
-    }
-
-    void UCICommunication::searchBestMove(int32_t searchDepth)
-    {
-        Evaluation evaluation(m_game.gameState);
-
-        EvaluationResult evalResult;
-
-        for (int currentDepth = 1; currentDepth <= searchDepth; ++currentDepth)
         {
-            evalResult = evaluation.getBestMove(currentDepth);
-
-            m_outputStream << evalResult << std::flush;
+            const std::lock_guard lock(m_mutex);
+            m_stopped = false;
+            searchRequest.timeToSearch = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
+            searchRequest.depth = depth;
         }
 
-        setBestMove(evalResult.bestMove());
-        sendBestMove();
+        m_waitForSearchRequest.notifyOne();
     }
 
-    void UCICommunication::setBestMove(Move move)
+    void UCICommunication::searchBestMove()
+    {
+        while (not gameHasBeenQuit())
+        {
+            {
+                std::unique_lock lock(m_mutex);
+                m_waitForSearchRequest.wait(lock, [this]{
+                    return (not m_stopped) or m_quit;
+                });
+            }
+
+            Evaluation evaluation(getGameState());
+            EvaluationResult evalResult;
+
+            for (int currentDepth = 1; currentDepth <= searchRequest.depth && (not searchHasBeenStopped()); ++currentDepth)
+            {
+                evalResult = evaluation.getBestMove(currentDepth);
+
+                m_outputStream << evalResult << std::flush;
+            }
+
+            if (evalResult.pvTable != nullptr)
+            {
+                m_outputStream << "bestmove " << evalResult.bestMove() << "\n" << std::flush;
+            }
+
+            stopSearch();
+        }
+    }
+
+    void UCICommunication::stopSearch()
     {
         const std::lock_guard lock(m_mutex);
-        m_searchFinished = true;
-        m_bestMove = move;
+        m_stopped = true;
     }
 
-    void UCICommunication::sendBestMove()
+    void UCICommunication::quitGame()
     {
-        const Move bestMove = getBestMove();
-        m_outputStream << "bestmove " << bestMove << "\n" << std::flush;
+        {
+            const std::lock_guard lock(m_mutex);
+            m_stopped = true;
+            m_quit = true;
+        }
+        m_waitForSearchRequest.notifyOne();
     }
 
-    Move UCICommunication::getBestMove() const
+    bool UCICommunication::searchHasBeenStopped() const
     {
-        const std::unique_lock lock(m_mutex);
-        return m_bestMove;
+        const std::lock_guard lock(m_mutex);
+        return m_stopped;
+    }
+
+    bool UCICommunication::gameHasBeenQuit() const
+    {
+        const std::lock_guard lock(m_mutex);
+        return m_quit;
+    }
+
+    void UCICommunication::setGameState(GameState getGameState)
+    {
+        const std::lock_guard lock(m_mutex);
+        m_game.gameState = getGameState;
     }
 }
