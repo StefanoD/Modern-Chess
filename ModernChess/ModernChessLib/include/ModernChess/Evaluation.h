@@ -1,11 +1,12 @@
 #pragma once
 
-#include "PrincipalVariationTable.h"
 #include "GameState.h"
+#include "PrincipalVariationTable.h"
 
 #include <array>
-#include <limits>
+#include <algorithm>
 #include <iostream>
+#include <limits>
 #include <memory>
 
 namespace ModernChess
@@ -34,11 +35,15 @@ namespace ModernChess
     {
     public:
         explicit Evaluation(GameState gameState) :
-            m_gameState{gameState},
-            m_halfMoveClockRootSearch{m_gameState.halfMoveClock},
-            pvTable{std::make_shared<PrincipalVariationTable>(m_halfMoveClockRootSearch)}
-            {
-            }
+                Evaluation(gameState, []{ return false; })
+        {}
+
+        explicit Evaluation(GameState gameState, std::function<bool()> stopSearching) :
+                m_gameState{gameState},
+                m_halfMoveClockRootSearch{m_gameState.halfMoveClock},
+                pvTable{std::make_shared<PrincipalVariationTable>(m_halfMoveClockRootSearch)},
+                m_stopSearching{std::move(stopSearching)}
+        {}
 
         [[nodiscard]] EvaluationResult getBestMove(int32_t depth);
 
@@ -65,6 +70,7 @@ namespace ModernChess
         std::array<std::array<Move, MaxNumberOfKillerMoves>, MaxHalfMoves> m_killerMoves{};
         // history moves [figure][square]
         std::array<std::array<int32_t, NumberOfFigureTypes>, NumberOfSquares> m_historyMoves{};
+        std::function<bool()> m_stopSearching{};
 
         // follow PV & score PV move
         bool m_followPv{};

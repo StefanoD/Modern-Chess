@@ -202,6 +202,8 @@ namespace ModernChess
 
     void UCICommunication::searchBestMove()
     {
+        auto stopCondition = [this] { return searchHasBeenStopped(); };
+
         while (not gameHasBeenQuit())
         {
             {
@@ -211,7 +213,7 @@ namespace ModernChess
                 });
             }
 
-            Evaluation evaluation(getGameState());
+            Evaluation evaluation(getGameState(), stopCondition);
             EvaluationResult evalResult;
             searchRequest.timer.start();
 

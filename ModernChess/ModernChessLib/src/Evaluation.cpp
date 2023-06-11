@@ -125,6 +125,11 @@ namespace ModernChess
             // restore board state
             m_gameState = gameStateCopy;
 
+            if (m_stopSearching())
+            {
+                return 0;
+            }
+
             // fail-hard beta cutoff
             if (score >= beta)
             {    // node (move) fails high
@@ -217,6 +222,11 @@ namespace ModernChess
             m_allowNullMove = true;
             // take move back
             m_gameState = gameStateCopy;
+
+            if (m_stopSearching())
+            {
+                return 0;
+            }
 
             ++movesSearched;
 
@@ -311,6 +321,11 @@ namespace ModernChess
 
             // take move back
             m_gameState = gameStateCopy;
+
+            if (m_stopSearching())
+            {
+                return 0;
+            }
 
             // fail-hard beta cutoff
             if (score >= beta)
