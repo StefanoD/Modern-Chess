@@ -250,7 +250,7 @@ namespace ModernChess
     bool UCICommunication::searchHasBeenStopped() const
     {
         const std::lock_guard lock(m_mutex);
-        return m_stopped or (searchRequest.timeToSearch >= searchRequest.timer.duration());
+        return m_stopped or (searchRequest.timeToSearch < searchRequest.timer.duration());
     }
 
     bool UCICommunication::gameHasBeenQuit() const
