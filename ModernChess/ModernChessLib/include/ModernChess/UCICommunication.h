@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game.h"
+#include "GameState.h"
 #include "Timer.h"
 #include "PeriodicTask.h"
 
@@ -19,6 +19,7 @@ namespace ModernChess
     class UCICommunication final
     {
         struct SearchRequest {
+            GameState gameState{};
             std::atomic_int32_t depth{};
             std::chrono::milliseconds timeToSearch{};
             Timer<> timer{};
@@ -38,11 +39,10 @@ namespace ModernChess
         [[nodiscard]] GameState getGameState() const
         {
             const std::lock_guard lock(m_mutex);
-            return m_game.gameState;
+            return m_searchRequest.gameState;
         }
 
     private:
-        Game m_game;
         std::istream &m_inputStream;
         std::ostream &m_outputStream;
         std::ostream &m_errorStream;
@@ -52,7 +52,7 @@ namespace ModernChess
         bool m_quit = false;
         Timer<> m_timeSinceSearchStarted{};
         WaitCondition m_waitForSearchRequest;
-        SearchRequest searchRequest{};
+        SearchRequest m_searchRequest{};
         std::thread m_searchThread;
 
         void registerToUI();

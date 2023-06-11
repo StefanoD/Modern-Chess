@@ -7,7 +7,6 @@ add_library(${target}
         ../include/ModernChess/BishopAttacks.h
         ../include/ModernChess/CastlingRights.h
         ../include/ModernChess/Color.h
-        ../include/ModernChess/Game.h
         ../include/ModernChess/GameState.h
         ../include/ModernChess/GlobalConstants.h
         ../include/ModernChess/FenParsing.h
@@ -46,7 +45,6 @@ add_library(${target}
         Utilities.cpp
         Player.cpp
         GameState.cpp
-        Game.cpp
         Move.cpp
         PawnAttacks.cpp
         RookAttacks.cpp

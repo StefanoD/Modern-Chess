@@ -1,4 +1,6 @@
 #include "ModernChess/UCICommunication.h"
+#include "ModernChess/MoveExecution.h"
+#include "ModernChess/PseudoMoveGeneration.h"
 #include "ModernChess/UCIParser.h"
 #include "ModernChess/FenParsing.h"
 #include "ModernChess/Evaluation.h"
@@ -133,7 +135,7 @@ namespace ModernChess
 
                 if (not move.isNullMove())
                 {
-                    m_game.makeMove(move, MoveType::AllMoves);
+                    MoveExecution::executeMove(m_searchRequest.gameState, move, MoveType::AllMoves);
                 }
                 else
                 {
@@ -152,7 +154,7 @@ namespace ModernChess
     Move UCICommunication::executeMoves(UCIParser &parser)
     {
         const UCIParser::UCIMove uciMove = parser.parseMove();
-        const std::vector<Move> possibleMovesFromCurrentSate = m_game.generateMoves();
+        const std::vector<Move> possibleMovesFromCurrentSate = PseudoMoveGeneration::generateMoves(m_searchRequest.gameState);
 
         for (const Move move : possibleMovesFromCurrentSate)
         {
@@ -193,8 +195,8 @@ namespace ModernChess
         {
             const std::lock_guard lock(m_mutex);
             m_stopped = false;
-            searchRequest.timeToSearch = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
-            searchRequest.depth = depth;
+            m_searchRequest.timeToSearch = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
+            m_searchRequest.depth = depth;
         }
 
         m_waitForSearchRequest.notifyOne();
@@ -215,9 +217,9 @@ namespace ModernChess
 
             Evaluation evaluation(getGameState(), stopCondition);
             EvaluationResult evalResult;
-            searchRequest.timer.start();
+            m_searchRequest.timer.start();
 
-            for (int currentDepth = 1; currentDepth <= searchRequest.depth && (not searchHasBeenStopped()); ++currentDepth)
+            for (int currentDepth = 1; currentDepth <= m_searchRequest.depth && (not searchHasBeenStopped()); ++currentDepth)
             {
                 evalResult = evaluation.getBestMove(currentDepth);
 
@@ -252,7 +254,7 @@ namespace ModernChess
     bool UCICommunication::searchHasBeenStopped() const
     {
         const std::lock_guard lock(m_mutex);
-        return m_stopped or (searchRequest.timeToSearch < searchRequest.timer.duration());
+        return m_stopped or (m_searchRequest.timeToSearch < m_searchRequest.timer.duration());
     }
 
     bool UCICommunication::gameHasBeenQuit() const
@@ -264,6 +266,6 @@ namespace ModernChess
     void UCICommunication::setGameState(GameState getGameState)
     {
         const std::lock_guard lock(m_mutex);
-        m_game.gameState = getGameState;
+        m_searchRequest.gameState = getGameState;
     }
 }
