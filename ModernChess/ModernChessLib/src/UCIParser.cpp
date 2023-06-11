@@ -1,7 +1,5 @@
 #include "ModernChess/UCIParser.h"
 
-#include <cstring>
-
 namespace ModernChess
 {
     UCIParser::UCIParser(std::string_view uiCommand) : BasicParser(uiCommand)
@@ -29,113 +27,75 @@ namespace ModernChess
 
     bool UCIParser::uiHasSentPosition()
     {
-        constexpr auto positionCommand = "position";
-
-        if (currentStringView().starts_with(positionCommand))
-        {
-            m_currentPos += strlen(positionCommand);
-
-            // Skip whitespace
-            nextPosition();
-
-            return true;
-        }
-        return false;
+        return uiHasSentCommand("position");
     }
 
     bool UCIParser::uiHasSentMoves()
     {
-        constexpr auto movesCommand = "moves";
-
-        if (currentStringView().starts_with(movesCommand))
-        {
-            m_currentPos += strlen(movesCommand);
-
-            // Skip whitespace
-            nextPosition();
-
-            return true;
-        }
-        return false;
+        return uiHasSentCommand("moves");
     }
 
     bool UCIParser::uiHasSentFENPosition()
     {
-        constexpr auto fenCommand = "fen";
-
-        if (currentStringView().starts_with(fenCommand))
-        {
-            m_currentPos += strlen(fenCommand);
-
-            // Skip whitespace
-            nextPosition();
-
-            return true;
-        }
-        return false;
+        return uiHasSentCommand("fen");
     }
 
     bool UCIParser::uiHasSentStartingPosition()
     {
-        constexpr auto startingPositionCommand = "startpos";
-
-        if (currentStringView().starts_with(startingPositionCommand))
-        {
-            m_currentPos += strlen(startingPositionCommand);
-
-            // It might have more commands, but maybe not
-            if (hasNextCharacter())
-            {
-                // Skip whitespace
-                nextPosition();
-            }
-            return true;
-        }
-        return false;
+        return uiHasSentCommand("startpos");
     }
 
     bool UCIParser::uiHasSentGoCommand()
     {
-        constexpr auto goCommand = "go";
-
-        if (currentStringView().starts_with(goCommand))
-        {
-            m_currentPos += strlen(goCommand);
-
-            // It might have more commands, but maybe not
-            if (hasNextCharacter())
-            {
-                // Skip whitespace
-                nextPosition();
-            }
-            return true;
-        }
-        return false;
+        return uiHasSentCommand("go");
     }
 
     bool UCIParser::uiHasSentSearchDepth()
     {
-        constexpr auto searchDepthCommand = "depth";
-
-        if (currentStringView().starts_with(searchDepthCommand))
-        {
-            m_currentPos += strlen(searchDepthCommand);
-
-            // Skip whitespace
-            nextPosition();
-
-            return true;
-        }
-        return false;
+        return uiHasSentCommand("depth");
     }
 
     bool UCIParser::uiHasSentStopCommand()
     {
-        constexpr auto stopCommand = "stop";
+        return uiHasSentCommand("stop");
+    }
 
-        if (currentStringView().starts_with(stopCommand))
+    bool UCIParser::uiHasSentTimeForWhite()
+    {
+        return uiHasSentCommand("wtime");
+    }
+
+    bool UCIParser::uiHasSentTimeForBlack()
+    {
+        return uiHasSentCommand("btime");
+    }
+
+    bool UCIParser::uiHasSentWhiteIncrement()
+    {
+        return uiHasSentCommand("winc");
+    }
+
+    bool UCIParser::uiHasSentBlackIncrement()
+    {
+        return uiHasSentCommand("binc");
+    }
+
+    bool UCIParser::uiHasSentMovesToGo()
+    {
+        return uiHasSentCommand("movestogo");
+    }
+
+    bool UCIParser::uiHasSentMovesTime()
+    {
+        return uiHasSentCommand("movetime");
+    }
+
+    bool UCIParser::uiHasSentCommand(std::string_view command)
+    {
+        if (currentStringView().starts_with(command))
         {
-            m_currentPos += strlen(stopCommand);
+            m_currentPos += command.length();
+            skipWhiteSpaces();
             return true;
         }
         return false;

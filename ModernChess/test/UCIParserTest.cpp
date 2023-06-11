@@ -60,4 +60,34 @@ namespace {
         EXPECT_EQ(move.targetSquare, Square::undefined);
         EXPECT_FALSE(move.legalPromotionCharacter);
     }
+
+    TEST(UCIParserTest, sendTimeForWhite)
+    {
+        UCIParser parser("wtime");
+        EXPECT_TRUE(parser.uiHasSentTimeForWhite());
+    }
+
+    TEST(UCIParserTest, sendTimeForBlack)
+    {
+        UCIParser parser("btime");
+        EXPECT_TRUE(parser.uiHasSentTimeForBlack());
+    }
+
+    TEST(UCIParserTest, sendTimeIncrementForWhite)
+    {
+        UCIParser parser("winc");
+        EXPECT_TRUE(parser.uiHasSentWhiteIncrement());
+    }
+
+    TEST(UCIParserTest, sendTimeIncrementForBlack)
+    {
+        UCIParser parser("binc");
+        EXPECT_TRUE(parser.uiHasSentBlackIncrement());
+    }
+
+    TEST(UCIParserTest, sendMovesToGo)
+    {
+        UCIParser parser("movestogo");
+        EXPECT_TRUE(parser.uiHasSentMovesToGo());
+    }
 }

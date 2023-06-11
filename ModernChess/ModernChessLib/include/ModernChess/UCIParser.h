@@ -47,8 +47,21 @@ namespace ModernChess
 
         [[nodiscard]] bool uiHasSentStopCommand();
 
+        [[nodiscard]] bool uiHasSentWhiteIncrement();
+
+        [[nodiscard]] bool uiHasSentBlackIncrement();
+
+        [[nodiscard]] bool uiHasSentTimeForWhite();
+
+        [[nodiscard]] bool uiHasSentTimeForBlack();
+
+        [[nodiscard]] bool uiHasSentMovesToGo();
+
+        [[nodiscard]] bool uiHasSentMovesTime();
+
         [[nodiscard]] UCIMove parseMove();
 
     private:
+        [[nodiscard]] bool uiHasSentCommand(std::string_view command);
     };
 }
