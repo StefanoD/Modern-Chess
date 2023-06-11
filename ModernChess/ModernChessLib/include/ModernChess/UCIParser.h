@@ -59,6 +59,8 @@ namespace ModernChess
 
         [[nodiscard]] bool uiHasSentMovesTime();
 
+        [[nodiscard]] bool uiHasSentInfiniteTime();
+
         [[nodiscard]] UCIMove parseMove();
 
     private:

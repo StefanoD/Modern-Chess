@@ -90,6 +90,11 @@ namespace ModernChess
         return uiHasSentCommand("movetime");
     }
 
+    bool UCIParser::uiHasSentInfiniteTime()
+    {
+        return uiHasSentCommand("infinite");
+    }
+
     bool UCIParser::uiHasSentCommand(std::string_view command)
     {
         if (currentStringView().starts_with(command))

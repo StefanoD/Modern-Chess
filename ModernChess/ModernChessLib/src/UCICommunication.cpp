@@ -181,22 +181,57 @@ namespace ModernChess
 
     void UCICommunication::executeGoCommand(UCIParser &parser)
     {
-        int32_t depth;
+        std::chrono::milliseconds timeToSearch = -1ms;
+        std::chrono::milliseconds timeIncrement = 0ms;
+        int64_t movesToGo = 1;
 
-        if (parser.uiHasSentSearchDepth())
+        while (parser.hasNextCharacter())
         {
-            depth = parser.parseNumber<int32_t>();
+            if (parser.uiHasSentSearchDepth())
+            {
+                const std::lock_guard lock(m_mutex);
+                m_searchRequest.depth = parser.parseNumber<int32_t>();
+            }
+            if (parser.uiHasSentMovesTime())
+            {
+                timeToSearch = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+            }
+            if ((parser.uiHasSentTimeForWhite() and m_searchRequest.gameState.board.sideToMove == Color::White) or
+                (parser.uiHasSentTimeForBlack() and m_searchRequest.gameState.board.sideToMove == Color::Black))
+            {
+                timeToSearch = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+            }
+            if ((parser.uiHasSentWhiteIncrement() and m_searchRequest.gameState.board.sideToMove == Color::White) or
+                (parser.uiHasSentBlackIncrement() and m_searchRequest.gameState.board.sideToMove == Color::Black))
+            {
+                timeIncrement = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+            }
+            if (parser.uiHasSentMovesToGo())
+            {
+                movesToGo = parser.parseNumber<int64_t>();
+            }
+            if (parser.uiHasSentInfiniteTime())
+            {
+                timeToSearch = InfiniteTime;
+            }
+
+            parser.skipWhiteSpaces();
         }
-        else
+
+        if (timeToSearch == -1ms)
         {
-            depth = 13;
+            // Time has not been set. Set infinite time
+            timeToSearch = InfiniteTime;
         }
+
+        // If we have infinite time, these calculations don't really have a practical affect
+        timeToSearch /= movesToGo;
+        timeToSearch += (timeIncrement - TimeSecurityMargin);
 
         {
             const std::lock_guard lock(m_mutex);
             m_stopped = false;
-            m_searchRequest.timeToSearch = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
-            m_searchRequest.depth = depth;
+            m_searchRequest.timePointToStopSearch = std::chrono::steady_clock::now() + timeToSearch;
         }
 
         m_waitForSearchRequest.notifyOne();
@@ -217,12 +252,17 @@ namespace ModernChess
 
             Evaluation evaluation(getGameState(), stopCondition);
             EvaluationResult evalResult;
-            m_searchRequest.timer.start();
 
-            for (int currentDepth = 1; currentDepth <= m_searchRequest.depth && (not searchHasBeenStopped()); ++currentDepth)
+            int32_t depth;
+
+            {
+                const std::lock_guard lock(m_mutex);
+                depth = m_searchRequest.depth;
+            }
+
+            for (int currentDepth = 1; currentDepth <= depth && (not searchHasBeenStopped()); ++currentDepth)
             {
                 evalResult = evaluation.getBestMove(currentDepth);
-
                 m_outputStream << evalResult << std::flush;
             }
 
@@ -254,7 +294,7 @@ namespace ModernChess
     bool UCICommunication::searchHasBeenStopped() const
     {
         const std::lock_guard lock(m_mutex);
-        return m_stopped or (m_searchRequest.timeToSearch < m_searchRequest.timer.duration());
+        return m_stopped or (m_searchRequest.timePointToStopSearch > std::chrono::steady_clock::now());
     }
 
     bool UCICommunication::gameHasBeenQuit() const
@@ -263,9 +303,9 @@ namespace ModernChess
         return m_quit;
     }
 
-    void UCICommunication::setGameState(GameState getGameState)
+    void UCICommunication::setGameState(GameState gameState)
     {
         const std::lock_guard lock(m_mutex);
-        m_searchRequest.gameState = getGameState;
+        m_searchRequest = SearchRequest(gameState);
     }
 }

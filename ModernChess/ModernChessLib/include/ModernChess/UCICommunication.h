@@ -11,6 +11,7 @@
 #include <condition_variable>
 #include <chrono>
 #include <atomic>
+#include <limits>
 
 namespace ModernChess
 {
@@ -18,11 +19,17 @@ namespace ModernChess
 
     class UCICommunication final
     {
+        static constexpr std::chrono::milliseconds InfiniteTime = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
+        // Make sure the engine does not exceed the allowed time to search
+        static constexpr std::chrono::milliseconds TimeSecurityMargin{5};
+
         struct SearchRequest {
+            SearchRequest() = default;
+            explicit SearchRequest(GameState gameState) : gameState(gameState) {}
+
             GameState gameState{};
-            std::atomic_int32_t depth{};
-            std::chrono::milliseconds timeToSearch{};
-            Timer<> timer{};
+            int32_t depth = 15; // default depth
+            std::chrono::time_point<std::chrono::steady_clock> timePointToStopSearch{};
         };
     public:
         explicit UCICommunication(std::istream &inputStream, std::ostream &outputStream, std::ostream &errorStream);
@@ -52,7 +59,7 @@ namespace ModernChess
         bool m_quit = false;
         Timer<> m_timeSinceSearchStarted{};
         WaitCondition m_waitForSearchRequest;
-        SearchRequest m_searchRequest{};
+        SearchRequest m_searchRequest;
         std::thread m_searchThread;
 
         void registerToUI();
@@ -71,7 +78,7 @@ namespace ModernChess
 
         void searchBestMove();
 
-        void setGameState(GameState getGameState);
+        void setGameState(GameState gameState);
 
         void stopSearch();
 
