@@ -21,7 +21,7 @@ namespace ModernChess
         }
 
     private:
-        using timePoint = typename ClockT::time_point;
-        timePoint _start = ClockT::now();
+        using TimePoint = typename ClockT::time_point;
+        TimePoint _start = ClockT::now();
     };
 }
