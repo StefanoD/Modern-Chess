@@ -21,14 +21,14 @@ namespace ModernChess
     {
         static constexpr std::chrono::milliseconds InfiniteTime = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
         // Make sure the engine does not exceed the allowed time to search
-        static constexpr std::chrono::milliseconds TimeSecurityMargin{5};
+        static constexpr std::chrono::milliseconds TimeSecurityMargin{8};
 
         struct SearchRequest {
             SearchRequest() = default;
             explicit SearchRequest(GameState gameState) : gameState(gameState) {}
 
             GameState gameState{};
-            int32_t depth = 15; // default depth
+            int32_t depth = 9; // default depth
             std::chrono::time_point<std::chrono::steady_clock> timePointToStopSearch{};
         };
     public:

@@ -341,4 +341,42 @@ namespace
 
         std::cout << uciCom.getGameState() << std::endl;
     }
+
+    TEST(UCICommunicationTest, TimeControl)
+    {
+        /*
+         * 8 . . . . . . . ♔
+         * 7 . . . . . ♚ . .
+         * 6 . . . . . ♟︎ . ♙
+         * 5 . . . ♙ . . . .
+         * 4 . . . . . . ♟︎ .
+         * 3 . . . ♙ . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . . . . .
+         *
+         *   a b c d e f g h
+         */
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&uciCom]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position startpos moves d2d4\n";
+        inputStream << "go wtime 1800000 btime 1800000 winc 0 binc 0 movestogo 40\n";
+        std::this_thread::sleep_for(3s);
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        EXPECT_TRUE(engineOutput.find("bestmove f7e7") != std::string::npos);
+        std::cout << engineOutput << std::endl;
+
+        std::cout << uciCom.getGameState() << std::endl;
+    }
 }

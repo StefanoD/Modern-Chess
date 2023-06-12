@@ -196,13 +196,29 @@ namespace ModernChess
             {
                 timeToSearch = std::chrono::milliseconds(parser.parseNumber<int64_t>());
             }
-            if ((parser.uiHasSentTimeForWhite() and m_searchRequest.gameState.board.sideToMove == Color::White) or
-                (parser.uiHasSentTimeForBlack() and m_searchRequest.gameState.board.sideToMove == Color::Black))
+            if (parser.uiHasSentTimeForWhite())
             {
-                timeToSearch = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+                // Even is side to move is not white, the value has to be read by the parser, so the
+                // string_view-pointer can continue to the next characters
+                if (auto timeValue = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+                    m_searchRequest.gameState.board.sideToMove == Color::White)
+                {
+                    // Only set, if side to move is white
+                    timeToSearch = timeValue;
+                }
             }
-            if ((parser.uiHasSentWhiteIncrement() and m_searchRequest.gameState.board.sideToMove == Color::White) or
-                (parser.uiHasSentBlackIncrement() and m_searchRequest.gameState.board.sideToMove == Color::Black))
+            if (parser.uiHasSentTimeForBlack())
+            {
+                // Even is side to move is not white, the value has to be read by the parser, so the
+                // string_view-pointer can continue to the next characters
+                if (auto timeValue = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+                        m_searchRequest.gameState.board.sideToMove == Color::Black)
+                {
+                    // Only set, if side to move is white
+                    timeToSearch = timeValue;
+                }
+            }
+            if (parser.uiHasSentWhiteIncrement() or parser.uiHasSentBlackIncrement())
             {
                 timeIncrement = std::chrono::milliseconds(parser.parseNumber<int64_t>());
             }
@@ -294,7 +310,7 @@ namespace ModernChess
     bool UCICommunication::searchHasBeenStopped() const
     {
         const std::lock_guard lock(m_mutex);
-        return m_stopped or (m_searchRequest.timePointToStopSearch > std::chrono::steady_clock::now());
+        return m_stopped or (m_searchRequest.timePointToStopSearch < std::chrono::steady_clock::now());
     }
 
     bool UCICommunication::gameHasBeenQuit() const
