@@ -28,7 +28,7 @@ namespace ModernChess
             explicit SearchRequest(GameState gameState) : gameState(gameState) {}
 
             GameState gameState{};
-            int32_t depth = 9; // default depth
+            int32_t depth = 11; // default depth
             std::chrono::time_point<std::chrono::steady_clock> timePointToStopSearch{};
         };
     public:

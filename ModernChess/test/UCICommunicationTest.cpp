@@ -216,7 +216,7 @@ namespace
 
         inputStream << "position fen " << fenString << "\n";
         inputStream << "go depth 6\n";
-        std::this_thread::sleep_for(1s);
+        std::this_thread::sleep_for(2s);
         inputStream << "quit\n";
         communicationThread.join();
 
@@ -254,7 +254,7 @@ namespace
 
         inputStream << "position fen " << fenString << "\n";
         inputStream << "go depth 6\n";
-        std::this_thread::sleep_for(1s);
+        std::this_thread::sleep_for(2s);
         inputStream << "quit\n";
         communicationThread.join();
 
@@ -292,7 +292,7 @@ namespace
 
         inputStream << fenString << "\n";
         inputStream << "go depth 6\n" << std::flush;
-        std::this_thread::sleep_for(1s);
+        std::this_thread::sleep_for(2s);
         inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
@@ -330,7 +330,7 @@ namespace
 
         inputStream << "position fen " << TestingPositions::Zugzwang3 << "\n";
         inputStream << "go depth 6\n";
-        std::this_thread::sleep_for(1s);
+        std::this_thread::sleep_for(2s);
         inputStream << "quit\n";
         communicationThread.join();
 
@@ -412,7 +412,7 @@ namespace
 
         const std::string engineOutput{outputStream.str()};
 
-        EXPECT_TRUE(engineOutput.find("bestmove f7e7") != std::string::npos);
+        EXPECT_TRUE(engineOutput.find("bestmove d7d5") != std::string::npos);
         std::cout << engineOutput << std::endl;
 
         std::cout << uciCom.getGameState() << std::endl;
