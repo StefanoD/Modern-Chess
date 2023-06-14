@@ -342,6 +342,44 @@ namespace
         std::cout << uciCom.getGameState() << std::endl;
     }
 
+    TEST(UCICommunicationTest, InfiniteTimeControl)
+    {
+        /*
+         * 8 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+         * 7 ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙
+         * 6 . . . . . . . .
+         * 5 . . . . . . . .
+         * 4 . . . . . . . .
+         * 3 . . . . . . . .
+         * 2 ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎ ♟︎
+         * 1 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+         *
+         *   a b c d e f g h
+         */
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&uciCom]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position startpos moves\n";
+        inputStream << "go infinite\n";
+        std::this_thread::sleep_for(3s);
+        inputStream << "quit\n";
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        EXPECT_TRUE(engineOutput.find("bestmove e2e4") != std::string::npos);
+        std::cout << engineOutput << std::endl;
+
+        std::cout << uciCom.getGameState() << std::endl;
+    }
+
     TEST(UCICommunicationTest, TimeControl)
     {
         /*

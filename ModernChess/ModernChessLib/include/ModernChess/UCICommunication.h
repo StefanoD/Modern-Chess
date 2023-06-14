@@ -19,7 +19,7 @@ namespace ModernChess
 
     class UCICommunication final
     {
-        static constexpr std::chrono::milliseconds InfiniteTime = std::chrono::milliseconds(std::numeric_limits<int64_t>::max());
+        static constexpr std::chrono::milliseconds InfiniteTime = std::chrono::hours (100); // avoid overflows in calculations
         // Make sure the engine does not exceed the allowed time to search
         static constexpr std::chrono::milliseconds TimeSecurityMargin{8};
 

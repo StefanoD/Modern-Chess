@@ -201,7 +201,7 @@ namespace ModernChess
                 // Even is side to move is not white, the value has to be read by the parser, so the
                 // string_view-pointer can continue to the next characters
                 if (auto timeValue = std::chrono::milliseconds(parser.parseNumber<int64_t>());
-                    m_searchRequest.gameState.board.sideToMove == Color::White)
+                        m_searchRequest.gameState.board.sideToMove == Color::White)
                 {
                     // Only set, if side to move is white
                     timeToSearch = timeValue;
@@ -209,18 +209,36 @@ namespace ModernChess
             }
             if (parser.uiHasSentTimeForBlack())
             {
-                // Even is side to move is not white, the value has to be read by the parser, so the
+                // Even is side to move is not black, the value has to be read by the parser, so the
                 // string_view-pointer can continue to the next characters
                 if (auto timeValue = std::chrono::milliseconds(parser.parseNumber<int64_t>());
                         m_searchRequest.gameState.board.sideToMove == Color::Black)
                 {
-                    // Only set, if side to move is white
+                    // Only set, if side to move is black
                     timeToSearch = timeValue;
                 }
             }
-            if (parser.uiHasSentWhiteIncrement() or parser.uiHasSentBlackIncrement())
+            if (parser.uiHasSentWhiteIncrement())
             {
-                timeIncrement = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+                // Even is side to move is not white, the value has to be read by the parser, so the
+                // string_view-pointer can continue to the next characters
+                if (auto timeValue = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+                        m_searchRequest.gameState.board.sideToMove == Color::White)
+                {
+                    // Only set, if side to move is white
+                    timeIncrement = timeValue;
+                }
+            }
+            if (parser.uiHasSentBlackIncrement())
+            {
+                // Even is side to move is not black, the value has to be read by the parser, so the
+                // string_view-pointer can continue to the next characters
+                if (auto timeValue = std::chrono::milliseconds(parser.parseNumber<int64_t>());
+                        m_searchRequest.gameState.board.sideToMove == Color::Black)
+                {
+                    // Only set, if side to move is black
+                    timeIncrement = timeValue;
+                }
             }
             if (parser.uiHasSentMovesToGo())
             {
