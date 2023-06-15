@@ -73,7 +73,6 @@ namespace ModernChess
             else if (parser.uiHasSentStopCommand())
             {
                 stopSearch();
-                m_waitForSearchRequest.notifyOne();
             }
             else if (parser.uiRequestsUCIMode())
             {
