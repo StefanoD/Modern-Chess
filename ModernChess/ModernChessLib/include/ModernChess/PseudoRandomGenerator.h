@@ -8,8 +8,6 @@ namespace ModernChess {
     public:
         PseudoRandomGenerator() = delete;
 
-        static constexpr uint32_t initialState = 1804289383;
-
         /**
         * @return generates 32-bit pseudo legal numbers
         */
@@ -45,5 +43,8 @@ namespace ModernChess {
             // return random number
             return n1 | (n2 << 16) | (n3 << 32) | (n4 << 48);
         }
+
+    private:
+        static constexpr uint32_t initialState = 1804289383;
     };
 }

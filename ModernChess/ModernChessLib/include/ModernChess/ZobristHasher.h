@@ -7,8 +7,10 @@
 namespace ModernChess {
     class ZobristHasher {
     public:
+        ZobristHasher();
+
         // random piece keys [piece][square]
-        std::array<std::array<uint64_t, NumberOfFigureTypes>, NumberOfSquares> piece_keys{};
+        std::array<std::array<uint64_t, NumberOfFigureTypes>, NumberOfSquares> piece_keys;
 
         // random en passant keys [square]
         std::array<uint64_t, NumberOfSquares> enpassant_keys;

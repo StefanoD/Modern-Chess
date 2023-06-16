@@ -53,7 +53,7 @@ add_library(${target}
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
-        )
+        ZobristHasher.cpp)
 
 target_include_directories(${target} PUBLIC ../include)
 
