@@ -125,11 +125,6 @@ namespace ModernChess
             // restore board state
             m_gameState = gameStateCopy;
 
-            if (m_stopSearching())
-            {
-                return 0;
-            }
-
             // fail-hard beta cutoff
             if (score >= beta)
             {    // node (move) fails high
@@ -223,11 +218,6 @@ namespace ModernChess
             // take move back
             m_gameState = gameStateCopy;
 
-            if (m_stopSearching())
-            {
-                return 0;
-            }
-
             ++movesSearched;
 
             // fail-hard beta cutoff
@@ -260,6 +250,11 @@ namespace ModernChess
                 alpha = score;
 
                 pvTable->addPrincipalVariation(move, m_gameState.halfMoveClock);
+            }
+
+            if (m_stopSearching())
+            {
+                break;
             }
         }
 
@@ -322,11 +317,6 @@ namespace ModernChess
             // take move back
             m_gameState = gameStateCopy;
 
-            if (m_stopSearching())
-            {
-                return 0;
-            }
-
             // fail-hard beta cutoff
             if (score >= beta)
             {
@@ -339,6 +329,11 @@ namespace ModernChess
             {
                 // PV node (move)
                 alpha = score;
+            }
+
+            if (m_stopSearching())
+            {
+                break;
             }
         }
 
