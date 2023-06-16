@@ -24,7 +24,7 @@ namespace
             uciCom.startCommunication();
         });
 
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
 
         communicationThread.join();
 
@@ -50,7 +50,7 @@ namespace
         });
 
         inputStream << "isready\n";
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
 
         communicationThread.join();
 
@@ -74,7 +74,7 @@ namespace
         });
 
         inputStream << "position startpos\n";
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
 
         communicationThread.join();
 
@@ -101,7 +101,7 @@ namespace
         });
 
         inputStream << "position startpos moves a2a3 a7a6\n";
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
 
         communicationThread.join();
 
@@ -132,7 +132,7 @@ namespace
         });
 
         inputStream << "position fen " << FenParsing::startPosition << " moves a2a3 a7a6\n";
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
         const GameState gameState = uciCom.getGameState();
@@ -163,7 +163,7 @@ namespace
         inputStream << "position startpos\n";
         inputStream << "go\n";
         std::this_thread::sleep_for(1s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
 
         communicationThread.join();
     }
@@ -183,7 +183,7 @@ namespace
         inputStream << "position startpos\n";
         inputStream << "go depth 2\n";
         std::this_thread::sleep_for(1s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
 
         communicationThread.join();
     }
@@ -217,7 +217,7 @@ namespace
         inputStream << "position fen " << fenString << "\n";
         inputStream << "go depth 6\n";
         std::this_thread::sleep_for(2s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
         const std::string engineOutput{outputStream.str()};
@@ -255,7 +255,7 @@ namespace
         inputStream << "position fen " << fenString << "\n";
         inputStream << "go depth 6\n";
         std::this_thread::sleep_for(2s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
         const std::string engineOutput{outputStream.str()};
@@ -331,7 +331,7 @@ namespace
         inputStream << "position fen " << TestingPositions::Zugzwang3 << "\n";
         inputStream << "go depth 6\n";
         std::this_thread::sleep_for(2s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
         const std::string engineOutput{outputStream.str()};
@@ -369,7 +369,7 @@ namespace
         inputStream << "position startpos moves\n";
         inputStream << "go infinite\n";
         std::this_thread::sleep_for(3s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
         const std::string engineOutput{outputStream.str()};
@@ -407,7 +407,7 @@ namespace
         inputStream << "position startpos moves d2d4\n";
         inputStream << "go wtime 1800000 btime 1800000 winc 0 binc 0 movestogo 40\n";
         std::this_thread::sleep_for(3s);
-        inputStream << "quit\n";
+        inputStream << "quit\n" << std::flush;
         communicationThread.join();
 
         const std::string engineOutput{outputStream.str()};
