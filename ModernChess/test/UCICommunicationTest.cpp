@@ -161,7 +161,7 @@ namespace
         });
 
         inputStream << "position startpos\n";
-        inputStream << "go\n";
+        inputStream << "go\n" << std::flush;
         std::this_thread::sleep_for(1s);
         inputStream << "quit\n" << std::flush;
 
@@ -181,7 +181,7 @@ namespace
         });
 
         inputStream << "position startpos\n";
-        inputStream << "go depth 2\n";
+        inputStream << "go depth 2\n" << std::flush;
         std::this_thread::sleep_for(1s);
         inputStream << "quit\n" << std::flush;
 
@@ -215,7 +215,7 @@ namespace
         constexpr auto fenString = "k7/2pbn3/2nNp3/3p4/N1rP2P1/PQr1P3/1Bq2P1P/4K2R w K - 0 26";
 
         inputStream << "position fen " << fenString << "\n";
-        inputStream << "go depth 6\n";
+        inputStream << "go depth 6\n" << std::flush;
         std::this_thread::sleep_for(2s);
         inputStream << "quit\n" << std::flush;
         communicationThread.join();
@@ -253,7 +253,7 @@ namespace
         constexpr auto fenString = "r3r1k1/2p1qpPp/p4n1Q/4p1N1/1n1pP1b1/pP1P4/P1P2PP1/2KR1B1R w - - 5 18";
 
         inputStream << "position fen " << fenString << "\n";
-        inputStream << "go depth 6\n";
+        inputStream << "go depth 6\n" << std::flush;
         std::this_thread::sleep_for(2s);
         inputStream << "quit\n" << std::flush;
         communicationThread.join();
@@ -329,7 +329,7 @@ namespace
         });
 
         inputStream << "position fen " << TestingPositions::Zugzwang3 << "\n";
-        inputStream << "go depth 6\n";
+        inputStream << "go depth 6\n" << std::flush;
         std::this_thread::sleep_for(2s);
         inputStream << "quit\n" << std::flush;
         communicationThread.join();
@@ -367,7 +367,7 @@ namespace
         });
 
         inputStream << "position startpos moves\n";
-        inputStream << "go infinite\n";
+        inputStream << "go infinite\n" << std::flush;
         std::this_thread::sleep_for(3s);
         inputStream << "quit\n" << std::flush;
         communicationThread.join();
@@ -405,7 +405,7 @@ namespace
         });
 
         inputStream << "position startpos moves d2d4\n";
-        inputStream << "go wtime 1800000 btime 1800000 winc 0 binc 0 movestogo 40\n";
+        inputStream << "go wtime 1800000 btime 1800000 winc 0 binc 0 movestogo 40\n" << std::flush;
         std::this_thread::sleep_for(3s);
         inputStream << "quit\n" << std::flush;
         communicationThread.join();
