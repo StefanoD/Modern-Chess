@@ -83,6 +83,11 @@ namespace ModernChess
                 m_errorStream << "Unknown command: " << parser.currentStringView() << std::endl << std::flush;
             }
         }
+
+        if (m_searchThread.joinable())
+        {
+            m_searchThread.join();
+        }
     }
 
     void UCICommunication::registerToUI()
