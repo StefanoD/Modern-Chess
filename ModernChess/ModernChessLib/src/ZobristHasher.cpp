@@ -2,6 +2,8 @@
 #include "ModernChess/Figure.h"
 #include "ModernChess/Square.h"
 #include "ModernChess/PseudoRandomGenerator.h"
+#include "ModernChess/GameState.h"
+#include "ModernChess/BitBoardOperations.h"
 
 namespace ModernChess {
 
@@ -32,5 +34,38 @@ namespace ModernChess {
 
         // init random side key
         side_key = PseudoRandomGenerator::getRandomU64Number();
+    }
+
+    uint64_t ZobristHasher::generateHash(const GameState &gameState)
+    {
+        uint64_t finalKey = 0;
+
+        for (Figure figure = Figure::WhitePawn; figure <= Figure::BlackKing; ++figure)
+        {
+            for (BitBoardState bitboard = gameState.board.bitboards[figure]; bitboard != BoardState::empty; )
+            {
+                const Square square = BitBoardOperations::bitScanForward(bitboard);
+                finalKey ^= piece_keys[figure][square];
+
+                // pop LS1B
+                bitboard = BitBoardOperations::eraseSquare(bitboard, square);
+            }
+        }
+
+        if (gameState.board.enPassantTarget != Square::undefined)
+        {
+            finalKey ^= enpassant_keys[gameState.board.enPassantTarget];
+        }
+
+        finalKey ^= castle_keys[gameState.board.castlingRights];
+
+        // hash the side only if black is to move
+        if (gameState.board.sideToMove == Color::Black)
+        {
+            finalKey ^= side_key;
+        }
+
+        // return generated hash key
+        return finalKey;
     }
 }
