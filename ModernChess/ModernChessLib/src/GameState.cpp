@@ -1,5 +1,10 @@
 #include "ModernChess/GameState.h"
 
+namespace ModernChess
+{
+    const ZobristHasher GameState::hasher{};
+}
+
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState)
 {
     using namespace ModernChess;
@@ -27,7 +32,8 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameSta
         os << "no" << std::endl;
     }
 
-    os << gameState.board.castlingRights;
+    os << gameState.board.castlingRights << std::endl;
+    os << "Hash key: " << std::hex << gameState.gameStateHash << std::endl;
 
     return os;
 }

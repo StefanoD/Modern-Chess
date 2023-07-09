@@ -27,7 +27,7 @@ add_executable(${target}
         PerftTest.cpp
         UCIParserTest.cpp
         UCICommunicationTest.cpp
-        )
+        ZobristHasherTest.cpp)
 
 target_link_libraries(${target} PRIVATE
         GTest::gtest_main

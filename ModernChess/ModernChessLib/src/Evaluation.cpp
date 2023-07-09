@@ -113,11 +113,18 @@ namespace ModernChess
             // preserve board state
             const GameState gameStateCopy = m_gameState;
 
-            // switch the side, literally giving opponent an extra move to make
-            m_gameState.board.sideToMove = Color(!bool(m_gameState.board.sideToMove));
+            // remove en passant square from hash key if available, because the new move invalidates it
+            if (m_gameState.board.enPassantTarget != Square::undefined)
+            {
+                m_gameState.gameStateHash ^= ZobristHasher::enpassantKeys[m_gameState.board.enPassantTarget];
+            }
 
             // reset en-passant capture square, because opponent missed the chance in the last move
             m_gameState.board.enPassantTarget = Square::undefined;
+
+            // switch the side, literally giving opponent an extra move to make
+            m_gameState.board.sideToMove = Color(!bool(m_gameState.board.sideToMove));
+            m_gameState.gameStateHash ^= ZobristHasher::sideKey;
 
             // search moves with reduced depth to find beta cutoffs (depth - 1 - R) where R is a depth reduction
             const int32_t score = -negamax(-beta, -beta + 1, depth - 1 - NullMovePruningDepthReduction);

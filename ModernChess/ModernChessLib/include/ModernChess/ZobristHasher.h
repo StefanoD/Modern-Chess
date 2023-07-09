@@ -14,15 +14,15 @@ namespace ModernChess {
         static uint64_t generateHash(const GameState &gameState);
 
         // random piece keys [piece][square]
-        static std::array<std::array<uint64_t, NumberOfFigureTypes>, NumberOfSquares> piece_keys;
+        static std::array<std::array<uint64_t, NumberOfSquares>, NumberOfFigureTypes> pieceKeys;
 
         // random en passant keys [square]
-        static std::array<uint64_t, NumberOfSquares> enpassant_keys;
+        static std::array<uint64_t, NumberOfSquares> enpassantKeys;
 
         // random castling keys
-        static std::array<uint64_t, 16> castle_keys;
+        static std::array<uint64_t, 16> castleKeys;
 
         // random side key
-        static uint64_t side_key;
+        static uint64_t sideKey;
     };
 }

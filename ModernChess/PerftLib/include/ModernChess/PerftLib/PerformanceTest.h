@@ -42,7 +42,7 @@ namespace ModernChess::Perft {
             for (const Move move : moveList)
             {
                 // preserve board state
-                const Board boardCopy = m_gameState.board;
+                const GameState gameStateCopy = m_gameState;
 
                 // make move
                 if (const bool kingIsNotInCheck = makeMove(move, MoveType::AllMoves);
@@ -55,7 +55,16 @@ namespace ModernChess::Perft {
                 const uint64_t numberOfNotes = perftDriver(depth - 1);
                 accumulatedNodes += numberOfNotes;
                 // take back
-                m_gameState.board = boardCopy;
+                m_gameState = gameStateCopy;
+
+                const uint64_t hashFromScratch = ZobristHasher::generateHash(m_gameState);
+
+                if (m_gameState.gameStateHash != hashFromScratch)
+                {
+                    std::cout << "Hash should be " << hashFromScratch << " after take-back, but it is " << m_gameState.gameStateHash << std::endl;
+                    std::cout << "Move: " << move << std::endl;
+                    std::cout << m_gameState.gameStateHash << std::endl;
+                }
 
                 // print move
                 //std::cout << move << "\t nodes: " << numberOfNotes << std::endl;

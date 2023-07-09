@@ -113,6 +113,8 @@ namespace ModernChess::FenParsing {
 
         initOccupancyMaps(gameState);
 
+        gameState.gameStateHash = ZobristHasher::generateHash(gameState);
+
         return gameState;
     }
 

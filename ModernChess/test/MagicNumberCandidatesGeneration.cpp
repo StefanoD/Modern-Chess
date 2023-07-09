@@ -130,7 +130,7 @@ namespace {
         }
     }
 
-    TEST(UtilitiesTest, getRandomU32Number)
+    TEST(MagicNumberCandidatesGenerationTest, getRandomU32Number)
     {
         EXPECT_EQ(PseudoRandomGenerator::getRandomU32Number(), 1741896308);
         EXPECT_EQ(PseudoRandomGenerator::getRandomU32Number(), 321584506);
@@ -139,12 +139,12 @@ namespace {
         EXPECT_EQ(PseudoRandomGenerator::getRandomU32Number(), 200407065);
     }
 
-    TEST(UtilitiesTest, generateMagicNumber)
+    TEST(MagicNumberCandidatesGenerationTest, generateMagicNumber)
     {
         EXPECT_EQ(generateMagicNumber(), 27162335321796624);
     }
 
-    TEST(UtilitiesTest, initMagicNumbers)
+    TEST(MagicNumberCandidatesGenerationTest, initMagicNumbers)
     {
         initMagicNumbers();
     }

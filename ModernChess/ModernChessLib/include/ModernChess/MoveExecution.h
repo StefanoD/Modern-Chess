@@ -3,6 +3,9 @@
 #include "GameState.h"
 #include "BitBoardOperations.h"
 #include "AttackQueries.h"
+#include "ZobristHasher.h"
+
+#include <iostream>
 
 namespace ModernChess
 {
@@ -19,12 +22,31 @@ namespace ModernChess
 
         static bool executeMove(GameState &gameState, Move move, MoveType moveType)
         {
+            bool moveIsLegal;
+
             if (gameState.board.sideToMove == Color::White)
             {
-                return MoveExecution::executeMoveForWhite(gameState, move, moveType);
+                moveIsLegal = MoveExecution::executeMoveForWhite(gameState, move, moveType);
+            }
+            else
+            {
+                moveIsLegal = MoveExecution::executeMoveForBlack(gameState, move, moveType);
             }
 
-            return MoveExecution::executeMoveForBlack(gameState, move, moveType);
+            const uint64_t hashFromScratch = ZobristHasher::generateHash(gameState);
+
+            if (gameState.gameStateHash != hashFromScratch)
+            {
+
+                std::cout << "Hash should be " << hashFromScratch << ", but it is " << gameState.gameStateHash << std::endl;
+                std::cout << "Move: " << move << std::endl;
+                std::cout << gameState << std::endl;
+                std::cout << "half moves: " << gameState.halfMoveClock << std::endl;
+
+                exit(1);
+            }
+
+            return moveIsLegal;
         }
 
         static bool executeMoveForWhite(GameState &gameState, Move move, MoveType moveType)
@@ -33,7 +55,7 @@ namespace ModernChess
             if (moveType == MoveType::AllMoves or move.isCapture())
             {
                 // preserve board state
-                const Board boardCopy = gameState.board;
+                const GameState gameStateCopy = gameState;
 
                 // parse move
                 const Square sourceSquare = move.getFrom();
@@ -62,13 +84,21 @@ namespace ModernChess
                     removeFromBitboards(gameState, Figure::BlackPawn, Color::Black, actualPawnSquare);
                 }
 
-                // reset en passant square
+                // remove en passant square from hash key if available, because the new move invalidates it
+                if (gameState.board.enPassantTarget != Square::undefined)
+                {
+                    gameState.gameStateHash ^= ZobristHasher::enpassantKeys[gameState.board.enPassantTarget];
+                }
+
+                // reset en passant square, because the new move invalidates it
                 gameState.board.enPassantTarget = Square::undefined;
 
                 // handle double pawn push
                 if (move.isDoublePawnPush())
                 {
-                    gameState.board.enPassantTarget = BitBoardOperations::getSouthSquareFromGivenSquare(targetSquare);
+                    const Square enPassantTarget = BitBoardOperations::getSouthSquareFromGivenSquare(targetSquare);
+                    gameState.board.enPassantTarget = enPassantTarget;
+                    gameState.gameStateHash ^= ZobristHasher::enpassantKeys[enPassantTarget];
                 }
 
                 // handle castling moves
@@ -98,16 +128,22 @@ namespace ModernChess
                         AttackQueries::squareIsAttackedByBlack(gameState.board, kingsSquare))
                 {
                     // take move back
-                    gameState.board = boardCopy;
+                    gameState = gameStateCopy;
 
                     // return illegal move
                     return false;
                 }
 
+                // Remove old castling hash
+                gameState.gameStateHash ^= ZobristHasher::castleKeys[gameState.board.castlingRights];
+
                 // update castling rights
                 gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
+                gameState.gameStateHash ^= ZobristHasher::castleKeys[gameState.board.castlingRights]; // new castling hash
+
                 // change side to move
                 gameState.board.sideToMove = Color::Black;
+                gameState.gameStateHash ^= ZobristHasher::sideKey;
                 ++gameState.halfMoveClock;
 
                 // return legal move
@@ -124,7 +160,7 @@ namespace ModernChess
             if (moveType == MoveType::AllMoves or move.isCapture())
             {
                 // preserve board state
-                const Board boardCopy = gameState.board;
+                const GameState gameStateCopy = gameState;
 
                 // parse move
                 const Square sourceSquare = move.getFrom();
@@ -153,13 +189,21 @@ namespace ModernChess
                     removeFromBitboards(gameState, Figure::WhitePawn, Color::White, actualPawnSquare);
                 }
 
+                // remove en passant square from hash key if available, because the new move invalidates it
+                if (gameState.board.enPassantTarget != Square::undefined)
+                {
+                    gameState.gameStateHash ^= ZobristHasher::enpassantKeys[gameState.board.enPassantTarget];
+                }
+
                 // reset en passant square
                 gameState.board.enPassantTarget = Square::undefined;
 
                 // handle double pawn push
                 if (move.isDoublePawnPush())
                 {
-                    gameState.board.enPassantTarget = BitBoardOperations::getNorthSquareFromGivenSquare(targetSquare);
+                    const Square enPassantTarget = BitBoardOperations::getNorthSquareFromGivenSquare(targetSquare);
+                    gameState.board.enPassantTarget = enPassantTarget;
+                    gameState.gameStateHash ^= ZobristHasher::enpassantKeys[enPassantTarget];
                 }
 
                 // handle castling moves
@@ -189,16 +233,22 @@ namespace ModernChess
                         AttackQueries::squareIsAttackedByWhite(gameState.board, kingsSquare))
                 {
                     // take move back
-                    gameState.board = boardCopy;
+                    gameState = gameStateCopy;
 
                     // return illegal move
                     return false;
                 }
 
+                // Remove old castling hash
+                gameState.gameStateHash ^= ZobristHasher::castleKeys[gameState.board.castlingRights];
+
                 // update castling rights
                 gameState.board.castlingRights = updateCastlingRights(gameState.board.castlingRights, sourceSquare, targetSquare);
+                gameState.gameStateHash ^= ZobristHasher::castleKeys[gameState.board.castlingRights]; // new castling hash
+
                 // change side to move
                 gameState.board.sideToMove = Color::White;
+                gameState.gameStateHash ^= ZobristHasher::sideKey;
                 ++gameState.halfMoveClock;
 
                 // return legal move
@@ -241,6 +291,9 @@ namespace ModernChess
             gameState.board.bitboards[figure] = BitBoardOperations::eraseSquare(gameState.board.bitboards[figure], square);
             gameState.board.occupancies[color] = BitBoardOperations::eraseSquare(gameState.board.occupancies[color], square);
             gameState.board.occupancies[Color::Both] = BitBoardOperations::eraseSquare(gameState.board.occupancies[Color::Both], square);
+
+            // remove the figure from hash key
+            gameState.gameStateHash ^= ZobristHasher::pieceKeys[figure][square];
         }
 
         static void addToBitboards(GameState &gameState, Figure figure, Color color, Square square)
@@ -248,6 +301,9 @@ namespace ModernChess
             gameState.board.bitboards[figure] = BitBoardOperations::occupySquare(gameState.board.bitboards[figure], square);
             gameState.board.occupancies[color] = BitBoardOperations::occupySquare(gameState.board.occupancies[color], square);
             gameState.board.occupancies[Color::Both] = BitBoardOperations::occupySquare(gameState.board.occupancies[Color::Both], square);
+
+            // set figure to the target square in hash key
+            gameState.gameStateHash ^= ZobristHasher::pieceKeys[figure][square];
         }
     };
 }
