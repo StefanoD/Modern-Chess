@@ -5,13 +5,13 @@
 #include <array>
 
 namespace ModernChess {
-    class GameState;
+    class Board;
 
     class ZobristHasher {
     public:
         ZobristHasher();
 
-        static uint64_t generateHash(const GameState &gameState);
+        static uint64_t generateHash(const Board &board);
 
         // random piece keys [piece][square]
         static std::array<std::array<uint64_t, NumberOfSquares>, NumberOfFigureTypes> pieceKeys;

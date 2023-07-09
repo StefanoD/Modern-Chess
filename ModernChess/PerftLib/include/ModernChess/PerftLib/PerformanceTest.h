@@ -57,7 +57,7 @@ namespace ModernChess::Perft {
                 // take back
                 m_gameState = gameStateCopy;
 
-                const uint64_t hashFromScratch = ZobristHasher::generateHash(m_gameState);
+                const uint64_t hashFromScratch = ZobristHasher::generateHash(m_gameState.board);
 
                 if (m_gameState.gameStateHash != hashFromScratch)
                 {

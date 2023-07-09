@@ -6,17 +6,14 @@ namespace ModernChess {
     class PseudoRandomGenerator
     {
     public:
-        PseudoRandomGenerator() = delete;
-
         /**
         * @return generates 32-bit pseudo legal numbers
         */
-        static uint32_t getRandomU32Number()
+        [[nodiscard]] uint32_t getRandomU32Number()
         {
-            // pseudo random number state
-            static uint32_t state = initialState;
+            // pseudo random number state1
 
-            // get current state
+            // get current state1
             uint32_t number = state;
 
             // XOR shift algorithm
@@ -24,7 +21,7 @@ namespace ModernChess {
             number ^= number >> 17;
             number ^= number << 5;
 
-            // update random number state
+            // update random number state1
             state = number;
 
             // return random number
@@ -32,7 +29,7 @@ namespace ModernChess {
         }
 
         /// generate 64-bit pseudo legal numbers
-        static uint64_t getRandomU64Number()
+        [[nodiscard]] uint64_t getRandomU64Number()
         {
             // init random numbers slicing 16 bits from MS1B side
             const auto n1 = uint64_t(getRandomU32Number()) & 0xFFFF;
@@ -45,6 +42,6 @@ namespace ModernChess {
         }
 
     private:
-        static constexpr uint32_t initialState = 1804289383;
+        uint32_t state = 1804289383; // initial state
     };
 }
