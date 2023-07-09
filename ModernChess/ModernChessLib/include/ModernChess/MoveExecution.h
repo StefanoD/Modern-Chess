@@ -3,9 +3,6 @@
 #include "GameState.h"
 #include "BitBoardOperations.h"
 #include "AttackQueries.h"
-#include "ZobristHasher.h"
-
-#include <iostream>
 
 namespace ModernChess
 {
@@ -22,31 +19,12 @@ namespace ModernChess
 
         static bool executeMove(GameState &gameState, Move move, MoveType moveType)
         {
-            bool moveIsLegal;
-
             if (gameState.board.sideToMove == Color::White)
             {
-                moveIsLegal = MoveExecution::executeMoveForWhite(gameState, move, moveType);
-            }
-            else
-            {
-                moveIsLegal = MoveExecution::executeMoveForBlack(gameState, move, moveType);
+                return MoveExecution::executeMoveForWhite(gameState, move, moveType);
             }
 
-            const uint64_t hashFromScratch = ZobristHasher::generateHash(gameState);
-
-            if (gameState.gameStateHash != hashFromScratch)
-            {
-
-                std::cout << "Hash should be " << hashFromScratch << ", but it is " << gameState.gameStateHash << std::endl;
-                std::cout << "Move: " << move << std::endl;
-                std::cout << gameState << std::endl;
-                std::cout << "half moves: " << gameState.halfMoveClock << std::endl;
-
-                exit(1);
-            }
-
-            return moveIsLegal;
+            return MoveExecution::executeMoveForBlack(gameState, move, moveType);
         }
 
         static bool executeMoveForWhite(GameState &gameState, Move move, MoveType moveType)
