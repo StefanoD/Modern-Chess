@@ -22,7 +22,7 @@ std::ostream &operator<<(std::ostream &os, const ModernChess::EvaluationResult &
 
 namespace ModernChess
 {
-    EvaluationResult Evaluation::getBestMove(int32_t depth)
+    EvaluationResult Evaluation::getBestMove(uint8_t depth)
     {
         m_followPv = true;
         // find best move within a given position
@@ -72,7 +72,7 @@ namespace ModernChess
         return moves;
     }
 
-    int32_t Evaluation::negamax(int32_t alpha, int32_t beta, int32_t depth)
+    int32_t Evaluation::negamax(int32_t alpha, int32_t beta, uint8_t depth)
     {
         // Init PV length
         pvTable->pvLength[m_gameState.halfMoveClock] = m_gameState.halfMoveClock;

@@ -29,7 +29,7 @@ namespace ModernChess
             explicit SearchRequest(GameState gameState) : gameState(gameState) {}
 
             GameState gameState{};
-            int32_t depth = 14; // default depth
+            uint8_t depth = 14; // default depth
             std::chrono::time_point<std::chrono::steady_clock> timePointToStopSearch{};
         };
     public:
@@ -71,7 +71,7 @@ namespace ModernChess
 
         void parsePosition(UCIParser &parser);
 
-        Move executeMoves(UCIParser &parser);
+        Move executeMoves(UCIParser &parser) const;
 
         void executeGoCommand(UCIParser &parser);
 

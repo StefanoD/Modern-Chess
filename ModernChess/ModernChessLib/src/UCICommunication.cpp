@@ -155,7 +155,7 @@ namespace ModernChess
         setGameState(FenParser(FenParsing::startPosition).parse());
     }
 
-    Move UCICommunication::executeMoves(UCIParser &parser)
+    Move UCICommunication::executeMoves(UCIParser &parser) const
     {
         const UCIParser::UCIMove uciMove = parser.parseMove();
         const std::vector<Move> possibleMovesFromCurrentSate = PseudoMoveGeneration::generateMoves(m_searchRequest.gameState);
@@ -194,7 +194,7 @@ namespace ModernChess
             if (parser.uiHasSentSearchDepth())
             {
                 const std::lock_guard lock(m_mutex);
-                m_searchRequest.depth = parser.parseNumber<int32_t>();
+                m_searchRequest.depth = parser.parseNumber<uint8_t>();
             }
             if (parser.uiHasSentMovesTime())
             {
@@ -291,14 +291,14 @@ namespace ModernChess
             Evaluation evaluation(getGameState(), stopCondition);
             EvaluationResult evalResult;
 
-            int32_t depth;
+            uint8_t depth;
 
             {
                 const std::lock_guard lock(m_mutex);
                 depth = m_searchRequest.depth;
             }
 
-            for (int currentDepth = 1; currentDepth <= depth && (not searchHasBeenStopped()); ++currentDepth)
+            for (uint8_t currentDepth = 1; currentDepth <= depth && (not searchHasBeenStopped()); ++currentDepth)
             {
                 evalResult = evaluation.getBestMove(currentDepth);
                 m_outputStream << evalResult << std::flush;

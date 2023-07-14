@@ -45,7 +45,7 @@ namespace ModernChess
                 m_stopSearching{std::move(stopSearching)}
         {}
 
-        [[nodiscard]] EvaluationResult getBestMove(int32_t depth);
+        [[nodiscard]] EvaluationResult getBestMove(uint8_t depth);
 
     protected:
         // Use half of max number in order to avoid overflows
@@ -84,7 +84,7 @@ namespace ModernChess
         [[nodiscard]] std::vector<Move> generateSortedMoves();
 
         // negamax alpha beta search
-        [[nodiscard]] int32_t negamax(int32_t alpha, int32_t beta, int32_t depth);
+        [[nodiscard]] int32_t negamax(int32_t alpha, int32_t beta, uint8_t depth);
 
         [[nodiscard]] int32_t quiescenceSearch(int32_t alpha, int32_t beta);
 
