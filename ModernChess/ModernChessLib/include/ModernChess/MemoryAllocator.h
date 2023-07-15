@@ -31,6 +31,24 @@ namespace ModernChess
 
             return std::unique_ptr<T, std::function<void(T*)>>(ptr, deleter);
         }
+
+        template<typename T>
+        static std::unique_ptr<T[], std::function<void(T*)>> alignedArray(size_t allocSizeBytes)
+        {
+            T* ptr = static_cast<T*>(MemoryAllocator::alignedAllocRawPtr(allocSizeBytes));
+
+            if (not ptr)
+            {
+                std::cerr << "Failed to allocate " << allocSizeBytes << " bytes!" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+
+            std::function<void(T*)> deleter = [](T *ptr) {
+                MemoryAllocator::alignedFree((void*) ptr);
+            };
+
+            return std::unique_ptr<T[], std::function<void(T*)>>(ptr, deleter);
+        }
     private:
         static void* alignedAllocRawPtr(size_t allocSizeBytes);
 
