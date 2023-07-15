@@ -18,6 +18,9 @@ namespace ModernChess {
 
     class TranspositionTable {
     public:
+        TranspositionTable();
+
+        void clear();
         void resize(size_t mbSize);
 
     private:
@@ -30,6 +33,6 @@ namespace ModernChess {
         };
 
         std::unique_ptr<TTEntry, std::function<void(TTEntry*)>> m_table;
-        size_t clusterCount;
+        size_t m_numberEntries;
     };
 }
