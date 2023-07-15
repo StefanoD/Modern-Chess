@@ -314,6 +314,12 @@ namespace ModernChess
             return beta;
         }
 
+        // we are too deep, hence there's an overflow of arrays relying on max half-moves constant
+        if (m_gameState.halfMoveClock >= MaxHalfMoves)
+        {
+            return evaluation;
+        }
+
         // Assume alpha score does not increase
         //HashFlag hashFlag = HashFlag::Alpha;
 
