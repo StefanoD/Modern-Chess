@@ -15,6 +15,7 @@ add_library(${target}
         ../include/ModernChess/Evaluation.h
         ../include/ModernChess/KingAttacks.h
         ../include/ModernChess/KnightAttacks.h
+        ../include/ModernChess/MemoryAllocator.h
         ../include/ModernChess/Move.h
         ../include/ModernChess/MoveExecution.h
         ../include/ModernChess/PseudoMoveGeneration.h
@@ -29,6 +30,7 @@ add_library(${target}
         ../include/ModernChess/QueenAttacks.h
         ../include/ModernChess/RookAttacks.h
         ../include/ModernChess/Square.h
+        ../include/ModernChess/TranspositionTable.h
         ../include/ModernChess/Timer.h
         ../include/ModernChess/TUI.h
         ../include/ModernChess/UCIParser.h
@@ -45,15 +47,19 @@ add_library(${target}
         Utilities.cpp
         Player.cpp
         GameState.cpp
+        MemoryAllocator.cpp
         Move.cpp
         PawnAttacks.cpp
         RookAttacks.cpp
         BishopAttacks.cpp
         CastlingRights.cpp
+        TranspositionTable.cpp
         TUI.cpp
         UCIParser.cpp
         UCICommunication.cpp
-        ZobristHasher.cpp)
+        ZobristHasher.cpp
+        MemoryAllocator.cpp
+        )
 
 target_include_directories(${target} PUBLIC ../include)
 
