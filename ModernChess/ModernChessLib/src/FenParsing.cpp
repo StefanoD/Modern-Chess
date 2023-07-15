@@ -51,8 +51,6 @@ namespace ModernChess::FenParsing {
     GameState FenParser::parse()
     {
         GameState gameState;
-        gameState.board.bitboards = {};
-        gameState.board.occupancies = {};
 
         // FEN strings begin at the top left (a8) and continue to the right position
         for (int rank = 7; rank >= 0; --rank)
