@@ -74,6 +74,13 @@ namespace ModernChess
 
     int32_t Evaluation::negamax(int32_t alpha, int32_t beta, uint8_t depth)
     {
+        if (const int32_t score = GameState::transpositionTable.getScore(m_gameState.gameStateHash, alpha, beta, depth);
+            score != TranspositionTable::NoHashEntryFound)
+        {
+            // Position has already been scored with at least the same depth
+            return score;
+        }
+
         // Init PV length
         pvTable->pvLength[m_gameState.halfMoveClock] = m_gameState.halfMoveClock;
 
@@ -97,6 +104,9 @@ namespace ModernChess
         {
             return evaluatePosition();
         }
+
+        // Assume alpha score does not increase
+        HashFlag hashFlag = HashFlag::Alpha;
 
         // increment nodes count
         ++m_numberOfNodes;
@@ -237,6 +247,8 @@ namespace ModernChess
                     m_killerMoves[0][m_gameState.halfMoveClock] = move; // new and better killer move
                 }
 
+                GameState::transpositionTable.addEntry(m_gameState.gameStateHash, HashFlag::Beta, score, depth);
+
                 // node (move) fails high
                 return beta;
             }
@@ -255,7 +267,7 @@ namespace ModernChess
 
                 // PV node (move)
                 alpha = score;
-
+                hashFlag = HashFlag::Exact; // Store PV node
                 pvTable->addPrincipalVariation(move, m_gameState.halfMoveClock);
             }
 
@@ -270,13 +282,19 @@ namespace ModernChess
         {
             // king is in check
             if (kingInCheck)
-            {    // return mating score (assuming closest distance to mating position)
-                return CheckMateScore + m_gameState.halfMoveClock;
+            {
+                // return mating score (assuming closest distance to mating position)
+                alpha = CheckMateScore + m_gameState.halfMoveClock;
             }
-            // king is not in check
-            // return stalemate score
-            return StaleMateScore;
+            else
+            {
+                // king is not in check
+                // return stalemate score
+                alpha = StaleMateScore;
+            }
         }
+
+        GameState::transpositionTable.addEntry(m_gameState.gameStateHash, hashFlag, alpha, depth);
 
         // node (move) fails low
         return alpha;
@@ -296,9 +314,13 @@ namespace ModernChess
             return beta;
         }
 
+        // Assume alpha score does not increase
+        //HashFlag hashFlag = HashFlag::Alpha;
+
         // found a better move
         if (evaluation > alpha)
         {
+            //hashFlag = HashFlag::Exact; // Store PV node
             // PV node (move)
             alpha = evaluation;
         }
@@ -327,6 +349,7 @@ namespace ModernChess
             // fail-hard beta cutoff
             if (score >= beta)
             {
+                //GameState::transpositionTable.addEntry(m_gameState.gameStateHash, HashFlag::Beta, score, 0);
                 // node (move) fails high
                 return beta;
             }
@@ -334,6 +357,7 @@ namespace ModernChess
             // found a better move
             if (score > alpha)
             {
+                //hashFlag = HashFlag::Exact; // Store PV node
                 // PV node (move)
                 alpha = score;
             }
@@ -343,6 +367,8 @@ namespace ModernChess
                 break;
             }
         }
+
+        //GameState::transpositionTable.addEntry(m_gameState.gameStateHash, hashFlag, alpha, 0);
 
         // node (move) fails low
         return alpha;

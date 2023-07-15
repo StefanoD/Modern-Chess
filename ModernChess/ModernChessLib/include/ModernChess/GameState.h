@@ -3,13 +3,14 @@
 #include "Board.h"
 #include "Move.h"
 #include "ZobristHasher.h"
+#include "TranspositionTable.h"
 
 namespace ModernChess
 {
     class GameState
     {
     public:
-        GameState() = default;
+        GameState();
 
     //private:
         Board board{};
@@ -17,7 +18,7 @@ namespace ModernChess
         int32_t halfMoveClock = 0;
         int32_t nextMoveClock = 0;
         uint64_t gameStateHash = 0;
-
+        static TranspositionTable transpositionTable;
 
         //std::vector<Move> moveList;
         bool operator==(const GameState &other) const = default;

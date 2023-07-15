@@ -3,6 +3,12 @@
 namespace ModernChess
 {
     const ZobristHasher GameState::m_hasher{};
+    TranspositionTable GameState::transpositionTable{};
+
+    GameState::GameState()
+    {
+        transpositionTable.clear();
+    }
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState)
@@ -33,7 +39,9 @@ std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameSta
     }
 
     os << gameState.board.castlingRights << std::endl;
-    os << "Hash key: " << std::hex << gameState.gameStateHash << std::endl;
 
+    const std::ios::fmtflags os_flags (os.flags());
+    os << "Hash key: " << std::hex << gameState.gameStateHash << std::endl;
+    os.flags(os_flags);
     return os;
 }

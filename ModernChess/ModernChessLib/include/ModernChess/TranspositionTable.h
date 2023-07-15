@@ -20,7 +20,7 @@ namespace ModernChess {
     public:
         TranspositionTable();
 
-        void addEntry(uint64_t hash, HashFlag flag, int32_t score, Move best, uint8_t depth);
+        void addEntry(uint64_t hash, HashFlag flag, int32_t score, uint8_t depth);
         [[nodiscard]] int32_t getScore(uint64_t hash, int32_t alpha, int32_t beta, uint8_t depth) const;
         void clear();
         void resize(size_t mbSize);
@@ -29,16 +29,14 @@ namespace ModernChess {
         static constexpr int32_t NoHashEntryFound = std::numeric_limits<int32_t>::max();
     private:
         struct TTEntry {
-            TTEntry(uint64_t hash, HashFlag hashFlag, int32_t score, Move best, uint8_t depth) :
+            TTEntry(uint64_t hash, HashFlag hashFlag, int32_t score, uint8_t depth) :
                     hash(hash),
                     score(score),
-                    best(best),
                     depth(depth),
                     hashFlag(hashFlag)
             {}
             uint64_t hash{};
             int32_t score{};
-            Move best{};
             uint8_t depth{}; //< current search depth
             HashFlag hashFlag{};
         };

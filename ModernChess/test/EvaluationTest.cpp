@@ -432,4 +432,35 @@ namespace
 
         std::cout << evalResult << std::endl;*/
     }
+
+    TEST(EvaluationTest, Crash)
+    {
+        /*
+         *
+         * 8 ♖ . . ♕ ♔ . . ♖
+         * 7 ♙ ♙ ♙ ♗ . ♙ ♙ ♙
+         * 6 . . ♘ . . ♘ . .
+         * 5 . ♝ . ♙ . . . .
+         * 4 . ♗ . ♞ ♟︎ . . .
+         * 3 . . ♞ . . ♟︎ . .
+         * 2 ♟︎ ♟︎ ♟︎ . . . ♟︎ ♟︎
+         * 1 ♜ . ♝ ♛ ♚ . . ♜
+         *
+         *   a b c d e f g h
+         */
+        FenParsing::FenParser fenParser("r2qk2r/pppb1ppp/2n2n2/1B1p4/1b1NP3/2N2P2/PPP3PP/R1BQK2R w KQkq - 0 8");
+        const GameState gameState = fenParser.parse();
+
+        std::cout << gameState << std::endl;
+
+        Evaluation evaluation(gameState);
+        const EvaluationResult evalResult = evaluation.getBestMove(8);
+
+        EXPECT_EQ(evalResult.bestMove().getFrom(), Square::b5);
+        EXPECT_EQ(evalResult.bestMove().getTo(), Square::c6);
+        EXPECT_EQ(evalResult.bestMove().getMovedFigure(), Figure::WhiteBishop);
+        EXPECT_TRUE(evalResult.bestMove().isCapture());
+
+        std::cout << evalResult << std::endl;
+    }
 }

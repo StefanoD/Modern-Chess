@@ -417,4 +417,42 @@ namespace
 
         std::cout << uciCom.getGameState() << std::endl;
     }
+
+    TEST(UCICommunicationTest, Crash)
+    {
+        /*
+         * 8 . . . . . . . ♔
+         * 7 . . . . . ♚ . .
+         * 6 . . . . . ♟︎ . ♙
+         * 5 . . . ♙ . . . .
+         * 4 . . . . . . ♟︎ .
+         * 3 . . . ♙ . . . .
+         * 2 . . . . . . . .
+         * 1 . . . . . . . .
+         *
+         *   a b c d e f g h
+         */
+        std::stringstream inputStream;
+        std::stringstream outputStream;
+        std::stringstream errorStream;
+
+        UCICommunication uciCom(inputStream, outputStream, errorStream);
+
+        std::thread communicationThread([&uciCom]{
+            uciCom.startCommunication();
+        });
+
+        inputStream << "position fen r2qk2r/pppb1ppp/2n2n2/1B1p4/1b1NP3/2N2P2/PPP3PP/R1BQK2R w KQkq - 0 8\n";
+        inputStream << "go depth 8\n" << std::flush;
+        std::this_thread::sleep_for(2s);
+        inputStream << "quit\n" << std::flush;
+        communicationThread.join();
+
+        const std::string engineOutput{outputStream.str()};
+
+        EXPECT_TRUE(engineOutput.find("bestmove b5c6") != std::string::npos);
+        std::cout << engineOutput << std::endl;
+
+        std::cout << uciCom.getGameState() << std::endl;
+    }
 }

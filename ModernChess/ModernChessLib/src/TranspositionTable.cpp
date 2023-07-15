@@ -10,9 +10,9 @@ namespace ModernChess {
         resize(4); // Default: 4 MB
     }
 
-    void TranspositionTable::addEntry(uint64_t hash, HashFlag flag, int32_t score, Move best, uint8_t depth)
+    void TranspositionTable::addEntry(uint64_t hash, HashFlag flag, int32_t score, uint8_t depth)
     {
-        const TTEntry entry(hash, flag, score, best, depth);
+        const TTEntry entry(hash, flag, score, depth);
         const size_t index = hash % m_numberEntries;
         m_table[index] = entry;
     }
@@ -43,7 +43,6 @@ namespace ModernChess {
                     return beta;
                 }
             }
-            //RememberBestMove();
         }
 
         return NoHashEntryFound;
