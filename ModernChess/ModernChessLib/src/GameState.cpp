@@ -2,7 +2,7 @@
 
 namespace ModernChess
 {
-    const ZobristHasher GameState::hasher{};
+    const ZobristHasher GameState::m_hasher{};
 }
 
 std::ostream& operator<<(std::ostream& os, const ModernChess::GameState &gameState)

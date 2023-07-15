@@ -23,7 +23,7 @@ namespace ModernChess
         bool operator==(const GameState &other) const = default;
 
     private:
-        static const ZobristHasher hasher;
+        static const ZobristHasher m_hasher;
     };
 
 }
