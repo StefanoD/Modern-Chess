@@ -75,7 +75,10 @@ namespace ModernChess
     int32_t Evaluation::negamax(int32_t alpha, int32_t beta, uint8_t depth)
     {
         if (const int32_t score = GameState::transpositionTable.getScore(m_gameState.gameStateHash, alpha, beta, depth);
-            score != TranspositionTable::NoHashEntryFound)
+            score != TranspositionTable::NoHashEntryFound &&
+            // In the first iteration/move/ply, there is no PV node to be returned, therefore don't return a score for the first ply.
+            m_gameState.halfMoveClock > m_halfMoveClockRootSearch
+            )
         {
             // Position has already been scored with at least the same depth
             return score;
