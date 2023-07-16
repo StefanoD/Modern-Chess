@@ -144,7 +144,9 @@ namespace ModernChess
 
             // fail-hard beta cutoff
             if (score >= beta)
-            {    // node (move) fails high
+            {
+                // node (move) fails high
+                GameState::transpositionTable.addEntry(m_gameState.gameStateHash, HashFlag::Beta, score, depth);
                 return beta;
             }
         }
