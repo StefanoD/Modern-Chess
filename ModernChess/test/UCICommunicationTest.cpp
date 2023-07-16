@@ -418,7 +418,7 @@ namespace
         std::cout << uciCom.getGameState() << std::endl;
     }
 
-    TEST(UCICommunicationTest, Crash)
+    TEST(UCICommunicationTest, SomeGame1)
     {
         /*
          * 8 . . . . . . . ♔

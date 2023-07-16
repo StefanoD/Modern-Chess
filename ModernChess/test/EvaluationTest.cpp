@@ -433,7 +433,7 @@ namespace
         std::cout << evalResult << std::endl;*/
     }
 
-    TEST(EvaluationTest, Crash)
+    TEST(EvaluationTest, SomeGame1)
     {
         /*
          *
