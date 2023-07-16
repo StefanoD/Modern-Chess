@@ -7,7 +7,7 @@ namespace ModernChess {
 
     TranspositionTable::TranspositionTable()
     {
-        resize(8); // Default: 8 MB
+        resize(16); // Default: 16 MB
     }
 
     void TranspositionTable::addEntry(uint64_t hash, HashFlag flag, int32_t score, uint8_t depth)
