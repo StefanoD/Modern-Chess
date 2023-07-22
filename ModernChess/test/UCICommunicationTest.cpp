@@ -374,7 +374,7 @@ namespace
 
         const std::string engineOutput{outputStream.str()};
 
-        EXPECT_TRUE(engineOutput.find("bestmove e2e4") != std::string::npos);
+        EXPECT_TRUE(engineOutput.find("bestmove d2d4") != std::string::npos);
         std::cout << engineOutput << std::endl;
 
         std::cout << uciCom.getGameState() << std::endl;
