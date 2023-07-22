@@ -5,6 +5,7 @@
 #include <cinttypes>
 #include <memory>
 #include <functional>
+#include <limits>
 
 namespace ModernChess {
 
